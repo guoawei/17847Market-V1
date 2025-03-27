@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>市集媒合平台 - 首頁</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+        }
+        :root {
+            --primary-yellow: #FBB03B;
+            --hover-yellow: #F59E0B;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 導航欄 -->
+    <nav class="bg-white shadow-lg fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <img class="h-8 w-auto" src="https://via.placeholder.com/150x50" alt="Logo">
+                    </div>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="home.html" class="border-b-2 border-yellow-500 text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium">
+                            首頁
+                        </a>
+                        <a href="market-list.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            探索市集
+                        </a>
+                        <a href="vendor-dashboard.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            成為攤商
+                        </a>
+                        <a href="about.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            關於我們
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <button type="button" onclick="window.location.href='login.html'" class="relative inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-500 shadow-sm hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+                            <i class="fas fa-user-plus mr-2"></i>
+                            註冊/登入
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要內容 -->
+    <main class="pt-16">
+        <!-- 輪播圖 -->
+        <div class="relative bg-gray-900 h-[500px]">
+            <img src="https://images.unsplash.com/photo-1516594798947-e65505dbb29d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
+                 class="w-full h-full object-cover opacity-70" alt="市集圖片">
+            <div class="absolute inset-0 flex items-center justify-center">
+                <div class="text-center">
+                    <h1 class="text-4xl font-bold text-white mb-4">
+                        發現最棒的市集活動
+                    </h1>
+                    <p class="text-xl text-white mb-8">
+                        為您的商品找到最適合的舞台
+                    </p>
+                    <div class="flex justify-center space-x-4">
+                        <a href="market-list.html" class="bg-yellow-500 text-white px-8 py-3 rounded-lg hover:bg-yellow-600 transition duration-300">
+                            探索市集
+                        </a>
+                        <a href="vendor-dashboard.html" class="bg-white text-gray-900 px-8 py-3 rounded-lg hover:bg-gray-100 transition duration-300">
+                            開始擺攤
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 熱門市集 -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-8">熱門市集</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 市集卡片 1 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1516594798947-e65505dbb29d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
+                         class="w-full h-48 object-cover" alt="市集圖片">
+                    <div class="p-6">
+                        <div class="flex items-center mb-2">
+                            <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded">熱門</span>
+                            <span class="ml-2 text-sm text-gray-500">台北市</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">週末文創市集</h3>
+                        <p class="text-gray-600 mb-4">2024/1/20-1/21</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-yellow-600 font-medium">剩餘攤位：5個</span>
+                            <a href="market-detail.html" class="text-yellow-600 hover:text-yellow-700">
+                                查看詳情 <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 市集卡片 2 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1516594798947-e65505dbb29d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
+                         class="w-full h-48 object-cover" alt="市集圖片">
+                    <div class="p-6">
+                        <div class="flex items-center mb-2">
+                            <span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded">即將截止</span>
+                            <span class="ml-2 text-sm text-gray-500">台中市</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">手作市集展</h3>
+                        <p class="text-gray-600 mb-4">2024/2/1-2/2</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-yellow-600 font-medium">剩餘攤位：3個</span>
+                            <a href="market-detail.html" class="text-yellow-600 hover:text-yellow-700">
+                                查看詳情 <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 市集卡片 3 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1516594798947-e65505dbb29d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
+                         class="w-full h-48 object-cover" alt="市集圖片">
+                    <div class="p-6">
+                        <div class="flex items-center mb-2">
+                            <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">新進</span>
+                            <span class="ml-2 text-sm text-gray-500">高雄市</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">藝術市集</h3>
+                        <p class="text-gray-600 mb-4">2024/2/15-2/16</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-yellow-600 font-medium">剩餘攤位：8個</span>
+                            <a href="market-detail.html" class="text-yellow-600 hover:text-yellow-700">
+                                查看詳情 <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 特色功能 -->
+        <section class="bg-gray-100 py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-8 text-center">為什麼選擇我們？</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="text-center">
+                        <div class="bg-white rounded-lg p-6 shadow-lg">
+                            <i class="fas fa-search text-4xl text-yellow-500 mb-4"></i>
+                            <h3 class="text-xl font-bold mb-2">輕鬆找到市集</h3>
+                            <p class="text-gray-600">快速瀏覽並篩選符合需求的市集活動</p>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-white rounded-lg p-6 shadow-lg">
+                            <i class="fas fa-clipboard-check text-4xl text-yellow-500 mb-4"></i>
+                            <h3 class="text-xl font-bold mb-2">簡單報名程序</h3>
+                            <p class="text-gray-600">三步驟完成報名，安心等待審核結果</p>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-white rounded-lg p-6 shadow-lg">
+                            <i class="fas fa-comments text-4xl text-yellow-500 mb-4"></i>
+                            <h3 class="text-xl font-bold mb-2">即時溝通平台</h3>
+                            <p class="text-gray-600">與主辦方直接聯繫，解決問題更有效率</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 頁尾 -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-bold mb-4">關於我們</h3>
+                    <ul class="space-y-2">
+                        <li><a href="about.html" class="text-gray-400 hover:text-white">公司介紹</a></li>
+                        <li><a href="terms.html" class="text-gray-400 hover:text-white">使用條款</a></li>
+                        <li><a href="privacy.html" class="text-gray-400 hover:text-white">隱私政策</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">攤商服務</h3>
+                    <ul class="space-y-2">
+                        <li><a href="vendor-guide.html" class="text-gray-400 hover:text-white">如何報名</a></li>
+                        <li><a href="vendor-pricing.html" class="text-gray-400 hover:text-white">收費標準</a></li>
+                        <li><a href="vendor-faq.html" class="text-gray-400 hover:text-white">常見問題</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">主辦方服務</h3>
+                    <ul class="space-y-2">
+                        <li><a href="organizer-post.html" class="text-gray-400 hover:text-white">刊登市集</a></li>
+                        <li><a href="organizer-dashboard.html" class="text-gray-400 hover:text-white">管理工具</a></li>
+                        <li><a href="organizer-cases.html" class="text-gray-400 hover:text-white">成功案例</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">聯絡我們</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2"></i>
+                            <a href="mailto:contact@example.com" class="text-gray-400 hover:text-white">contact@example.com</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-2"></i>
+                            <span class="text-gray-400">02-1234-5678</span>
+                        </li>
+                    </ul>
+                    <div class="mt-4 flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-line"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400">
+                <p>&copy; 2024 市集媒合平台. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html> 

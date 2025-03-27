@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>活動報告 - 市集媒合平台</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Alpine.js CDN -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #F3F4F6;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-screen flex">
+        <!-- 側邊欄 -->
+        <div class="bg-white w-64 min-h-screen shadow-lg fixed">
+            <div class="flex items-center justify-center h-16 border-b border-gray-200">
+                <img class="h-8" src="https://images.unsplash.com/photo-1490127252417-7c393f993ee4?w=150&h=50&fit=crop" alt="Logo">
+            </div>
+            <nav class="mt-6">
+                <div class="px-4 py-2">
+                    <div class="flex items-center space-x-2 text-sm text-gray-600">
+                        <img class="h-8 w-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop" alt="主辦方頭像">
+                        <span>歡迎回來，主辦方</span>
+                    </div>
+                </div>
+                <div class="px-2 mt-4">
+                    <a href="organizer-dashboard.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-home w-5 h-5"></i>
+                        <span class="mx-4">首頁</span>
+                    </a>
+                    <a href="market-management.html" class="flex items-center px-4 py-3 mt-2 text-gray-700 bg-yellow-50 rounded-lg">
+                        <i class="fas fa-store w-5 h-5"></i>
+                        <span class="mx-4">我的市集</span>
+                    </a>
+                    <a href="vendor-review.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-users w-5 h-5"></i>
+                        <span class="mx-4">攤商審核</span>
+                    </a>
+                    <a href="market-analytics.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-chart-line w-5 h-5"></i>
+                        <span class="mx-4">數據分析</span>
+                    </a>
+                    <a href="market-settings.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-cog w-5 h-5"></i>
+                        <span class="mx-4">設定</span>
+                    </a>
+                </div>
+            </nav>
+        </div>
+
+        <!-- 主要內容區 -->
+        <div class="flex-1 ml-64">
+            <!-- 頂部導航 -->
+            <header class="bg-white shadow-sm">
+                <div class="flex items-center justify-between h-16 px-8">
+                    <div class="flex items-center">
+                        <a href="market-management.html" class="text-gray-600 hover:text-gray-900">
+                            <i class="fas fa-arrow-left mr-2"></i>
+                        </a>
+                        <h1 class="text-xl font-bold text-gray-800">2024年4月文創市集 - 活動報告</h1>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <button class="text-gray-600 hover:text-gray-800">
+                            <i class="fas fa-bell"></i>
+                        </button>
+                        <button class="flex items-center space-x-2">
+                            <img class="h-8 w-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop" alt="主辦方頭像">
+                            <i class="fas fa-chevron-down text-gray-600"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 主要內容 -->
+            <main class="p-8">
+                <div class="max-w-7xl mx-auto">
+                    <!-- 概覽卡片 -->
+                    <div class="grid grid-cols-4 gap-6 mb-8">
+                        <!-- 總報名數 -->
+                        <div class="bg-white rounded-lg shadow-sm p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-600">總報名數</p>
+                                    <p class="text-2xl font-bold text-gray-900 mt-1">85</p>
+                                </div>
+                                <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-users text-yellow-600 text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <p class="text-sm text-green-600">
+                                    <i class="fas fa-arrow-up mr-1"></i>
+                                    <span>較上次增加 12%</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- 已核准攤商 -->
+                        <div class="bg-white rounded-lg shadow-sm p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-600">已核准攤商</p>
+                                    <p class="text-2xl font-bold text-gray-900 mt-1">50</p>
+                                </div>
+                                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-check-circle text-green-600 text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <p class="text-sm text-gray-600">
+                                    <span>核准率 58.8%</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- 預估收入 -->
+                        <div class="bg-white rounded-lg shadow-sm p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-600">預估收入</p>
+                                    <p class="text-2xl font-bold text-gray-900 mt-1">$175,000</p>
+                                </div>
+                                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-dollar-sign text-blue-600 text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <p class="text-sm text-blue-600">
+                                    <i class="fas fa-arrow-up mr-1"></i>
+                                    <span>較上次增加 8%</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- 瀏覽次數 -->
+                        <div class="bg-white rounded-lg shadow-sm p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-600">瀏覽次數</p>
+                                    <p class="text-2xl font-bold text-gray-900 mt-1">1,234</p>
+                                </div>
+                                <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-eye text-purple-600 text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <p class="text-sm text-purple-600">
+                                    <i class="fas fa-arrow-up mr-1"></i>
+                                    <span>較上次增加 25%</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 圖表區 -->
+                    <div class="grid grid-cols-2 gap-6 mb-8">
+                        <!-- 報名趨勢圖 -->
+                        <div class="bg-white rounded-lg shadow-sm p-6">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">報名趨勢</h3>
+                            <canvas id="registrationTrend"></canvas>
+                        </div>
+
+                        <!-- 攤位類型分布圖 -->
+                        <div class="bg-white rounded-lg shadow-sm p-6">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">攤位類型分布</h3>
+                            <canvas id="boothTypeDistribution"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- 詳細數據表格 -->
+                    <div class="bg-white rounded-lg shadow-sm p-6">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">攤位類型統計</h3>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead>
+                                    <tr>
+                                        <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">攤位類型</th>
+                                        <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">總數量</th>
+                                        <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">已報名</th>
+                                        <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">報名率</th>
+                                        <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">預估收入</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">一般攤位</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">30</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">25</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">83.3%</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$75,000</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">大型攤位</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">10</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">8</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">80%</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$40,000</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">飲食攤位</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">15</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">15</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">100%</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$60,000</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // 報名趨勢圖
+        const registrationTrend = new Chart(
+            document.getElementById('registrationTrend'),
+            {
+                type: 'line',
+                data: {
+                    labels: ['3/1', '3/5', '3/10', '3/15', '3/20', '3/25', '3/30'],
+                    datasets: [{
+                        label: '累計報名數',
+                        data: [10, 25, 35, 45, 60, 75, 85],
+                        borderColor: '#F59E0B',
+                        backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    }
+                }
+            }
+        );
+
+        // 攤位類型分布圖
+        const boothTypeDistribution = new Chart(
+            document.getElementById('boothTypeDistribution'),
+            {
+                type: 'doughnut',
+                data: {
+                    labels: ['一般攤位', '大型攤位', '飲食攤位'],
+                    datasets: [{
+                        data: [25, 8, 15],
+                        backgroundColor: [
+                            '#F59E0B',
+                            '#3B82F6',
+                            '#10B981'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    }
+                }
+            }
+        );
+    </script>
+</body>
+</html> 

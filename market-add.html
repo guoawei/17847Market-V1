@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新增活動 - 市集媒合平台</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Alpine.js CDN -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #F3F4F6;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-screen flex">
+        <!-- 側邊欄 -->
+        <div class="bg-white w-64 min-h-screen shadow-lg fixed">
+            <div class="flex items-center justify-center h-16 border-b border-gray-200">
+                <img class="h-8" src="https://images.unsplash.com/photo-1490127252417-7c393f993ee4?w=150&h=50&fit=crop" alt="Logo">
+            </div>
+            <nav class="mt-6">
+                <div class="px-4 py-2">
+                    <div class="flex items-center space-x-2 text-sm text-gray-600">
+                        <img class="h-8 w-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop" alt="主辦方頭像">
+                        <span>歡迎回來，主辦方</span>
+                    </div>
+                </div>
+                <div class="px-2 mt-4">
+                    <a href="organizer-dashboard.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-home w-5 h-5"></i>
+                        <span class="mx-4">首頁</span>
+                    </a>
+                    <a href="market-management.html" class="flex items-center px-4 py-3 mt-2 text-gray-700 bg-yellow-50 rounded-lg">
+                        <i class="fas fa-store w-5 h-5"></i>
+                        <span class="mx-4">我的市集</span>
+                    </a>
+                    <a href="vendor-review.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-users w-5 h-5"></i>
+                        <span class="mx-4">攤商審核</span>
+                    </a>
+                    <a href="market-analytics.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-chart-line w-5 h-5"></i>
+                        <span class="mx-4">數據分析</span>
+                    </a>
+                    <a href="market-settings.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-cog w-5 h-5"></i>
+                        <span class="mx-4">設定</span>
+                    </a>
+                </div>
+            </nav>
+        </div>
+
+        <!-- 主要內容區 -->
+        <div class="flex-1 ml-64">
+            <!-- 頂部導航 -->
+            <header class="bg-white shadow-sm">
+                <div class="flex items-center justify-between h-16 px-8">
+                    <div class="flex items-center">
+                        <a href="market-management.html" class="text-gray-600 hover:text-gray-900">
+                            <i class="fas fa-arrow-left mr-2"></i>
+                        </a>
+                        <h1 class="text-xl font-bold text-gray-800">新增活動</h1>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <button class="text-gray-600 hover:text-gray-800">
+                            <i class="fas fa-bell"></i>
+                        </button>
+                        <button class="flex items-center space-x-2">
+                            <img class="h-8 w-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop" alt="主辦方頭像">
+                            <i class="fas fa-chevron-down text-gray-600"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 主要內容 -->
+            <main class="p-8">
+                <div class="max-w-4xl mx-auto">
+                    <form x-data="{ 
+                        currentStep: 1,
+                        formData: {
+                            title: '',
+                            startDate: '',
+                            endDate: '',
+                            startTime: '',
+                            endTime: '',
+                            location: '',
+                            address: '',
+                            maxBooths: '',
+                            description: ''
+                        }
+                    }" class="bg-white rounded-lg shadow-sm">
+                        <!-- 步驟指示器 -->
+                        <div class="border-b border-gray-200">
+                            <div class="px-6 py-4">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="flex items-center">
+                                            <div class="w-8 h-8 rounded-full bg-yellow-500 flex items-center justify-center text-white font-bold" :class="{ 'bg-yellow-500': currentStep >= 1, 'bg-gray-300': currentStep < 1 }">1</div>
+                                            <div class="ml-2">
+                                                <p class="text-sm font-medium text-gray-900">基本資訊</p>
+                                            </div>
+                                        </div>
+                                        <div class="w-12 h-0.5 bg-gray-200" :class="{ 'bg-yellow-500': currentStep > 1 }"></div>
+                                        <div class="flex items-center">
+                                            <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-white font-bold" :class="{ 'bg-yellow-500': currentStep >= 2, 'bg-gray-300': currentStep < 2 }">2</div>
+                                            <div class="ml-2">
+                                                <p class="text-sm font-medium text-gray-900">攤位設定</p>
+                                            </div>
+                                        </div>
+                                        <div class="w-12 h-0.5 bg-gray-200" :class="{ 'bg-yellow-500': currentStep > 2 }"></div>
+                                        <div class="flex items-center">
+                                            <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-white font-bold" :class="{ 'bg-yellow-500': currentStep >= 3, 'bg-gray-300': currentStep < 3 }">3</div>
+                                            <div class="ml-2">
+                                                <p class="text-sm font-medium text-gray-900">報名設定</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 步驟 1：基本資訊 -->
+                        <div x-show="currentStep === 1" class="p-6">
+                            <div class="space-y-6">
+                                <!-- 活動名稱 -->
+                                <div>
+                                    <label for="title" class="block text-sm font-medium text-gray-700">活動名稱</label>
+                                    <input type="text" id="title" x-model="formData.title" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" placeholder="例：2024年4月文創市集">
+                                </div>
+
+                                <!-- 活動時間 -->
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="startDate" class="block text-sm font-medium text-gray-700">開始日期</label>
+                                        <input type="date" id="startDate" x-model="formData.startDate" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500">
+                                    </div>
+                                    <div>
+                                        <label for="endDate" class="block text-sm font-medium text-gray-700">結束日期</label>
+                                        <input type="date" id="endDate" x-model="formData.endDate" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500">
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="startTime" class="block text-sm font-medium text-gray-700">開始時間</label>
+                                        <input type="time" id="startTime" x-model="formData.startTime" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500">
+                                    </div>
+                                    <div>
+                                        <label for="endTime" class="block text-sm font-medium text-gray-700">結束時間</label>
+                                        <input type="time" id="endTime" x-model="formData.endTime" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500">
+                                    </div>
+                                </div>
+
+                                <!-- 活動地點 -->
+                                <div>
+                                    <label for="location" class="block text-sm font-medium text-gray-700">活動地點名稱</label>
+                                    <input type="text" id="location" x-model="formData.location" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" placeholder="例：松山文創園區">
+                                </div>
+
+                                <div>
+                                    <label for="address" class="block text-sm font-medium text-gray-700">詳細地址</label>
+                                    <input type="text" id="address" x-model="formData.address" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" placeholder="例：台北市信義區光復南路133號">
+                                </div>
+
+                                <!-- 攤位數量 -->
+                                <div>
+                                    <label for="maxBooths" class="block text-sm font-medium text-gray-700">攤位數量上限</label>
+                                    <input type="number" id="maxBooths" x-model="formData.maxBooths" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" placeholder="例：50">
+                                </div>
+
+                                <!-- 活動說明 -->
+                                <div>
+                                    <label for="description" class="block text-sm font-medium text-gray-700">活動說明</label>
+                                    <textarea id="description" x-model="formData.description" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" placeholder="請輸入活動說明..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 步驟 2：攤位設定 -->
+                        <div x-show="currentStep === 2" class="p-6">
+                            <div class="space-y-6">
+                                <!-- 攤位類型 -->
+                                <div class="bg-white rounded-lg shadow-sm p-6">
+                                    <div class="flex justify-between items-center mb-6">
+                                        <h3 class="text-lg font-medium text-gray-900">攤位類型</h3>
+                                        <a href="booth-type-add.html" class="inline-flex items-center px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">
+                                            <i class="fas fa-plus mr-2"></i>
+                                            新增攤位類型
+                                        </a>
+                                    </div>
+                                    
+                                    <div class="space-y-4">
+                                        <!-- 一般攤位 -->
+                                        <div class="border rounded-lg p-4">
+                                            <div class="flex justify-between items-start">
+                                                <div>
+                                                    <h4 class="font-medium text-gray-900">一般攤位</h4>
+                                                    <p class="text-sm text-gray-600 mt-1">適合一般商品展示的標準攤位</p>
+                                                    <div class="mt-2 space-y-1">
+                                                        <p class="text-sm text-gray-600">尺寸：3x3公尺</p>
+                                                        <p class="text-sm text-gray-600">報名費用：3,000元</p>
+                                                        <p class="text-sm text-gray-600">提供用電、桌椅</p>
+                                                    </div>
+                                                </div>
+                                                <div class="flex space-x-2">
+                                                    <a href="booth-type-edit.html" class="text-gray-600 hover:text-gray-900">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <button class="text-red-600 hover:text-red-900">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 大型攤位 -->
+                                        <div class="border rounded-lg p-4">
+                                            <div class="flex justify-between items-start">
+                                                <div>
+                                                    <h4 class="font-medium text-gray-900">大型攤位</h4>
+                                                    <p class="text-sm text-gray-600 mt-1">適合大型商品展示的寬敞攤位</p>
+                                                    <div class="mt-2 space-y-1">
+                                                        <p class="text-sm text-gray-600">尺寸：6x3公尺</p>
+                                                        <p class="text-sm text-gray-600">報名費用：5,000元</p>
+                                                        <p class="text-sm text-gray-600">提供用電、桌椅</p>
+                                                    </div>
+                                                </div>
+                                                <div class="flex space-x-2">
+                                                    <a href="booth-type-edit.html" class="text-gray-600 hover:text-gray-900">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <button class="text-red-600 hover:text-red-900">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 飲食攤位 -->
+                                        <div class="border rounded-lg p-4">
+                                            <div class="flex justify-between items-start">
+                                                <div>
+                                                    <h4 class="font-medium text-gray-900">飲食攤位</h4>
+                                                    <p class="text-sm text-gray-600 mt-1">適合餐飲業者的專用攤位</p>
+                                                    <div class="mt-2 space-y-1">
+                                                        <p class="text-sm text-gray-600">尺寸：3x3公尺</p>
+                                                        <p class="text-sm text-gray-600">報名費用：4,000元</p>
+                                                        <p class="text-sm text-gray-600">提供用電、桌椅、加強電力</p>
+                                                    </div>
+                                                </div>
+                                                <div class="flex space-x-2">
+                                                    <a href="booth-type-edit.html" class="text-gray-600 hover:text-gray-900">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <button class="text-red-600 hover:text-red-900">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 攤位配置圖 -->
+                                <div>
+                                    <h3 class="text-lg font-medium text-gray-900 mb-4">攤位配置圖</h3>
+                                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-8">
+                                        <div class="text-center">
+                                            <i class="fas fa-upload text-gray-400 text-3xl mb-2"></i>
+                                            <p class="text-gray-600">上傳攤位配置圖</p>
+                                            <p class="text-sm text-gray-500 mt-1">支援 JPG、PNG 格式，建議尺寸 1200x800 像素</p>
+                                            <button type="button" class="mt-4 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm text-gray-700 hover:bg-gray-50">
+                                                選擇檔案
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 其他設定 -->
+                                <div>
+                                    <h3 class="text-lg font-medium text-gray-900 mb-4">其他設定</h3>
+                                    <div class="space-y-4">
+                                        <div class="flex items-center">
+                                            <input type="checkbox" id="provideTable" class="rounded border-gray-300 text-yellow-500 focus:ring-yellow-500">
+                                            <label for="provideTable" class="ml-2 text-gray-700">提供桌椅</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="checkbox" id="providePower" class="rounded border-gray-300 text-yellow-500 focus:ring-yellow-500">
+                                            <label for="providePower" class="ml-2 text-gray-700">提供用電</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="checkbox" id="provideWifi" class="rounded border-gray-300 text-yellow-500 focus:ring-yellow-500">
+                                            <label for="provideWifi" class="ml-2 text-gray-700">提供 WiFi</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 步驟 3：報名設定 -->
+                        <div x-show="currentStep === 3" class="p-6">
+                            <div class="space-y-6">
+                                <!-- 報名開始日期 -->
+                                <div>
+                                    <label for="registrationStartDate" class="block text-sm font-medium text-gray-700">報名開始日期</label>
+                                    <input type="date" id="registrationStartDate" x-model="formData.registrationStartDate" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500">
+                                </div>
+
+                                <!-- 報名結束日期 -->
+                                <div>
+                                    <label for="registrationEndDate" class="block text-sm font-medium text-gray-700">報名結束日期</label>
+                                    <input type="date" id="registrationEndDate" x-model="formData.registrationEndDate" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500">
+                                </div>
+
+                                <!-- 報名時間 -->
+                                <div>
+                                    <label for="registrationTime" class="block text-sm font-medium text-gray-700">報名時間</label>
+                                    <input type="time" id="registrationTime" x-model="formData.registrationTime" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500">
+                                </div>
+
+                                <!-- 報名費用 -->
+                                <div>
+                                    <label for="registrationFee" class="block text-sm font-medium text-gray-700">保證金</label>
+                                    <input type="number" id="registrationFee" x-model="formData.registrationFee" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" placeholder="例：1000">
+                                </div>
+
+                                <!-- 報名說明 -->
+                                <div>
+                                    <label for="registrationDescription" class="block text-sm font-medium text-gray-700">報名說明</label>
+                                    <textarea id="registrationDescription" x-model="formData.registrationDescription" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" placeholder="請輸入報名說明..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 按鈕區 -->
+                        <div class="px-6 py-4 bg-gray-50 rounded-b-lg flex justify-between">
+                            <button type="button" @click="window.location.href='market-management.html'" class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900">
+                                取消
+                            </button>
+                            <div class="flex space-x-2">
+                                <button type="button" x-show="currentStep > 1" @click="currentStep--" class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900">
+                                    上一步
+                                </button>
+                                <button type="button" x-show="currentStep < 3" @click="currentStep++" class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">
+                                    下一步
+                                </button>
+                                <button type="submit" x-show="currentStep === 3" class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">
+                                    建立活動
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>攤商儀表板 - 市集媒合平台</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #F3F4F6;
+        }
+
+        /* 自定義捲軸樣式 */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #FFFFFF;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #D4A373;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #C69B7B;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-screen flex">
+        <!-- 側邊欄 -->
+        <div class="bg-white w-64 min-h-screen shadow-lg fixed">
+            <div class="flex items-center justify-center h-16 border-b border-gray-200">
+                <img class="h-8" src="https://images.unsplash.com/photo-1490127252417-7c393f993ee4?w=150&h=50&fit=crop" alt="Logo">
+            </div>
+            <nav class="mt-6">
+                <div class="px-4 py-2">
+                    <div class="flex items-center space-x-2 text-sm text-gray-600">
+                        <img class="h-8 w-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop" alt="使用者頭像">
+                        <span>歡迎回來，攤商</span>
+                    </div>
+                </div>
+                <div class="px-2 mt-4">
+                    <a href="vendor-dashboard.html" class="flex items-center px-4 py-3 text-gray-700 bg-yellow-50 rounded-lg">
+                        <i class="fas fa-home w-5 h-5"></i>
+                        <span class="mx-4">首頁</span>
+                    </a>
+                    <a href="vendor-profile.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-user w-5 h-5"></i>
+                        <span class="mx-4">基本資料</span>
+                    </a>
+                    <a href="vendor-markets.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-store w-5 h-5"></i>
+                        <span class="mx-4">我的市集</span>
+                    </a>
+                    <a href="vendor-products.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-box w-5 h-5"></i>
+                        <span class="mx-4">商品管理</span>
+                    </a>
+                    <a href="vendor-settings.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-cog w-5 h-5"></i>
+                        <span class="mx-4">設定</span>
+                    </a>
+                </div>
+            </nav>
+        </div>
+
+        <!-- 主要內容區 -->
+        <div class="flex-1 ml-64">
+            <!-- 頂部導航 -->
+            <header class="bg-white shadow-sm">
+                <div class="flex items-center justify-between h-16 px-8">
+                    <h1 class="text-xl font-bold text-gray-800">攤商儀表板</h1>
+                    <div class="flex items-center space-x-4">
+                        <button class="text-gray-600 hover:text-gray-800">
+                            <i class="fas fa-bell"></i>
+                        </button>
+                        <button class="flex items-center space-x-2">
+                            <img class="h-8 w-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop" alt="使用者頭像">
+                            <i class="fas fa-chevron-down text-gray-600"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 主要內容 -->
+            <main class="p-8">
+                <!-- 歡迎區塊 -->
+                <div class="bg-white p-6 rounded-lg shadow-sm mb-8">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-900">早安，小草工作室</h2>
+                            <p class="text-gray-600 mt-1">今天是個尋找新市集的好日子</p>
+                        </div>
+                        <a href="home.html" class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors">
+                            <i class="fas fa-search mr-2"></i>
+                            探索市集
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 數據概覽 -->
+                <div class="grid grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="p-3 bg-yellow-50 rounded-lg">
+                                <i class="fas fa-calendar-check text-yellow-600"></i>
+                            </div>
+                            <span class="text-gray-600">本月參與</span>
+                        </div>
+                        <div class="text-2xl font-bold text-gray-900">4</div>
+                        <div class="text-sm text-gray-600 mt-1">場市集</div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="p-3 bg-yellow-50 rounded-lg">
+                                <i class="fas fa-clock text-yellow-600"></i>
+                            </div>
+                            <span class="text-gray-600">待審核</span>
+                        </div>
+                        <div class="text-2xl font-bold text-gray-900">2</div>
+                        <div class="text-sm text-gray-600 mt-1">個申請</div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="p-3 bg-yellow-50 rounded-lg">
+                                <i class="fas fa-heart text-yellow-600"></i>
+                            </div>
+                            <span class="text-gray-600">收藏中</span>
+                        </div>
+                        <div class="text-2xl font-bold text-gray-900">6</div>
+                        <div class="text-sm text-gray-600 mt-1">個市集</div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="p-3 bg-yellow-50 rounded-lg">
+                                <i class="fas fa-star text-yellow-600"></i>
+                            </div>
+                            <span class="text-gray-600">評價</span>
+                        </div>
+                        <div class="text-2xl font-bold text-gray-900">4.8</div>
+                        <div class="text-sm text-gray-600 mt-1">平均星等</div>
+                    </div>
+                </div>
+
+                <!-- 近期活動和申請狀態 -->
+                <div class="grid grid-cols-3 gap-6">
+                    <!-- 近期市集 -->
+                    <div class="col-span-2 bg-white rounded-lg shadow-sm">
+                        <div class="p-6 border-b border-gray-200">
+                            <h3 class="text-lg font-bold text-gray-900">近期市集</h3>
+                        </div>
+                        <div class="p-6">
+                            <div class="space-y-6">
+                                <!-- 市集項目 -->
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-4">
+                                        <img src="https://images.unsplash.com/photo-1531058020387-3be344556be6?w=400&h=300&fit=crop" alt="市集照片" class="w-20 h-20 rounded-lg object-cover">
+                                        <div>
+                                            <h4 class="font-medium text-gray-900">週末文創市集</h4>
+                                            <div class="flex items-center text-sm text-gray-600 mt-1">
+                                                <i class="fas fa-map-marker-alt w-4 h-4 mr-2"></i>
+                                                台北市信義區松壽路2號
+                                            </div>
+                                            <div class="flex items-center text-sm text-gray-600 mt-1">
+                                                <i class="fas fa-calendar w-4 h-4 mr-2"></i>
+                                                2024/1/20-1/21
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            已確認
+                                        </span>
+                                        <button class="mt-2 text-yellow-600 hover:text-yellow-700 text-sm">
+                                            <a href="vendor-apply-market.html">查看詳情</a>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-4">
+                                        <img src="https://images.unsplash.com/photo-1531058020387-3be344556be6?w=400&h=300&fit=crop" alt="市集照片" class="w-20 h-20 rounded-lg object-cover">
+                                        <div>
+                                            <h4 class="font-medium text-gray-900">手作文創展</h4>
+                                            <div class="flex items-center text-sm text-gray-600 mt-1">
+                                                <i class="fas fa-map-marker-alt w-4 h-4 mr-2"></i>
+                                                台北市中山區南京東路三段219號
+                                            </div>
+                                            <div class="flex items-center text-sm text-gray-600 mt-1">
+                                                <i class="fas fa-calendar w-4 h-4 mr-2"></i>
+                                                2024/2/3-2/4
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                            待繳費
+                                        </span>
+                                        <button class="mt-2 text-yellow-600 hover:text-yellow-700 text-sm">
+                                            <a href="vendor-apply-market.html">查看詳情</a>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 申請狀態 -->
+                    <div class="bg-white rounded-lg shadow-sm">
+                        <div class="p-6 border-b border-gray-200">
+                            <h3 class="text-lg font-bold text-gray-900">申請狀態</h3>
+                        </div>
+                        <div class="p-6">
+                            <div class="space-y-6">
+                                <div class="relative pb-6 border-l-2 border-gray-200 ml-3">
+                                    <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-yellow-500"></div>
+                                    <div class="ml-6">
+                                        <div class="text-sm font-medium text-gray-900">申請審核中</div>
+                                        <div class="text-xs text-gray-600 mt-1">春季手作市集</div>
+                                        <div class="text-xs text-gray-600">2024/3/15-3/16</div>
+                                    </div>
+                                </div>
+                                <div class="relative pb-6 border-l-2 border-gray-200 ml-3">
+                                    <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-yellow-500"></div>
+                                    <div class="ml-6">
+                                        <div class="text-sm font-medium text-gray-900">等待繳費確認</div>
+                                        <div class="text-xs text-gray-600 mt-1">手作文創展</div>
+                                        <div class="text-xs text-gray-600">2024/2/3-2/4</div>
+                                    </div>
+                                </div>
+                                <div class="relative pb-6 border-l-2 border-gray-200 ml-3">
+                                    <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-green-500"></div>
+                                    <div class="ml-6">
+                                        <div class="text-sm font-medium text-gray-900">申請已通過</div>
+                                        <div class="text-xs text-gray-600 mt-1">週末文創市集</div>
+                                        <div class="text-xs text-gray-600">2024/1/20-1/21</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 待辦事項 -->
+                <div class="mt-8 bg-white rounded-lg shadow-sm border border-[#E8E6E1]">
+                    <div class="p-6 border-b border-[#E8E6E1]">
+                        <h3 class="text-lg font-bold text-[#5C5648]">待辦事項</h3>
+                    </div>
+                    <div class="p-6">
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-4 bg-[#E9DDC7] bg-opacity-20 rounded-lg">
+                                <div class="flex items-center">
+                                    <i class="fas fa-exclamation-circle text-[#D4A373] mr-3"></i>
+                                    <span class="text-[#5C5648]">手作文創展攤位費用尚未繳納，請於 2024/1/15 前完成繳費</span>
+                                </div>
+                                <button class="text-[#D4A373] hover:text-[#C69B7B]">
+                                    前往繳費
+                                </button>
+                            </div>
+                            <div class="flex items-center justify-between p-4 bg-[#E9DDC7] bg-opacity-20 rounded-lg">
+                                <div class="flex items-center">
+                                    <i class="fas fa-info-circle text-[#D4A373] mr-3"></i>
+                                    <span class="text-[#5C5648]">週末文創市集將於下週舉行，請準時入場佈置</span>
+                                </div>
+                                <button class="text-[#D4A373] hover:text-[#C69B7B]">
+                                    查看詳情
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>報名確認 - 市集媒合平台</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #F3F4F6;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- 主要內容區 -->
+    <div class="min-h-screen">
+        <!-- 頂部導航 -->
+        <header class="bg-white shadow-sm">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex items-center justify-between h-16 px-8">
+                    <div class="flex items-center space-x-4">
+                        <a href="market-apply.html" class="text-gray-600 hover:text-gray-800">
+                            <i class="fas fa-arrow-left"></i>
+                            <span class="ml-2">返回報名表</span>
+                        </a>
+                        <h1 class="text-xl font-bold text-gray-800">報名確認</h1>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- 主要內容 -->
+        <main class="p-8">
+            <div class="max-w-3xl mx-auto">
+                <!-- 報名成功提示 -->
+                <div class="bg-green-50 rounded-lg shadow-sm mb-6">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-check-circle text-green-500 text-3xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h2 class="text-xl font-bold text-green-800">報名成功！</h2>
+                                <p class="text-green-700">您的報名已送出，請等待市集審核。</p>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg p-4">
+                            <p class="text-sm text-gray-600">
+                                <i class="fas fa-info-circle mr-2 text-blue-500"></i>
+                                市集方將於1-2個工作天內完成審核，審核通過後我們會立即寄送匯款資訊給您，請留意您的信箱。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 報名資訊 -->
+                <div class="bg-white rounded-lg shadow-sm mb-6">
+                    <div class="p-6">
+                        <h2 class="text-xl font-bold text-gray-900 mb-4">報名資訊</h2>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center pb-4 border-b border-gray-200">
+                                <div>
+                                    <h3 class="font-medium text-gray-900">週末文創市集</h3>
+                                    <p class="text-sm text-gray-500">2024/1/20-1/21</p>
+                                </div>
+                                <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">審核中</span>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-500">標準攤位 x 2日</span>
+                                    <span class="text-gray-900">NT$ 5,000</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-500">保證金（可退還）</span>
+                                    <span class="text-gray-900">NT$ 1,000</span>
+                                </div>
+                                <div class="pt-2 border-t border-gray-200">
+                                    <div class="flex justify-between">
+                                        <span class="font-medium text-gray-900">總計</span>
+                                        <span class="font-medium text-gray-900">NT$ 6,000</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 注意事項 -->
+                <div class="bg-white rounded-lg shadow-sm mb-6">
+                    <div class="p-6">
+                        <h2 class="text-xl font-bold text-gray-900 mb-4">注意事項</h2>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-clock text-yellow-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h3 class="font-medium text-gray-900">審核通過後</h3>
+                                    <p class="text-sm text-gray-600 mt-1">
+                                        請於收到匯款資訊後的3天內完成匯款並填寫匯款帳號末5碼，逾期報名將自動取消。
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-envelope text-yellow-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h3 class="font-medium text-gray-900">Email通知</h3>
+                                    <p class="text-sm text-gray-600 mt-1">
+                                        審核結果將會寄送至您的信箱，請務必確認信箱設定正確。
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-question-circle text-yellow-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h3 class="font-medium text-gray-900">需要協助？</h3>
+                                    <p class="text-sm text-gray-600 mt-1">
+                                        如有任何問題，請聯繫市集主辦方或客服人員。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end space-x-4 mt-6">
+                    <a href="vendor-market-detail.html" class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                        查看報名資訊
+                    </a>
+                    <a href="home.html" class="px-6 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">
+                        繼續瀏覽市集
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html> 

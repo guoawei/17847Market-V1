@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>攤商審核 - 市集媒合平台</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Alpine.js CDN -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #F3F4F6;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-screen flex">
+        <!-- 側邊欄 -->
+        <div class="bg-white w-64 min-h-screen shadow-lg fixed">
+            <div class="flex items-center justify-center h-16 border-b border-gray-200">
+                <a href="organizer-dashboard.html">
+                    <img class="h-8" src="https://images.unsplash.com/photo-1490127252417-7c393f993ee4?w=150&h=50&fit=crop" alt="Logo">
+                </a>
+            </div>
+            <nav class="mt-6">
+                <div class="px-4 py-2">
+                    <div class="flex items-center space-x-2 text-sm text-gray-600">
+                        <img class="h-8 w-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop" alt="主辦方頭像">
+                        <span>歡迎回來，主辦方</span>
+                    </div>
+                </div>
+                <div class="px-2 mt-4">
+                    <a href="organizer-dashboard.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-home w-5 h-5"></i>
+                        <span class="mx-4">首頁</span>
+                    </a>
+                    <a href="market-management.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-store w-5 h-5"></i>
+                        <span class="mx-4">我的市集</span>
+                    </a>
+                    <a href="vendor-review.html" class="flex items-center px-4 py-3 mt-2 text-gray-700 bg-yellow-50 rounded-lg">
+                        <i class="fas fa-users w-5 h-5"></i>
+                        <span class="mx-4">攤商審核</span>
+                    </a>
+                    <a href="market-analytics.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-chart-line w-5 h-5"></i>
+                        <span class="mx-4">數據分析</span>
+                    </a>
+                    <a href="market-settings.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-cog w-5 h-5"></i>
+                        <span class="mx-4">設定</span>
+                    </a>
+                </div>
+            </nav>
+        </div>
+
+        <!-- 主要內容區 -->
+        <div class="flex-1 ml-64">
+            <!-- 頂部導航 -->
+            <header class="bg-white shadow-sm">
+                <div class="flex items-center justify-between h-16 px-8">
+                    <h1 class="text-xl font-bold text-gray-800">攤商審核</h1>
+                    <div class="flex items-center space-x-4">
+                        <a href="organizer-notifications.html" class="text-gray-600 hover:text-gray-800">
+                            <i class="fas fa-bell"></i>
+                        </a>
+                        <div class="relative" x-data="{ open: false }">
+                            <button @click="open = !open" class="flex items-center space-x-2">
+                                <img class="h-8 w-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop" alt="主辦方頭像">
+                                <i class="fas fa-chevron-down text-gray-600"></i>
+                            </button>
+                            <div x-show="open" 
+                                 @click.away="open = false"
+                                 class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-10">
+                                <a href="organizer-profile.html" class="block px-4 py-2 text-gray-700 hover:bg-yellow-50">
+                                    <i class="fas fa-user mr-2"></i>個人資料
+                                </a>
+                                <a href="organizer-settings.html" class="block px-4 py-2 text-gray-700 hover:bg-yellow-50">
+                                    <i class="fas fa-cog mr-2"></i>帳號設定
+                                </a>
+                                <hr class="my-2 border-gray-200">
+                                <a href="login.html" class="block px-4 py-2 text-red-600 hover:bg-red-50">
+                                    <i class="fas fa-sign-out-alt mr-2"></i>登出
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 主要內容 -->
+            <main class="p-8">
+                <!-- 活動選擇 -->
+                <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+                    <div class="flex items-center justify-between">
+                        <div class="flex-1">
+                            <h2 class="text-lg font-bold text-gray-900 mb-4">選擇活動</h2>
+                            <div class="grid grid-cols-3 gap-4">
+                                <!-- 活動卡片 1 -->
+                                <div class="border rounded-lg p-4 cursor-pointer hover:border-yellow-500 transition-colors" 
+                                     :class="{ 'border-yellow-500 bg-yellow-50': selectedEvent === 'event1' }"
+                                     @click="selectedEvent = 'event1'">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <h3 class="font-bold text-gray-900">2024年3月場</h3>
+                                        <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">進行中</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600">2024/03/16-17</p>
+                                    <p class="text-sm text-gray-600">松山文創園區</p>
+                                    <div class="mt-2 flex items-center justify-between">
+                                        <span class="text-sm text-gray-500">待審核：12</span>
+                                        <span class="text-sm text-gray-500">已核准：35</span>
+                                    </div>
+                                </div>
+
+                                <!-- 活動卡片 2 -->
+                                <div class="border rounded-lg p-4 cursor-pointer hover:border-yellow-500 transition-colors"
+                                     :class="{ 'border-yellow-500 bg-yellow-50': selectedEvent === 'event2' }"
+                                     @click="selectedEvent = 'event2'">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <h3 class="font-bold text-gray-900">2024年4月場</h3>
+                                        <span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs">即將開始</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600">2024/04/20-21</p>
+                                    <p class="text-sm text-gray-600">松山文創園區</p>
+                                    <div class="mt-2 flex items-center justify-between">
+                                        <span class="text-sm text-gray-500">待審核：8</span>
+                                        <span class="text-sm text-gray-500">已核准：20</span>
+                                    </div>
+                                </div>
+
+                                <!-- 活動卡片 3 -->
+                                <div class="border rounded-lg p-4 cursor-pointer hover:border-yellow-500 transition-colors"
+                                     :class="{ 'border-yellow-500 bg-yellow-50': selectedEvent === 'event3' }"
+                                     @click="selectedEvent = 'event3'">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <h3 class="font-bold text-gray-900">2024年2月場</h3>
+                                        <span class="px-2 py-1 bg-gray-100 text-gray-800 rounded-full text-xs">已結束</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600">2024/02/17-18</p>
+                                    <p class="text-sm text-gray-600">松山文創園區</p>
+                                    <div class="mt-2 flex items-center justify-between">
+                                        <span class="text-sm text-gray-500">總申請：65</span>
+                                        <span class="text-sm text-gray-500">已核准：48</span>
+                                    </div>
+                                </div>
+
+                                <!-- 活動卡片 4 -->
+                                <div class="border rounded-lg p-4 cursor-pointer hover:border-yellow-500 transition-colors"
+                                     :class="{ 'border-yellow-500 bg-yellow-50': selectedEvent === 'event4' }"
+                                     @click="selectedEvent = 'event4'">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <h3 class="font-bold text-gray-900">2024年5月場</h3>
+                                        <span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs">即將開始</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600">2024/05/18-19</p>
+                                    <p class="text-sm text-gray-600">松山文創園區</p>
+                                    <div class="mt-2 flex items-center justify-between">
+                                        <span class="text-sm text-gray-500">待審核：5</span>
+                                        <span class="text-sm text-gray-500">已核准：15</span>
+                                    </div>
+                                </div>
+
+                                <!-- 活動卡片 5 -->
+                                <div class="border rounded-lg p-4 cursor-pointer hover:border-yellow-500 transition-colors"
+                                     :class="{ 'border-yellow-500 bg-yellow-50': selectedEvent === 'event5' }"
+                                     @click="selectedEvent = 'event5'">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <h3 class="font-bold text-gray-900">2024年6月場</h3>
+                                        <span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs">即將開始</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600">2024/06/15-16</p>
+                                    <p class="text-sm text-gray-600">松山文創園區</p>
+                                    <div class="mt-2 flex items-center justify-between">
+                                        <span class="text-sm text-gray-500">待審核：3</span>
+                                        <span class="text-sm text-gray-500">已核准：10</span>
+                                    </div>
+                                </div>
+
+                                <!-- 活動卡片 6 -->
+                                <div class="border rounded-lg p-4 cursor-pointer hover:border-yellow-500 transition-colors"
+                                     :class="{ 'border-yellow-500 bg-yellow-50': selectedEvent === 'event6' }"
+                                     @click="selectedEvent = 'event6'">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <h3 class="font-bold text-gray-900">2024年7月場</h3>
+                                        <span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs">即將開始</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600">2024/07/20-21</p>
+                                    <p class="text-sm text-gray-600">松山文創園區</p>
+                                    <div class="mt-2 flex items-center justify-between">
+                                        <span class="text-sm text-gray-500">待審核：2</span>
+                                        <span class="text-sm text-gray-500">已核准：8</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 分頁控制 -->
+                            <div class="mt-6 flex items-center justify-between">
+                                <div class="flex items-center space-x-2">
+                                    <button class="px-3 py-2 rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50" 
+                                            :class="{ 'opacity-50 cursor-not-allowed': currentPage === 1 }"
+                                            @click="currentPage > 1 && currentPage--">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </button>
+                                    <button class="px-4 py-2 rounded-lg bg-yellow-500 text-white">1</button>
+                                    <button class="px-4 py-2 rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50">2</button>
+                                    <button class="px-4 py-2 rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50">3</button>
+                                    <button class="px-3 py-2 rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50"
+                                            :class="{ 'opacity-50 cursor-not-allowed': currentPage === totalPages }"
+                                            @click="currentPage < totalPages && currentPage++">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                                <div class="text-sm text-gray-500">
+                                    共 18 個活動
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 審核列表 -->
+                <div class="bg-white rounded-lg shadow-sm" x-show="selectedEvent">
+                    <!-- 列表標題 -->
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-bold text-gray-900">待審核申請</h3>
+                            <div class="flex items-center space-x-4">
+                                <div class="relative">
+                                    <input type="text" placeholder="搜尋攤商..." class="pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500">
+                                    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                                </div>
+                                <select class="px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500">
+                                    <option value="">所有攤位類型</option>
+                                    <option value="standard">一般攤位</option>
+                                    <option value="large">大型攤位</option>
+                                    <option value="food">飲食攤位</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 申請列表 -->
+                    <div class="divide-y divide-gray-200">
+                        <!-- 申請項目 1 -->
+                        <a href="organizer-vendor-review.html" class="block p-6 hover:bg-gray-50 transition-colors">
+                            <div class="flex items-start justify-between">
+                                <div class="flex-1">
+                                    <div class="flex items-center space-x-4">
+                                        <img class="h-12 w-12 rounded-full object-cover" src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=200&h=200&fit=crop" alt="攤商頭像">
+                                        <div>
+                                            <h4 class="font-bold text-gray-900">小草工作室</h4>
+                                            <p class="text-sm text-gray-600">手作飾品</p>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 grid grid-cols-3 gap-4">
+                                        <div>
+                                            <p class="text-sm text-gray-500">申請時間</p>
+                                            <p class="text-gray-900">2024/02/15 14:30</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-500">聯絡電話</p>
+                                            <p class="text-gray-900">0912-345-678</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-500">電子郵件</p>
+                                            <p class="text-gray-900">grassstudio@example.com</p>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <p class="text-sm text-gray-500">商品描述</p>
+                                        <p class="text-gray-900 mt-1">手工製作的精美飾品，包括項鍊、耳環、手鍊等。使用天然材料，每件作品都是獨一無二的。</p>
+                                    </div>
+                                </div>
+                                <div class="ml-6 flex items-center space-x-2">
+                                    <button class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600" onclick="event.stopPropagation();">
+                                        拒絕
+                                    </button>
+                                    <button class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600" onclick="event.stopPropagation();">
+                                        核准
+                                    </button>
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- 申請項目 2 -->
+                        <div class="p-6 hover:bg-gray-50 transition-colors">
+                            <div class="flex items-start justify-between">
+                                <div class="flex-1">
+                                    <div class="flex items-center space-x-4">
+                                        <img class="h-12 w-12 rounded-full object-cover" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=48&h=48&fit=crop" alt="攤商頭像">
+                                        <div>
+                                            <h4 class="font-bold text-gray-900">美食天地</h4>
+                                            <p class="text-sm text-gray-600">飲食攤位</p>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 grid grid-cols-3 gap-4">
+                                        <div>
+                                            <p class="text-sm text-gray-500">申請時間</p>
+                                            <p class="text-gray-900">2024/03/10 15:45</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-500">聯絡電話</p>
+                                            <p class="text-gray-900">0912-345-679</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-500">電子郵件</p>
+                                            <p class="text-gray-900">food@example.com</p>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <p class="text-sm text-gray-500">商品描述</p>
+                                        <p class="text-gray-900 mt-1">特色小吃、飲品、甜點</p>
+                                    </div>
+                                </div>
+                                <div class="ml-6 flex items-center space-x-2">
+                                    <button class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">
+                                        拒絕
+                                    </button>
+                                    <button class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600">
+                                        核准
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('vendorReview', () => ({
+                selectedEvent: null,
+                currentPage: 1,
+                totalPages: 3,
+                eventsPerPage: 6
+            }))
+        })
+    </script>
+</body>
+</html> 

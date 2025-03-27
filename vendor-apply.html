@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>攤商報名 - 週末文創市集</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 導航欄 -->
+    <nav class="bg-white shadow-lg fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <img class="h-8 w-auto" src="https://via.placeholder.com/150x50" alt="Logo">
+                    </div>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="#" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">首頁</a>
+                        <a href="#" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">探索市集</a>
+                        <a href="#" class="border-b-2 border-yellow-500 text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium">成為攤商</a>
+                        <a href="#" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">關於我們</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要內容 -->
+    <main class="pt-16">
+        <!-- 頁面標題 -->
+        <div class="bg-white shadow">
+            <div class="max-w-7xl mx-auto py-6 px-4">
+                <h1 class="text-3xl font-bold text-gray-900">攤商報名</h1>
+                <p class="mt-2 text-gray-600">週末文創市集 2024/1/20-1/21</p>
+            </div>
+        </div>
+
+        <!-- 報名表單 -->
+        <div class="max-w-7xl mx-auto py-8 px-4">
+            <div class="bg-white shadow-lg rounded-lg">
+                <div class="p-6">
+                    <form class="space-y-8">
+                        <!-- 基本資料 -->
+                        <div>
+                            <h2 class="text-xl font-bold text-gray-900 mb-4">基本資料</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">攤商名稱 <span class="text-red-500">*</span></label>
+                                    <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">負責人姓名 <span class="text-red-500">*</span></label>
+                                    <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">聯絡電話 <span class="text-red-500">*</span></label>
+                                    <input type="tel" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Email <span class="text-red-500">*</span></label>
+                                    <input type="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Line ID <span class="text-red-500">*</span></label>
+                                    <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Instagram 帳號</label>
+                                    <div class="mt-1 flex rounded-md shadow-sm">
+                                        <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                                            @
+                                        </span>
+                                        <input type="text" class="flex-1 block w-full rounded-none rounded-r-md border-gray-300 focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm" placeholder="username">
+                                    </div>
+                                </div>
+                                <div class="md:col-span-2">
+                                    <label class="block text-sm font-medium text-gray-700">通訊地址 <span class="text-red-500">*</span></label>
+                                    <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 攤位資訊 -->
+                        <div>
+                            <h2 class="text-xl font-bold text-gray-900 mb-4">攤位資訊</h2>
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">攤位類型 <span class="text-red-500">*</span></label>
+                                    <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" placeholder="請輸入攤位類型（例如：3m x 3m）" required>
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">攤位大頭照 <span class="text-red-500">*</span></label>
+                                    <div class="mt-2 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                                        <div class="space-y-1 text-center">
+                                            <i class="fas fa-user-circle text-gray-400 text-3xl mb-3"></i>
+                                            <div class="flex text-sm text-gray-600">
+                                                <label class="relative cursor-pointer bg-white rounded-md font-medium text-yellow-500 hover:text-yellow-600">
+                                                    <span>上傳照片</span>
+                                                    <input type="file" class="sr-only" accept="image/*">
+                                                </label>
+                                                <p class="pl-1">或將檔案拖曳至此</p>
+                                            </div>
+                                            <p class="text-xs text-gray-500">建議尺寸 500x500 像素</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">攤位照片 <span class="text-red-500">*</span></label>
+                                    <div class="mt-2 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                                        <div class="space-y-1 text-center">
+                                            <i class="fas fa-store text-gray-400 text-3xl mb-3"></i>
+                                            <div class="flex text-sm text-gray-600">
+                                                <label class="relative cursor-pointer bg-white rounded-md font-medium text-yellow-500 hover:text-yellow-600">
+                                                    <span>上傳照片</span>
+                                                    <input type="file" class="sr-only" multiple accept="image/*">
+                                                </label>
+                                                <p class="pl-1">或將檔案拖曳至此</p>
+                                            </div>
+                                            <p class="text-xs text-gray-500">最多 3 張攤位實景照片</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">販售商品類別 <span class="text-red-500">*</span></label>
+                                    <div class="mt-2 grid grid-cols-2 gap-4">
+                                        <div class="flex items-center">
+                                            <input type="checkbox" class="h-4 w-4 text-yellow-500 focus:ring-yellow-500 border-gray-300 rounded">
+                                            <label class="ml-3 text-sm text-gray-700">手作文創商品</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="checkbox" class="h-4 w-4 text-yellow-500 focus:ring-yellow-500 border-gray-300 rounded">
+                                            <label class="ml-3 text-sm text-gray-700">文具雜貨</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="checkbox" class="h-4 w-4 text-yellow-500 focus:ring-yellow-500 border-gray-300 rounded">
+                                            <label class="ml-3 text-sm text-gray-700">服飾配件</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="checkbox" class="h-4 w-4 text-yellow-500 focus:ring-yellow-500 border-gray-300 rounded">
+                                            <label class="ml-3 text-sm text-gray-700">生活用品</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="checkbox" class="h-4 w-4 text-yellow-500 focus:ring-yellow-500 border-gray-300 rounded">
+                                            <label class="ml-3 text-sm text-gray-700">食品飲料</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="checkbox" class="h-4 w-4 text-yellow-500 focus:ring-yellow-500 border-gray-300 rounded">
+                                            <label class="ml-3 text-sm text-gray-700">其他文創相關</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">商品說明 <span class="text-red-500">*</span></label>
+                                    <textarea rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" placeholder="請詳細說明您的商品特色、價格範圍等資訊" required></textarea>
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">攤位需求說明 <span class="text-red-500">*</span></label>
+                                    <div class="mt-4 space-y-4">
+                                        <div class="flex items-center">
+                                            <input type="checkbox" class="h-4 w-4 text-yellow-500 focus:ring-yellow-500 border-gray-300 rounded">
+                                            <label class="ml-3 text-sm text-gray-700">需要使用明火</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="checkbox" class="h-4 w-4 text-yellow-500 focus:ring-yellow-500 border-gray-300 rounded">
+                                            <label class="ml-3 text-sm text-gray-700">需要使用電源</label>
+                                        </div>
+                                        <div class="mt-2" id="powerDetails" style="display: none;">
+                                            <label class="block text-sm font-medium text-gray-700">用電需求說明</label>
+                                            <textarea rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" placeholder="請說明用電設備與需求（例如：咖啡機 1000W）"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    document.querySelector('input[type="checkbox"]:last-of-type').addEventListener('change', function() {
+                                        document.getElementById('powerDetails').style.display = this.checked ? 'block' : 'none';
+                                    });
+                                </script>
+                            </div>
+                        </div>
+
+                        <!-- 其他需求 -->
+                        <div>
+                            <h2 class="text-xl font-bold text-gray-900 mb-4">其他需求</h2>
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">額外設備需求</label>
+                                    <div class="mt-2 space-y-4">
+                                        <div class="flex items-center">
+                                            <input type="checkbox" class="h-4 w-4 text-yellow-500 focus:ring-yellow-500 border-gray-300 rounded">
+                                            <label class="ml-3 text-sm text-gray-700">額外用電（110V/500W）</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="checkbox" class="h-4 w-4 text-yellow-500 focus:ring-yellow-500 border-gray-300 rounded">
+                                            <label class="ml-3 text-sm text-gray-700">額外桌子</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="checkbox" class="h-4 w-4 text-yellow-500 focus:ring-yellow-500 border-gray-300 rounded">
+                                            <label class="ml-3 text-sm text-gray-700">額外椅子</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">備註說明</label>
+                                    <textarea rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" placeholder="如有其他特殊需求請在此說明"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 同意條款 -->
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="flex items-center h-5">
+                                    <input type="checkbox" class="h-4 w-4 text-yellow-500 focus:ring-yellow-500 border-gray-300 rounded" required>
+                                </div>
+                                <div class="ml-3 text-sm">
+                                    <label class="font-medium text-gray-700">我已閱讀並同意以下條款 <span class="text-red-500">*</span></label>
+                                    <p class="text-gray-500">包含市集規範、退費規定、請假規定等相關規範</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 提交按鈕 -->
+                        <div class="flex justify-end space-x-4">
+                            <button type="button" class="px-6 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+                                取消
+                            </button>
+                            <button type="submit" class="px-6 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-500 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+                                確認送出
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 頁尾 -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-bold mb-4">關於我們</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">公司介紹</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">使用條款</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">隱私政策</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">攤商服務</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">如何報名</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">收費標準</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">常見問題</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">主辦方服務</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">刊登市集</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">管理工具</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">成功案例</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">聯絡我們</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2"></i>
+                            <a href="mailto:contact@example.com" class="text-gray-400 hover:text-white">contact@example.com</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-2"></i>
+                            <span class="text-gray-400">02-1234-5678</span>
+                        </li>
+                    </ul>
+                    <div class="mt-4 flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-line"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400">
+                <p>&copy; 2024 市集媒合平台. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html> 

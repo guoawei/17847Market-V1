@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新增活動 - 市集媒合平台</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #F3F4F6;
+        }
+
+        /* 自定義捲軸樣式 */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #F3F4F6;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #FCD34D;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #F59E0B;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-screen flex">
+        <!-- 側邊欄 -->
+        <div class="bg-white w-64 min-h-screen shadow-lg fixed">
+            <div class="flex items-center justify-center h-16 border-b border-gray-200">
+                <img class="h-8" src="https://images.unsplash.com/photo-1490127252417-7c393f993ee4?w=150&h=50&fit=crop" alt="Logo">
+            </div>
+            <nav class="mt-6">
+                <div class="px-4 py-2">
+                    <div class="flex items-center space-x-2 text-sm text-gray-600">
+                        <img class="h-8 w-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop" alt="主辦方頭像">
+                        <span>歡迎回來，主辦方</span>
+                    </div>
+                </div>
+                <div class="px-2 mt-4">
+                    <a href="organizer-dashboard.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-home w-5 h-5"></i>
+                        <span class="mx-4">首頁</span>
+                    </a>
+                    <a href="market-management.html" class="flex items-center px-4 py-3 mt-2 text-gray-700 bg-yellow-50 rounded-lg">
+                        <i class="fas fa-store w-5 h-5"></i>
+                        <span class="mx-4">我的市集</span>
+                    </a>
+                    <a href="vendor-review.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-users w-5 h-5"></i>
+                        <span class="mx-4">攤商審核</span>
+                    </a>
+                    <a href="market-analytics.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-chart-line w-5 h-5"></i>
+                        <span class="mx-4">數據分析</span>
+                    </a>
+                    <a href="market-settings.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-cog w-5 h-5"></i>
+                        <span class="mx-4">設定</span>
+                    </a>
+                </div>
+            </nav>
+        </div>
+
+        <!-- 主要內容區 -->
+        <div class="flex-1 ml-64">
+            <!-- 頂部導航 -->
+            <header class="bg-white shadow-sm">
+                <div class="flex items-center justify-between h-16 px-8">
+                    <div class="flex items-center space-x-4">
+                        <a href="market-management.html" class="text-gray-600 hover:text-gray-800">
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                        <h1 class="text-xl font-bold text-gray-800">新增活動</h1>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <button class="text-gray-600 hover:text-gray-800">
+                            <i class="fas fa-bell"></i>
+                        </button>
+                        <button class="flex items-center space-x-2">
+                            <img class="h-8 w-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop" alt="主辦方頭像">
+                            <i class="fas fa-chevron-down text-gray-600"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 主要內容 -->
+            <main class="p-8">
+                <div class="max-w-4xl mx-auto">
+                    <form class="space-y-6">
+                        <!-- 基本資訊 -->
+                        <div class="bg-white rounded-lg shadow-sm p-6">
+                            <h2 class="text-lg font-bold text-gray-900 mb-4">基本資訊</h2>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">活動名稱</label>
+                                    <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500" placeholder="請輸入活動名稱">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">活動時間</label>
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <input type="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
+                                        </div>
+                                        <div>
+                                            <input type="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">活動地點</label>
+                                    <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500" placeholder="請輸入活動地點">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">活動照片</label>
+                                    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg">
+                                        <div class="space-y-1 text-center">
+                                            <i class="fas fa-camera text-gray-400 text-3xl"></i>
+                                            <div class="flex text-sm text-gray-600">
+                                                <label class="relative cursor-pointer rounded-md font-medium text-yellow-600 hover:text-yellow-500">
+                                                    <span>上傳照片</span>
+                                                    <input type="file" class="sr-only" accept="image/*">
+                                                </label>
+                                                <p class="pl-1">或拖放檔案</p>
+                                            </div>
+                                            <p class="text-xs text-gray-500">PNG, JPG, GIF 最大 2MB</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 攤位設定 -->
+                        <div class="bg-white rounded-lg shadow-sm p-6">
+                            <h2 class="text-lg font-bold text-gray-900 mb-4">攤位設定</h2>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">攤位類型</label>
+                                    <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
+                                        <option>標準攤位 (3m x 3m)</option>
+                                        <option>大型攤位 (4m x 4m)</option>
+                                        <option>小型攤位 (2m x 2m)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">攤位數量</label>
+                                    <input type="number" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500" placeholder="請輸入攤位數量">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">攤位費用</label>
+                                    <div class="relative">
+                                        <span class="absolute left-3 top-2 text-gray-500">NT$</span>
+                                        <input type="number" class="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500" placeholder="請輸入攤位費用">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">攤位配置圖</label>
+                                    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg">
+                                        <div class="space-y-1 text-center">
+                                            <i class="fas fa-upload text-gray-400 text-3xl"></i>
+                                            <div class="flex text-sm text-gray-600">
+                                                <label class="relative cursor-pointer rounded-md font-medium text-yellow-600 hover:text-yellow-500">
+                                                    <span>上傳配置圖</span>
+                                                    <input type="file" class="sr-only" accept="image/*">
+                                                </label>
+                                                <p class="pl-1">或拖放檔案</p>
+                                            </div>
+                                            <p class="text-xs text-gray-500">PNG, JPG, PDF 最大 5MB</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 報名設定 -->
+                        <div class="bg-white rounded-lg shadow-sm p-6">
+                            <h2 class="text-lg font-bold text-gray-900 mb-4">報名設定</h2>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">報名開始時間</label>
+                                    <input type="datetime-local" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">報名截止時間</label>
+                                    <input type="datetime-local" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">審核截止時間</label>
+                                    <input type="datetime-local" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">匯款截止時間</label>
+                                    <input type="datetime-local" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 提交按鈕 -->
+                        <div class="flex justify-end space-x-4">
+                            <button type="button" class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                                取消
+                            </button>
+                            <button type="submit" class="px-6 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">
+                                建立活動
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html> 

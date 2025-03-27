@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>主辦方首頁 - 市集媒合平台</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Alpine.js CDN -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #F3F4F6;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-screen flex">
+        <!-- 側邊欄 -->
+        <div class="bg-white w-64 min-h-screen shadow-lg fixed">
+            <div class="flex items-center justify-center h-16 border-b border-gray-200">
+                <a href="organizer-dashboard.html">
+                    <img class="h-8" src="https://images.unsplash.com/photo-1490127252417-7c393f993ee4?w=150&h=50&fit=crop" alt="Logo">
+                </a>
+            </div>
+            <nav class="mt-6">
+                <div class="px-4 py-2">
+                    <div class="flex items-center space-x-2 text-sm text-gray-600">
+                        <img class="h-8 w-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop" alt="主辦方頭像">
+                        <span>歡迎回來，主辦方</span>
+                    </div>
+                </div>
+                <div class="px-2 mt-4">
+                    <a href="organizer-dashboard.html" class="flex items-center px-4 py-3 text-gray-700 bg-yellow-50 rounded-lg">
+                        <i class="fas fa-home w-5 h-5"></i>
+                        <span class="mx-4">首頁</span>
+                    </a>
+                    <a href="market-management.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-store w-5 h-5"></i>
+                        <span class="mx-4">我的市集</span>
+                    </a>
+                    <a href="vendor-review.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-users w-5 h-5"></i>
+                        <span class="mx-4">攤商審核</span>
+                    </a>
+                    <a href="market-analytics.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-chart-line w-5 h-5"></i>
+                        <span class="mx-4">數據分析</span>
+                    </a>
+                    <a href="market-settings.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-cog w-5 h-5"></i>
+                        <span class="mx-4">設定</span>
+                    </a>
+                </div>
+            </nav>
+        </div>
+
+        <!-- 主要內容區 -->
+        <div class="flex-1 ml-64">
+            <!-- 頂部導航 -->
+            <header class="bg-white shadow-sm">
+                <div class="flex items-center justify-between h-16 px-8">
+                    <h1 class="text-xl font-bold text-gray-800">主辦方首頁</h1>
+                    <div class="flex items-center space-x-4">
+                        <a href="organizer-notifications.html" class="text-gray-600 hover:text-gray-800">
+                            <i class="fas fa-bell"></i>
+                        </a>
+                        <div class="relative" x-data="{ open: false }">
+                            <button @click="open = !open" class="flex items-center space-x-2">
+                                <img class="h-8 w-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop" alt="主辦方頭像">
+                                <i class="fas fa-chevron-down text-gray-600"></i>
+                            </button>
+                            <div x-show="open" 
+                                 @click.away="open = false"
+                                 class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-10">
+                                <a href="organizer-profile.html" class="block px-4 py-2 text-gray-700 hover:bg-yellow-50">
+                                    <i class="fas fa-user mr-2"></i>個人資料
+                                </a>
+                                <a href="organizer-settings.html" class="block px-4 py-2 text-gray-700 hover:bg-yellow-50">
+                                    <i class="fas fa-cog mr-2"></i>帳號設定
+                                </a>
+                                <hr class="my-2 border-gray-200">
+                                <a href="login.html" class="block px-4 py-2 text-red-600 hover:bg-red-50">
+                                    <i class="fas fa-sign-out-alt mr-2"></i>登出
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 主要內容 -->
+            <main class="p-8">
+                <!-- 歡迎訊息 -->
+                <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-900">歡迎回來，主辦方</h2>
+                            <p class="text-gray-600 mt-2">今天是 2024/03/15，您有 12 個待審核的攤商申請</p>
+                        </div>
+                        <a href="market-add.html" class="px-6 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors">
+                            <i class="fas fa-plus mr-2"></i>新增活動
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 重要通知 -->
+                <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+                    <h3 class="text-lg font-bold text-gray-900 mb-4">重要通知</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 bg-yellow-50 rounded-lg">
+                            <div class="flex items-center">
+                                <i class="fas fa-exclamation-circle text-yellow-500 mr-3"></i>
+                                <span class="text-gray-700">12 件攤商申請待審核，請盡快處理</span>
+                            </div>
+                            <a href="vendor-review.html" class="text-yellow-500 hover:text-yellow-600">
+                                前往審核
+                            </a>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-yellow-50 rounded-lg">
+                            <div class="flex items-center">
+                                <i class="fas fa-info-circle text-yellow-500 mr-3"></i>
+                                <span class="text-gray-700">場地佈置計畫需於 2024/03/20 前確認</span>
+                            </div>
+                            <a href="market-management.html" class="text-yellow-500 hover:text-yellow-600">
+                                查看詳情
+                            </a>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-yellow-50 rounded-lg">
+                            <div class="flex items-center">
+                                <i class="fas fa-calendar-check text-yellow-500 mr-3"></i>
+                                <span class="text-gray-700">攤商說明會將於 2024/03/18 舉行</span>
+                            </div>
+                            <a href="market-management.html" class="text-yellow-500 hover:text-yellow-600">
+                                查看詳情
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 近期活動概覽 -->
+                <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-bold text-gray-900">近期活動</h3>
+                        <a href="market-management.html" class="text-sm text-yellow-500 hover:text-yellow-600">查看全部</a>
+                    </div>
+                    <div class="grid grid-cols-3 gap-6">
+                        <!-- 進行中的活動 -->
+                        <div class="bg-green-50 rounded-lg p-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm font-medium text-green-800">進行中</span>
+                                <span class="text-sm text-green-600">1 個活動</span>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex items-center space-x-2">
+                                    <img class="h-8 w-8 rounded-lg object-cover" src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=32&h=32&fit=crop" alt="活動圖片">
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-900">2024年3月場</p>
+                                        <p class="text-xs text-gray-500">松山文創園區</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 即將開始的活動 -->
+                        <div class="bg-yellow-50 rounded-lg p-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm font-medium text-yellow-800">即將開始</span>
+                                <span class="text-sm text-yellow-600">1 個活動</span>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex items-center space-x-2">
+                                    <img class="h-8 w-8 rounded-lg object-cover" src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=32&h=32&fit=crop" alt="活動圖片">
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-900">2024年4月場</p>
+                                        <p class="text-xs text-gray-500">松山文創園區</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 已結束的活動 -->
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm font-medium text-gray-800">已結束</span>
+                                <span class="text-sm text-gray-600">1 個活動</span>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex items-center space-x-2">
+                                    <img class="h-8 w-8 rounded-lg object-cover" src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=32&h=32&fit=crop" alt="活動圖片">
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-900">2024年2月場</p>
+                                        <p class="text-xs text-gray-500">松山文創園區</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 關鍵數據指標 -->
+                <div class="grid grid-cols-4 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="p-3 bg-yellow-50 rounded-lg">
+                                <i class="fas fa-store text-yellow-500"></i>
+                            </div>
+                            <span class="text-gray-500">總攤位數</span>
+                        </div>
+                        <div class="text-2xl font-bold text-gray-800">150</div>
+                        <div class="text-sm text-gray-500 mt-1">本月新增 50 個</div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="p-3 bg-green-50 rounded-lg">
+                                <i class="fas fa-users text-green-500"></i>
+                            </div>
+                            <span class="text-gray-500">已核准攤商</span>
+                        </div>
+                        <div class="text-2xl font-bold text-gray-800">103</div>
+                        <div class="text-sm text-gray-500 mt-1">核准率 68.7%</div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="p-3 bg-blue-50 rounded-lg">
+                                <i class="fas fa-dollar-sign text-blue-500"></i>
+                            </div>
+                            <span class="text-gray-500">預估收入</span>
+                        </div>
+                        <div class="text-2xl font-bold text-gray-800">309,000</div>
+                        <div class="text-sm text-gray-500 mt-1">本月預估</div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="p-3 bg-purple-50 rounded-lg">
+                                <i class="fas fa-eye text-purple-500"></i>
+                            </div>
+                            <span class="text-gray-500">總瀏覽次數</span>
+                        </div>
+                        <div class="text-2xl font-bold text-gray-800">7,350</div>
+                        <div class="text-sm text-gray-500 mt-1">本月瀏覽</div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html> 

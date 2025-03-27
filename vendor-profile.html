@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>攤商資料維護 - 市集媒合平台</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #F3F4F6;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-screen flex">
+        <!-- 側邊欄 -->
+        <div class="bg-white w-64 min-h-screen shadow-lg fixed">
+            <div class="flex items-center justify-center h-16 border-b border-gray-200">
+                <img class="h-8" src="https://images.unsplash.com/photo-1490127252417-7c393f993ee4?w=150&h=50&fit=crop" alt="Logo">
+            </div>
+            <nav class="mt-6">
+                <div class="px-4 py-2">
+                    <div class="flex items-center space-x-2 text-sm text-gray-600">
+                        <img class="h-8 w-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=32&h=32&fit=crop" alt="攤商頭像">
+                        <span>歡迎回來，小草工作室</span>
+                    </div>
+                </div>
+                <div class="px-2 mt-4">
+                    <a href="vendor-dashboard.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-home w-5 h-5"></i>
+                        <span class="mx-4">首頁</span>
+                    </a>
+                    <a href="vendor-profile.html" class="flex items-center px-4 py-3 mt-2 text-gray-700 bg-yellow-50 rounded-lg">
+                        <i class="fas fa-user w-5 h-5"></i>
+                        <span class="mx-4">基本資料</span>
+                    </a>
+                    <a href="vendor-markets.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-store w-5 h-5"></i>
+                        <span class="mx-4">我的市集</span>
+                    </a>
+                    <a href="vendor-products.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-box w-5 h-5"></i>
+                        <span class="mx-4">商品管理</span>
+                    </a>
+                    <a href="vendor-settings.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-cog w-5 h-5"></i>
+                        <span class="mx-4">設定</span>
+                    </a>
+                </div>
+            </nav>
+        </div>
+
+        <!-- 主要內容區 -->
+        <div class="flex-1 ml-64">
+            <!-- 頂部導航 -->
+            <header class="bg-white shadow-sm">
+                <div class="flex items-center justify-between h-16 px-8">
+                    <h1 class="text-xl font-bold text-gray-800">基本資料</h1>
+                    <div class="flex items-center space-x-4">
+                        <a href="#" class="text-gray-600 hover:text-gray-800">
+                            <i class="fas fa-bell"></i>
+                        </a>
+                        <div class="relative" x-data="{ open: false }">
+                            <button @click="open = !open" class="flex items-center space-x-2">
+                                <img class="h-8 w-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=32&h=32&fit=crop" alt="攤商頭像">
+                                <i class="fas fa-chevron-down text-gray-600"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 主要內容 -->
+            <main class="p-8">
+                <div class="max-w-3xl mx-auto">
+                    <div class="bg-white shadow-sm rounded-lg">
+                        <div class="p-6">
+                            <form class="space-y-8">
+                                <!-- 基本資料 -->
+                                <div>
+                                    <h2 class="text-xl font-bold text-gray-900 mb-4">基本資料</h2>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700">攤商名稱 <span class="text-red-500">*</span></label>
+                                            <input type="text" value="小草工作室" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" required>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700">負責人姓名 <span class="text-red-500">*</span></label>
+                                            <input type="text" value="林小草" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" required>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700">聯絡電話 <span class="text-red-500">*</span></label>
+                                            <input type="tel" value="0912-345-678" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" required>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700">Email <span class="text-red-500">*</span></label>
+                                            <input type="email" value="grassstudio@example.com" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" required>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700">Line ID <span class="text-red-500">*</span></label>
+                                            <input type="text" value="grassstudio" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" required>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700">Instagram 帳號</label>
+                                            <div class="mt-1 flex rounded-md shadow-sm">
+                                                <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                                                    @
+                                                </span>
+                                                <input type="text" value="grassstudio" class="flex-1 block w-full rounded-none rounded-r-md border-gray-300 focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm">
+                                            </div>
+                                        </div>
+                                        <div class="md:col-span-2">
+                                            <label class="block text-sm font-medium text-gray-700">通訊地址 <span class="text-red-500">*</span></label>
+                                            <input type="text" value="台北市信義區信義路五段7號" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 攤位資訊 -->
+                                <div>
+                                    <h2 class="text-xl font-bold text-gray-900 mb-4">攤位資訊</h2>
+                                    <div class="space-y-6">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700">攤位大頭照 <span class="text-red-500">*</span></label>
+                                            <div class="mt-2 flex items-center space-x-4">
+                                                <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=200&h=200&fit=crop" alt="攤位大頭照" class="h-24 w-24 rounded-full object-cover">
+                                                <button type="button" class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                                    更換照片
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700">攤位照片 <span class="text-red-500">*</span></label>
+                                            <div class="mt-2 grid grid-cols-3 gap-4">
+                                                <div class="relative">
+                                                    <img src="https://images.unsplash.com/photo-1612336307429-8a898d10e223?w=300&h=300&fit=crop" alt="攤位照片1" class="w-full h-32 object-cover rounded-lg">
+                                                    <button type="button" class="absolute top-2 right-2 p-1 bg-white rounded-full shadow-sm hover:bg-gray-100">
+                                                        <i class="fas fa-times text-gray-600"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="relative">
+                                                    <img src="https://images.unsplash.com/photo-1612336307429-8a898d10e223?w=300&h=300&fit=crop" alt="攤位照片2" class="w-full h-32 object-cover rounded-lg">
+                                                    <button type="button" class="absolute top-2 right-2 p-1 bg-white rounded-full shadow-sm hover:bg-gray-100">
+                                                        <i class="fas fa-times text-gray-600"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="border-2 border-gray-300 border-dashed rounded-lg p-4 flex items-center justify-center">
+                                                    <button type="button" class="text-gray-600 hover:text-gray-900">
+                                                        <i class="fas fa-plus text-2xl"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700">販售商品類別 <span class="text-red-500">*</span></label>
+                                            <div class="mt-2 grid grid-cols-2 gap-4">
+                                                <div class="flex items-center">
+                                                    <input type="checkbox" checked class="h-4 w-4 text-yellow-500 focus:ring-yellow-500 border-gray-300 rounded">
+                                                    <label class="ml-3 text-sm text-gray-700">手作文創商品</label>
+                                                </div>
+                                                <div class="flex items-center">
+                                                    <input type="checkbox" class="h-4 w-4 text-yellow-500 focus:ring-yellow-500 border-gray-300 rounded">
+                                                    <label class="ml-3 text-sm text-gray-700">文具雜貨</label>
+                                                </div>
+                                                <div class="flex items-center">
+                                                    <input type="checkbox" checked class="h-4 w-4 text-yellow-500 focus:ring-yellow-500 border-gray-300 rounded">
+                                                    <label class="ml-3 text-sm text-gray-700">服飾配件</label>
+                                                </div>
+                                                <div class="flex items-center">
+                                                    <input type="checkbox" class="h-4 w-4 text-yellow-500 focus:ring-yellow-500 border-gray-300 rounded">
+                                                    <label class="ml-3 text-sm text-gray-700">生活用品</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700">商品說明 <span class="text-red-500">*</span></label>
+                                            <textarea rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" required>手工製作的精美飾品，包括項鍊、耳環、手鍊等。使用天然材料，每件作品都是獨一無二的。價格範圍從 NT$300 至 NT$1,500 不等。</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 提交按鈕 -->
+                                <div class="flex justify-end space-x-4">
+                                    <button type="button" class="px-6 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+                                        取消
+                                    </button>
+                                    <button type="submit" class="px-6 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-500 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+                                        儲存變更
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html> 

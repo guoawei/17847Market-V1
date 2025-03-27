@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品管理 - 市集媒合平台</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #F3F4F6;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-screen flex">
+        <!-- 側邊欄 -->
+        <div class="bg-white w-64 min-h-screen shadow-lg fixed">
+            <div class="flex items-center justify-center h-16 border-b border-gray-200">
+                <img class="h-8" src="https://images.unsplash.com/photo-1490127252417-7c393f993ee4?w=150&h=50&fit=crop" alt="Logo">
+            </div>
+            <nav class="mt-6">
+                <div class="px-4 py-2">
+                    <div class="flex items-center space-x-2 text-sm text-gray-600">
+                        <img class="h-8 w-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop" alt="使用者頭像">
+                        <span>歡迎回來，攤商</span>
+                    </div>
+                </div>
+                <div class="px-2 mt-4">
+                    <a href="vendor-dashboard.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-home w-5 h-5"></i>
+                        <span class="mx-4">首頁</span>
+                    </a>
+                    <a href="vendor-profile.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-user w-5 h-5"></i>
+                        <span class="mx-4">基本資料</span>
+                    </a>
+                    <a href="vendor-markets.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-store w-5 h-5"></i>
+                        <span class="mx-4">我的市集</span>
+                    </a>
+                    <a href="vendor-products.html" class="flex items-center px-4 py-3 mt-2 text-gray-700 bg-yellow-50 rounded-lg">
+                        <i class="fas fa-box w-5 h-5"></i>
+                        <span class="mx-4">商品管理</span>
+                    </a>
+                    <a href="vendor-settings.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-cog w-5 h-5"></i>
+                        <span class="mx-4">設定</span>
+                    </a>
+                </div>
+            </nav>
+        </div>
+
+        <!-- 主要內容區 -->
+        <div class="flex-1 ml-64">
+            <!-- 頂部導航 -->
+            <header class="bg-white shadow-sm">
+                <div class="flex items-center justify-between h-16 px-8">
+                    <h1 class="text-xl font-bold text-gray-800">商品管理</h1>
+                    <div class="flex items-center space-x-4">
+                        <button class="text-gray-600 hover:text-gray-800">
+                            <i class="fas fa-bell"></i>
+                        </button>
+                        <button class="flex items-center space-x-2">
+                            <img class="h-8 w-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop" alt="使用者頭像">
+                            <i class="fas fa-chevron-down text-gray-600"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 主要內容 -->
+            <main class="p-8">
+                <!-- 頂部操作區 -->
+                <div class="flex justify-between items-center mb-8">
+                    <div class="flex space-x-4">
+                        <button class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors">
+                            全部商品
+                        </button>
+                        <button class="px-4 py-2 bg-white text-gray-600 rounded-lg hover:bg-gray-50 transition-colors">
+                            已上架
+                        </button>
+                        <button class="px-4 py-2 bg-white text-gray-600 rounded-lg hover:bg-gray-50 transition-colors">
+                            已下架
+                        </button>
+                    </div>
+                    <button class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors">
+                        <i class="fas fa-plus mr-2"></i>
+                        新增商品
+                    </button>
+                </div>
+
+                <!-- 商品列表 -->
+                <div class="bg-white rounded-lg shadow-sm">
+                    <div class="p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- 商品卡片 1 -->
+                            <div class="border border-gray-200 rounded-lg overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=300&fit=crop" alt="商品照片" class="w-full h-48 object-cover">
+                                <div class="p-4">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h4 class="text-lg font-medium text-gray-900">手工皮革錢包</h4>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            已上架
+                                        </span>
+                                    </div>
+                                    <p class="text-gray-600 text-sm mb-4">精緻手工皮革製作，完美展現工藝之美</p>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-yellow-600 font-medium">NT$ 1,200</span>
+                                        <div class="flex space-x-2">
+                                            <button class="p-2 text-gray-600 hover:text-yellow-600">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="p-2 text-gray-600 hover:text-red-600">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 商品卡片 2 -->
+                            <div class="border border-gray-200 rounded-lg overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1526947425960-945c6e72858f?w=400&h=300&fit=crop" alt="商品照片" class="w-full h-48 object-cover">
+                                <div class="p-4">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h4 class="text-lg font-medium text-gray-900">手工耳環</h4>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            已上架
+                                        </span>
+                                    </div>
+                                    <p class="text-gray-600 text-sm mb-4">獨特設計的手工耳環，展現個人風格</p>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-yellow-600 font-medium">NT$ 580</span>
+                                        <div class="flex space-x-2">
+                                            <button class="p-2 text-gray-600 hover:text-yellow-600">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="p-2 text-gray-600 hover:text-red-600">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 商品卡片 3 -->
+                            <div class="border border-gray-200 rounded-lg overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1509695507497-903c140c43b0?w=400&h=300&fit=crop" alt="商品照片" class="w-full h-48 object-cover">
+                                <div class="p-4">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h4 class="text-lg font-medium text-gray-900">手工香氛蠟燭</h4>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                            已下架
+                                        </span>
+                                    </div>
+                                    <p class="text-gray-600 text-sm mb-4">天然精油調製，帶來療癒香氛體驗</p>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-yellow-600 font-medium">NT$ 450</span>
+                                        <div class="flex space-x-2">
+                                            <button class="p-2 text-gray-600 hover:text-yellow-600">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="p-2 text-gray-600 hover:text-red-600">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html> 

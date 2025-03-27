@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>市集設定 - 市集媒合平台</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #F3F4F6;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-screen flex">
+        <!-- 側邊欄 -->
+        <div class="bg-white w-64 min-h-screen shadow-lg fixed">
+            <div class="flex items-center justify-center h-16 border-b border-gray-200">
+                <img class="h-8" src="https://images.unsplash.com/photo-1490127252417-7c393f993ee4?w=150&h=50&fit=crop" alt="Logo">
+            </div>
+            <nav class="mt-6">
+                <div class="px-4 py-2">
+                    <div class="flex items-center space-x-2 text-sm text-gray-600">
+                        <img class="h-8 w-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop" alt="主辦方頭像">
+                        <span>歡迎回來，主辦方</span>
+                    </div>
+                </div>
+                <div class="px-2 mt-4">
+                    <a href="organizer-dashboard.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-home w-5 h-5"></i>
+                        <span class="mx-4">首頁</span>
+                    </a>
+                    <a href="market-management.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-store w-5 h-5"></i>
+                        <span class="mx-4">我的市集</span>
+                    </a>
+                    <a href="vendor-review.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-users w-5 h-5"></i>
+                        <span class="mx-4">攤商審核</span>
+                    </a>
+                    <a href="market-analytics.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                        <i class="fas fa-chart-line w-5 h-5"></i>
+                        <span class="mx-4">數據分析</span>
+                    </a>
+                    <a href="market-settings.html" class="flex items-center px-4 py-3 mt-2 text-gray-700 bg-yellow-50 rounded-lg">
+                        <i class="fas fa-cog w-5 h-5"></i>
+                        <span class="mx-4">設定</span>
+                    </a>
+                </div>
+            </nav>
+        </div>
+
+        <!-- 主要內容區 -->
+        <div class="flex-1 ml-64">
+            <!-- 頂部導航 -->
+            <header class="bg-white shadow-sm">
+                <div class="flex items-center justify-between h-16 px-8">
+                    <h1 class="text-xl font-bold text-gray-800">市集設定</h1>
+                    <div class="flex items-center space-x-4">
+                        <button class="text-gray-600 hover:text-gray-800">
+                            <i class="fas fa-bell"></i>
+                        </button>
+                        <button class="flex items-center space-x-2">
+                            <img class="h-8 w-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop" alt="主辦方頭像">
+                            <i class="fas fa-chevron-down text-gray-600"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 主要內容 -->
+            <main class="p-8">
+                <!-- 設定選項卡 -->
+                <div class="bg-white rounded-lg shadow-sm mb-8">
+                    <div class="border-b border-gray-200">
+                        <nav class="flex -mb-px">
+                            <button onclick="showTab('basic-info')" class="px-6 py-4 text-sm font-medium text-yellow-500 border-b-2 border-yellow-500">
+                                基本資訊
+                            </button>
+                            <button onclick="showTab('booth-management')" class="px-6 py-4 text-sm font-medium text-gray-500 hover:text-gray-700">
+                                攤位管理
+                            </button>
+                            <button onclick="showTab('payment-settings')" class="px-6 py-4 text-sm font-medium text-gray-500 hover:text-gray-700">
+                                付款設定
+                            </button>
+                            <button onclick="showTab('notification-settings')" class="px-6 py-4 text-sm font-medium text-gray-500 hover:text-gray-700">
+                                通知設定
+                            </button>
+                        </nav>
+                    </div>
+
+                    <!-- 基本資訊表單 -->
+                    <div id="basic-info" class="tab-content">
+                        <div class="p-6">
+                            <form>
+                                <div class="space-y-6">
+                                    <!-- 市集主視覺照片 -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">市集主視覺照片</label>
+                                        <div class="flex items-center space-x-4">
+                                            <div class="relative group">
+                                                <img class="h-32 w-32 object-cover rounded-lg" src="https://images.unsplash.com/photo-1531058020387-3be344556be6?w=400&h=200&fit=crop" alt="市集主視覺">
+                                                <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
+                                                    <button type="button" class="text-white">
+                                                        <i class="fas fa-camera text-xl"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <button type="button" class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                                    更換照片
+                                                </button>
+                                                <p class="mt-2 text-sm text-gray-500">建議尺寸：1200 x 600 像素</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 市集活動照片 -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">市集活動照片（最多5張）</label>
+                                        <div class="grid grid-cols-5 gap-4">
+                                            <!-- 已上傳的照片 -->
+                                            <div class="relative group">
+                                                <img class="h-24 w-24 object-cover rounded-lg" src="https://images.unsplash.com/photo-1534237710431-e2fc698436d0?w=200&h=200&fit=crop" alt="活動照片1">
+                                                <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
+                                                    <button type="button" class="text-white p-1 hover:text-red-500">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="relative group">
+                                                <img class="h-24 w-24 object-cover rounded-lg" src="https://images.unsplash.com/photo-1506459225024-1428097a7e18?w=200&h=200&fit=crop" alt="活動照片2">
+                                                <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
+                                                    <button type="button" class="text-white p-1 hover:text-red-500">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="relative group">
+                                                <img class="h-24 w-24 object-cover rounded-lg" src="https://images.unsplash.com/photo-1533900298318-6b8da08a523e?w=200&h=200&fit=crop" alt="活動照片3">
+                                                <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
+                                                    <button type="button" class="text-white p-1 hover:text-red-500">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <!-- 上傳新照片按鈕 -->
+                                            <div class="h-24 w-24 border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-yellow-500 transition-colors">
+                                                <i class="fas fa-plus text-gray-400"></i>
+                                                <span class="text-xs text-gray-500 mt-1">新增照片</span>
+                                            </div>
+                                        </div>
+                                        <p class="mt-2 text-sm text-gray-500">建議尺寸：800 x 800 像素，檔案大小不超過 2MB</p>
+                                    </div>
+
+                                    <!-- 市集名稱 -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">市集名稱</label>
+                                        <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md" value="台北手作市集">
+                                    </div>
+
+                                    <!-- 市集描述 -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">市集描述</label>
+                                        <textarea class="w-full px-4 py-2 border border-gray-300 rounded-md" rows="4">台北最大的手作市集，匯集各地文創、手作、美食攤商。每週六日舉辦，歡迎參觀選購。</textarea>
+                                    </div>
+
+                                    <!-- 市集地點 -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">市集地點</label>
+                                        <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md" value="台北市信義區市民廣場">
+                                    </div>
+
+                                    <!-- 聯絡資訊 -->
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">聯絡電話</label>
+                                            <input type="tel" class="w-full px-4 py-2 border border-gray-300 rounded-md" value="02-1234-5678">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">電子郵件</label>
+                                            <input type="email" class="w-full px-4 py-2 border border-gray-300 rounded-md" value="market@example.com">
+                                        </div>
+                                    </div>
+
+                                    <!-- 社群媒體連結 -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">社群媒體連結</label>
+                                        <div class="space-y-2">
+                                            <input type="url" class="w-full px-4 py-2 border border-gray-300 rounded-md" placeholder="Facebook 連結">
+                                            <input type="url" class="w-full px-4 py-2 border border-gray-300 rounded-md" placeholder="Instagram 連結">
+                                        </div>
+                                    </div>
+
+                                    <!-- 儲存按鈕 -->
+                                    <div class="flex justify-end">
+                                        <button type="submit" class="px-6 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">
+                                            儲存變更
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- 攤位管理表單 -->
+                    <div id="booth-management" class="tab-content hidden p-6">
+                        <form>
+                            <div class="space-y-6">
+                                <!-- 攤位類型列表 -->
+                                <div>
+                                    <div class="flex justify-between items-center mb-4">
+                                        <label class="text-sm font-medium text-gray-700">攤位類型管理</label>
+                                        <button type="button" class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">
+                                            新增類型
+                                        </button>
+                                    </div>
+                                    <div class="bg-white rounded-lg border border-gray-200">
+                                        <div class="p-4 border-b border-gray-200">
+                                            <div class="flex justify-between items-center">
+                                                <div>
+                                                    <h4 class="font-medium text-gray-900">手作飾品區</h4>
+                                                    <p class="text-sm text-gray-500">提供手作飾品、配件展示與販售</p>
+                                                </div>
+                                                <div class="flex items-center space-x-2">
+                                                    <span class="text-sm text-gray-600">攤位數：10</span>
+                                                    <span class="text-sm text-gray-600">費用：$3,000/攤</span>
+                                                    <button class="text-gray-400 hover:text-gray-600">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="p-4 border-b border-gray-200">
+                                            <div class="flex justify-between items-center">
+                                                <div>
+                                                    <h4 class="font-medium text-gray-900">文創商品區</h4>
+                                                    <p class="text-sm text-gray-500">文創商品、藝術作品展示與販售</p>
+                                                </div>
+                                                <div class="flex items-center space-x-2">
+                                                    <span class="text-sm text-gray-600">攤位數：8</span>
+                                                    <span class="text-sm text-gray-600">費用：$3,500/攤</span>
+                                                    <button class="text-gray-400 hover:text-gray-600">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="p-4 border-b border-gray-200">
+                                            <div class="flex justify-between items-center">
+                                                <div>
+                                                    <h4 class="font-medium text-gray-900">美食小吃區</h4>
+                                                    <p class="text-sm text-gray-500">特色美食、小吃、飲品販售</p>
+                                                </div>
+                                                <div class="flex items-center space-x-2">
+                                                    <span class="text-sm text-gray-600">攤位數：12</span>
+                                                    <span class="text-sm text-gray-600">費用：$4,000/攤</span>
+                                                    <button class="text-gray-400 hover:text-gray-600">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 攤位配置圖 -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">攤位配置圖</label>
+                                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                                        <div class="space-y-2">
+                                            <i class="fas fa-upload text-gray-400 text-3xl"></i>
+                                            <p class="text-gray-500">上傳攤位配置圖</p>
+                                            <p class="text-sm text-gray-400">支援 JPG、PNG 格式，檔案大小不超過 5MB</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 儲存按鈕 -->
+                                <div class="flex justify-end">
+                                    <button type="submit" class="px-6 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">
+                                        儲存變更
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- 付款設定表單 -->
+                    <div id="payment-settings" class="tab-content hidden p-6">
+                        <form>
+                            <div class="space-y-6">
+                                <!-- 收款帳戶資訊 -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-4">收款帳戶資訊</label>
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-sm text-gray-600 mb-2">銀行代碼</label>
+                                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md" placeholder="請輸入銀行代碼">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm text-gray-600 mb-2">分行代碼</label>
+                                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md" placeholder="請輸入分行代碼">
+                                        </div>
+                                        <div class="col-span-2">
+                                            <label class="block text-sm text-gray-600 mb-2">帳號</label>
+                                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md" placeholder="請輸入帳號">
+                                        </div>
+                                        <div class="col-span-2">
+                                            <label class="block text-sm text-gray-600 mb-2">戶名</label>
+                                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md" placeholder="請輸入戶名">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 發票設定 -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-4">發票設定</label>
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label class="block text-sm text-gray-600 mb-2">統一編號</label>
+                                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md" placeholder="請輸入統一編號">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm text-gray-600 mb-2">公司名稱</label>
+                                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md" placeholder="請輸入公司名稱">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm text-gray-600 mb-2">公司地址</label>
+                                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md" placeholder="請輸入公司地址">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 儲存按鈕 -->
+                                <div class="flex justify-end">
+                                    <button type="submit" class="px-6 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">
+                                        儲存變更
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- 通知設定表單 -->
+                    <div id="notification-settings" class="tab-content hidden p-6">
+                        <form>
+                            <div class="space-y-6">
+                                <!-- 電子郵件通知 -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-4">電子郵件通知</label>
+                                    <div class="space-y-4">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <h4 class="text-sm font-medium text-gray-900">新攤商申請</h4>
+                                                <p class="text-sm text-gray-500">當有新的攤商提出申請時通知</p>
+                                            </div>
+                                            <label class="flex items-center">
+                                                <input type="checkbox" class="form-checkbox h-4 w-4 text-yellow-500">
+                                            </label>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <h4 class="text-sm font-medium text-gray-900">攤商繳費通知</h4>
+                                                <p class="text-sm text-gray-500">當攤商完成繳費時通知</p>
+                                            </div>
+                                            <label class="flex items-center">
+                                                <input type="checkbox" class="form-checkbox h-4 w-4 text-yellow-500" checked>
+                                            </label>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <h4 class="text-sm font-medium text-gray-900">市集活動提醒</h4>
+                                                <p class="text-sm text-gray-500">市集開始前的提醒通知</p>
+                                            </div>
+                                            <label class="flex items-center">
+                                                <input type="checkbox" class="form-checkbox h-4 w-4 text-yellow-500" checked>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 系統通知 -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-4">系統通知</label>
+                                    <div class="space-y-4">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <h4 class="text-sm font-medium text-gray-900">瀏覽人數統計</h4>
+                                                <p class="text-sm text-gray-500">每日瀏覽人數統計報告</p>
+                                            </div>
+                                            <label class="flex items-center">
+                                                <input type="checkbox" class="form-checkbox h-4 w-4 text-yellow-500">
+                                            </label>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <h4 class="text-sm font-medium text-gray-900">系統更新通知</h4>
+                                                <p class="text-sm text-gray-500">平台功能更新與維護通知</p>
+                                            </div>
+                                            <label class="flex items-center">
+                                                <input type="checkbox" class="form-checkbox h-4 w-4 text-yellow-500" checked>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 儲存按鈕 -->
+                                <div class="flex justify-end">
+                                    <button type="submit" class="px-6 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">
+                                        儲存變更
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // 選項卡切換功能
+        function showTab(tabId) {
+            // 隱藏所有內容
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+            
+            // 移除所有選項卡的活動狀態
+            document.querySelectorAll('nav button').forEach(button => {
+                button.classList.remove('text-yellow-500', 'border-yellow-500');
+                button.classList.add('text-gray-500');
+            });
+            
+            // 顯示選中的內容
+            document.getElementById(tabId).classList.remove('hidden');
+            
+            // 設置選中選項卡的樣式
+            event.currentTarget.classList.remove('text-gray-500');
+            event.currentTarget.classList.add('text-yellow-500', 'border-yellow-500');
+        }
+    </script>
+</body>
+</html> 
