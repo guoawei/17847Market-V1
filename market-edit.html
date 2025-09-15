@@ -166,14 +166,14 @@
                                     <label class="block text-sm font-medium text-gray-700 mb-1">攤位費用</label>
                                     <div class="relative">
                                         <span class="absolute left-3 top-2 text-gray-500">NT$</span>
-                                        <input type="number" class="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500" value="3000">
+                                        <input type="number" class="w-full pl-12 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500" value="3000">
                                     </div>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">攤位配置圖</label>
                                     <div class="mt-1">
                                         <div class="relative">
-                                            <img src="https://images.unsplash.com/photo-1506459225024-1428097a7e18?w=800&h=400&fit=crop" alt="攤位配置圖" class="w-full h-48 object-cover rounded-lg">
+                                            <img src="vendor-place.png" alt="攤位配置圖" class="w-full h-48 object-cover rounded-lg">
                                             <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity rounded-lg">
                                                 <label class="cursor-pointer bg-white px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-100">
                                                     <i class="fas fa-upload mr-2"></i>
@@ -188,8 +188,227 @@
                             </div>
                         </div>
 
-                        <!-- 報名設定 -->
+                        <!-- 租借設備 -->
                         <div class="bg-white rounded-lg shadow-sm p-6">
+                            <div class="flex justify-between items-center mb-4">
+                                <h2 class="text-lg font-bold text-gray-900">租借設備</h2>
+                                <button type="button" onclick="openAddEquipmentModal()" class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors">
+                                    <i class="fas fa-plus mr-2"></i>
+                                    新增設備
+                                </button>
+                            </div>
+                            <div class="space-y-4">
+                                <!-- 設備列表 -->
+                                <div id="equipment-list" class="space-y-3">
+                                    <!-- 陽傘 -->
+                                    <div class="equipment-item" data-id="umbrella">
+                                        <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                                            <div class="flex items-center space-x-4">
+                                                <div class="p-2 bg-yellow-100 rounded-lg">
+                                                    <i class="fas fa-umbrella text-yellow-600"></i>
+                                                </div>
+                                                <div>
+                                                    <h3 class="font-medium text-gray-900">陽傘</h3>
+                                                    <p class="text-sm text-gray-500">遮陽防雨，適合戶外攤位</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center space-x-4">
+                                                <div class="text-right">
+                                                    <div class="text-sm text-gray-500">單價</div>
+                                                    <div class="font-medium text-gray-900">NT$ 200/天</div>
+                                                </div>
+                                                <div class="text-right">
+                                                    <div class="text-sm text-gray-500">可租借數量</div>
+                                                    <div class="font-medium text-gray-900">50</div>
+                                                </div>
+                                                <div class="flex items-center space-x-2">
+                                                    <button type="button" onclick="editEquipment('umbrella')" class="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200">
+                                                        <i class="fas fa-edit mr-1"></i>
+                                                        編輯
+                                                    </button>
+                                                    <button type="button" onclick="deleteEquipment('umbrella')" class="px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200">
+                                                        <i class="fas fa-trash mr-1"></i>
+                                                        刪除
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 桌椅組 -->
+                                    <div class="equipment-item" data-id="table">
+                                        <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                                            <div class="flex items-center space-x-4">
+                                                <div class="p-2 bg-yellow-100 rounded-lg">
+                                                    <i class="fas fa-chair text-yellow-600"></i>
+                                                </div>
+                                                <div>
+                                                    <h3 class="font-medium text-gray-900">桌椅組</h3>
+                                                    <p class="text-sm text-gray-500">一桌二椅，基本展示設備</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center space-x-4">
+                                                <div class="text-right">
+                                                    <div class="text-sm text-gray-500">單價</div>
+                                                    <div class="font-medium text-gray-900">NT$ 300/天</div>
+                                                </div>
+                                                <div class="text-right">
+                                                    <div class="text-sm text-gray-500">可租借數量</div>
+                                                    <div class="font-medium text-gray-900">30</div>
+                                                </div>
+                                                <div class="flex items-center space-x-2">
+                                                    <button type="button" onclick="editEquipment('table')" class="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200">
+                                                        <i class="fas fa-edit mr-1"></i>
+                                                        編輯
+                                                    </button>
+                                                    <button type="button" onclick="deleteEquipment('table')" class="px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200">
+                                                        <i class="fas fa-trash mr-1"></i>
+                                                        刪除
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 電燈 -->
+                                    <div class="equipment-item" data-id="light">
+                                        <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                                            <div class="flex items-center space-x-4">
+                                                <div class="p-2 bg-yellow-100 rounded-lg">
+                                                    <i class="fas fa-lightbulb text-yellow-600"></i>
+                                                </div>
+                                                <div>
+                                                    <h3 class="font-medium text-gray-900">電燈</h3>
+                                                    <p class="text-sm text-gray-500">LED 照明燈具，提供充足光源</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center space-x-4">
+                                                <div class="text-right">
+                                                    <div class="text-sm text-gray-500">單價</div>
+                                                    <div class="font-medium text-gray-900">NT$ 150/天</div>
+                                                </div>
+                                                <div class="text-right">
+                                                    <div class="text-sm text-gray-500">可租借數量</div>
+                                                    <div class="font-medium text-gray-900">40</div>
+                                                </div>
+                                                <div class="flex items-center space-x-2">
+                                                    <button type="button" onclick="editEquipment('light')" class="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200">
+                                                        <i class="fas fa-edit mr-1"></i>
+                                                        編輯
+                                                    </button>
+                                                    <button type="button" onclick="deleteEquipment('light')" class="px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200">
+                                                        <i class="fas fa-trash mr-1"></i>
+                                                        刪除
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 電源插座 -->
+                                    <div class="equipment-item" data-id="power">
+                                        <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                                            <div class="flex items-center space-x-4">
+                                                <div class="p-2 bg-yellow-100 rounded-lg">
+                                                    <i class="fas fa-plug text-yellow-600"></i>
+                                                </div>
+                                                <div>
+                                                    <h3 class="font-medium text-gray-900">電源插座</h3>
+                                                    <p class="text-sm text-gray-500">110V 電源，適合電器設備</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center space-x-4">
+                                                <div class="text-right">
+                                                    <div class="text-sm text-gray-500">單價</div>
+                                                    <div class="font-medium text-gray-900">NT$ 100/天</div>
+                                                </div>
+                                                <div class="text-right">
+                                                    <div class="text-sm text-gray-500">可租借數量</div>
+                                                    <div class="font-medium text-gray-900">25</div>
+                                                </div>
+                                                <div class="flex items-center space-x-2">
+                                                    <button type="button" onclick="editEquipment('power')" class="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200">
+                                                        <i class="fas fa-edit mr-1"></i>
+                                                        編輯
+                                                    </button>
+                                                    <button type="button" onclick="deleteEquipment('power')" class="px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200">
+                                                        <i class="fas fa-trash mr-1"></i>
+                                                        刪除
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- 新增/編輯設備模態框 -->
+                        <div id="equipment-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+                            <div class="flex items-center justify-center min-h-screen p-4">
+                                <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
+                                    <div class="p-6">
+                                        <div class="flex justify-between items-center mb-4">
+                                            <h3 class="text-lg font-bold text-gray-900" id="modal-title">新增設備</h3>
+                                            <button type="button" onclick="closeEquipmentModal()" class="text-gray-400 hover:text-gray-600">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                        
+                                        <form id="equipment-form" class="space-y-4">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">設備名稱</label>
+                                                <input type="text" id="equipment-name" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500" placeholder="請輸入設備名稱" required>
+                                            </div>
+                                            
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">設備介紹</label>
+                                                <textarea id="equipment-description" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500" rows="3" placeholder="請輸入設備介紹" required></textarea>
+                                            </div>
+                                            
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">單價 (NT$/天)</label>
+                                                <input type="number" id="equipment-price" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500" placeholder="請輸入單價" min="0" required>
+                                            </div>
+                                            
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">可租借數量</label>
+                                                <input type="number" id="equipment-quantity" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500" placeholder="請輸入可租借數量" min="1" required>
+                                            </div>
+                                            
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">設備圖標</label>
+                                                <select id="equipment-icon" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
+                                                    <option value="fas fa-umbrella">陽傘</option>
+                                                    <option value="fas fa-chair">桌椅</option>
+                                                    <option value="fas fa-plug">電源</option>
+                                                    <option value="fas fa-layer-group">展示架</option>
+                                                    <option value="fas fa-volume-up">音響</option>
+                                                    <option value="fas fa-lightbulb">燈具</option>
+                                                    <option value="fas fa-fan">風扇</option>
+                                                    <option value="fas fa-thermometer-half">空調</option>
+                                                    <option value="fas fa-tv">螢幕</option>
+                                                    <option value="fas fa-camera">攝影</option>
+                                                </select>
+                                            </div>
+                                            
+                                            <div class="flex justify-end space-x-3 pt-4">
+                                                <button type="button" onclick="closeEquipmentModal()" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                                                    取消
+                                                </button>
+                                                <button type="submit" class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">
+                                                    儲存
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 報名設定 -->
+                        <div class="bg-white rounded-lg shadow-sm p-6 mt-8">
                             <h2 class="text-lg font-bold text-gray-900 mb-4">報名設定</h2>
                             <div class="space-y-4">
                                 <div>
@@ -231,5 +450,188 @@
             </main>
         </div>
     </div>
+
+    <!-- JavaScript -->
+    <script>
+        // 設備資料存儲
+        let equipmentData = {
+            umbrella: {
+                id: 'umbrella',
+                name: '陽傘',
+                description: '遮陽防雨，適合戶外攤位',
+                price: 200,
+                quantity: 50,
+                icon: 'fas fa-umbrella'
+            },
+            table: {
+                id: 'table',
+                name: '桌椅組',
+                description: '一桌二椅，基本展示設備',
+                price: 300,
+                quantity: 30,
+                icon: 'fas fa-chair'
+            },
+            light: {
+                id: 'light',
+                name: '電燈',
+                description: 'LED 照明燈具，提供充足光源',
+                price: 150,
+                quantity: 40,
+                icon: 'fas fa-lightbulb'
+            },
+            power: {
+                id: 'power',
+                name: '電源插座',
+                description: '110V 電源，適合電器設備',
+                price: 100,
+                quantity: 25,
+                icon: 'fas fa-plug'
+            }
+        };
+
+        let editingEquipmentId = null;
+
+        // 開啟新增設備模態框
+        function openAddEquipmentModal() {
+            editingEquipmentId = null;
+            document.getElementById('modal-title').textContent = '新增設備';
+            document.getElementById('equipment-form').reset();
+            document.getElementById('equipment-modal').classList.remove('hidden');
+        }
+
+        // 開啟編輯設備模態框
+        function editEquipment(equipmentId) {
+            editingEquipmentId = equipmentId;
+            const equipment = equipmentData[equipmentId];
+            
+            document.getElementById('modal-title').textContent = '編輯設備';
+            document.getElementById('equipment-name').value = equipment.name;
+            document.getElementById('equipment-description').value = equipment.description;
+            document.getElementById('equipment-price').value = equipment.price;
+            document.getElementById('equipment-quantity').value = equipment.quantity;
+            document.getElementById('equipment-icon').value = equipment.icon;
+            
+            document.getElementById('equipment-modal').classList.remove('hidden');
+        }
+
+        // 關閉設備模態框
+        function closeEquipmentModal() {
+            document.getElementById('equipment-modal').classList.add('hidden');
+            editingEquipmentId = null;
+        }
+
+        // 刪除設備
+        function deleteEquipment(equipmentId) {
+            if (confirm('確定要刪除此設備嗎？')) {
+                delete equipmentData[equipmentId];
+                renderEquipmentList();
+            }
+        }
+
+        // 渲染設備列表
+        function renderEquipmentList() {
+            console.log('開始渲染設備列表，設備資料：', equipmentData);
+            const equipmentList = document.getElementById('equipment-list');
+            console.log('找到設備列表容器：', equipmentList);
+            equipmentList.innerHTML = '';
+
+            Object.values(equipmentData).forEach(equipment => {
+                console.log('正在渲染設備：', equipment);
+                const equipmentItem = document.createElement('div');
+                equipmentItem.className = 'equipment-item';
+                equipmentItem.setAttribute('data-id', equipment.id);
+                
+                equipmentItem.innerHTML = `
+                    <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                        <div class="flex items-center space-x-4">
+                            <div class="p-2 bg-yellow-100 rounded-lg">
+                                <i class="${equipment.icon} text-yellow-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-gray-900">${equipment.name}</h3>
+                                <p class="text-sm text-gray-500">${equipment.description}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="text-right">
+                                <div class="text-sm text-gray-500">單價</div>
+                                <div class="font-medium text-gray-900">NT$ ${equipment.price}/天</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-sm text-gray-500">可租借數量</div>
+                                <div class="font-medium text-gray-900">${equipment.quantity}</div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <button type="button" onclick="editEquipment('${equipment.id}')" class="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200">
+                                    <i class="fas fa-edit mr-1"></i>
+                                    編輯
+                                </button>
+                                <button type="button" onclick="deleteEquipment('${equipment.id}')" class="px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200">
+                                    <i class="fas fa-trash mr-1"></i>
+                                    刪除
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                equipmentList.appendChild(equipmentItem);
+            });
+        }
+
+        // 生成唯一ID
+        function generateId() {
+            return 'equipment_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        // 處理表單提交
+        document.getElementById('equipment-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('equipment-name').value;
+            const description = document.getElementById('equipment-description').value;
+            const price = parseInt(document.getElementById('equipment-price').value);
+            const quantity = parseInt(document.getElementById('equipment-quantity').value);
+            const icon = document.getElementById('equipment-icon').value;
+            
+            if (editingEquipmentId) {
+                // 編輯現有設備
+                equipmentData[editingEquipmentId] = {
+                    ...equipmentData[editingEquipmentId],
+                    name,
+                    description,
+                    price,
+                    quantity,
+                    icon
+                };
+            } else {
+                // 新增設備
+                const newId = generateId();
+                equipmentData[newId] = {
+                    id: newId,
+                    name,
+                    description,
+                    price,
+                    quantity,
+                    icon
+                };
+            }
+            
+            renderEquipmentList();
+            closeEquipmentModal();
+        });
+
+        // 點擊模態框背景關閉
+        document.getElementById('equipment-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeEquipmentModal();
+            }
+        });
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            renderEquipmentList();
+        });
+    </script>
 </body>
 </html> 

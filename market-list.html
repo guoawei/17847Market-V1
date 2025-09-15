@@ -13,7 +13,7 @@
     <style>
         body {
             font-family: 'Noto Sans TC', sans-serif;
-            background-color: #FFFFFF;
+            background-color: #F3F4F6;
         }
 
         /* 自定義捲軸樣式 */
@@ -35,38 +35,38 @@
         }
     </style>
 </head>
-<body class="bg-white">
+<body class="bg-gray-100">
     <div class="min-h-screen flex">
         <!-- 側邊欄 -->
-        <div class="bg-white w-64 min-h-screen shadow-lg fixed border-r border-[#E8E6E1]">
-            <div class="flex items-center justify-center h-16 border-b border-[#E8E6E1]">
-                <img class="h-8" src="https://via.placeholder.com/150x50" alt="Logo">
+        <div class="bg-white w-64 min-h-screen shadow-lg fixed">
+            <div class="flex items-center justify-center h-16 border-b border-gray-200">
+                <img class="h-8" src="https://images.unsplash.com/photo-1490127252417-7c393f993ee4?w=150&h=50&fit=crop" alt="Logo">
             </div>
             <nav class="mt-6">
                 <div class="px-4 py-2">
-                    <div class="flex items-center space-x-2 text-sm text-[#5C5648]">
-                        <img class="h-8 w-8 rounded-full border border-[#E8E6E1]" src="https://via.placeholder.com/32" alt="使用者頭像">
+                    <div class="flex items-center space-x-2 text-sm text-gray-600">
+                        <img class="h-8 w-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop" alt="使用者頭像">
                         <span>歡迎回來，攤商</span>
                     </div>
                 </div>
                 <div class="px-2 mt-4">
-                    <a href="#" class="flex items-center px-4 py-3 text-[#5C5648] hover:bg-[#E9DDC7] rounded-lg transition-colors">
+                    <a href="#" class="flex items-center px-4 py-3 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
                         <i class="fas fa-home w-5 h-5"></i>
                         <span class="mx-4">首頁</span>
                     </a>
-                    <a href="#" class="flex items-center px-4 py-3 mt-2 text-[#5C5648] bg-[#E9DDC7] rounded-lg">
+                    <a href="#" class="flex items-center px-4 py-3 mt-2 text-gray-700 bg-yellow-50 rounded-lg">
                         <i class="fas fa-store w-5 h-5"></i>
                         <span class="mx-4">市集列表</span>
                     </a>
-                    <a href="#" class="flex items-center px-4 py-3 mt-2 text-[#5C5648] hover:bg-[#E9DDC7] rounded-lg transition-colors">
+                    <a href="#" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
                         <i class="fas fa-clipboard-list w-5 h-5"></i>
                         <span class="mx-4">我的申請</span>
                     </a>
-                    <a href="#" class="flex items-center px-4 py-3 mt-2 text-[#5C5648] hover:bg-[#E9DDC7] rounded-lg transition-colors">
+                    <a href="#" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
                         <i class="fas fa-heart w-5 h-5"></i>
                         <span class="mx-4">收藏市集</span>
                     </a>
-                    <a href="#" class="flex items-center px-4 py-3 mt-2 text-[#5C5648] hover:bg-[#E9DDC7] rounded-lg transition-colors">
+                    <a href="#" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
                         <i class="fas fa-cog w-5 h-5"></i>
                         <span class="mx-4">設定</span>
                     </a>
@@ -77,16 +77,22 @@
         <!-- 主要內容區 -->
         <div class="flex-1 ml-64">
             <!-- 頂部導航 -->
-            <header class="bg-white shadow-sm border-b border-[#E8E6E1]">
+            <header class="bg-white shadow-sm">
                 <div class="flex items-center justify-between h-16 px-8">
-                    <h1 class="text-xl font-bold text-[#5C5648]">市集列表</h1>
                     <div class="flex items-center space-x-4">
-                        <button class="text-[#5C5648] hover:text-[#A8A495]">
+                        <h1 class="text-xl font-bold text-gray-800">市集列表</h1>
+                        <a href="index.html" class="text-gray-600 hover:text-yellow-600 transition-colors">
+                            <i class="fas fa-home mr-1"></i>
+                            返回首頁
+                        </a>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <button class="text-gray-600 hover:text-gray-800">
                             <i class="fas fa-bell"></i>
                         </button>
                         <button class="flex items-center space-x-2">
-                            <img class="h-8 w-8 rounded-full border border-[#E8E6E1]" src="https://via.placeholder.com/32" alt="使用者頭像">
-                            <i class="fas fa-chevron-down text-[#5C5648]"></i>
+                            <img class="h-8 w-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop" alt="使用者頭像">
+                            <i class="fas fa-chevron-down text-gray-600"></i>
                         </button>
                     </div>
                 </div>
@@ -102,34 +108,118 @@
                             <div class="relative">
                                 <input type="text" 
                                        placeholder="搜尋市集名稱、地點..." 
-                                       class="w-full pl-10 pr-4 py-2 border border-[#E8E6E1] rounded-lg focus:border-[#D4A373] focus:ring-[#D4A373] text-[#5C5648] placeholder-[#A8A495]">
+                                       class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:border-yellow-500 focus:ring-yellow-500 text-gray-900 placeholder-gray-500">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center">
-                                    <i class="fas fa-search text-[#A8A495]"></i>
+                                    <i class="fas fa-search text-gray-500"></i>
                                 </div>
                             </div>
                         </div>
                         <!-- 篩選按鈕 -->
-                        <button class="px-4 py-2 border border-[#E8E6E1] rounded-lg text-[#5C5648] hover:bg-[#E9DDC7] transition-colors">
-                            <i class="fas fa-filter mr-2"></i>
-                            篩選
-                        </button>
+                        <div class="relative">
+                            <button id="filterBtn" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-yellow-50 transition-colors">
+                                <i class="fas fa-filter mr-2"></i>
+                                篩選
+                            </button>
+                            <!-- 篩選下拉選單 -->
+                            <div id="filterDropdown" class="absolute top-full right-0 mt-2 w-72 bg-white border border-gray-300 rounded-lg shadow-lg z-50 hidden">
+                                <div class="p-4">
+                                    <h3 class="text-lg font-bold text-gray-900 mb-4">篩選條件</h3>
+                                    
+                                    <!-- 地區篩選 -->
+                                    <div class="mb-4">
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">地區</label>
+                                        <select class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 focus:border-yellow-500 focus:ring-yellow-500">
+                                            <option value="">全部地區</option>
+                                            <option value="taipei">台北市</option>
+                                            <option value="new-taipei">新北市</option>
+                                            <option value="taoyuan">桃園市</option>
+                                            <option value="taichung">台中市</option>
+                                            <option value="tainan">台南市</option>
+                                            <option value="kaohsiung">高雄市</option>
+                                            <option value="hsinchu">新竹市</option>
+                                            <option value="keelung">基隆市</option>
+                                            <option value="yilan">宜蘭縣</option>
+                                            <option value="hualien">花蓮縣</option>
+                                            <option value="taitung">台東縣</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <!-- 類型篩選 -->
+                                    <div class="mb-4">
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">市集類型</label>
+                                        <div class="space-y-2">
+                                            <label class="flex items-center">
+                                                <input type="checkbox" class="mr-2 text-yellow-600 focus:ring-yellow-500">
+                                                <span class="text-sm text-gray-700">文創市集</span>
+                                            </label>
+                                            <label class="flex items-center">
+                                                <input type="checkbox" class="mr-2 text-yellow-600 focus:ring-yellow-500">
+                                                <span class="text-sm text-gray-700">農夫市集</span>
+                                            </label>
+                                            <label class="flex items-center">
+                                                <input type="checkbox" class="mr-2 text-yellow-600 focus:ring-yellow-500">
+                                                <span class="text-sm text-gray-700">手作市集</span>
+                                            </label>
+                                            <label class="flex items-center">
+                                                <input type="checkbox" class="mr-2 text-yellow-600 focus:ring-yellow-500">
+                                                <span class="text-sm text-gray-700">美食市集</span>
+                                            </label>
+                                            <label class="flex items-center">
+                                                <input type="checkbox" class="mr-2 text-yellow-600 focus:ring-yellow-500">
+                                                <span class="text-sm text-gray-700">二手市集</span>
+                                            </label>
+                                            <label class="flex items-center">
+                                                <input type="checkbox" class="mr-2 text-yellow-600 focus:ring-yellow-500">
+                                                <span class="text-sm text-gray-700">藝術市集</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 日期篩選 -->
+                                    <div class="mb-4">
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">日期範圍</label>
+                                        <div class="grid grid-cols-2 gap-2">
+                                            <div>
+                                                <label class="block text-xs text-gray-500 mb-1">開始日期</label>
+                                                <input type="date" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 focus:border-yellow-500 focus:ring-yellow-500">
+                                            </div>
+                                            <div>
+                                                <label class="block text-xs text-gray-500 mb-1">結束日期</label>
+                                                <input type="date" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 focus:border-yellow-500 focus:ring-yellow-500">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 按鈕區域 -->
+                                    <div class="flex space-x-2 pt-2 border-t border-gray-200">
+                                        <button class="flex-1 px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors">
+                                            套用篩選
+                                        </button>
+                                        <button id="clearFilterBtn" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-yellow-50 transition-colors">
+                                            清除
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <!-- 排序按鈕 -->
-                        <button class="px-4 py-2 border border-[#E8E6E1] rounded-lg text-[#5C5648] hover:bg-[#E9DDC7] transition-colors">
+                        <button class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-yellow-50 transition-colors">
                             <i class="fas fa-sort mr-2"></i>
                             排序
                         </button>
                     </div>
                     <!-- 篩選標籤 -->
                     <div class="flex flex-wrap gap-2 mt-4">
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-[#E9DDC7] text-[#5C5648]">
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-yellow-100 text-yellow-800">
                             台北市
-                            <button class="ml-2 text-[#5C5648] hover:text-[#A8A495]">
+                            <button class="ml-2 text-yellow-800 hover:text-yellow-600">
                                 <i class="fas fa-times"></i>
                             </button>
                         </span>
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-[#E9DDC7] text-[#5C5648]">
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-yellow-100 text-yellow-800">
                             週末市集
-                            <button class="ml-2 text-[#5C5648] hover:text-[#A8A495]">
+                            <button class="ml-2 text-yellow-800 hover:text-yellow-600">
                                 <i class="fas fa-times"></i>
                             </button>
                         </span>
@@ -139,37 +229,37 @@
                 <!-- 市集列表 -->
                 <div class="grid grid-cols-3 gap-6">
                     <!-- 市集卡片 -->
-                    <div class="bg-white rounded-lg shadow-sm border border-[#E8E6E1] overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
                         <img src="https://images.unsplash.com/photo-1516962080544-eac695c93791" alt="市集照片" class="w-full h-48 object-cover">
                         <div class="p-4">
                             <div class="flex justify-between items-start mb-2">
-                                <h3 class="text-lg font-bold text-[#5C5648]">週末文創市集</h3>
-                                <button class="text-[#A8A495] hover:text-[#D4A373]">
+                                <h3 class="text-lg font-bold text-gray-900">週末文創市集</h3>
+                                <button class="text-gray-400 hover:text-yellow-500">
                                     <i class="far fa-heart"></i>
                                 </button>
                             </div>
                             <div class="space-y-2 mb-4">
-                                <div class="flex items-center text-sm text-[#5C5648]">
-                                    <i class="fas fa-map-marker-alt w-4 h-4 mr-2 text-[#D4A373]"></i>
+                                <div class="flex items-center text-sm text-gray-600">
+                                    <i class="fas fa-map-marker-alt w-4 h-4 mr-2 text-yellow-500"></i>
                                     台北市信義區松壽路2號
                                 </div>
-                                <div class="flex items-center text-sm text-[#5C5648]">
-                                    <i class="fas fa-calendar w-4 h-4 mr-2 text-[#D4A373]"></i>
+                                <div class="flex items-center text-sm text-gray-600">
+                                    <i class="fas fa-calendar w-4 h-4 mr-2 text-yellow-500"></i>
                                     2024/1/20-1/21
                                 </div>
-                                <div class="flex items-center text-sm text-[#5C5648]">
-                                    <i class="fas fa-clock w-4 h-4 mr-2 text-[#D4A373]"></i>
+                                <div class="flex items-center text-sm text-gray-600">
+                                    <i class="fas fa-clock w-4 h-4 mr-2 text-yellow-500"></i>
                                     11:00-19:00
                                 </div>
                             </div>
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center space-x-2">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#E9DDC7] text-[#5C5648]">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
                                         開放報名中
                                     </span>
-                                    <span class="text-sm text-[#A8A495]">剩餘 5 個攤位</span>
+                                    <span class="text-sm text-gray-500">剩餘 5 個攤位</span>
                                 </div>
-                                <a href="#" class="text-[#D4A373] hover:text-[#C69B7B] text-sm font-medium">
+                                <a href="#" class="text-yellow-600 hover:text-yellow-700 text-sm font-medium">
                                     查看詳情
                                     <i class="fas fa-arrow-right ml-1"></i>
                                 </a>
@@ -178,37 +268,37 @@
                     </div>
 
                     <!-- 重複的市集卡片 -->
-                    <div class="bg-white rounded-lg shadow-sm border border-[#E8E6E1] overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
                         <img src="https://images.unsplash.com/photo-1516962080544-eac695c93791" alt="市集照片" class="w-full h-48 object-cover">
                         <div class="p-4">
                             <div class="flex justify-between items-start mb-2">
-                                <h3 class="text-lg font-bold text-[#5C5648]">手作文創展</h3>
-                                <button class="text-[#D4A373]">
+                                <h3 class="text-lg font-bold text-gray-900">手作文創展</h3>
+                                <button class="text-yellow-500">
                                     <i class="fas fa-heart"></i>
                                 </button>
                             </div>
                             <div class="space-y-2 mb-4">
-                                <div class="flex items-center text-sm text-[#5C5648]">
-                                    <i class="fas fa-map-marker-alt w-4 h-4 mr-2 text-[#D4A373]"></i>
+                                <div class="flex items-center text-sm text-gray-600">
+                                    <i class="fas fa-map-marker-alt w-4 h-4 mr-2 text-yellow-500"></i>
                                     台北市中山區南京東路三段219號
                                 </div>
-                                <div class="flex items-center text-sm text-[#5C5648]">
-                                    <i class="fas fa-calendar w-4 h-4 mr-2 text-[#D4A373]"></i>
+                                <div class="flex items-center text-sm text-gray-600">
+                                    <i class="fas fa-calendar w-4 h-4 mr-2 text-yellow-500"></i>
                                     2024/2/3-2/4
                                 </div>
-                                <div class="flex items-center text-sm text-[#5C5648]">
-                                    <i class="fas fa-clock w-4 h-4 mr-2 text-[#D4A373]"></i>
+                                <div class="flex items-center text-sm text-gray-600">
+                                    <i class="fas fa-clock w-4 h-4 mr-2 text-yellow-500"></i>
                                     12:00-20:00
                                 </div>
                             </div>
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center space-x-2">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#E9DDC7] text-[#5C5648]">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
                                         即將開放報名
                                     </span>
-                                    <span class="text-sm text-[#A8A495]">共 20 個攤位</span>
+                                    <span class="text-sm text-gray-500">共 20 個攤位</span>
                                 </div>
-                                <a href="#" class="text-[#D4A373] hover:text-[#C69B7B] text-sm font-medium">
+                                <a href="#" class="text-yellow-600 hover:text-yellow-700 text-sm font-medium">
                                     查看詳情
                                     <i class="fas fa-arrow-right ml-1"></i>
                                 </a>
@@ -217,36 +307,36 @@
                     </div>
 
                     <!-- 已結束的市集卡片 -->
-                    <div class="bg-white rounded-lg shadow-sm border border-[#E8E6E1] overflow-hidden hover:shadow-md transition-shadow opacity-75">
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow opacity-75">
                         <img src="https://images.unsplash.com/photo-1516962080544-eac695c93791" alt="市集照片" class="w-full h-48 object-cover grayscale">
                         <div class="p-4">
                             <div class="flex justify-between items-start mb-2">
-                                <h3 class="text-lg font-bold text-[#5C5648]">冬季手作市集</h3>
-                                <button class="text-[#A8A495] hover:text-[#D4A373]">
+                                <h3 class="text-lg font-bold text-gray-900">冬季手作市集</h3>
+                                <button class="text-gray-400 hover:text-yellow-500">
                                     <i class="far fa-heart"></i>
                                 </button>
                             </div>
                             <div class="space-y-2 mb-4">
-                                <div class="flex items-center text-sm text-[#5C5648]">
-                                    <i class="fas fa-map-marker-alt w-4 h-4 mr-2 text-[#D4A373]"></i>
+                                <div class="flex items-center text-sm text-gray-600">
+                                    <i class="fas fa-map-marker-alt w-4 h-4 mr-2 text-yellow-500"></i>
                                     台北市大安區忠孝東路四段
                                 </div>
-                                <div class="flex items-center text-sm text-[#5C5648]">
-                                    <i class="fas fa-calendar w-4 h-4 mr-2 text-[#D4A373]"></i>
+                                <div class="flex items-center text-sm text-gray-600">
+                                    <i class="fas fa-calendar w-4 h-4 mr-2 text-yellow-500"></i>
                                     2023/12/15-12/16
                                 </div>
-                                <div class="flex items-center text-sm text-[#5C5648]">
-                                    <i class="fas fa-clock w-4 h-4 mr-2 text-[#D4A373]"></i>
+                                <div class="flex items-center text-sm text-gray-600">
+                                    <i class="fas fa-clock w-4 h-4 mr-2 text-yellow-500"></i>
                                     11:00-18:00
                                 </div>
                             </div>
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center space-x-2">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-[#A8A495]">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-500">
                                         已結束
                                     </span>
                                 </div>
-                                <a href="#" class="text-[#D4A373] hover:text-[#C69B7B] text-sm font-medium">
+                                <a href="#" class="text-yellow-600 hover:text-yellow-700 text-sm font-medium">
                                     查看詳情
                                     <i class="fas fa-arrow-right ml-1"></i>
                                 </a>
@@ -258,13 +348,13 @@
                 <!-- 分頁 -->
                 <div class="mt-8 flex justify-center">
                     <nav class="flex items-center space-x-2">
-                        <button class="p-2 rounded-lg border border-[#E8E6E1] text-[#5C5648] hover:bg-[#E9DDC7] transition-colors">
+                        <button class="p-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-yellow-50 transition-colors">
                             <i class="fas fa-chevron-left"></i>
                         </button>
-                        <button class="px-4 py-2 rounded-lg bg-[#E9DDC7] text-[#5C5648]">1</button>
-                        <button class="px-4 py-2 rounded-lg border border-[#E8E6E1] text-[#5C5648] hover:bg-[#E9DDC7] transition-colors">2</button>
-                        <button class="px-4 py-2 rounded-lg border border-[#E8E6E1] text-[#5C5648] hover:bg-[#E9DDC7] transition-colors">3</button>
-                        <button class="p-2 rounded-lg border border-[#E8E6E1] text-[#5C5648] hover:bg-[#E9DDC7] transition-colors">
+                        <button class="px-4 py-2 rounded-lg bg-yellow-500 text-white">1</button>
+                        <button class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-yellow-50 transition-colors">2</button>
+                        <button class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-yellow-50 transition-colors">3</button>
+                        <button class="p-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-yellow-50 transition-colors">
                             <i class="fas fa-chevron-right"></i>
                         </button>
                     </nav>
@@ -272,5 +362,49 @@
             </main>
         </div>
     </div>
+
+     <!-- JavaScript -->
+     <script>
+        // 篩選功能
+        const filterBtn = document.getElementById('filterBtn');
+        const filterDropdown = document.getElementById('filterDropdown');
+        const clearFilterBtn = document.getElementById('clearFilterBtn');
+
+        // 切換篩選下拉選單
+        filterBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            filterDropdown.classList.toggle('hidden');
+        });
+
+        // 點擊其他地方關閉下拉選單
+        document.addEventListener('click', function(e) {
+            if (!filterBtn.contains(e.target) && !filterDropdown.contains(e.target)) {
+                filterDropdown.classList.add('hidden');
+            }
+        });
+
+        // 清除篩選
+        clearFilterBtn.addEventListener('click', function() {
+            // 清除所有選中的選項
+            const checkboxes = filterDropdown.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => checkbox.checked = false);
+            
+            const selects = filterDropdown.querySelectorAll('select');
+            selects.forEach(select => select.selectedIndex = 0);
+            
+            const dateInputs = filterDropdown.querySelectorAll('input[type="date"]');
+            dateInputs.forEach(input => input.value = '');
+            
+            // 關閉下拉選單
+            filterDropdown.classList.add('hidden');
+        });
+
+        // 套用篩選
+        filterDropdown.querySelector('button:first-of-type').addEventListener('click', function() {
+            // 這裡可以添加篩選邏輯
+            console.log('套用篩選');
+            filterDropdown.classList.add('hidden');
+        });
+    </script>
 </body>
 </html> 

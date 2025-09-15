@@ -1,429 +1,586 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>週末文創市集 - 市集詳情</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        body {
-            font-family: 'Noto Sans TC', sans-serif;
-        }
+      body {
+        font-family: "Noto Sans TC", sans-serif;
+      }
     </style>
-</head>
-<body class="bg-gray-50">
+  </head>
+  <body class="bg-gray-50">
     <!-- 導航欄 -->
     <nav class="bg-white shadow-lg fixed w-full z-50">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex justify-between h-16">
-                <div class="flex">
-                    <div class="flex-shrink-0 flex items-center">
-                        <a href="home.html">
-                            <img class="h-8 w-auto" src="https://via.placeholder.com/150x50" alt="Logo">
-                        </a>
-                    </div>
-                    <div class="hidden md:ml-6 md:flex md:space-x-8">
-                        <a href="home.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                            首頁
-                        </a>
-                        <a href="market-list.html" class="border-b-2 border-yellow-500 text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium">
-                            探索市集
-                        </a>
-                        <a href="vendor-dashboard.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                            成為攤商
-                        </a>
-                        <a href="about.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                            關於我們
-                        </a>
-                    </div>
-                </div>
-                <div class="flex items-center">
-                    <div class="flex-shrink-0">
-                        <button type="button" onclick="window.location.href='login.html'" class="relative inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-500 shadow-sm hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
-                            <i class="fas fa-user-plus mr-2"></i>
-                            註冊/登入
-                        </button>
-                    </div>
-                </div>
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="flex justify-between h-16">
+          <div class="flex">
+            <div class="flex-shrink-0 flex items-center">
+              <a href="home.html">
+                <img
+                  class="h-10 w-auto"
+                  src="./17847market-logo-v2.jpg"
+                  alt="Logo"
+                />
+              </a>
             </div>
+            <div class="hidden md:ml-6 md:flex md:space-x-8">
+              <a
+                href="home.html"
+                class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+              >
+                首頁
+              </a>
+              <a
+                href="market-list.html"
+                class="border-b-2 border-yellow-500 text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium"
+              >
+                探索市集
+              </a>
+              <a
+                href="vendor-dashboard.html"
+                class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+              >
+                成為攤商
+              </a>
+              <a
+                href="about.html"
+                class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+              >
+                關於我們
+              </a>
+            </div>
+          </div>
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <button
+                type="button"
+                onclick="window.location.href='login.html'"
+                class="relative inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-500 shadow-sm hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
+              >
+                <i class="fas fa-user-plus mr-2"></i>
+                註冊/登入
+              </button>
+            </div>
+          </div>
         </div>
+      </div>
     </nav>
 
     <!-- 主要內容 -->
     <main class="pt-16">
-        <!-- 市集封面圖 -->
-        <div class="relative h-[400px]">
-            <img src="https://images.unsplash.com/photo-1516594798947-e65505dbb29d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
-                 class="w-full h-full object-cover" alt="市集封面圖">
-            <div class="absolute inset-0 bg-black bg-opacity-40"></div>
-            <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
-                <div class="max-w-7xl mx-auto">
-                    <div class="flex items-center mb-4">
-                        <span class="bg-yellow-500 text-white text-sm font-medium px-2.5 py-0.5 rounded mr-2">熱門</span>
-                        <span class="text-sm">台北市</span>
-                    </div>
-                    <h1 class="text-4xl font-bold mb-2">週末文創市集</h1>
-                    <p class="text-lg opacity-90">2024/1/20-1/21</p>
-                </div>
+      <!-- 市集封面圖 -->
+      <div class="relative h-[400px]">
+        <img
+          src="https://images.unsplash.com/photo-1516594798947-e65505dbb29d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+          class="w-full h-full object-cover"
+          alt="市集封面圖"
+        />
+        <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+        <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
+          <div class="max-w-7xl mx-auto">
+            <div class="flex items-center mb-4">
+              <span
+                class="bg-yellow-500 text-white text-sm font-medium px-2.5 py-0.5 rounded mr-2"
+                >熱門</span
+              >
+              <span class="text-sm">台北市</span>
             </div>
+            <h1 class="text-4xl font-bold mb-2">週末文創市集</h1>
+            <p class="text-lg opacity-90">2024/1/20-1/21</p>
+          </div>
         </div>
+      </div>
 
-        <!-- 市集內容 -->
-        <div class="max-w-7xl mx-auto px-4 py-8">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- 左側資訊 -->
-                <div class="lg:col-span-2">
-                    <!-- 基本資訊 -->
-                    <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
-                        <h2 class="text-2xl font-bold mb-4">活動資訊</h2>
-                        <div class="space-y-4">
-                            <div class="flex items-start">
-                                <i class="fas fa-map-marker-alt text-yellow-500 mt-1 mr-3"></i>
-                                <div>
-                                    <h3 class="font-medium">活動地點</h3>
-                                    <p class="text-gray-600">台北市中正區重慶南路一段122號</p>
-                                    <a href="#" class="text-yellow-500 hover:text-yellow-600 text-sm">在地圖上查看</a>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <i class="fas fa-calendar text-yellow-500 mt-1 mr-3"></i>
-                                <div>
-                                    <h3 class="font-medium">活動時間</h3>
-                                    <p class="text-gray-600">2024/1/20-1/21 10:00-18:00</p>
-                                    <p class="text-sm text-gray-500">進場時間：當天早上 08:00-09:30</p>
-                                    <p class="text-sm text-gray-500">撤場時間：當天晚上 18:00-19:30</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <i class="fas fa-user text-yellow-500 mt-1 mr-3"></i>
-                                <div>
-                                    <h3 class="font-medium">主辦單位</h3>
-                                    <p class="text-gray-600">文創市集有限公司</p>
-                                    <p class="text-sm text-gray-500">聯絡電話：02-1234-5678</p>
-                                    <p class="text-sm text-gray-500">Email：contact@example.com</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 市集簡介 -->
-                    <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
-                        <h2 class="text-2xl font-bold mb-4">市集簡介</h2>
-                        <div class="prose max-w-none">
-                            <p class="text-gray-600 mb-4">
-                                週末文創市集將於台北市中正區舉辦，邀請各地文創工作者共同參與。本次市集主題為「手作溫度」，歡迎各類手作、文創商品參展。
-                            </p>
-                            <p class="text-gray-600 mb-4">
-                                現場將提供完善的攤位設備，包含桌椅、遮陽棚等基本配備。同時也會安排表演活動，為市集增添更多精彩內容。
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- 招商資訊 -->
-                    <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
-                        <h2 class="text-2xl font-bold mb-4">招商資訊</h2>
-                        <div class="space-y-6">
-                            <div>
-                                <h3 class="font-medium text-lg mb-2">招商攤數</h3>
-                                <p class="text-gray-600">總攤位數：80個（標準攤位60個、加大攤位20個）</p>
-                            </div>
-                            
-                            <div>
-                                <h3 class="font-medium text-lg mb-2">攤位型式</h3>
-                                <div class="overflow-x-auto">
-                                    <table class="min-w-full divide-y divide-gray-200">
-                                        <thead class="bg-gray-50">
-                                            <tr>
-                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">類型</th>
-                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">尺寸</th>
-                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">租金</th>
-                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">設備</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="bg-white divide-y divide-gray-200">
-                                            <tr>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">標準攤位</td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3m x 3m</td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">NT$ 5,000</td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">桌子x1、椅子x2</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">加大攤位</td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">4m x 3m</td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">NT$ 8,000</td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">桌子x2、椅子x2</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <div>
-                                <h3 class="font-medium text-lg mb-2">招商類別</h3>
-                                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                                    <div class="bg-yellow-50 p-3 rounded-lg">
-                                        <p class="text-yellow-800">手作文創商品</p>
-                                    </div>
-                                    <div class="bg-yellow-50 p-3 rounded-lg">
-                                        <p class="text-yellow-800">文具雜貨</p>
-                                    </div>
-                                    <div class="bg-yellow-50 p-3 rounded-lg">
-                                        <p class="text-yellow-800">服飾配件</p>
-                                    </div>
-                                    <div class="bg-yellow-50 p-3 rounded-lg">
-                                        <p class="text-yellow-800">生活用品</p>
-                                    </div>
-                                    <div class="bg-yellow-50 p-3 rounded-lg">
-                                        <p class="text-yellow-800">食品飲料</p>
-                                    </div>
-                                    <div class="bg-yellow-50 p-3 rounded-lg">
-                                        <p class="text-yellow-800">其他文創相關</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 其它說明 -->
-                    <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
-                        <h2 class="text-2xl font-bold mb-4">其它說明</h2>
-                        <div class="space-y-4">
-                            <div class="flex items-start">
-                                <i class="fas fa-ruler text-yellow-500 mt-1 mr-3"></i>
-                                <div>
-                                    <h3 class="font-medium">攤位設備</h3>
-                                    <p class="text-gray-600">提供桌椅、遮陽棚</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <i class="fas fa-bolt text-yellow-500 mt-1 mr-3"></i>
-                                <div>
-                                    <h3 class="font-medium">供電服務</h3>
-                                    <p class="text-gray-600">每個攤位提供110V/500W電力，如需額外用電請事先申請</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <i class="fas fa-fire text-yellow-500 mt-1 mr-3"></i>
-                                <div>
-                                    <h3 class="font-medium">明火使用</h3>
-                                    <p class="text-gray-600">禁止使用明火及瓦斯等危險物品</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <i class="fas fa-box text-yellow-500 mt-1 mr-3"></i>
-                                <div>
-                                    <h3 class="font-medium">寄物服務</h3>
-                                    <p class="text-gray-600">不提供寄物服務，請自行保管貴重物品</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <i class="fas fa-trash text-yellow-500 mt-1 mr-3"></i>
-                                <div>
-                                    <h3 class="font-medium">垃圾處理</h3>
-                                    <p class="text-gray-600">請自行處理垃圾，保持攤位整潔</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 注意事項 -->
-                    <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
-                        <h2 class="text-2xl font-bold mb-4">注意事項</h2>
-                        <ul class="list-disc list-inside space-y-2 text-gray-600">
-                            <li>請攤商於活動當天上午9:00前完成進場佈置</li>
-                            <li>攤位位置將由主辦方統一安排，不得異議</li>
-                            <li>禁止轉租或分租攤位</li>
-                            <li>禁止使用擴音設備</li>
-                            <li>請遵守場地使用規範</li>
-                            <li>如有違規情形，主辦方有權要求離場</li>
-                        </ul>
-                    </div>
-
-                    <!-- 請假規定 -->
-                    <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
-                        <h2 class="text-2xl font-bold mb-4">請假規定</h2>
-                        <div class="prose max-w-none text-gray-600">
-                            <p class="mb-4">如需請假，請依下列規定辦理：</p>
-                            <ul class="list-disc list-inside space-y-2">
-                                <li>請於活動前7天提出請假申請</li>
-                                <li>每季請假次數不得超過2次</li>
-                                <li>請假不予退費</li>
-                                <li>未事先請假者視為曠市，影響後續報名資格</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- 雨天機制 -->
-                    <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
-                        <h2 class="text-2xl font-bold mb-4">雨天機制</h2>
-                        <div class="prose max-w-none text-gray-600">
-                            <p class="mb-4">本活動為室內場地，照常舉行。如遇重大天災：</p>
-                            <ul class="list-disc list-inside space-y-2">
-                                <li>依政府公告之停班停課標準辦理</li>
-                                <li>若活動取消將另行公告延期日期</li>
-                                <li>若無法參加延期場次，將依退費規定辦理</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- 退款辦法 -->
-                    <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
-                        <h2 class="text-2xl font-bold mb-4">退款辦法</h2>
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-gray-50">
-                                    <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">取消時間</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">退款比例</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">活動前14天以上</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">退還80%</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">活動前7-13天</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">退還50%</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">活動前7天內</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">不予退還</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <p class="mt-4 text-sm text-gray-500">
-                            * 退款將於申請後14個工作天內處理
-                        </p>
-                    </div>
+      <!-- 市集內容 -->
+      <div class="max-w-7xl mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <!-- 左側資訊 -->
+          <div class="lg:col-span-2">
+            <!-- 基本資訊 -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+              <h2 class="text-2xl font-bold mb-4">活動資訊</h2>
+              <div class="space-y-4">
+                <div class="flex items-start">
+                  <i
+                    class="fas fa-map-marker-alt text-yellow-500 mt-1 mr-3"
+                  ></i>
+                  <div>
+                    <h3 class="font-medium">活動地點</h3>
+                    <p class="text-gray-600">台北市中正區重慶南路一段122號</p>
+                    <a
+                      href="#"
+                      class="text-yellow-500 hover:text-yellow-600 text-sm"
+                      >在地圖上查看</a
+                    >
+                  </div>
                 </div>
-
-                <!-- 右側報名資訊 -->
-                <div class="lg:col-span-1">
-                    <div class="bg-white rounded-lg shadow-lg p-6 sticky top-24">
-                        <h2 class="text-2xl font-bold mb-4">報名資訊</h2>
-                        <div class="space-y-4">
-                            <div class="p-4 bg-yellow-50 rounded-lg">
-                                <p class="text-yellow-800">
-                                    <i class="fas fa-clock mr-2"></i>
-                                    報名截止日期：2024/1/10
-                                </p>
-                            </div>
-                            
-                            <!-- 攤位類型選擇 -->
-                            <div class="border rounded-lg">
-                                <div class="p-4 border-b">
-                                    <div class="flex justify-between items-center">
-                                        <div>
-                                            <h3 class="font-medium">標準攤位</h3>
-                                            <p class="text-sm text-gray-500">3m x 3m</p>
-                                        </div>
-                                        <div class="text-right">
-                                            <p class="font-medium">NT$ 5,000</p>
-                                            <p class="text-sm text-gray-500">剩餘 5 個</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="p-4">
-                                    <div class="flex justify-between items-center">
-                                        <div>
-                                            <h3 class="font-medium">加大攤位</h3>
-                                            <p class="text-sm text-gray-500">4m x 3m</p>
-                                        </div>
-                                        <div class="text-right">
-                                            <p class="font-medium">NT$ 8,000</p>
-                                            <p class="text-sm text-gray-500">剩餘 3 個</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- 報名按鈕 -->
-                            <a href="market-apply.html" class="block w-full bg-yellow-500 text-white px-6 py-3 rounded-lg hover:bg-yellow-600 transition duration-300 text-center">
-                                立即報名
-                            </a>
-
-                            <!-- 其他資訊 -->
-                            <div class="text-sm text-gray-500">
-                                <p class="flex items-center mb-2">
-                                    <i class="fas fa-info-circle mr-2"></i>
-                                    報名前請詳閱注意事項
-                                </p>
-                                <p class="flex items-center">
-                                    <i class="fas fa-question-circle mr-2"></i>
-                                    如有問題請聯繫主辦方
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="flex items-start">
+                  <i class="fas fa-calendar text-yellow-500 mt-1 mr-3"></i>
+                  <div>
+                    <h3 class="font-medium">活動時間</h3>
+                    <p class="text-gray-600">2024/1/20-1/21 10:00-18:00</p>
+                    <p class="text-sm text-gray-500">
+                      進場時間：當天早上 08:00-09:30
+                    </p>
+                    <p class="text-sm text-gray-500">
+                      撤場時間：當天晚上 18:00-19:30
+                    </p>
+                  </div>
                 </div>
+                <div class="flex items-start">
+                  <i class="fas fa-user text-yellow-500 mt-1 mr-3"></i>
+                  <div>
+                    <h3 class="font-medium">主辦單位</h3>
+                    <p class="text-gray-600">文創市集有限公司</p>
+                    <p class="text-sm text-gray-500">聯絡電話：02-1234-5678</p>
+                    <p class="text-sm text-gray-500">
+                      Email：contact@example.com
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
+
+            <!-- 市集簡介 -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+              <h2 class="text-2xl font-bold mb-4">市集簡介</h2>
+              <div class="prose max-w-none">
+                <p class="text-gray-600 mb-4">
+                  週末文創市集將於台北市中正區舉辦，邀請各地文創工作者共同參與。本次市集主題為「手作溫度」，歡迎各類手作、文創商品參展。
+                </p>
+                <p class="text-gray-600 mb-4">
+                  現場將提供完善的攤位設備，包含桌椅、遮陽棚等基本配備。同時也會安排表演活動，為市集增添更多精彩內容。
+                </p>
+              </div>
+            </div>
+
+            <!-- 招商資訊 -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+              <h2 class="text-2xl font-bold mb-4">招商資訊</h2>
+              <div class="space-y-6">
+                <div>
+                  <h3 class="font-medium text-lg mb-2">招商攤數</h3>
+                  <p class="text-gray-600">
+                    總攤位數：80個（標準攤位60個、加大攤位20個）
+                  </p>
+                </div>
+
+                <div>
+                  <h3 class="font-medium text-lg mb-2">攤位型式</h3>
+                  <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                      <thead class="bg-gray-50">
+                        <tr>
+                          <th
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          >
+                            類型
+                          </th>
+                          <th
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          >
+                            尺寸
+                          </th>
+                          <th
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          >
+                            租金
+                          </th>
+                          <th
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          >
+                            設備
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody class="bg-white divide-y divide-gray-200">
+                        <tr>
+                          <td
+                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
+                          >
+                            標準攤位
+                          </td>
+                          <td
+                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                          >
+                            3m x 3m
+                          </td>
+                          <td
+                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                          >
+                            NT$ 5,000
+                          </td>
+                          <td
+                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                          >
+                            桌子x1、椅子x2
+                          </td>
+                        </tr>
+                        <tr>
+                          <td
+                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
+                          >
+                            加大攤位
+                          </td>
+                          <td
+                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                          >
+                            4m x 3m
+                          </td>
+                          <td
+                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                          >
+                            NT$ 8,000
+                          </td>
+                          <td
+                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                          >
+                            桌子x2、椅子x2
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 class="font-medium text-lg mb-2">招商類別</h3>
+                  <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="bg-yellow-50 p-3 rounded-lg">
+                      <p class="text-yellow-800">手作文創商品</p>
+                    </div>
+                    <div class="bg-yellow-50 p-3 rounded-lg">
+                      <p class="text-yellow-800">文具雜貨</p>
+                    </div>
+                    <div class="bg-yellow-50 p-3 rounded-lg">
+                      <p class="text-yellow-800">服飾配件</p>
+                    </div>
+                    <div class="bg-yellow-50 p-3 rounded-lg">
+                      <p class="text-yellow-800">生活用品</p>
+                    </div>
+                    <div class="bg-yellow-50 p-3 rounded-lg">
+                      <p class="text-yellow-800">食品飲料</p>
+                    </div>
+                    <div class="bg-yellow-50 p-3 rounded-lg">
+                      <p class="text-yellow-800">其他文創相關</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 其它說明 -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+              <h2 class="text-2xl font-bold mb-4">其它說明</h2>
+              <div class="space-y-4">
+                <div class="flex items-start">
+                  <i class="fas fa-ruler text-yellow-500 mt-1 mr-3"></i>
+                  <div>
+                    <h3 class="font-medium">攤位設備</h3>
+                    <p class="text-gray-600">提供桌椅、遮陽棚</p>
+                  </div>
+                </div>
+                <div class="flex items-start">
+                  <i class="fas fa-bolt text-yellow-500 mt-1 mr-3"></i>
+                  <div>
+                    <h3 class="font-medium">供電服務</h3>
+                    <p class="text-gray-600">
+                      每個攤位提供110V/500W電力，如需額外用電請事先申請
+                    </p>
+                  </div>
+                </div>
+                <div class="flex items-start">
+                  <i class="fas fa-fire text-yellow-500 mt-1 mr-3"></i>
+                  <div>
+                    <h3 class="font-medium">明火使用</h3>
+                    <p class="text-gray-600">禁止使用明火及瓦斯等危險物品</p>
+                  </div>
+                </div>
+                <div class="flex items-start">
+                  <i class="fas fa-box text-yellow-500 mt-1 mr-3"></i>
+                  <div>
+                    <h3 class="font-medium">寄物服務</h3>
+                    <p class="text-gray-600">
+                      不提供寄物服務，請自行保管貴重物品
+                    </p>
+                  </div>
+                </div>
+                <div class="flex items-start">
+                  <i class="fas fa-trash text-yellow-500 mt-1 mr-3"></i>
+                  <div>
+                    <h3 class="font-medium">垃圾處理</h3>
+                    <p class="text-gray-600">請自行處理垃圾，保持攤位整潔</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 注意事項 -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+              <h2 class="text-2xl font-bold mb-4">注意事項</h2>
+              <ul class="list-disc list-inside space-y-2 text-gray-600">
+                <li>請攤商於活動當天上午9:00前完成進場佈置</li>
+                <li>攤位位置將由主辦方統一安排，不得異議</li>
+                <li>禁止轉租或分租攤位</li>
+                <li>禁止使用擴音設備</li>
+                <li>請遵守場地使用規範</li>
+                <li>如有違規情形，主辦方有權要求離場</li>
+              </ul>
+            </div>
+
+            <!-- 請假規定 -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+              <h2 class="text-2xl font-bold mb-4">請假規定</h2>
+              <div class="prose max-w-none text-gray-600">
+                <p class="mb-4">如需請假，請依下列規定辦理：</p>
+                <ul class="list-disc list-inside space-y-2">
+                  <li>請於活動前7天提出請假申請</li>
+                  <li>每季請假次數不得超過2次</li>
+                  <li>請假不予退費</li>
+                  <li>未事先請假者視為曠市，影響後續報名資格</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- 雨天機制 -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+              <h2 class="text-2xl font-bold mb-4">雨天機制</h2>
+              <div class="prose max-w-none text-gray-600">
+                <p class="mb-4">本活動為室內場地，照常舉行。如遇重大天災：</p>
+                <ul class="list-disc list-inside space-y-2">
+                  <li>依政府公告之停班停課標準辦理</li>
+                  <li>若活動取消將另行公告延期日期</li>
+                  <li>若無法參加延期場次，將依退費規定辦理</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- 退款辦法 -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+              <h2 class="text-2xl font-bold mb-4">退款辦法</h2>
+              <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                  <thead class="bg-gray-50">
+                    <tr>
+                      <th
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        取消時間
+                      </th>
+                      <th
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        退款比例
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-white divide-y divide-gray-200">
+                    <tr>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
+                      >
+                        活動前14天以上
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        退還80%
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
+                      >
+                        活動前7-13天
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        退還50%
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
+                      >
+                        活動前7天內
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        不予退還
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="mt-4 text-sm text-gray-500">
+                * 退款將於申請後14個工作天內處理
+              </p>
+            </div>
+          </div>
+
+          <!-- 右側報名資訊 -->
+          <div class="lg:col-span-1">
+            <div class="bg-white rounded-lg shadow-lg p-6 sticky top-24">
+              <h2 class="text-2xl font-bold mb-4">報名資訊</h2>
+              <div class="space-y-4">
+                <div class="p-4 bg-yellow-50 rounded-lg">
+                  <p class="text-yellow-800">
+                    <i class="fas fa-clock mr-2"></i>
+                    報名截止日期：2025/12/20
+                  </p>
+                </div>
+
+                <!-- 攤位類型選擇 -->
+                <div class="border rounded-lg">
+                  <div class="p-4 border-b">
+                    <div class="flex justify-between items-center">
+                      <div>
+                        <h3 class="font-medium">標準攤位</h3>
+                        <p class="text-sm text-gray-500">3m x 3m</p>
+                      </div>
+                      <div class="text-right">
+                        <p class="font-medium">NT$ 5,000</p>
+                        <p class="text-sm text-gray-500">剩餘 5 個</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-4">
+                    <div class="flex justify-between items-center">
+                      <div>
+                        <h3 class="font-medium">加大攤位</h3>
+                        <p class="text-sm text-gray-500">4m x 3m</p>
+                      </div>
+                      <div class="text-right">
+                        <p class="font-medium">NT$ 8,000</p>
+                        <p class="text-sm text-gray-500">剩餘 3 個</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 報名按鈕 -->
+                <a
+                  href="market-apply.html"
+                  class="block w-full bg-yellow-500 text-white px-6 py-3 rounded-lg hover:bg-yellow-600 transition duration-300 text-center"
+                >
+                  立即報名
+                </a>
+
+                <!-- 其他資訊 -->
+                <div class="text-sm text-gray-500">
+                  <p class="flex items-center mb-2">
+                    <i class="fas fa-info-circle mr-2"></i>
+                    報名前請詳閱注意事項
+                  </p>
+                  <p class="flex items-center">
+                    <i class="fas fa-question-circle mr-2"></i>
+                    如有問題請聯繫主辦方
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </main>
 
     <!-- 頁尾 -->
     <footer class="bg-gray-900 text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <h3 class="text-lg font-bold mb-4">關於我們</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white">公司介紹</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">使用條款</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">隱私政策</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-lg font-bold mb-4">攤商服務</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white">如何報名</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">收費標準</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">常見問題</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-lg font-bold mb-4">主辦方服務</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white">刊登市集</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">管理工具</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">成功案例</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-lg font-bold mb-4">聯絡我們</h3>
-                    <ul class="space-y-2">
-                        <li class="flex items-center">
-                            <i class="fas fa-envelope mr-2"></i>
-                            <a href="mailto:contact@example.com" class="text-gray-400 hover:text-white">contact@example.com</a>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-phone mr-2"></i>
-                            <span class="text-gray-400">02-1234-5678</span>
-                        </li>
-                    </ul>
-                    <div class="mt-4 flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <i class="fab fa-line"></i>
-                        </a>
-                    </div>
-                </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <h3 class="text-lg font-bold mb-4">關於我們</h3>
+            <ul class="space-y-2">
+              <li>
+                <a href="#" class="text-gray-400 hover:text-white">公司介紹</a>
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-white">使用條款</a>
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-white">隱私政策</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold mb-4">攤商服務</h3>
+            <ul class="space-y-2">
+              <li>
+                <a href="#" class="text-gray-400 hover:text-white">如何報名</a>
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-white">收費標準</a>
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-white">常見問題</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold mb-4">主辦方服務</h3>
+            <ul class="space-y-2">
+              <li>
+                <a href="#" class="text-gray-400 hover:text-white">刊登市集</a>
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-white">管理工具</a>
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-white">成功案例</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold mb-4">聯絡我們</h3>
+            <ul class="space-y-2">
+              <li class="flex items-center">
+                <i class="fas fa-envelope mr-2"></i>
+                <a
+                  href="mailto:contact@example.com"
+                  class="text-gray-400 hover:text-white"
+                  >contact@example.com</a
+                >
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-phone mr-2"></i>
+                <span class="text-gray-400">02-1234-5678</span>
+              </li>
+            </ul>
+            <div class="mt-4 flex space-x-4">
+              <a href="#" class="text-gray-400 hover:text-white">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="#" class="text-gray-400 hover:text-white">
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a href="#" class="text-gray-400 hover:text-white">
+                <i class="fab fa-line"></i>
+              </a>
             </div>
-            <div class="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400">
-                <p>&copy; 2024 市集媒合平台. All rights reserved.</p>
-            </div>
+          </div>
         </div>
+        <div
+          class="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400"
+        >
+          <p>&copy; 2024 市集媒合平台. All rights reserved.</p>
+        </div>
+      </div>
     </footer>
-</body>
-</html> 
+  </body>
+</html>
