@@ -56,11 +56,13 @@
             document.getElementById('status-payment-reviewing').classList.add('hidden');
             document.getElementById('status-confirmed').classList.add('hidden');
             document.getElementById('status-expired').classList.add('hidden');
+            document.getElementById('status-rejected').classList.add('hidden');
             document.getElementById('unpaid-notice').classList.add('hidden');
             document.getElementById('reviewing-notice').classList.add('hidden');
             document.getElementById('payment-reviewing-notice').classList.add('hidden');
             document.getElementById('confirmed-notice').classList.add('hidden');
             document.getElementById('expired-notice').classList.add('hidden');
+            document.getElementById('rejected-notice').classList.add('hidden');
 
             // 顯示選定的狀態
             switch(status) {
@@ -83,6 +85,10 @@
                 case 'expired':
                     document.getElementById('status-expired').classList.remove('hidden');
                     document.getElementById('expired-notice').classList.remove('hidden');
+                    break;
+                case 'rejected':
+                    document.getElementById('status-rejected').classList.remove('hidden');
+                    document.getElementById('rejected-notice').classList.remove('hidden');
                     break;
             }
         }
@@ -194,6 +200,8 @@
                                     <span id="status-confirmed" class="hidden px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">已確認</span>
                                     <!-- 已過期狀態 -->
                                     <span id="status-expired" class="hidden px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">已過期</span>
+                                    <!-- 審核未通過狀態 -->
+                                    <span id="status-rejected" class="hidden px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">審核未通過</span>
                                 </div>
                             </div>
 
@@ -367,6 +375,37 @@
                                         </a>
                                     </div>
                                 </div>
+
+                                <!-- 審核未通過狀態顯示 -->
+                                <div id="rejected-notice" class="hidden bg-red-50 p-4 rounded-lg">
+                                    <p class="text-sm text-red-800">
+                                        <i class="fas fa-times-circle mr-2"></i>
+                                        很抱歉，您的攤商資料審核未通過。
+                                    </p>
+                                    <div class="mt-2 flex items-center">
+                                        <i class="fas fa-clock text-red-500 mr-2"></i>
+                                        <p class="text-sm text-red-800">
+                                            審核時間：2024/01/06 16:30
+                                        </p>
+                                    </div>
+                                    <div class="mt-4">
+                                        <h4 class="text-sm font-medium text-red-800 mb-2">未通過原因：</h4>
+                                        <ul class="text-sm text-red-700 list-disc list-inside space-y-1">
+                                            <li>商品照片品質不符合要求</li>
+                                            <li>攤位佈置方案需要調整</li>
+                                        </ul>
+                                    </div>
+                                    <div class="mt-4 space-y-2">
+                                        <a href="vendor-profile.html" class="inline-flex items-center text-yellow-600 hover:text-yellow-700 mr-4">
+                                            <i class="fas fa-edit mr-2"></i>
+                                            修改攤商資料
+                                        </a>
+                                        <a href="market-list.html" class="inline-flex items-center text-yellow-600 hover:text-yellow-700">
+                                            <i class="fas fa-search mr-2"></i>
+                                            探索其他市集
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -512,6 +551,9 @@
                         </button>
                         <button onclick="showStatus('expired')" class="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors">
                             已過期
+                        </button>
+                        <button onclick="showStatus('rejected')" class="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">
+                            審核未通過
                         </button>
                     </div>
                 </div>
