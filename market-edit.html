@@ -148,28 +148,127 @@
 
                         <!-- 攤位設定 -->
                         <div class="bg-white rounded-lg shadow-sm p-6">
-                            <h2 class="text-lg font-bold text-gray-900 mb-4">攤位設定</h2>
+                            <div class="flex justify-between items-center mb-4">
+                                <h2 class="text-lg font-bold text-gray-900">攤位設定</h2>
+                                <button type="button" onclick="openAddBoothModal()" class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors">
+                                    <i class="fas fa-plus mr-2"></i>
+                                    新增攤位類型
+                                </button>
+                            </div>
                             <div class="space-y-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">攤位類型</label>
-                                    <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
-                                        <option selected>標準攤位 (3m x 3m)</option>
-                                        <option>大型攤位 (4m x 4m)</option>
-                                        <option>小型攤位 (2m x 2m)</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">攤位數量</label>
-                                    <input type="number" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500" value="50">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">攤位費用</label>
-                                    <div class="relative">
-                                        <span class="absolute left-3 top-2 text-gray-500">NT$</span>
-                                        <input type="number" class="w-full pl-12 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500" value="3000">
+                                <!-- 攤位類型列表 -->
+                                <div id="booth-list" class="space-y-3">
+                                    <!-- 標準攤位 -->
+                                    <div class="booth-item" data-id="standard">
+                                        <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                                            <div class="flex items-center space-x-4">
+                                                <div class="p-2 bg-yellow-100 rounded-lg">
+                                                    <i class="fas fa-store text-yellow-600"></i>
+                                                </div>
+                                                <div>
+                                                    <h3 class="font-medium text-gray-900">標準攤位</h3>
+                                                    <p class="text-sm text-gray-500">3m x 3m，適合一般商品展示</p>
+                                                    <p class="text-xs text-gray-400 mt-1">編號：A-01 ~ A-50</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center space-x-4">
+                                                <div class="text-right">
+                                                    <div class="text-sm text-gray-500">單價</div>
+                                                    <div class="font-medium text-gray-900">NT$ 3,000/天</div>
+                                                </div>
+                                                <div class="text-right">
+                                                    <div class="text-sm text-gray-500">攤位數量</div>
+                                                    <div class="font-medium text-gray-900">50</div>
+                                                </div>
+                                                <div class="flex items-center space-x-2">
+                                                    <button type="button" onclick="editBooth('standard')" class="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200">
+                                                        <i class="fas fa-edit mr-1"></i>
+                                                        編輯
+                                                    </button>
+                                                    <button type="button" onclick="deleteBooth('standard')" class="px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200">
+                                                        <i class="fas fa-trash mr-1"></i>
+                                                        刪除
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 大型攤位 -->
+                                    <div class="booth-item" data-id="large">
+                                        <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                                            <div class="flex items-center space-x-4">
+                                                <div class="p-2 bg-yellow-100 rounded-lg">
+                                                    <i class="fas fa-store text-yellow-600"></i>
+                                                </div>
+                                                <div>
+                                                    <h3 class="font-medium text-gray-900">大型攤位</h3>
+                                                    <p class="text-sm text-gray-500">4m x 4m，適合大型商品或多人攤位</p>
+                                                    <p class="text-xs text-gray-400 mt-1">編號：B-01 ~ B-20</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center space-x-4">
+                                                <div class="text-right">
+                                                    <div class="text-sm text-gray-500">單價</div>
+                                                    <div class="font-medium text-gray-900">NT$ 4,500/天</div>
+                                                </div>
+                                                <div class="text-right">
+                                                    <div class="text-sm text-gray-500">攤位數量</div>
+                                                    <div class="font-medium text-gray-900">20</div>
+                                                </div>
+                                                <div class="flex items-center space-x-2">
+                                                    <button type="button" onclick="editBooth('large')" class="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200">
+                                                        <i class="fas fa-edit mr-1"></i>
+                                                        編輯
+                                                    </button>
+                                                    <button type="button" onclick="deleteBooth('large')" class="px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200">
+                                                        <i class="fas fa-trash mr-1"></i>
+                                                        刪除
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 小型攤位 -->
+                                    <div class="booth-item" data-id="small">
+                                        <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                                            <div class="flex items-center space-x-4">
+                                                <div class="p-2 bg-yellow-100 rounded-lg">
+                                                    <i class="fas fa-store text-yellow-600"></i>
+                                                </div>
+                                                <div>
+                                                    <h3 class="font-medium text-gray-900">小型攤位</h3>
+                                                    <p class="text-sm text-gray-500">2m x 2m，適合小商品或初次參加者</p>
+                                                    <p class="text-xs text-gray-400 mt-1">編號：C-01 ~ C-30</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center space-x-4">
+                                                <div class="text-right">
+                                                    <div class="text-sm text-gray-500">單價</div>
+                                                    <div class="font-medium text-gray-900">NT$ 2,000/天</div>
+                                                </div>
+                                                <div class="text-right">
+                                                    <div class="text-sm text-gray-500">攤位數量</div>
+                                                    <div class="font-medium text-gray-900">30</div>
+                                                </div>
+                                                <div class="flex items-center space-x-2">
+                                                    <button type="button" onclick="editBooth('small')" class="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200">
+                                                        <i class="fas fa-edit mr-1"></i>
+                                                        編輯
+                                                    </button>
+                                                    <button type="button" onclick="deleteBooth('small')" class="px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200">
+                                                        <i class="fas fa-trash mr-1"></i>
+                                                        刪除
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div>
+
+                                <!-- 攤位配置圖 -->
+                                <div class="mt-6">
                                     <label class="block text-sm font-medium text-gray-700 mb-1">攤位配置圖</label>
                                     <div class="mt-1">
                                         <div class="relative">
@@ -344,6 +443,77 @@
                             </div>
                         </div>
 
+                        <!-- 新增/編輯攤位模態框 -->
+                        <div id="booth-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+                            <div class="flex items-center justify-center min-h-screen p-4">
+                                <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
+                                    <div class="p-6">
+                                        <div class="flex justify-between items-center mb-4">
+                                            <h3 class="text-lg font-bold text-gray-900" id="booth-modal-title">新增攤位類型</h3>
+                                            <button type="button" onclick="closeBoothModal()" class="text-gray-400 hover:text-gray-600">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                        
+                                        <form id="booth-form" class="space-y-4">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">攤位類型名稱</label>
+                                                <input type="text" id="booth-name" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500" placeholder="請輸入攤位類型名稱" required>
+                                            </div>
+                                            
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">攤位介紹</label>
+                                                <textarea id="booth-description" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500" rows="3" placeholder="請輸入攤位介紹" required></textarea>
+                                            </div>
+                                            
+                                            <div class="grid grid-cols-2 gap-4">
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700 mb-1">攤位尺寸</label>
+                                                    <input type="text" id="booth-size" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500" placeholder="例如：3m x 3m" required>
+                                                </div>
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700 mb-1">攤位編號前綴</label>
+                                                    <input type="text" id="booth-prefix" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500" placeholder="例如：A" required>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="grid grid-cols-2 gap-4">
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700 mb-1">單價 (NT$/天)</label>
+                                                    <input type="number" id="booth-price" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500" placeholder="請輸入單價" min="0" required>
+                                                </div>
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700 mb-1">攤位數量</label>
+                                                    <input type="number" id="booth-quantity" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500" placeholder="請輸入攤位數量" min="1" required>
+                                                </div>
+                                            </div>
+                                            
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">攤位圖標</label>
+                                                <select id="booth-icon" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
+                                                    <option value="fas fa-store">攤位</option>
+                                                    <option value="fas fa-home">房屋</option>
+                                                    <option value="fas fa-building">建築</option>
+                                                    <option value="fas fa-warehouse">倉庫</option>
+                                                    <option value="fas fa-shop">商店</option>
+                                                    <option value="fas fa-cube">立方體</option>
+                                                </select>
+                                            </div>
+                                            
+                                            <div class="flex justify-end space-x-3 pt-4">
+                                                <button type="button" onclick="closeBoothModal()" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                                                    取消
+                                                </button>
+                                                <button type="submit" class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">
+                                                    儲存
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- 新增/編輯設備模態框 -->
                         <div id="equipment-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
                             <div class="flex items-center justify-center min-h-screen p-4">
@@ -453,6 +623,40 @@
 
     <!-- JavaScript -->
     <script>
+        // 攤位資料存儲
+        let boothData = {
+            standard: {
+                id: 'standard',
+                name: '標準攤位',
+                description: '3m x 3m，適合一般商品展示',
+                size: '3m x 3m',
+                prefix: 'A',
+                price: 3000,
+                quantity: 50,
+                icon: 'fas fa-store'
+            },
+            large: {
+                id: 'large',
+                name: '大型攤位',
+                description: '4m x 4m，適合大型商品或多人攤位',
+                size: '4m x 4m',
+                prefix: 'B',
+                price: 4500,
+                quantity: 20,
+                icon: 'fas fa-store'
+            },
+            small: {
+                id: 'small',
+                name: '小型攤位',
+                description: '2m x 2m，適合小商品或初次參加者',
+                size: '2m x 2m',
+                prefix: 'C',
+                price: 2000,
+                quantity: 30,
+                icon: 'fas fa-store'
+            }
+        };
+
         // 設備資料存儲
         let equipmentData = {
             umbrella: {
@@ -489,7 +693,147 @@
             }
         };
 
+        let editingBoothId = null;
         let editingEquipmentId = null;
+
+        // 攤位相關函數
+        // 開啟新增攤位模態框
+        function openAddBoothModal() {
+            editingBoothId = null;
+            document.getElementById('booth-modal-title').textContent = '新增攤位類型';
+            document.getElementById('booth-form').reset();
+            document.getElementById('booth-modal').classList.remove('hidden');
+        }
+
+        // 開啟編輯攤位模態框
+        function editBooth(boothId) {
+            editingBoothId = boothId;
+            const booth = boothData[boothId];
+            
+            document.getElementById('booth-modal-title').textContent = '編輯攤位類型';
+            document.getElementById('booth-name').value = booth.name;
+            document.getElementById('booth-description').value = booth.description;
+            document.getElementById('booth-size').value = booth.size;
+            document.getElementById('booth-prefix').value = booth.prefix;
+            document.getElementById('booth-price').value = booth.price;
+            document.getElementById('booth-quantity').value = booth.quantity;
+            document.getElementById('booth-icon').value = booth.icon;
+            
+            document.getElementById('booth-modal').classList.remove('hidden');
+        }
+
+        // 關閉攤位模態框
+        function closeBoothModal() {
+            document.getElementById('booth-modal').classList.add('hidden');
+            editingBoothId = null;
+        }
+
+        // 刪除攤位
+        function deleteBooth(boothId) {
+            if (confirm('確定要刪除此攤位類型嗎？')) {
+                delete boothData[boothId];
+                renderBoothList();
+            }
+        }
+
+        // 渲染攤位列表
+        function renderBoothList() {
+            const boothList = document.getElementById('booth-list');
+            boothList.innerHTML = '';
+
+            Object.values(boothData).forEach(booth => {
+                const boothItem = document.createElement('div');
+                boothItem.className = 'booth-item';
+                boothItem.setAttribute('data-id', booth.id);
+                
+                boothItem.innerHTML = `
+                    <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                        <div class="flex items-center space-x-4">
+                            <div class="p-2 bg-yellow-100 rounded-lg">
+                                <i class="${booth.icon} text-yellow-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-gray-900">${booth.name}</h3>
+                                <p class="text-sm text-gray-500">${booth.description}</p>
+                                <p class="text-xs text-gray-400 mt-1">編號：${booth.prefix}-01 ~ ${booth.prefix}-${booth.quantity.toString().padStart(2, '0')}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="text-right">
+                                <div class="text-sm text-gray-500">單價</div>
+                                <div class="font-medium text-gray-900">NT$ ${booth.price.toLocaleString()}/天</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-sm text-gray-500">攤位數量</div>
+                                <div class="font-medium text-gray-900">${booth.quantity}</div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <button type="button" onclick="editBooth('${booth.id}')" class="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200">
+                                    <i class="fas fa-edit mr-1"></i>
+                                    編輯
+                                </button>
+                                <button type="button" onclick="deleteBooth('${booth.id}')" class="px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200">
+                                    <i class="fas fa-trash mr-1"></i>
+                                    刪除
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                boothList.appendChild(boothItem);
+            });
+        }
+
+        // 處理攤位表單提交
+        document.getElementById('booth-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('booth-name').value;
+            const description = document.getElementById('booth-description').value;
+            const size = document.getElementById('booth-size').value;
+            const prefix = document.getElementById('booth-prefix').value;
+            const price = parseInt(document.getElementById('booth-price').value);
+            const quantity = parseInt(document.getElementById('booth-quantity').value);
+            const icon = document.getElementById('booth-icon').value;
+            
+            if (editingBoothId) {
+                // 編輯現有攤位
+                boothData[editingBoothId] = {
+                    ...boothData[editingBoothId],
+                    name,
+                    description,
+                    size,
+                    prefix,
+                    price,
+                    quantity,
+                    icon
+                };
+            } else {
+                // 新增攤位
+                const newId = 'booth_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                boothData[newId] = {
+                    id: newId,
+                    name,
+                    description,
+                    size,
+                    prefix,
+                    price,
+                    quantity,
+                    icon
+                };
+            }
+            
+            renderBoothList();
+            closeBoothModal();
+        });
+
+        // 點擊攤位模態框背景關閉
+        document.getElementById('booth-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeBoothModal();
+            }
+        });
 
         // 開啟新增設備模態框
         function openAddEquipmentModal() {
@@ -630,6 +974,7 @@
 
         // 初始化
         document.addEventListener('DOMContentLoaded', function() {
+            renderBoothList();
             renderEquipmentList();
         });
     </script>
