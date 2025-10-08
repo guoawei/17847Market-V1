@@ -146,21 +146,185 @@
                             </div>
                         </div>
 
-                        <!-- 攤位設定 -->
+                        <!-- 參加日期和攤位管理 -->
                         <div class="bg-white rounded-lg shadow-sm p-6">
-                            <div class="flex justify-between items-center mb-4">
-                                <h2 class="text-lg font-bold text-gray-900">攤位設定</h2>
-                                <button type="button" onclick="openAddBoothModal()" class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors">
-                                    <i class="fas fa-plus mr-2"></i>
-                                    新增攤位類型
-                                </button>
+                            <div class="flex justify-between items-center mb-6">
+                                <div>
+                                    <h2 class="text-lg font-bold text-gray-900">參加日期和攤位管理</h2>
+                                    <p class="text-sm text-gray-600 mt-1">管理不同的參加日期和對應的攤位配置</p>
+                                </div>
+                                <div class="flex space-x-3">
+                                    <button type="button" onclick="openAddDateGroupModal()" class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors">
+                                        <i class="fas fa-plus mr-2"></i>
+                                        新增參加日期
+                                    </button>
+                                    <button type="button" onclick="openAddBoothModal()" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+                                        <i class="fas fa-plus mr-2"></i>
+                                        新增攤位類型
+                                    </button>
+                                </div>
                             </div>
-                            <div class="space-y-4">
-                                <!-- 攤位類型列表 -->
+                            
+                            <!-- 日期列表 -->
+                            <div id="date-group-list" class="space-y-6">
+                                <!-- 範例參加日期 1 -->
+                                <div class="border border-gray-200 rounded-lg p-6 bg-gradient-to-r from-yellow-50 to-orange-50">
+                                    <div class="flex items-center justify-between mb-6">
+                                        <div class="flex items-center">
+                                            <div class="p-3 bg-yellow-100 rounded-lg mr-4">
+                                                <i class="fas fa-calendar-week text-yellow-600 text-xl"></i>
+                                            </div>
+                                            <div>
+                                                <h3 class="text-xl font-bold text-gray-900">週末文創市集 - 第一週</h3>
+                                                <p class="text-sm text-gray-600">活動日期：3/16（六）、3/17（日）</p>
+                                                <p class="text-sm text-gray-500">時間：10:00 - 18:00</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center space-x-4">
+                                            <div class="text-right">
+                                                <div class="text-sm text-gray-500">總攤位數</div>
+                                                <div class="font-bold text-lg text-gray-900">65</div>
+                                            </div>
+                                            <div class="flex items-center space-x-2">
+                                                <button type="button" onclick="editDateGroup('group-1')" class="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200">
+                                                    <i class="fas fa-edit mr-1"></i>
+                                                    編輯
+                                                </button>
+                                                <button type="button" onclick="deleteDateGroup('group-1')" class="px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200">
+                                                    <i class="fas fa-trash mr-1"></i>
+                                                    刪除
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="ml-16">
+                                        <h4 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                                            <i class="fas fa-store text-yellow-600 mr-2"></i>
+                                            攤位配置：
+                                        </h4>
+                                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                            <div class="p-4 border rounded-lg bg-white shadow-sm hover:shadow-md transition-shadow">
+                                                <div class="flex justify-between items-start mb-3">
+                                                    <div>
+                                                        <span class="block font-bold text-gray-900">標準攤位</span>
+                                                        <span class="block text-sm text-gray-500">3m x 3m</span>
+                                                    </div>
+                                                    <span class="text-xl font-bold text-yellow-600">NT$ 3,000</span>
+                                                </div>
+                                                <div class="flex justify-between items-center">
+                                                    <span class="text-sm text-gray-500">可用數量</span>
+                                                    <span class="font-bold text-gray-900">30 個</span>
+                                                </div>
+                                            </div>
+                                            <div class="p-4 border rounded-lg bg-white shadow-sm hover:shadow-md transition-shadow">
+                                                <div class="flex justify-between items-start mb-3">
+                                                    <div>
+                                                        <span class="block font-bold text-gray-900">大型攤位</span>
+                                                        <span class="block text-sm text-gray-500">4m x 4m</span>
+                                                    </div>
+                                                    <span class="text-xl font-bold text-yellow-600">NT$ 4,500</span>
+                                                </div>
+                                                <div class="flex justify-between items-center">
+                                                    <span class="text-sm text-gray-500">可用數量</span>
+                                                    <span class="font-bold text-gray-900">15 個</span>
+                                                </div>
+                                            </div>
+                                            <div class="p-4 border rounded-lg bg-white shadow-sm hover:shadow-md transition-shadow">
+                                                <div class="flex justify-between items-start mb-3">
+                                                    <div>
+                                                        <span class="block font-bold text-gray-900">小型攤位</span>
+                                                        <span class="block text-sm text-gray-500">2m x 2m</span>
+                                                    </div>
+                                                    <span class="text-xl font-bold text-yellow-600">NT$ 2,000</span>
+                                                </div>
+                                                <div class="flex justify-between items-center">
+                                                    <span class="text-sm text-gray-500">可用數量</span>
+                                                    <span class="font-bold text-gray-900">20 個</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 範例參加日期 2 -->
+                                <div class="border border-gray-200 rounded-lg p-6 bg-gradient-to-r from-blue-50 to-purple-50">
+                                    <div class="flex items-center justify-between mb-6">
+                                        <div class="flex items-center">
+                                            <div class="p-3 bg-blue-100 rounded-lg mr-4">
+                                                <i class="fas fa-calendar-week text-blue-600 text-xl"></i>
+                                            </div>
+                                            <div>
+                                                <h3 class="text-xl font-bold text-gray-900">週末文創市集 - 第二週</h3>
+                                                <p class="text-sm text-gray-600">活動日期：3/23（六）、3/24（日）</p>
+                                                <p class="text-sm text-gray-500">時間：10:00 - 18:00</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center space-x-4">
+                                            <div class="text-right">
+                                                <div class="text-sm text-gray-500">總攤位數</div>
+                                                <div class="font-bold text-lg text-gray-900">35</div>
+                                            </div>
+                                            <div class="flex items-center space-x-2">
+                                                <button type="button" onclick="editDateGroup('group-2')" class="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200">
+                                                    <i class="fas fa-edit mr-1"></i>
+                                                    編輯
+                                                </button>
+                                                <button type="button" onclick="deleteDateGroup('group-2')" class="px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200">
+                                                    <i class="fas fa-trash mr-1"></i>
+                                                    刪除
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="ml-16">
+                                        <h4 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                                            <i class="fas fa-store text-blue-600 mr-2"></i>
+                                            攤位配置：
+                                        </h4>
+                                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                            <div class="p-4 border rounded-lg bg-white shadow-sm hover:shadow-md transition-shadow">
+                                                <div class="flex justify-between items-start mb-3">
+                                                    <div>
+                                                        <span class="block font-bold text-gray-900">標準攤位</span>
+                                                        <span class="block text-sm text-gray-500">3m x 3m</span>
+                                                    </div>
+                                                    <span class="text-xl font-bold text-blue-600">NT$ 3,200</span>
+                                                </div>
+                                                <div class="flex justify-between items-center">
+                                                    <span class="text-sm text-gray-500">可用數量</span>
+                                                    <span class="font-bold text-gray-900">25 個</span>
+                                                </div>
+                                            </div>
+                                            <div class="p-4 border rounded-lg bg-white shadow-sm hover:shadow-md transition-shadow">
+                                                <div class="flex justify-between items-start mb-3">
+                                                    <div>
+                                                        <span class="block font-bold text-gray-900">大型攤位</span>
+                                                        <span class="block text-sm text-gray-500">4m x 4m</span>
+                                                    </div>
+                                                    <span class="text-xl font-bold text-blue-600">NT$ 4,800</span>
+                                                </div>
+                                                <div class="flex justify-between items-center">
+                                                    <span class="text-sm text-gray-500">可用數量</span>
+                                                    <span class="font-bold text-gray-900">10 個</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 動態生成的參加日期項目會在這裡顯示 -->
+                            </div>
+                            
+                            <!-- 分隔線 -->
+                            <div class="border-t border-gray-200 pt-6 mt-8">
+                                <h3 class="text-lg font-bold text-gray-900 mb-4">攤位類型設定</h3>
+                                <p class="text-sm text-gray-600 mb-4">管理攤位類型的基本資訊，這些類型可以在日期配置中使用</p>
                                 <div id="booth-list" class="space-y-3">
-                                    <!-- 標準攤位 -->
-                                    <div class="booth-item" data-id="standard">
-                                        <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                                    <!-- 範例攤位類型 -->
+                                    <div class="booth-item border border-gray-200 rounded-lg p-4">
+                                        <div class="flex items-center justify-between">
                                             <div class="flex items-center space-x-4">
                                                 <div class="p-2 bg-yellow-100 rounded-lg">
                                                     <i class="fas fa-store text-yellow-600"></i>
@@ -173,19 +337,19 @@
                                             </div>
                                             <div class="flex items-center space-x-4">
                                                 <div class="text-right">
-                                                    <div class="text-sm text-gray-500">單價</div>
+                                                    <div class="text-sm text-gray-500">基本價格</div>
                                                     <div class="font-medium text-gray-900">NT$ 3,000/天</div>
                                                 </div>
                                                 <div class="text-right">
-                                                    <div class="text-sm text-gray-500">攤位數量</div>
+                                                    <div class="text-sm text-gray-500">總數量</div>
                                                     <div class="font-medium text-gray-900">50</div>
                                                 </div>
                                                 <div class="flex items-center space-x-2">
-                                                    <button type="button" onclick="editBooth('standard')" class="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200">
+                                                    <button type="button" class="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200">
                                                         <i class="fas fa-edit mr-1"></i>
                                                         編輯
                                                     </button>
-                                                    <button type="button" onclick="deleteBooth('standard')" class="px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200">
+                                                    <button type="button" class="px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200">
                                                         <i class="fas fa-trash mr-1"></i>
                                                         刪除
                                                     </button>
@@ -194,9 +358,8 @@
                                         </div>
                                     </div>
 
-                                    <!-- 大型攤位 -->
-                                    <div class="booth-item" data-id="large">
-                                        <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                                    <div class="booth-item border border-gray-200 rounded-lg p-4">
+                                        <div class="flex items-center justify-between">
                                             <div class="flex items-center space-x-4">
                                                 <div class="p-2 bg-yellow-100 rounded-lg">
                                                     <i class="fas fa-store text-yellow-600"></i>
@@ -209,19 +372,19 @@
                                             </div>
                                             <div class="flex items-center space-x-4">
                                                 <div class="text-right">
-                                                    <div class="text-sm text-gray-500">單價</div>
+                                                    <div class="text-sm text-gray-500">基本價格</div>
                                                     <div class="font-medium text-gray-900">NT$ 4,500/天</div>
                                                 </div>
                                                 <div class="text-right">
-                                                    <div class="text-sm text-gray-500">攤位數量</div>
+                                                    <div class="text-sm text-gray-500">總數量</div>
                                                     <div class="font-medium text-gray-900">20</div>
                                                 </div>
                                                 <div class="flex items-center space-x-2">
-                                                    <button type="button" onclick="editBooth('large')" class="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200">
+                                                    <button type="button" class="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200">
                                                         <i class="fas fa-edit mr-1"></i>
                                                         編輯
                                                     </button>
-                                                    <button type="button" onclick="deleteBooth('large')" class="px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200">
+                                                    <button type="button" class="px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200">
                                                         <i class="fas fa-trash mr-1"></i>
                                                         刪除
                                                     </button>
@@ -230,9 +393,8 @@
                                         </div>
                                     </div>
 
-                                    <!-- 小型攤位 -->
-                                    <div class="booth-item" data-id="small">
-                                        <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                                    <div class="booth-item border border-gray-200 rounded-lg p-4">
+                                        <div class="flex items-center justify-between">
                                             <div class="flex items-center space-x-4">
                                                 <div class="p-2 bg-yellow-100 rounded-lg">
                                                     <i class="fas fa-store text-yellow-600"></i>
@@ -245,19 +407,19 @@
                                             </div>
                                             <div class="flex items-center space-x-4">
                                                 <div class="text-right">
-                                                    <div class="text-sm text-gray-500">單價</div>
+                                                    <div class="text-sm text-gray-500">基本價格</div>
                                                     <div class="font-medium text-gray-900">NT$ 2,000/天</div>
                                                 </div>
                                                 <div class="text-right">
-                                                    <div class="text-sm text-gray-500">攤位數量</div>
+                                                    <div class="text-sm text-gray-500">總數量</div>
                                                     <div class="font-medium text-gray-900">30</div>
                                                 </div>
                                                 <div class="flex items-center space-x-2">
-                                                    <button type="button" onclick="editBooth('small')" class="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200">
+                                                    <button type="button" class="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200">
                                                         <i class="fas fa-edit mr-1"></i>
                                                         編輯
                                                     </button>
-                                                    <button type="button" onclick="deleteBooth('small')" class="px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200">
+                                                    <button type="button" class="px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200">
                                                         <i class="fas fa-trash mr-1"></i>
                                                         刪除
                                                     </button>
@@ -265,24 +427,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-
-                                <!-- 攤位配置圖 -->
-                                <div class="mt-6">
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">攤位配置圖</label>
-                                    <div class="mt-1">
-                                        <div class="relative">
-                                            <img src="vendor-place.png" alt="攤位配置圖" class="w-full h-48 object-cover rounded-lg">
-                                            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity rounded-lg">
-                                                <label class="cursor-pointer bg-white px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-100">
-                                                    <i class="fas fa-upload mr-2"></i>
-                                                    更換配置圖
-                                                    <input type="file" class="hidden" accept="image/*,application/pdf">
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <p class="mt-2 text-xs text-gray-500">PNG、JPG、PDF 格式，檔案大小不超過 5MB</p>
-                                    </div>
+                                    
+                                    <!-- 動態生成的攤位類型列表會在這裡顯示 -->
                                 </div>
                             </div>
                         </div>
@@ -440,6 +586,77 @@
                                     </div>
                                 </div>
 
+                            </div>
+                        </div>
+
+                        <!-- 新增/編輯參加日期模態框 -->
+                        <div id="date-group-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+                            <div class="flex items-center justify-center min-h-screen p-4">
+                                <div class="bg-white rounded-lg shadow-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+                                    <div class="p-6">
+                                        <div class="flex justify-between items-center mb-4">
+                                            <h3 class="text-lg font-bold text-gray-900" id="date-group-modal-title">新增參加日期</h3>
+                                            <button type="button" onclick="closeDateGroupModal()" class="text-gray-400 hover:text-gray-600">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                        
+                                        <form id="date-group-form" class="space-y-6">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">參加日期名稱</label>
+                                                <input type="text" id="group-name" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500" placeholder="例如：週末文創市集 - 第一週" required>
+                                            </div>
+                                            
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-3">活動日期</label>
+                                                <div id="date-inputs" class="space-y-3">
+                                                    <!-- 動態生成的日期輸入 -->
+                                                </div>
+                                                <button type="button" onclick="addDateInput()" class="mt-2 px-3 py-1 text-sm bg-green-500 text-white rounded hover:bg-green-600">
+                                                    <i class="fas fa-plus mr-1"></i>
+                                                    新增日期
+                                                </button>
+                                            </div>
+                                            
+                                            <div class="grid grid-cols-3 gap-4">
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700 mb-1">開始時間</label>
+                                                    <input type="time" id="group-start-time" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500" required>
+                                                </div>
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700 mb-1">結束時間</label>
+                                                    <input type="time" id="group-end-time" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500" required>
+                                                </div>
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700 mb-1">剩餘名額</label>
+                                                    <input type="number" id="group-quota" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500" min="0" value="20" required>
+                                                </div>
+                                            </div>
+                                            
+                                            <div>
+                                                <div class="flex justify-between items-center mb-3">
+                                                    <label class="block text-sm font-medium text-gray-700">攤位配置</label>
+                                                    <button type="button" onclick="addBoothConfig()" class="px-3 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600">
+                                                        <i class="fas fa-plus mr-1"></i>
+                                                        新增配置
+                                                    </button>
+                                                </div>
+                                                <div id="booth-configs" class="space-y-4">
+                                                    <!-- 動態生成的攤位配置 -->
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="flex justify-end space-x-3 pt-4">
+                                                <button type="button" onclick="closeDateGroupModal()" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                                                    取消
+                                                </button>
+                                                <button type="submit" class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">
+                                                    儲存
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -623,6 +840,60 @@
 
     <!-- JavaScript -->
     <script>
+        // 參加日期資料存儲
+        let dateGroupData = {
+            'group-1': {
+                id: 'group-1',
+                name: '週末文創市集 - 第一週',
+                dates: ['2024-03-16', '2024-03-17'],
+                startTime: '10:00',
+                endTime: '18:00',
+                remainingQuota: 65, // 30 + 15 + 20 = 65
+                boothConfigs: [
+                    {
+                        id: 'config-1',
+                        boothType: 'standard',
+                        quantity: 30,
+                        price: 3000
+                    },
+                    {
+                        id: 'config-2',
+                        boothType: 'large',
+                        quantity: 15,
+                        price: 4500
+                    },
+                    {
+                        id: 'config-3',
+                        boothType: 'small',
+                        quantity: 20,
+                        price: 2000
+                    }
+                ]
+            },
+            'group-2': {
+                id: 'group-2',
+                name: '週末文創市集 - 第二週',
+                dates: ['2024-03-23', '2024-03-24'],
+                startTime: '10:00',
+                endTime: '18:00',
+                remainingQuota: 35, // 25 + 10 = 35
+                boothConfigs: [
+                    {
+                        id: 'config-4',
+                        boothType: 'standard',
+                        quantity: 25,
+                        price: 3200
+                    },
+                    {
+                        id: 'config-5',
+                        boothType: 'large',
+                        quantity: 10,
+                        price: 4800
+                    }
+                ]
+            }
+        };
+
         // 攤位資料存儲
         let boothData = {
             standard: {
@@ -693,8 +964,348 @@
             }
         };
 
+        let editingDateGroupId = null;
         let editingBoothId = null;
         let editingEquipmentId = null;
+
+        // 參加日期相關函數
+        let configCounter = 0;
+        let dateInputCounter = 0;
+        
+        // 開啟新增參加日期模態框
+        function openAddDateGroupModal() {
+            editingDateGroupId = null;
+            document.getElementById('date-group-modal-title').textContent = '新增參加日期';
+            // document.getElementById('date-group-form').reset();
+            clearDateInputs();
+            clearBoothConfigs();
+            addDateInput(); // 預設新增一個日期輸入
+            addBoothConfig(); // 預設新增一個攤位配置
+            setTimeout(() => {
+                updateQuotaDisplay(); // 更新剩餘名額顯示
+            }, 100);
+            document.getElementById('date-group-modal').classList.remove('hidden');
+        }
+
+        // 開啟編輯參加日期模態框
+        function editDateGroup(groupId) {
+            editingDateGroupId = groupId;
+            const group = dateGroupData[groupId];
+            
+            document.getElementById('date-group-modal-title').textContent = '編輯參加日期';
+            document.getElementById('group-name').value = group.name;
+            document.getElementById('group-start-time').value = group.startTime;
+            document.getElementById('group-end-time').value = group.endTime;
+            document.getElementById('group-quota').value = group.remainingQuota;
+            
+            clearDateInputs();
+            clearBoothConfigs();
+            
+            // 載入現有的日期
+            group.dates.forEach(date => {
+                addDateInput(date);
+            });
+            
+            // 載入現有的攤位配置
+            group.boothConfigs.forEach(config => {
+                addBoothConfig(config);
+            });
+            
+            setTimeout(() => {
+                updateQuotaDisplay(); // 更新剩餘名額顯示
+            }, 100);
+            
+            document.getElementById('date-group-modal').classList.remove('hidden');
+        }
+
+        // 關閉參加日期模態框
+        function closeDateGroupModal() {
+            document.getElementById('date-group-modal').classList.add('hidden');
+            editingDateGroupId = null;
+        }
+
+        // 刪除參加日期
+        function deleteDateGroup(groupId) {
+            if (confirm('確定要刪除此參加日期嗎？')) {
+                delete dateGroupData[groupId];
+                renderDateGroupList();
+            }
+        }
+
+        // 新增攤位配置
+        function addBoothConfig(config = null) {
+            const container = document.getElementById('booth-configs');
+            configCounter++;
+            
+            const configId = config ? config.id : `config-${configCounter}-${Date.now()}`;
+            const boothType = config ? config.boothType : '';
+            const quantity = config ? config.quantity : 10;
+            const price = config ? config.price : 3000;
+            
+            const configDiv = document.createElement('div');
+            configDiv.className = 'border border-gray-200 rounded-lg p-4 bg-gray-50';
+            configDiv.setAttribute('data-config-id', configId);
+            
+            configDiv.innerHTML = `
+                <div class="flex justify-between items-center mb-3">
+                    <h4 class="text-sm font-medium text-gray-700">攤位配置</h4>
+                    <button type="button" onclick="removeBoothConfig('${configId}')" class="text-red-500 hover:text-red-700">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">攤位類型</label>
+                        <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500" required>
+                            <option value="">請選擇攤位類型</option>
+                            ${Object.values(boothData).map(booth => 
+                                `<option value="${booth.id}" ${booth.id === boothType ? 'selected' : ''}>${booth.name} (${booth.size})</option>`
+                            ).join('')}
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">數量</label>
+                        <input type="number" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500" min="1" value="${quantity}" onchange="updateQuotaDisplay()" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">價格 (NT$/天)</label>
+                        <input type="number" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500" min="0" value="${price}" required>
+                    </div>
+                </div>
+            `;
+            
+            container.appendChild(configDiv);
+        }
+
+        // 移除攤位配置
+        function removeBoothConfig(configId) {
+            const configDiv = document.querySelector(`[data-config-id="${configId}"]`);
+            if (configDiv) {
+                configDiv.remove();
+                updateQuotaDisplay(); // 更新剩餘名額
+            }
+        }
+
+        // 清除所有攤位配置
+        function clearBoothConfigs() {
+            document.getElementById('booth-configs').innerHTML = '';
+        }
+
+        // 新增日期輸入
+        function addDateInput(date = '') {
+            const container = document.getElementById('date-inputs');
+            dateInputCounter++;
+            
+            const dateDiv = document.createElement('div');
+            dateDiv.className = 'flex items-center space-x-3';
+            dateDiv.setAttribute('data-date-input', dateInputCounter);
+            
+            dateDiv.innerHTML = `
+                <input type="date" class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500" value="${date}" required>
+                <button type="button" onclick="removeDateInput('${dateInputCounter}')" class="text-red-500 hover:text-red-700">
+                    <i class="fas fa-trash"></i>
+                </button>
+            `;
+            
+            container.appendChild(dateDiv);
+        }
+
+        // 移除日期輸入
+        function removeDateInput(inputId) {
+            const dateDiv = document.querySelector(`[data-date-input="${inputId}"]`);
+            if (dateDiv) {
+                dateDiv.remove();
+            }
+        }
+
+        // 清除所有日期輸入
+        function clearDateInputs() {
+            document.getElementById('date-inputs').innerHTML = '';
+        }
+
+        // 計算攤位配置總數量
+        function calculateTotalQuota() {
+            const configElements = document.querySelectorAll('#booth-configs [data-config-id]');
+            let total = 0;
+            
+            configElements.forEach(configDiv => {
+                const quantityInput = configDiv.querySelector('input[type="number"]:nth-of-type(1)');
+                if (quantityInput && quantityInput.value) {
+                    total += parseInt(quantityInput.value) || 0;
+                }
+            });
+            
+            return total;
+        }
+
+        // 更新剩餘名額顯示
+        function updateQuotaDisplay() {
+            const total = calculateTotalQuota();
+            const quotaInput = document.getElementById('group-quota');
+            if (quotaInput) {
+                quotaInput.value = total;
+            }
+        }
+
+        // 渲染參加日期列表
+        function renderDateGroupList() {
+            const container = document.getElementById('date-group-list');
+            container.innerHTML = '';
+
+            Object.values(dateGroupData).forEach(group => {
+                const groupItem = document.createElement('div');
+                groupItem.className = 'border border-gray-200 rounded-lg p-6 bg-gradient-to-r from-yellow-50 to-orange-50';
+                groupItem.setAttribute('data-id', group.id);
+                
+                // 格式化日期顯示
+                const formattedDates = group.dates.map(date => {
+                    const dateObj = new Date(date);
+                    const dayOfWeek = ['日', '一', '二', '三', '四', '五', '六'][dateObj.getDay()];
+                    return `${date.split('-')[1]}/${date.split('-')[2]}（${dayOfWeek}）`;
+                }).join('、');
+                
+                // 計算攤位總數量
+                const totalBooths = group.boothConfigs.reduce((sum, config) => sum + config.quantity, 0);
+                
+                groupItem.innerHTML = `
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-yellow-100 rounded-lg mr-4">
+                                <i class="fas fa-calendar-week text-yellow-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900">${group.name}</h3>
+                                <p class="text-sm text-gray-600">活動日期：${formattedDates}</p>
+                                <p class="text-sm text-gray-500">時間：${group.startTime} - ${group.endTime}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="text-right">
+                                <div class="text-sm text-gray-500">總攤位數</div>
+                                <div class="font-bold text-lg text-gray-900">${totalBooths}</div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <button type="button" onclick="editDateGroup('${group.id}')" class="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200">
+                                    <i class="fas fa-edit mr-1"></i>
+                                    編輯
+                                </button>
+                                <button type="button" onclick="deleteDateGroup('${group.id}')" class="px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200">
+                                    <i class="fas fa-trash mr-1"></i>
+                                    刪除
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="ml-16">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                            <i class="fas fa-store text-yellow-600 mr-2"></i>
+                            攤位配置：
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            ${group.boothConfigs.map(config => {
+                                const booth = boothData[config.boothType];
+                                return `
+                                    <div class="p-4 border rounded-lg bg-white shadow-sm hover:shadow-md transition-shadow">
+                                        <div class="flex justify-between items-start mb-3">
+                                            <div>
+                                                <span class="block font-bold text-gray-900">${booth.name}</span>
+                                                <span class="block text-sm text-gray-500">${booth.size}</span>
+                                            </div>
+                                            <span class="text-xl font-bold text-yellow-600">NT$ ${config.price.toLocaleString()}</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-sm text-gray-500">可用數量</span>
+                                            <span class="font-bold text-gray-900">${config.quantity} 個</span>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(groupItem);
+            });
+        }
+
+        // 處理參加日期表單提交
+        document.getElementById('date-group-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('group-name').value;
+            const startTime = document.getElementById('group-start-time').value;
+            const endTime = document.getElementById('group-end-time').value;
+            const quota = calculateTotalQuota(); // 自動計算剩餘名額
+            
+            // 獲取日期
+            const dateInputs = document.querySelectorAll('#date-inputs input[type="date"]');
+            const dates = Array.from(dateInputs).map(input => input.value).filter(date => date);
+            
+            if (dates.length === 0) {
+                alert('請至少新增一個活動日期');
+                return;
+            }
+            
+            // 獲取攤位配置
+            const configElements = document.querySelectorAll('#booth-configs [data-config-id]');
+            const boothConfigs = [];
+            
+            configElements.forEach(configDiv => {
+                const select = configDiv.querySelector('select');
+                const quantityInput = configDiv.querySelector('input[type="number"]:nth-of-type(1)');
+                const priceInput = configDiv.querySelector('input[type="number"]:nth-of-type(2)');
+                
+                if (select.value && quantityInput.value && priceInput.value) {
+                    boothConfigs.push({
+                        id: configDiv.getAttribute('data-config-id'),
+                        boothType: select.value,
+                        quantity: parseInt(quantityInput.value),
+                        price: parseInt(priceInput.value)
+                    });
+                }
+            });
+            
+            if (boothConfigs.length === 0) {
+                alert('請至少新增一個攤位配置');
+                return;
+            }
+            
+            if (editingDateGroupId) {
+                // 編輯現有參加日期
+                dateGroupData[editingDateGroupId] = {
+                    ...dateGroupData[editingDateGroupId],
+                    name,
+                    dates,
+                    startTime,
+                    endTime,
+                    remainingQuota: quota,
+                    boothConfigs
+                };
+            } else {
+                // 新增參加日期
+                const newId = 'group-' + Date.now();
+                dateGroupData[newId] = {
+                    id: newId,
+                    name,
+                    dates,
+                    startTime,
+                    endTime,
+                    remainingQuota: quota,
+                    boothConfigs
+                };
+            }
+            
+            renderDateGroupList();
+            closeDateGroupModal();
+        });
+
+        // 點擊參加日期模態框背景關閉
+        document.getElementById('date-group-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeDateGroupModal();
+            }
+        });
 
         // 攤位相關函數
         // 開啟新增攤位模態框
@@ -974,6 +1585,7 @@
 
         // 初始化
         document.addEventListener('DOMContentLoaded', function() {
+            renderDateGroupList();
             renderBoothList();
             renderEquipmentList();
         });

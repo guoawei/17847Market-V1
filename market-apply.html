@@ -65,62 +65,246 @@
                                 </div>
                             </div>
 
-                            <!-- 選擇參加日期 -->
+                            <!-- 選擇參加日期和攤位 -->
                             <div>
-                                <h2 class="text-xl font-bold text-gray-900 mb-4">選擇參加日期</h2>
-                                <div class="space-y-4">
-                                    <div class="flex items-center">
-                                        <input type="checkbox" id="day1" class="h-4 w-4 text-yellow-500 focus:ring-yellow-500 border-gray-300 rounded">
-                                        <label for="day1" class="ml-3">
-                                            <span class="block text-sm font-medium text-gray-900">3/16（六）</span>
-                                            <span class="block text-sm text-gray-500">10:00-18:00</span>
-                                        </label>
-                                        <span class="ml-auto text-sm text-gray-500">剩餘名額：15</span>
+                                <h2 class="text-xl font-bold text-gray-900 mb-4">選擇參加日期和攤位</h2>
+                                <div class="space-y-6">
+                                    <!-- 3/16 星期六 -->
+                                    <div class="border border-gray-200 rounded-lg p-4">
+                                        <div class="flex items-center justify-between mb-4">
+                                            <div class="flex items-center">
+                                                <input type="checkbox" id="day1" name="selectedDays" value="2024-03-16" class="h-4 w-4 text-yellow-500 focus:ring-yellow-500 border-gray-300 rounded" onchange="updateBoothSelection()">
+                                                <label for="day1" class="ml-3">
+                                                    <span class="block text-lg font-medium text-gray-900">3/16（六）</span>
+                                                    <span class="block text-sm text-gray-500">10:00-18:00</span>
+                                                </label>
+                                            </div>
+                                            <span class="text-sm text-gray-500">剩餘名額：15</span>
+                                        </div>
+                                        
+                                        <!-- 3/16 攤位選擇 -->
+                                        <div id="day1-booths" class="hidden ml-7 space-y-3">
+                                            <h4 class="text-sm font-medium text-gray-700 mb-3">選擇攤位類型：</h4>
+                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                                <div class="relative">
+                                                    <input type="radio" name="booth-size-day1" id="size1-day1" value="standard" class="peer sr-only" onchange="calculateTotal()">
+                                                    <label for="size1-day1" class="block p-3 border rounded-lg cursor-pointer hover:border-yellow-500 peer-checked:border-yellow-500 peer-checked:bg-yellow-50">
+                                                        <div class="flex justify-between items-center">
+                                                            <div>
+                                                                <span class="block font-medium text-gray-900">標準攤位</span>
+                                                                <span class="block text-sm text-gray-500">3m x 3m</span>
+                                                            </div>
+                                                            <div class="flex items-center">
+                                                                <span class="font-medium text-gray-900 mr-2">NT$ 3,000</span>
+                                                                <i class="fas fa-check-circle text-yellow-500 opacity-0 peer-checked:opacity-100"></i>
+                                                            </div>
+                                                        </div>
+                                                    </label>
+                                                </div>
+                                                <div class="relative">
+                                                    <input type="radio" name="booth-size-day1" id="size2-day1" value="large" class="peer sr-only" onchange="calculateTotal()">
+                                                    <label for="size2-day1" class="block p-3 border rounded-lg cursor-pointer hover:border-yellow-500 peer-checked:border-yellow-500 peer-checked:bg-yellow-50">
+                                                        <div class="flex justify-between items-center">
+                                                            <div>
+                                                                <span class="block font-medium text-gray-900">大型攤位</span>
+                                                                <span class="block text-sm text-gray-500">4m x 4m</span>
+                                                            </div>
+                                                            <div class="flex items-center">
+                                                                <span class="font-medium text-gray-900 mr-2">NT$ 4,500</span>
+                                                                <i class="fas fa-check-circle text-yellow-500 opacity-0 peer-checked:opacity-100"></i>
+                                                            </div>
+                                                        </div>
+                                                    </label>
+                                                </div>
+                                                <div class="relative">
+                                                    <input type="radio" name="booth-size-day1" id="size3-day1" value="small" class="peer sr-only" onchange="calculateTotal()">
+                                                    <label for="size3-day1" class="block p-3 border rounded-lg cursor-pointer hover:border-yellow-500 peer-checked:border-yellow-500 peer-checked:bg-yellow-50">
+                                                        <div class="flex justify-between items-center">
+                                                            <div>
+                                                                <span class="block font-medium text-gray-900">小型攤位</span>
+                                                                <span class="block text-sm text-gray-500">2m x 2m</span>
+                                                            </div>
+                                                            <div class="flex items-center">
+                                                                <span class="font-medium text-gray-900 mr-2">NT$ 2,000</span>
+                                                                <i class="fas fa-check-circle text-yellow-500 opacity-0 peer-checked:opacity-100"></i>
+                                                            </div>
+                                                        </div>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="flex items-center">
-                                        <input type="checkbox" id="day2" class="h-4 w-4 text-yellow-500 focus:ring-yellow-500 border-gray-300 rounded">
-                                        <label for="day2" class="ml-3">
-                                            <span class="block text-sm font-medium text-gray-900">3/17（日）</span>
-                                            <span class="block text-sm text-gray-500">10:00-18:00</span>
-                                        </label>
-                                        <span class="ml-auto text-sm text-gray-500">剩餘名額：12</span>
+
+                                    <!-- 3/17 星期日 -->
+                                    <div class="border border-gray-200 rounded-lg p-4">
+                                        <div class="flex items-center justify-between mb-4">
+                                            <div class="flex items-center">
+                                                <input type="checkbox" id="day2" name="selectedDays" value="2024-03-17" class="h-4 w-4 text-yellow-500 focus:ring-yellow-500 border-gray-300 rounded" onchange="updateBoothSelection()">
+                                                <label for="day2" class="ml-3">
+                                                    <span class="block text-lg font-medium text-gray-900">3/17（日）</span>
+                                                    <span class="block text-sm text-gray-500">10:00-18:00</span>
+                                                </label>
+                                            </div>
+                                            <span class="text-sm text-gray-500">剩餘名額：12</span>
+                                        </div>
+                                        
+                                        <!-- 3/17 攤位選擇 -->
+                                        <div id="day2-booths" class="hidden ml-7 space-y-3">
+                                            <h4 class="text-sm font-medium text-gray-700 mb-3">選擇攤位類型：</h4>
+                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                                <div class="relative">
+                                                    <input type="radio" name="booth-size-day2" id="size1-day2" value="standard" class="peer sr-only" onchange="calculateTotal()">
+                                                    <label for="size1-day2" class="block p-3 border rounded-lg cursor-pointer hover:border-yellow-500 peer-checked:border-yellow-500 peer-checked:bg-yellow-50">
+                                                        <div class="flex justify-between items-center">
+                                                            <div>
+                                                                <span class="block font-medium text-gray-900">標準攤位</span>
+                                                                <span class="block text-sm text-gray-500">3m x 3m</span>
+                                                            </div>
+                                                            <div class="flex items-center">
+                                                                <span class="font-medium text-gray-900 mr-2">NT$ 3,000</span>
+                                                                <i class="fas fa-check-circle text-yellow-500 opacity-0 peer-checked:opacity-100"></i>
+                                                            </div>
+                                                        </div>
+                                                    </label>
+                                                </div>
+                                                <div class="relative">
+                                                    <input type="radio" name="booth-size-day2" id="size2-day2" value="large" class="peer sr-only" onchange="calculateTotal()">
+                                                    <label for="size2-day2" class="block p-3 border rounded-lg cursor-pointer hover:border-yellow-500 peer-checked:border-yellow-500 peer-checked:bg-yellow-50">
+                                                        <div class="flex justify-between items-center">
+                                                            <div>
+                                                                <span class="block font-medium text-gray-900">大型攤位</span>
+                                                                <span class="block text-sm text-gray-500">4m x 4m</span>
+                                                            </div>
+                                                            <div class="flex items-center">
+                                                                <span class="font-medium text-gray-900 mr-2">NT$ 4,500</span>
+                                                                <i class="fas fa-check-circle text-yellow-500 opacity-0 peer-checked:opacity-100"></i>
+                                                            </div>
+                                                        </div>
+                                                    </label>
+                                                </div>
+                                                <div class="relative">
+                                                    <input type="radio" name="booth-size-day2" id="size3-day2" value="small" class="peer sr-only" onchange="calculateTotal()">
+                                                    <label for="size3-day2" class="block p-3 border rounded-lg cursor-pointer hover:border-yellow-500 peer-checked:border-yellow-500 peer-checked:bg-yellow-50">
+                                                        <div class="flex justify-between items-center">
+                                                            <div>
+                                                                <span class="block font-medium text-gray-900">小型攤位</span>
+                                                                <span class="block text-sm text-gray-500">2m x 2m</span>
+                                                            </div>
+                                                            <div class="flex items-center">
+                                                                <span class="font-medium text-gray-900 mr-2">NT$ 2,000</span>
+                                                                <i class="fas fa-check-circle text-yellow-500 opacity-0 peer-checked:opacity-100"></i>
+                                                            </div>
+                                                        </div>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 選擇提示 -->
+                                <div class="mt-4 p-3 bg-blue-50 rounded-lg">
+                                    <div class="flex items-start">
+                                        <i class="fas fa-info-circle text-blue-500 mt-0.5 mr-2"></i>
+                                        <div class="text-sm text-blue-700">
+                                            <p class="font-medium">選擇提示：</p>
+                                            <p>• 請先選擇參加日期，再為每一天選擇攤位類型</p>
+                                            <p>• 每天的攤位選擇是獨立的，可以選擇不同的攤位大小</p>
+                                            <p>• 費用會根據選擇的日期和攤位類型自動計算</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- 選擇攤位大小 -->
+                            <!-- 攤商類型 -->
                             <div>
-                                <h2 class="text-xl font-bold text-gray-900 mb-4">選擇攤位大小</h2>
-                                <div class="grid grid-cols-2 gap-4">
+                                <h2 class="text-xl font-bold text-gray-900 mb-4">攤商類型</h2>
+                                <p class="text-sm text-gray-600 mb-4">請選擇您的攤商類型，這有助於市集方了解您的商品性質</p>
+                                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                                     <div class="relative">
-                                        <input type="radio" name="booth-size" id="size1" class="peer sr-only" checked>
-                                        <label for="size1" class="block p-4 border rounded-lg cursor-pointer hover:border-yellow-500 peer-checked:border-yellow-500 peer-checked:bg-yellow-50">
-                                            <div class="flex justify-between items-start">
-                                                <div>
-                                                    <span class="block font-medium text-gray-900">標準攤位</span>
-                                                    <span class="block text-sm text-gray-500">2.5m x 2.5m</span>
+                                        <input type="radio" id="vendor-food" name="vendor-type" value="food" class="peer sr-only" onchange="updateVendorTypeSelection()">
+                                        <label for="vendor-food" class="block p-4 border rounded-lg cursor-pointer hover:border-yellow-500 peer-checked:border-yellow-500 peer-checked:bg-yellow-50">
+                                            <div class="flex flex-col items-center text-center">
+                                                <div class="p-3 bg-yellow-100 rounded-full mb-2">
+                                                    <i class="fas fa-utensils text-yellow-600 text-xl"></i>
                                                 </div>
-                                                <div class="flex items-center">
-                                                    <span class="font-medium text-gray-900 mr-2">NT$ 2,500/日</span>
-                                                    <i class="fas fa-check-circle text-yellow-500 opacity-0 peer-checked:opacity-100"></i>
-                                                </div>
+                                                <span class="font-medium text-gray-900">美食</span>
+                                                <span class="text-sm text-gray-500">餐飲、飲品</span>
                                             </div>
                                         </label>
                                     </div>
+                                    
                                     <div class="relative">
-                                        <input type="radio" name="booth-size" id="size2" class="peer sr-only">
-                                        <label for="size2" class="block p-4 border rounded-lg cursor-pointer hover:border-yellow-500 peer-checked:border-yellow-500 peer-checked:bg-yellow-50">
-                                            <div class="flex justify-between items-start">
-                                                <div>
-                                                    <span class="block font-medium text-gray-900">大型攤位</span>
-                                                    <span class="block text-sm text-gray-500">3m x 3m</span>
+                                        <input type="radio" id="vendor-handmade" name="vendor-type" value="handmade" class="peer sr-only" onchange="updateVendorTypeSelection()">
+                                        <label for="vendor-handmade" class="block p-4 border rounded-lg cursor-pointer hover:border-yellow-500 peer-checked:border-yellow-500 peer-checked:bg-yellow-50">
+                                            <div class="flex flex-col items-center text-center">
+                                                <div class="p-3 bg-yellow-100 rounded-full mb-2">
+                                                    <i class="fas fa-palette text-yellow-600 text-xl"></i>
                                                 </div>
-                                                <div class="flex items-center">
-                                                    <span class="font-medium text-gray-900 mr-2">NT$ 3,500/日</span>
-                                                    <i class="fas fa-check-circle text-yellow-500 opacity-0 peer-checked:opacity-100"></i>
-                                                </div>
+                                                <span class="font-medium text-gray-900">手工創作</span>
+                                                <span class="text-sm text-gray-500">藝術品、工藝品</span>
                                             </div>
                                         </label>
+                                    </div>
+                                    
+                                    <div class="relative">
+                                        <input type="radio" id="vendor-clothing" name="vendor-type" value="clothing" class="peer sr-only" onchange="updateVendorTypeSelection()">
+                                        <label for="vendor-clothing" class="block p-4 border rounded-lg cursor-pointer hover:border-yellow-500 peer-checked:border-yellow-500 peer-checked:bg-yellow-50">
+                                            <div class="flex flex-col items-center text-center">
+                                                <div class="p-3 bg-yellow-100 rounded-full mb-2">
+                                                    <i class="fas fa-tshirt text-yellow-600 text-xl"></i>
+                                                </div>
+                                                <span class="font-medium text-gray-900">服飾配件</span>
+                                                <span class="text-sm text-gray-500">衣服、包包、飾品</span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="relative">
+                                        <input type="radio" id="vendor-beauty" name="vendor-type" value="beauty" class="peer sr-only" onchange="updateVendorTypeSelection()">
+                                        <label for="vendor-beauty" class="block p-4 border rounded-lg cursor-pointer hover:border-yellow-500 peer-checked:border-yellow-500 peer-checked:bg-yellow-50">
+                                            <div class="flex flex-col items-center text-center">
+                                                <div class="p-3 bg-yellow-100 rounded-full mb-2">
+                                                    <i class="fas fa-spa text-yellow-600 text-xl"></i>
+                                                </div>
+                                                <span class="font-medium text-gray-900">美容保養</span>
+                                                <span class="text-sm text-gray-500">化妝品、保養品</span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="relative">
+                                        <input type="radio" id="vendor-home" name="vendor-type" value="home" class="peer sr-only" onchange="updateVendorTypeSelection()">
+                                        <label for="vendor-home" class="block p-4 border rounded-lg cursor-pointer hover:border-yellow-500 peer-checked:border-yellow-500 peer-checked:bg-yellow-50">
+                                            <div class="flex flex-col items-center text-center">
+                                                <div class="p-3 bg-yellow-100 rounded-full mb-2">
+                                                    <i class="fas fa-home text-yellow-600 text-xl"></i>
+                                                </div>
+                                                <span class="font-medium text-gray-900">居家生活</span>
+                                                <span class="text-sm text-gray-500">家用品、裝飾品</span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="relative">
+                                        <input type="radio" id="vendor-other" name="vendor-type" value="other" class="peer sr-only" onchange="updateVendorTypeSelection()">
+                                        <label for="vendor-other" class="block p-4 border rounded-lg cursor-pointer hover:border-yellow-500 peer-checked:border-yellow-500 peer-checked:bg-yellow-50">
+                                            <div class="flex flex-col items-center text-center">
+                                                <div class="p-3 bg-yellow-100 rounded-full mb-2">
+                                                    <i class="fas fa-ellipsis-h text-yellow-600 text-xl"></i>
+                                                </div>
+                                                <span class="font-medium text-gray-900">其他</span>
+                                                <span class="text-sm text-gray-500">其他類型商品</span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <!-- 已選擇的攤商類型顯示 -->
+                                <div id="selected-vendor-types" class="mt-4 hidden">
+                                    <h4 class="text-sm font-medium text-gray-700 mb-2">已選擇的攤商類型：</h4>
+                                    <div id="selected-types-list" class="flex flex-wrap gap-2">
+                                        <!-- 動態顯示已選擇的類型 -->
                                     </div>
                                 </div>
                             </div>
@@ -178,20 +362,16 @@
                             <div>
                                 <h2 class="text-xl font-bold text-gray-900 mb-4">費用試算</h2>
                                 <div class="bg-gray-50 p-4 rounded-lg">
-                                    <div class="space-y-2">
-                                        <div class="flex justify-between text-sm">
-                                            <span class="text-gray-500">標準攤位 x 2日</span>
-                                            <span class="text-gray-900">NT$ 5,000</span>
+                                    <div id="cost-breakdown" class="space-y-2">
+                                        <!-- 動態費用項目會在這裡顯示 -->
+                                        <div class="text-center text-gray-500 py-4">
+                                            請選擇參加日期和攤位類型來查看費用明細
                                         </div>
-                                        <div class="flex justify-between text-sm">
-                                            <span class="text-gray-500">保證金（可退還）</span>
-                                            <span class="text-gray-900">NT$ 1,000</span>
-                                        </div>
-                                        <div class="pt-2 border-t border-gray-200">
-                                            <div class="flex justify-between">
-                                                <span class="font-medium text-gray-900">總計</span>
-                                                <span class="font-medium text-gray-900">NT$ 6,000</span>
-                                            </div>
+                                    </div>
+                                    <div class="pt-3 border-t border-gray-200">
+                                        <div class="flex justify-between">
+                                            <span class="font-medium text-gray-900">總計</span>
+                                            <span id="total-cost" class="font-medium text-gray-900">NT$ 0</span>
                                         </div>
                                     </div>
                                 </div>
@@ -212,5 +392,185 @@
             </div>
         </main>
     </div>
+    <!-- JavaScript -->
+    <script>
+        // 攤位價格設定
+        const boothPrices = {
+            standard: 3000,
+            large: 4500,
+            small: 2000
+        };
+        
+        const depositAmount = 1000; // 保證金
+        
+        // 更新攤位選擇顯示
+        function updateBoothSelection() {
+            const day1Checkbox = document.getElementById('day1');
+            const day2Checkbox = document.getElementById('day2');
+            const day1Booths = document.getElementById('day1-booths');
+            const day2Booths = document.getElementById('day2-booths');
+            
+            // 顯示/隱藏對應的攤位選擇區域
+            if (day1Checkbox.checked) {
+                day1Booths.classList.remove('hidden');
+            } else {
+                day1Booths.classList.add('hidden');
+                // 清除該天的攤位選擇
+                const day1Radios = document.querySelectorAll('input[name="booth-size-day1"]');
+                day1Radios.forEach(radio => radio.checked = false);
+            }
+            
+            if (day2Checkbox.checked) {
+                day2Booths.classList.remove('hidden');
+            } else {
+                day2Booths.classList.add('hidden');
+                // 清除該天的攤位選擇
+                const day2Radios = document.querySelectorAll('input[name="booth-size-day2"]');
+                day2Radios.forEach(radio => radio.checked = false);
+            }
+            
+            calculateTotal();
+        }
+        
+        // 計算總費用
+        function calculateTotal() {
+            const breakdown = document.getElementById('cost-breakdown');
+            const totalCost = document.getElementById('total-cost');
+            
+            let total = 0;
+            let breakdownItems = [];
+            
+            // 檢查3/16的選擇
+            const day1Checkbox = document.getElementById('day1');
+            if (day1Checkbox.checked) {
+                const day1Booth = document.querySelector('input[name="booth-size-day1"]:checked');
+                if (day1Booth) {
+                    const price = boothPrices[day1Booth.value];
+                    const boothName = getBoothDisplayName(day1Booth.value);
+                    total += price;
+                    breakdownItems.push({
+                        description: `3/16 ${boothName}`,
+                        amount: price
+                    });
+                }
+            }
+            
+            // 檢查3/17的選擇
+            const day2Checkbox = document.getElementById('day2');
+            if (day2Checkbox.checked) {
+                const day2Booth = document.querySelector('input[name="booth-size-day2"]:checked');
+                if (day2Booth) {
+                    const price = boothPrices[day2Booth.value];
+                    const boothName = getBoothDisplayName(day2Booth.value);
+                    total += price;
+                    breakdownItems.push({
+                        description: `3/17 ${boothName}`,
+                        amount: price
+                    });
+                }
+            }
+            
+            // 更新費用明細
+            if (breakdownItems.length === 0) {
+                breakdown.innerHTML = '<div class="text-center text-gray-500 py-4">請選擇參加日期和攤位類型來查看費用明細</div>';
+                totalCost.textContent = 'NT$ 0';
+            } else {
+                let breakdownHTML = '';
+                breakdownItems.forEach(item => {
+                    breakdownHTML += `
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-500">${item.description}</span>
+                            <span class="text-gray-900">NT$ ${item.amount.toLocaleString()}</span>
+                        </div>
+                    `;
+                });
+                
+                // 如果有選擇任何攤位，顯示保證金
+                if (total > 0) {
+                    breakdownHTML += `
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-500">保證金（可退還）</span>
+                            <span class="text-gray-900">NT$ ${depositAmount.toLocaleString()}</span>
+                        </div>
+                    `;
+                    total += depositAmount;
+                }
+                
+                breakdown.innerHTML = breakdownHTML;
+                totalCost.textContent = `NT$ ${total.toLocaleString()}`;
+            }
+        }
+        
+        // 獲取攤位顯示名稱
+        function getBoothDisplayName(boothType) {
+            const names = {
+                standard: '標準攤位',
+                large: '大型攤位',
+                small: '小型攤位'
+            };
+            return names[boothType] || boothType;
+        }
+        
+        // 表單驗證
+        function validateForm() {
+            const selectedDays = document.querySelectorAll('input[name="selectedDays"]:checked');
+            
+            if (selectedDays.length === 0) {
+                alert('請至少選擇一個參加日期');
+                return false;
+            }
+            
+            // 檢查每個選中的日期是否都有選擇攤位
+            for (let dayCheckbox of selectedDays) {
+                const dayValue = dayCheckbox.value;
+                const boothRadios = document.querySelectorAll(`input[name="booth-size-${dayValue === '2024-03-16' ? 'day1' : 'day2'}"]:checked`);
+                
+                if (boothRadios.length === 0) {
+                    const dayName = dayValue === '2024-03-16' ? '3/16（六）' : '3/17（日）';
+                    alert(`請為 ${dayName} 選擇攤位類型`);
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+        
+        // 攤商類型資料
+        const vendorTypeInfo = {
+            food: { name: '美食', icon: 'fas fa-utensils', description: '餐飲、飲品' },
+            handmade: { name: '手工創作', icon: 'fas fa-palette', description: '藝術品、工藝品' },
+            clothing: { name: '服飾配件', icon: 'fas fa-tshirt', description: '衣服、包包、飾品' },
+            beauty: { name: '美容保養', icon: 'fas fa-spa', description: '化妝品、保養品' },
+            home: { name: '居家生活', icon: 'fas fa-home', description: '家用品、裝飾品' },
+            other: { name: '其他', icon: 'fas fa-ellipsis-h', description: '其他類型商品' }
+        };
+        
+        // 更新攤商類型選擇顯示
+        function updateVendorTypeSelection() {
+            const selectedType = document.querySelector('input[name="vendor-type"]:checked');
+            const selectedTypesContainer = document.getElementById('selected-vendor-types');
+            const selectedTypesList = document.getElementById('selected-types-list');
+            
+            if (!selectedType) {
+                selectedTypesContainer.classList.add('hidden');
+            } else {
+                selectedTypesContainer.classList.remove('hidden');
+                
+                const typeInfo = vendorTypeInfo[selectedType.value];
+                selectedTypesList.innerHTML = `
+                    <div class="inline-flex items-center px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">
+                        <i class="${typeInfo.icon} mr-2"></i>
+                        ${typeInfo.name}
+                    </div>
+                `;
+            }
+        }
+        
+        // 頁面載入時的初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            calculateTotal();
+            updateVendorTypeSelection();
+        });
+    </script>
 </body>
 </html> 
