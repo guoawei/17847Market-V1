@@ -446,51 +446,152 @@
                   </p>
                 </div>
 
-                <!-- 攤位類型選擇 -->
-                <div class="border rounded-lg">
-                  <div class="p-4 border-b">
-                    <div class="flex justify-between items-center">
-                      <div>
-                        <h3 class="font-medium">標準攤位</h3>
-                        <p class="text-sm text-gray-500">3m x 3m</p>
+                <!-- 多日期攤位選擇（加入捲軸） -->
+                <div
+                  class="space-y-3 max-h-96 overflow-y-auto pr-2"
+                  style="
+                    scrollbar-width: thin;
+                    scrollbar-color: #fcd34d #f3f4f6;
+                  "
+                >
+                  <!-- 第一天 -->
+                  <div class="border rounded-lg overflow-hidden">
+                    <button
+                      onclick="toggleDay(event, 'day1')"
+                      class="w-full bg-gray-100 px-4 py-3 border-b flex items-center justify-between hover:bg-gray-200 transition"
+                    >
+                      <div class="text-left">
+                        <h3 class="font-bold text-gray-800">
+                          <i
+                            class="fas fa-calendar-day mr-2 text-yellow-500"
+                          ></i>
+                          2024/1/20 (六)
+                        </h3>
+                        <p class="text-xs text-gray-600 mt-1">10:00 - 18:00</p>
                       </div>
-                      <div class="text-right">
-                        <p class="font-medium">NT$ 5,000</p>
-                        <p class="text-sm text-gray-500">剩餘 5 個</p>
+                      <i
+                        class="fas fa-chevron-down transition-transform"
+                        id="day1-icon"
+                      ></i>
+                    </button>
+                    <div id="day1-content" class="divide-y">
+                      <!-- 標準攤位 -->
+                      <div class="p-4 hover:bg-gray-50 transition">
+                        <div class="flex justify-between items-start">
+                          <div class="flex-1">
+                            <h4 class="font-medium text-gray-900">標準攤位</h4>
+                            <p class="text-sm text-gray-500 mt-1">3m x 3m</p>
+                            <p class="text-sm text-gray-500">桌子x1、椅子x2</p>
+                          </div>
+                          <div class="text-right ml-4">
+                            <p class="font-bold text-gray-900">NT$ 5,000</p>
+                            <p class="text-sm text-green-600 font-medium mt-1">
+                              <i class="fas fa-store mr-1"></i>剩餘 5 個
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- 加大攤位 -->
+                      <div class="p-4 hover:bg-gray-50 transition">
+                        <div class="flex justify-between items-start">
+                          <div class="flex-1">
+                            <h4 class="font-medium text-gray-900">加大攤位</h4>
+                            <p class="text-sm text-gray-500 mt-1">4m x 3m</p>
+                            <p class="text-sm text-gray-500">桌子x2、椅子x2</p>
+                          </div>
+                          <div class="text-right ml-4">
+                            <p class="font-bold text-gray-900">NT$ 8,000</p>
+                            <p class="text-sm text-orange-600 font-medium mt-1">
+                              <i class="fas fa-store mr-1"></i>剩餘 3 個
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <div class="p-4">
-                    <div class="flex justify-between items-center">
-                      <div>
-                        <h3 class="font-medium">加大攤位</h3>
-                        <p class="text-sm text-gray-500">4m x 3m</p>
+
+                  <!-- 第二天 -->
+                  <div class="border rounded-lg overflow-hidden">
+                    <button
+                      onclick="toggleDay(event, 'day2')"
+                      class="w-full bg-gray-100 px-4 py-3 border-b flex items-center justify-between hover:bg-gray-200 transition"
+                    >
+                      <div class="text-left">
+                        <h3 class="font-bold text-gray-800">
+                          <i
+                            class="fas fa-calendar-day mr-2 text-yellow-500"
+                          ></i>
+                          2024/1/21 (日)
+                        </h3>
+                        <p class="text-xs text-gray-600 mt-1">10:00 - 18:00</p>
                       </div>
-                      <div class="text-right">
-                        <p class="font-medium">NT$ 8,000</p>
-                        <p class="text-sm text-gray-500">剩餘 3 個</p>
+                      <i
+                        class="fas fa-chevron-down transition-transform"
+                        id="day2-icon"
+                      ></i>
+                    </button>
+                    <div id="day2-content" class="divide-y">
+                      <!-- 標準攤位 -->
+                      <div class="p-4 hover:bg-gray-50 transition">
+                        <div class="flex justify-between items-start">
+                          <div class="flex-1">
+                            <h4 class="font-medium text-gray-900">標準攤位</h4>
+                            <p class="text-sm text-gray-500 mt-1">3m x 3m</p>
+                            <p class="text-sm text-gray-500">桌子x1、椅子x2</p>
+                          </div>
+                          <div class="text-right ml-4">
+                            <p class="font-bold text-gray-900">NT$ 5,000</p>
+                            <p class="text-sm text-green-600 font-medium mt-1">
+                              <i class="fas fa-store mr-1"></i>剩餘 8 個
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- 加大攤位 -->
+                      <div class="p-4 hover:bg-gray-50 transition">
+                        <div class="flex justify-between items-start">
+                          <div class="flex-1">
+                            <h4 class="font-medium text-gray-900">加大攤位</h4>
+                            <p class="text-sm text-gray-500 mt-1">4m x 3m</p>
+                            <p class="text-sm text-gray-500">桌子x2、椅子x2</p>
+                          </div>
+                          <div class="text-right ml-4">
+                            <p class="font-bold text-gray-900">NT$ 8,000</p>
+                            <p class="text-sm text-red-600 font-medium mt-1">
+                              <i class="fas fa-store mr-1"></i>剩餘 1 個
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
+                <!-- 優惠說明 -->
+                <div class="p-3 bg-blue-50 rounded-lg">
+                  <p class="text-sm text-blue-800">
+                    <i class="fas fa-tag mr-2"></i>
+                    兩日皆報名可享 95 折優惠
+                  </p>
+                </div>
+
                 <!-- 報名按鈕 -->
                 <a
                   href="market-apply.html"
-                  class="block w-full bg-yellow-500 text-white px-6 py-3 rounded-lg hover:bg-yellow-600 transition duration-300 text-center"
+                  class="block w-full bg-yellow-500 text-white px-6 py-3 rounded-lg hover:bg-yellow-600 transition duration-300 text-center font-medium"
                 >
-                  立即報名
+                  <i class="fas fa-shopping-cart mr-2"></i>立即報名
                 </a>
 
                 <!-- 其他資訊 -->
-                <div class="text-sm text-gray-500">
-                  <p class="flex items-center mb-2">
-                    <i class="fas fa-info-circle mr-2"></i>
-                    報名前請詳閱注意事項
+                <div class="text-sm text-gray-500 space-y-2">
+                  <p class="flex items-start">
+                    <i class="fas fa-info-circle mr-2 mt-0.5"></i>
+                    <span>報名前請詳閱注意事項</span>
                   </p>
-                  <p class="flex items-center">
-                    <i class="fas fa-question-circle mr-2"></i>
-                    如有問題請聯繫主辦方
+                  <p class="flex items-start">
+                    <i class="fas fa-question-circle mr-2 mt-0.5"></i>
+                    <span>如有問題請聯繫主辦方</span>
                   </p>
                 </div>
               </div>
@@ -582,5 +683,30 @@
         </div>
       </div>
     </footer>
+
+    <!-- JavaScript for toggle functionality -->
+    <script>
+      function toggleDay(event, dayId) {
+        event.preventDefault();
+        const content = document.getElementById(dayId + "-content");
+        const icon = document.getElementById(dayId + "-icon");
+
+        if (content.style.display === "none") {
+          content.style.display = "block";
+          icon.style.transform = "rotate(0deg)";
+        } else {
+          content.style.display = "none";
+          icon.style.transform = "rotate(-90deg)";
+        }
+      }
+
+      // Initialize all days as expanded on page load
+      document.addEventListener("DOMContentLoaded", function () {
+        const allContents = document.querySelectorAll('[id$="-content"]');
+        allContents.forEach((content) => {
+          content.style.display = "block";
+        });
+      });
+    </script>
   </body>
 </html>
