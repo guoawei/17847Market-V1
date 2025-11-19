@@ -37,106 +37,115 @@
 
         <!-- 主要內容 -->
         <main class="p-8">
-            <div class="max-w-3xl mx-auto">
-                <!-- 報名成功提示 -->
-                <div class="bg-green-50 rounded-lg shadow-sm mb-6">
-                    <div class="p-6">
-                        <div class="flex items-center mb-4">
-                            <div class="flex-shrink-0">
-                                <i class="fas fa-check-circle text-green-500 text-3xl"></i>
+            <div class="max-w-2xl mx-auto">
+                <!-- 報名成功卡片 -->
+                <div class="bg-white rounded-lg shadow-lg">
+                    <!-- 成功標題 -->
+                    <div class="bg-green-50 px-6 py-4 border-b border-green-100">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 text-2xl mr-3"></i>
+                            <div>
+                                <h2 class="text-lg font-bold text-green-800">報名成功！</h2>
+                                <p class="text-sm text-green-600">您的報名已送出，審核中</p>
                             </div>
-                            <div class="ml-4">
-                                <h2 class="text-xl font-bold text-green-800">報名成功！</h2>
-                                <p class="text-green-700">您的報名已送出，請等待市集審核。</p>
-                            </div>
-                        </div>
-                        <div class="bg-white rounded-lg p-4">
-                            <p class="text-sm text-gray-600">
-                                <i class="fas fa-info-circle mr-2 text-blue-500"></i>
-                                市集方將於1-2個工作天內完成審核，審核通過後我們會立即寄送匯款資訊給您，請留意您的信箱。
-                            </p>
                         </div>
                     </div>
-                </div>
 
-                <!-- 報名資訊 -->
-                <div class="bg-white rounded-lg shadow-sm mb-6">
-                    <div class="p-6">
-                        <h2 class="text-xl font-bold text-gray-900 mb-4">報名資訊</h2>
-                        <div class="space-y-4">
-                            <div class="flex justify-between items-center pb-4 border-b border-gray-200">
+                    <div class="p-6 space-y-6">
+                        <!-- 報名單號 -->
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <div class="flex items-center justify-between">
                                 <div>
-                                    <h3 class="font-medium text-gray-900">週末文創市集</h3>
-                                    <p class="text-sm text-gray-500">2024/1/20-1/21</p>
+                                    <p class="text-xs text-gray-500 mb-1">報名單號</p>
+                                    <p class="text-xl font-bold text-gray-900 font-mono">#TW0251104AKLA9H</p>
                                 </div>
-                                <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">審核中</span>
+                                <button
+                                    onclick="copyOrderNumber()"
+                                    class="px-4 py-2 bg-white hover:bg-gray-50 border border-gray-300 text-gray-700 rounded-lg text-sm transition"
+                                >
+                                    <i class="fas fa-copy mr-1"></i>複製
+                                </button>
                             </div>
-                            <div class="space-y-2">
+                        </div>
+
+                        <!-- 市集資訊 -->
+                        <div>
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <h3 class="font-bold text-gray-900">週末文創市集</h3>
+                                    <p class="text-sm text-gray-500 mt-1">2024/1/20-1/21</p>
+                                </div>
+                                <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">審核中</span>
+                            </div>
+
+                            <div class="bg-gray-50 rounded-lg p-4 space-y-2">
                                 <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500">標準攤位 x 2日</span>
-                                    <span class="text-gray-900">NT$ 5,000</span>
+                                    <span class="text-gray-600">標準攤位 x 2日</span>
+                                    <span class="text-gray-900 font-medium">NT$ 5,000</span>
                                 </div>
                                 <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500">保證金（可退還）</span>
-                                    <span class="text-gray-900">NT$ 1,000</span>
+                                    <span class="text-gray-600">保證金（可退還）</span>
+                                    <span class="text-gray-900 font-medium">NT$ 1,000</span>
                                 </div>
-                                <div class="pt-2 border-t border-gray-200">
-                                    <div class="flex justify-between">
-                                        <span class="font-medium text-gray-900">總計</span>
-                                        <span class="font-medium text-gray-900">NT$ 6,000</span>
-                                    </div>
+                                <div class="pt-2 border-t border-gray-300 flex justify-between">
+                                    <span class="font-bold text-gray-900">總計</span>
+                                    <span class="font-bold text-gray-900 text-lg">NT$ 6,000</span>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <!-- 注意事項 -->
-                <div class="bg-white rounded-lg shadow-sm mb-6">
-                    <div class="p-6">
-                        <h2 class="text-xl font-bold text-gray-900 mb-4">注意事項</h2>
-                        <div class="space-y-4">
-                            <div class="flex items-start">
-                                <i class="fas fa-clock text-yellow-500 mt-1 mr-3"></i>
-                                <div>
-                                    <h3 class="font-medium text-gray-900">審核通過後</h3>
-                                    <p class="text-sm text-gray-600 mt-1">
-                                        請於收到匯款資訊後的3天內完成匯款並填寫匯款帳號末5碼，逾期報名將自動取消。
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <i class="fas fa-envelope text-yellow-500 mt-1 mr-3"></i>
-                                <div>
-                                    <h3 class="font-medium text-gray-900">Email通知</h3>
-                                    <p class="text-sm text-gray-600 mt-1">
-                                        審核結果將會寄送至您的信箱，請務必確認信箱設定正確。
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <i class="fas fa-question-circle text-yellow-500 mt-1 mr-3"></i>
-                                <div>
-                                    <h3 class="font-medium text-gray-900">需要協助？</h3>
-                                    <p class="text-sm text-gray-600 mt-1">
-                                        如有任何問題，請聯繫市集主辦方或客服人員。
-                                    </p>
-                                </div>
-                            </div>
+                        <!-- 後續步驟 -->
+                        <div class="bg-blue-50 rounded-lg p-4">
+                            <h3 class="font-medium text-blue-900 mb-2 flex items-center">
+                                <i class="fas fa-info-circle mr-2"></i>後續步驟
+                            </h3>
+                            <ul class="text-sm text-blue-800 space-y-1">
+                                <li>• 審核結果將於 1-2 個工作天內以 Email 通知</li>
+                                <li>• 審核通過後請於 3 天內完成匯款</li>
+                                <li>• 如有問題請聯繫市集主辦方</li>
+                            </ul>
+                        </div>
+
+                        <!-- 按鈕 -->
+                        <div class="flex gap-3 pt-2">
+                            <a href="vendor-market-detail.html" class="flex-1 px-4 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 text-center font-medium transition">
+                                查看詳情
+                            </a>
+                            <a href="home.html" class="flex-1 px-4 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 text-center font-medium transition">
+                                繼續瀏覽
+                            </a>
                         </div>
                     </div>
-                </div>
-
-                <div class="flex justify-end space-x-4 mt-6">
-                    <a href="vendor-market-detail.html" class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
-                        查看報名資訊
-                    </a>
-                    <a href="home.html" class="px-6 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">
-                        繼續瀏覽市集
-                    </a>
                 </div>
             </div>
         </main>
     </div>
+
+    <script>
+        function copyOrderNumber() {
+            const orderNumber = '#TW0251104AKLA9H';
+
+            // 使用 Clipboard API 複製文字
+            navigator.clipboard.writeText(orderNumber).then(function() {
+                // 複製成功，顯示提示
+                const button = event.target.closest('button');
+                const originalHTML = button.innerHTML;
+
+                button.innerHTML = '<i class="fas fa-check mr-2"></i>已複製';
+                button.classList.add('bg-green-100', 'text-green-700');
+                button.classList.remove('bg-gray-100', 'text-gray-700');
+
+                // 2秒後恢復原狀
+                setTimeout(function() {
+                    button.innerHTML = originalHTML;
+                    button.classList.remove('bg-green-100', 'text-green-700');
+                    button.classList.add('bg-gray-100', 'text-gray-700');
+                }, 2000);
+            }).catch(function(err) {
+                console.error('複製失敗:', err);
+                alert('複製失敗，請手動複製報名單號');
+            });
+        }
+    </script>
 </body>
 </html> 
