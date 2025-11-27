@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      body {
+        font-family: "Arial", "Microsoft JhengHei", sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 600px;
+        margin: 40px auto;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+      .logo-container {
+        text-align: center;
+      }
+      .logo {
+        border-radius: 8px;
+      }
+      .content {
+        padding: 40px 30px;
+      }
+      .no-box {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+        margin: 30px 0;
+      }
+      .no-code {
+        font-size: 24px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        margin: 10px 0;
+      }
+      .price-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .tr-title {
+        font-size: 14px;
+        color: #666;
+        letter-spacing: 1px;
+        padding: 10px 0;
+      }
+      tr {
+        font-size: 14px;
+        letter-spacing: 1px;
+        padding: 8px 0;
+      }
+      .td-left {
+        text-align: left;
+        padding-top: 14px;
+      }
+      .td-right {
+        text-align: left;
+        padding-top: 14px;
+      }
+      .info-text {
+        color: #666;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+      .check-button {
+        font-size: 14px;
+        margin: 20px 0;
+        padding: 12px 16px;
+        border: 0px;
+        border-radius: 4px;
+        background-color: #333;
+        color: white;
+      }
+      .check-button:hover {
+        cursor: pointer;
+      }
+      .footer {
+        background-color: #f8f9fa;
+        padding: 20px;
+        text-align: center;
+        color: #6c757d;
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="content">
+        <div class="logo-container">
+          <img
+            src="https://17847market-dev-bucket.s3.ap-east-2.amazonaws.com/mail/17847market-logo-square.png"
+            width="80px"
+            height="100%"
+            class="logo"
+          />
+        </div>
+        <h1>繳費即將逾期</h1>
+        <p class="info-text">
+          你報名 歡樂市集 的 2025星耀跨年市集 活動已審核通過！<br />
+          請在 2025-11-28 23:59:00 之前，轉帳金額到指定的帳戶，並回報後5碼。<br />
+          逾期將取消資格。
+        </p>
+        <div class="no-box"><div class="no-code">合計NT$ 3500元</div></div>
+        <table class="price-table">
+          <tr class="tr-title">
+            <td class="td-left">銀行名稱</td>
+            <td class="td-right">分行代碼</td>
+          </tr>
+          <tr>
+            <td>004 台灣銀行</td>
+            <td>43897</td>
+          </tr>
+          <tr class="tr-title">
+            <td class="td-left">銀行帳號</td>
+            <td class="td-right">戶名</td>
+          </tr>
+          <tr>
+            <td>0047897661</td>
+            <td>王小明</td>
+          </tr>
+        </table>
+        <button class="check-button">回報後5碼</button>
+
+        <p class="info-text">
+          如有任何問題，歡迎聯繫我們的客服團隊。<br />service@17847market.com.tw
+        </p>
+      </div>
+      <div class="footer">
+        <p>此為系統自動發送的郵件，請勿直接回覆</p>
+        <p>&copy; 2025 擺個市集 17847Market. All rights reserved.</p>
+      </div>
+    </div>
+  </body>
+</html>
