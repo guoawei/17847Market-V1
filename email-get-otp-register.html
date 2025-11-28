@@ -5,16 +5,20 @@
     <style>
       body {
         font-family: "Arial", "Microsoft JhengHei", sans-serif;
-        background-color: #f4f4f4;
         margin: 0;
         padding: 0;
+      }
+      .email-wrapper {
+        background-color: #f4f4f4;
+        padding: 40px 20px;
+        min-height: 100vh;
       }
       .container {
         max-width: 600px;
         margin: 40px auto;
         background-color: #ffffff;
         border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e0e0e0;
         overflow: hidden;
       }
       .logo-container {
@@ -62,31 +66,36 @@
       }
     </style>
   </head>
+  <title>【擺個市集】註冊驗證碼</title>
   <body>
-    <div class="container">
-      <div class="content">
-        <div class="logo-container">
-          <img
-            src="https://17847market-dev-bucket.s3.ap-east-2.amazonaws.com/mail/17847market-logo-square.png"
-            width="80px"
-            height="100%"
-            class="logo"
-          />
-        </div>
-        <h1>登入你的 擺個市集 帳號</h1>
-        <p class="info-text">請在10分鐘內輸入此代碼，以登入帳號。</p>
+    <div class="email-wrapper">
+      <div class="container">
+        <div class="content">
+          <div class="logo-container">
+            <img
+              src="https://17847market-dev-bucket.s3.ap-east-2.amazonaws.com/mail/17847market-logo-square.png"
+              width="80px"
+              height="100%"
+              class="logo"
+            />
+          </div>
+          <h1>註冊擺個市集帳號</h1>
+          <p class="info-text">
+            感謝您註冊擺個市集！請在10分鐘內輸入此驗證碼以完成註冊。
+          </p>
 
-        <div class="otp-box">
-          <div class="otp-code">${otp}</div>
-        </div>
+          <div class="otp-box">
+            <div class="otp-code">${otp}</div>
+          </div>
 
-        <p class="info-text">
-          如有任何問題，歡迎聯繫我們的客服團隊。<br />service@17847market.com.tw
-        </p>
-      </div>
-      <div class="footer">
-        <p>此為系統自動發送的郵件，請勿直接回覆</p>
-        <p>&copy; 2025 擺個市集 17847Market. All rights reserved.</p>
+          <p class="info-text">
+            如有任何問題，歡迎聯繫我們的客服團隊。<br />service@17847market.com.tw
+          </p>
+        </div>
+        <div class="footer">
+          <p>此為系統自動發送的郵件，請勿直接回覆</p>
+          <p>&copy; 2025 擺個市集 17847Market. All rights reserved.</p>
+        </div>
       </div>
     </div>
   </body>
