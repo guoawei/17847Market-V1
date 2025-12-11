@@ -25,8 +25,8 @@
   </head>
   <body class="bg-gray-100">
     <div class="min-h-screen flex">
-      <!-- 側邊欄 -->
-      <div class="bg-white w-64 min-h-screen shadow-lg fixed">
+      <!-- 側邊欄 (桌面版) -->
+      <div class="bg-white w-64 min-h-screen shadow-lg fixed hidden md:block">
         <div
           class="flex items-center justify-center h-16 border-b border-gray-200"
         >
@@ -90,28 +90,34 @@
       </div>
 
       <!-- 主要內容區 -->
-      <div class="flex-1 ml-64">
+      <div class="flex-1 md:ml-64">
         <!-- 頂部導航 -->
-        <header class="bg-white shadow-sm">
-          <div class="flex items-center justify-between h-16 px-8">
+        <header class="bg-white shadow-sm sticky top-0 z-10">
+          <div class="flex items-center justify-between h-14 md:h-16 px-4 md:px-8">
             <div class="flex items-center space-x-4">
-              <h1 class="text-xl font-bold text-gray-800">首頁</h1>
+              <button class="text-gray-600 hover:text-gray-800 md:hidden">
+                <i class="fas fa-bars text-xl"></i>
+              </button>
+              <h1 class="text-lg md:text-xl font-bold text-gray-800">首頁</h1>
               <a
                 href="index.html"
-                class="text-gray-600 hover:text-orange-600 transition-colors"
+                class="hidden md:inline-flex text-gray-600 hover:text-orange-600 transition-colors"
               >
                 <i class="fas fa-home mr-1"></i>
                 返回首頁
               </a>
             </div>
             <div class="flex items-center space-x-4">
+              <a href="index.html" class="md:hidden text-gray-600 hover:text-orange-600">
+                <i class="fas fa-home text-xl"></i>
+              </a>
               <a
                 href="organizer-notifications.html"
-                class="text-gray-600 hover:text-gray-800"
+                class="hidden md:block text-gray-600 hover:text-gray-800"
               >
                 <i class="fas fa-bell"></i>
               </a>
-              <button class="flex items-center space-x-2">
+              <button class="hidden md:flex items-center space-x-2">
                 <img
                   class="h-8 w-8 rounded-full object-cover"
                   src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop"
@@ -124,83 +130,83 @@
         </header>
 
         <!-- 主要內容 -->
-        <main class="p-8">
+        <main class="p-4 sm:p-6 md:p-8">
           <!-- 引導卡片 -->
           <div class="max-w-4xl mx-auto">
-            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div class="bg-white rounded-xl sm:rounded-2xl shadow-lg overflow-hidden">
               <!-- 頂部圖示區 -->
               <div
-                class="bg-gradient-to-r from-gray-50 to-gray-100 p-12 text-center border-b border-gray-200"
+                class="bg-gradient-to-r from-gray-50 to-gray-100 p-6 sm:p-8 md:p-12 text-center border-b border-gray-200"
               >
                 <div
-                  class="inline-flex items-center justify-center w-24 h-24 bg-white rounded-full mb-6 shadow-sm"
+                  class="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-white rounded-full mb-4 sm:mb-5 md:mb-6 shadow-sm"
                 >
-                  <i class="fas fa-store text-gray-700 text-5xl"></i>
+                  <i class="fas fa-store text-gray-700 text-3xl sm:text-4xl md:text-5xl"></i>
                 </div>
-                <h1 class="text-3xl font-bold text-gray-900 mb-3">
+                <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-2 sm:mb-3 px-4">
                   建立您的第一個市集
                 </h1>
-                <p class="text-gray-600 text-lg">
+                <p class="text-gray-600 text-sm sm:text-base md:text-lg px-4">
                   讓我們開始創建市集資料，開啟您的市集主之旅
                 </p>
               </div>
 
               <!-- 內容區 -->
-              <div class="p-8">
+              <div class="p-4 sm:p-6 md:p-8">
                 <!-- 步驟說明 -->
-                <div class="mb-8">
-                  <h2 class="text-xl font-bold text-gray-900 mb-4">
+                <div class="mb-6 sm:mb-8">
+                  <h2 class="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">
                     接下來您需要完成以下步驟：
                   </h2>
-                  <div class="space-y-4">
+                  <div class="space-y-3 sm:space-y-4">
                     <div class="flex items-start">
                       <div
-                        class="flex-shrink-0 w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center mr-4"
+                        class="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 bg-gray-200 rounded-full flex items-center justify-center mr-3 sm:mr-4"
                       >
-                        <span class="text-gray-700 font-bold">1</span>
+                        <span class="text-gray-700 font-bold text-sm sm:text-base">1</span>
                       </div>
                       <div>
-                        <h3 class="font-bold text-gray-900 mb-1">
+                        <h3 class="font-bold text-gray-900 mb-1 text-sm sm:text-base">
                           填寫基本資訊
                         </h3>
-                        <p class="text-gray-600">
+                        <p class="text-gray-600 text-sm">
                           包含市集名稱、簡介、聯絡方式等
                         </p>
                       </div>
                     </div>
                     <div class="flex items-start">
                       <div
-                        class="flex-shrink-0 w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center mr-4"
+                        class="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 bg-gray-200 rounded-full flex items-center justify-center mr-3 sm:mr-4"
                       >
-                        <span class="text-gray-700 font-bold">2</span>
+                        <span class="text-gray-700 font-bold text-sm sm:text-base">2</span>
                       </div>
                       <div>
-                        <h3 class="font-bold text-gray-900 mb-1">
+                        <h3 class="font-bold text-gray-900 mb-1 text-sm sm:text-base">
                           上傳市集照片
                         </h3>
-                        <p class="text-gray-600">
+                        <p class="text-gray-600 text-sm">
                           展示您的市集特色，吸引更多攤商
                         </p>
                       </div>
                     </div>
                     <div class="flex items-start">
                       <div
-                        class="flex-shrink-0 w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center mr-4"
+                        class="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 bg-gray-200 rounded-full flex items-center justify-center mr-3 sm:mr-4"
                       >
-                        <span class="text-gray-700 font-bold">3</span>
+                        <span class="text-gray-700 font-bold text-sm sm:text-base">3</span>
                       </div>
                       <div>
-                        <h3 class="font-bold text-gray-900 mb-1">
+                        <h3 class="font-bold text-gray-900 mb-1 text-sm sm:text-base">
                           設定市集類型
                         </h3>
-                        <p class="text-gray-600">選擇市集的類型和風格定位</p>
+                        <p class="text-gray-600 text-sm">選擇市集的類型和風格定位</p>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 <!-- 提示資訊 -->
-                <div class="bg-gray-50 border-l-4 border-gray-400 p-4 mb-8">
+                <div class="bg-gray-50 border-l-4 border-gray-400 p-3 sm:p-4 mb-6 sm:mb-8">
                   <div class="flex">
                     <div class="flex-shrink-0">
                       <i class="fas fa-lightbulb text-gray-600"></i>
@@ -215,14 +221,14 @@
                 </div>
 
                 <!-- 功能介紹 -->
-                <div class="mb-8">
-                  <h2 class="text-xl font-bold text-gray-900 mb-4">
+                <div class="mb-6 sm:mb-8">
+                  <h2 class="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">
                     建立市集後，您可以：
                   </h2>
-                  <div class="grid grid-cols-2 gap-6">
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                     <div class="flex items-start">
                       <i
-                        class="fas fa-calendar-plus text-gray-500 text-2xl mr-4 mt-1"
+                        class="fas fa-calendar-plus text-gray-500 text-xl sm:text-2xl mr-3 sm:mr-4 mt-1"
                       ></i>
                       <div>
                         <h3 class="font-medium text-gray-900 mb-1">發布活動</h3>
@@ -233,7 +239,7 @@
                     </div>
                     <div class="flex items-start">
                       <i
-                        class="fas fa-user-check text-gray-500 text-2xl mr-4 mt-1"
+                        class="fas fa-user-check text-gray-500 text-xl sm:text-2xl mr-3 sm:mr-4 mt-1"
                       ></i>
                       <div>
                         <h3 class="font-medium text-gray-900 mb-1">審核攤商</h3>
@@ -244,7 +250,7 @@
                     </div>
                     <div class="flex items-start">
                       <i
-                        class="fas fa-chart-bar text-gray-500 text-2xl mr-4 mt-1"
+                        class="fas fa-chart-bar text-gray-500 text-xl sm:text-2xl mr-3 sm:mr-4 mt-1"
                       ></i>
                       <div>
                         <h3 class="font-medium text-gray-900 mb-1">數據分析</h3>
@@ -255,7 +261,7 @@
                     </div>
                     <div class="flex items-start">
                       <i
-                        class="fas fa-bullhorn text-gray-500 text-2xl mr-4 mt-1"
+                        class="fas fa-bullhorn text-gray-500 text-xl sm:text-2xl mr-3 sm:mr-4 mt-1"
                       ></i>
                       <div>
                         <h3 class="font-medium text-gray-900 mb-1">行銷推廣</h3>
@@ -268,17 +274,17 @@
                 </div>
 
                 <!-- 行動按鈕 -->
-                <div class="flex justify-center space-x-4">
+                <div class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
                   <a
                     href="market-create.html"
-                    class="px-8 py-3 bg-orange-400 text-white rounded-lg hover:bg-amber-600 transition-colors font-medium text-lg"
+                    class="w-full sm:w-auto px-6 sm:px-8 py-3 bg-orange-400 text-white rounded-lg hover:bg-amber-600 transition-colors font-medium text-base sm:text-lg text-center"
                   >
                     <i class="fas fa-plus mr-2"></i>
                     開始建立市集
                   </a>
                   <button
                     onclick="skipGuide()"
-                    class="px-8 py-3 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium text-lg"
+                    class="w-full sm:w-auto px-6 sm:px-8 py-3 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium text-base sm:text-lg"
                   >
                     稍後再說
                   </button>

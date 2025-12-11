@@ -21,8 +21,8 @@
 </head>
 <body class="bg-gray-100">
     <div class="min-h-screen flex">
-        <!-- 側邊欄 -->
-        <div class="bg-white w-64 min-h-screen shadow-lg fixed">
+        <!-- 側邊欄 (桌面版) -->
+        <div class="bg-white w-64 min-h-screen shadow-lg fixed hidden md:block">
             <div class="flex items-center justify-center h-16 border-b border-gray-200">
                 <img class="h-8" src="https://images.unsplash.com/photo-1490127252417-7c393f993ee4?w=150&h=50&fit=crop" alt="Logo">
             </div>
@@ -59,22 +59,28 @@
         </div>
 
         <!-- 主要內容區 -->
-        <div class="flex-1 ml-64">
+        <div class="flex-1 md:ml-64">
             <!-- 頂部導航 -->
-            <header class="bg-white shadow-sm">
-                <div class="flex items-center justify-between h-16 px-8">
+            <header class="bg-white shadow-sm sticky top-0 z-10">
+                <div class="flex items-center justify-between h-14 md:h-16 px-4 md:px-8">
                     <div class="flex items-center space-x-4">
-                        <h1 class="text-xl font-bold text-gray-800">探索市集</h1>
-                        <a href="index.html" class="text-gray-600 hover:text-orange-600 transition-colors">
+                        <button class="text-gray-600 hover:text-gray-800 md:hidden">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        <h1 class="text-lg md:text-xl font-bold text-gray-800">探索市集</h1>
+                        <a href="index.html" class="hidden md:inline-flex text-gray-600 hover:text-orange-600 transition-colors">
                             <i class="fas fa-home mr-1"></i>
                             返回首頁
                         </a>
                     </div>
                     <div class="flex items-center space-x-4">
-                        <button class="text-gray-600 hover:text-gray-800">
+                        <a href="index.html" class="md:hidden text-gray-600 hover:text-orange-600">
+                            <i class="fas fa-home text-xl"></i>
+                        </a>
+                        <button class="hidden md:block text-gray-600 hover:text-gray-800">
                             <i class="fas fa-bell"></i>
                         </button>
-                        <div class="relative" x-data="{ open: false }">
+                        <div class="relative hidden md:block" x-data="{ open: false }">
                             <button @click="open = !open" class="flex items-center space-x-2">
                                 <img class="h-8 w-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop" alt="使用者頭像">
                                 <i class="fas fa-chevron-down text-gray-600"></i>
@@ -85,109 +91,109 @@
             </header>
 
             <!-- 主要內容 -->
-            <main class="p-8">
+            <main class="p-4 sm:p-6 md:p-8">
                 <!-- 歡迎訊息卡片 -->
-                <div class="bg-gradient-to-r from-gray-50 to-gray-100 rounded-2xl shadow-lg p-8 mb-8 border border-gray-200">
+                <div class="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6 md:p-8 mb-6 sm:mb-8 border border-gray-200">
                     <div class="flex items-center justify-between">
-                        <div>
-                            <h1 class="text-3xl font-bold mb-2 text-gray-900">恭喜！您的攤商資料已建立完成</h1>
-                            <p class="text-gray-600 text-lg">現在開始探索適合您的市集活動，展開擺攤之旅吧！</p>
+                        <div class="flex-1">
+                            <h1 class="text-xl sm:text-2xl md:text-3xl font-bold mb-2 text-gray-900">恭喜！您的攤商資料已建立完成</h1>
+                            <p class="text-gray-600 text-sm sm:text-base md:text-lg">現在開始探索適合您的市集活動，展開擺攤之旅吧！</p>
                         </div>
-                        <div class="hidden md:block">
-                            <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-sm">
-                                <i class="fas fa-check-circle text-gray-700 text-5xl"></i>
+                        <div class="hidden md:block ml-4">
+                            <div class="w-20 h-20 md:w-24 md:h-24 bg-white rounded-full flex items-center justify-center shadow-sm">
+                                <i class="fas fa-check-circle text-gray-700 text-4xl md:text-5xl"></i>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- 快速導覽 -->
-                <div class="grid grid-cols-3 gap-6 mb-8">
-                    <div class="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow">
-                        <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mr-4">
-                                <i class="fas fa-search text-gray-500 text-xl"></i>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                    <div class="bg-white rounded-lg shadow-sm p-4 sm:p-6 hover:shadow-md transition-shadow">
+                        <div class="flex items-center mb-3 sm:mb-4">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gray-100 rounded-lg flex items-center justify-center mr-3 sm:mr-4">
+                                <i class="fas fa-search text-gray-500 text-lg sm:text-xl"></i>
                             </div>
-                            <h3 class="text-lg font-bold text-gray-900">瀏覽市集</h3>
+                            <h3 class="text-base sm:text-lg font-bold text-gray-900">瀏覽市集</h3>
                         </div>
-                        <p class="text-gray-600 mb-4">探索全台各地精彩的市集活動，找到最適合您的機會</p>
-                        <a href="market-list.html" class="text-orange-400 hover:text-amber-600 font-medium">
+                        <p class="text-gray-600 mb-3 sm:mb-4 text-sm sm:text-base">探索全台各地精彩的市集活動，找到最適合您的機會</p>
+                        <a href="market-list.html" class="text-orange-400 hover:text-amber-600 font-medium text-sm sm:text-base">
                             開始探索 <i class="fas fa-arrow-right ml-1"></i>
                         </a>
                     </div>
 
-                    <div class="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow">
-                        <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mr-4">
-                                <i class="fas fa-heart text-gray-500 text-xl"></i>
+                    <div class="bg-white rounded-lg shadow-sm p-4 sm:p-6 hover:shadow-md transition-shadow">
+                        <div class="flex items-center mb-3 sm:mb-4">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gray-100 rounded-lg flex items-center justify-center mr-3 sm:mr-4">
+                                <i class="fas fa-heart text-gray-500 text-lg sm:text-xl"></i>
                             </div>
-                            <h3 class="text-lg font-bold text-gray-900">收藏市集</h3>
+                            <h3 class="text-base sm:text-lg font-bold text-gray-900">收藏市集</h3>
                         </div>
-                        <p class="text-gray-600 mb-4">將感興趣的市集加入收藏，隨時追蹤最新動態</p>
-                        <a href="#" class="text-orange-400 hover:text-amber-600 font-medium">
+                        <p class="text-gray-600 mb-3 sm:mb-4 text-sm sm:text-base">將感興趣的市集加入收藏，隨時追蹤最新動態</p>
+                        <a href="#" class="text-orange-400 hover:text-amber-600 font-medium text-sm sm:text-base">
                             查看收藏 <i class="fas fa-arrow-right ml-1"></i>
                         </a>
                     </div>
 
-                    <div class="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow">
-                        <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mr-4">
-                                <i class="fas fa-filter text-gray-500 text-xl"></i>
+                    <div class="bg-white rounded-lg shadow-sm p-4 sm:p-6 hover:shadow-md transition-shadow">
+                        <div class="flex items-center mb-3 sm:mb-4">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gray-100 rounded-lg flex items-center justify-center mr-3 sm:mr-4">
+                                <i class="fas fa-filter text-gray-500 text-lg sm:text-xl"></i>
                             </div>
-                            <h3 class="text-lg font-bold text-gray-900">篩選條件</h3>
+                            <h3 class="text-base sm:text-lg font-bold text-gray-900">篩選條件</h3>
                         </div>
-                        <p class="text-gray-600 mb-4">使用篩選功能，快速找到符合您需求的市集</p>
-                        <a href="market-list.html" class="text-orange-400 hover:text-amber-600 font-medium">
+                        <p class="text-gray-600 mb-3 sm:mb-4 text-sm sm:text-base">使用篩選功能，快速找到符合您需求的市集</p>
+                        <a href="market-list.html" class="text-orange-400 hover:text-amber-600 font-medium text-sm sm:text-base">
                             設定篩選 <i class="fas fa-arrow-right ml-1"></i>
                         </a>
                     </div>
                 </div>
 
                 <!-- 使用指南 -->
-                <div class="bg-white rounded-lg shadow-sm p-8 mb-8">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-6">如何申請市集活動？</h2>
-                    <div class="grid grid-cols-4 gap-6">
+                <div class="bg-white rounded-lg shadow-sm p-4 sm:p-6 md:p-8 mb-6 sm:mb-8">
+                    <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">如何申請市集活動？</h2>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
                         <div class="text-center">
-                            <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <span class="text-2xl font-bold text-gray-700">1</span>
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3 md:mb-4">
+                                <span class="text-lg sm:text-xl md:text-2xl font-bold text-gray-700">1</span>
                             </div>
-                            <h3 class="font-bold text-gray-900 mb-2">瀏覽市集</h3>
-                            <p class="text-sm text-gray-600">查看市集活動資訊與要求</p>
+                            <h3 class="font-bold text-gray-900 mb-1 sm:mb-2 text-sm sm:text-base">瀏覽市集</h3>
+                            <p class="text-xs sm:text-sm text-gray-600">查看市集活動資訊與要求</p>
                         </div>
                         <div class="text-center">
-                            <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <span class="text-2xl font-bold text-gray-700">2</span>
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3 md:mb-4">
+                                <span class="text-lg sm:text-xl md:text-2xl font-bold text-gray-700">2</span>
                             </div>
-                            <h3 class="font-bold text-gray-900 mb-2">提出申請</h3>
-                            <p class="text-sm text-gray-600">填寫申請表單並送出</p>
+                            <h3 class="font-bold text-gray-900 mb-1 sm:mb-2 text-sm sm:text-base">提出申請</h3>
+                            <p class="text-xs sm:text-sm text-gray-600">填寫申請表單並送出</p>
                         </div>
                         <div class="text-center">
-                            <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <span class="text-2xl font-bold text-gray-700">3</span>
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3 md:mb-4">
+                                <span class="text-lg sm:text-xl md:text-2xl font-bold text-gray-700">3</span>
                             </div>
-                            <h3 class="font-bold text-gray-900 mb-2">等待審核</h3>
-                            <p class="text-sm text-gray-600">市集主審核您的申請</p>
+                            <h3 class="font-bold text-gray-900 mb-1 sm:mb-2 text-sm sm:text-base">等待審核</h3>
+                            <p class="text-xs sm:text-sm text-gray-600">市集主審核您的申請</p>
                         </div>
                         <div class="text-center">
-                            <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <span class="text-2xl font-bold text-gray-700">4</span>
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3 md:mb-4">
+                                <span class="text-lg sm:text-xl md:text-2xl font-bold text-gray-700">4</span>
                             </div>
-                            <h3 class="font-bold text-gray-900 mb-2">完成繳費</h3>
-                            <p class="text-sm text-gray-600">審核通過後繳納攤位費</p>
+                            <h3 class="font-bold text-gray-900 mb-1 sm:mb-2 text-sm sm:text-base">完成繳費</h3>
+                            <p class="text-xs sm:text-sm text-gray-600">審核通過後繳納攤位費</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- 推薦市集 -->
-                <div class="bg-white rounded-lg shadow-sm p-8">
-                    <div class="flex items-center justify-between mb-6">
-                        <h2 class="text-2xl font-bold text-gray-900">推薦市集活動</h2>
-                        <a href="market-list.html" class="text-orange-400 hover:text-amber-600 font-medium">
+                <div class="bg-white rounded-lg shadow-sm p-4 sm:p-6 md:p-8">
+                    <div class="flex items-center justify-between mb-4 sm:mb-6">
+                        <h2 class="text-xl sm:text-2xl font-bold text-gray-900">推薦市集活動</h2>
+                        <a href="market-list.html" class="text-orange-400 hover:text-amber-600 font-medium text-sm sm:text-base">
                             查看全部 <i class="fas fa-arrow-right ml-1"></i>
                         </a>
                     </div>
 
-                    <div class="grid grid-cols-3 gap-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
                         <!-- 市集卡片 1 -->
                         <div class="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
                             <img src="https://images.unsplash.com/photo-1516962080544-eac695c93791?w=400&h=200&fit=crop" alt="市集照片" class="w-full h-40 object-cover">
@@ -284,14 +290,14 @@
                 </div>
 
                 <!-- 提示訊息 -->
-                <div class="mt-8 bg-gray-50 border-l-4 border-gray-400 p-6 rounded-lg">
+                <div class="mt-6 sm:mt-8 bg-gray-50 border-l-4 border-gray-400 p-4 sm:p-6 rounded-lg">
                     <div class="flex">
                         <div class="flex-shrink-0">
-                            <i class="fas fa-lightbulb text-gray-600 text-2xl"></i>
+                            <i class="fas fa-lightbulb text-gray-600 text-xl sm:text-2xl"></i>
                         </div>
-                        <div class="ml-4">
-                            <h3 class="font-bold text-gray-900 mb-2">小提示</h3>
-                            <p class="text-gray-700">
+                        <div class="ml-3 sm:ml-4">
+                            <h3 class="font-bold text-gray-900 mb-1 sm:mb-2 text-sm sm:text-base">小提示</h3>
+                            <p class="text-gray-700 text-xs sm:text-sm md:text-base">
                                 定期查看市集列表，新的活動會不定期發布。您也可以使用收藏功能追蹤喜歡的市集主辦方，第一時間收到他們的新活動通知。
                             </p>
                         </div>

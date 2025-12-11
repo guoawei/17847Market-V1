@@ -19,8 +19,8 @@
 </head>
 <body class="bg-gray-100">
     <div class="min-h-screen flex">
-        <!-- 側邊欄 -->
-        <div class="bg-white w-64 min-h-screen shadow-lg fixed">
+        <!-- 側邊欄 (桌面版) -->
+        <div class="bg-white w-64 min-h-screen shadow-lg fixed hidden md:block">
             <div class="flex items-center justify-center h-16 border-b border-gray-200">
                 <a href="organizer-dashboard.html">
                     <img class="h-8" src="https://images.unsplash.com/photo-1490127252417-7c393f993ee4?w=150&h=50&fit=crop" alt="Logo">
@@ -59,22 +59,28 @@
         </div>
 
         <!-- 主要內容區 -->
-        <div class="flex-1 ml-64">
+        <div class="flex-1 md:ml-64">
             <!-- 頂部導航 -->
-            <header class="bg-white shadow-sm">
-                <div class="flex items-center justify-between h-16 px-8">
+            <header class="bg-white shadow-sm sticky top-0 z-10">
+                <div class="flex items-center justify-between h-14 md:h-16 px-4 md:px-8">
                     <div class="flex items-center space-x-4">
-                        <h1 class="text-xl font-bold text-gray-800">活動列表</h1>
-                        <a href="index.html" class="text-gray-600 hover:text-orange-600 transition-colors">
+                        <button class="text-gray-600 hover:text-gray-800 md:hidden">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        <h1 class="text-lg md:text-xl font-bold text-gray-800">活動列表</h1>
+                        <a href="index.html" class="hidden md:inline-flex text-gray-600 hover:text-orange-600 transition-colors">
                             <i class="fas fa-home mr-1"></i>
                             返回首頁
                         </a>
                     </div>
                     <div class="flex items-center space-x-4">
-                        <a href="organizer-notifications.html" class="text-gray-600 hover:text-gray-800">
+                        <a href="index.html" class="md:hidden text-gray-600 hover:text-orange-600">
+                            <i class="fas fa-home text-xl"></i>
+                        </a>
+                        <a href="organizer-notifications.html" class="hidden md:block text-gray-600 hover:text-gray-800">
                             <i class="fas fa-bell"></i>
                         </a>
-                        <button class="flex items-center space-x-2">
+                        <button class="hidden md:flex items-center space-x-2">
                             <img class="h-8 w-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop" alt="主辦方頭像">
                             <i class="fas fa-chevron-down text-gray-600"></i>
                         </button>
@@ -83,107 +89,107 @@
             </header>
 
             <!-- 主要內容 -->
-            <main class="p-8">
+            <main class="p-4 sm:p-6 md:p-8">
                 <!-- 空狀態引導卡片 -->
                 <div class="max-w-3xl mx-auto">
-                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden text-center p-12">
+                    <div class="bg-white rounded-xl sm:rounded-2xl shadow-lg overflow-hidden text-center p-6 sm:p-10 md:p-12">
                         <!-- 圖示 -->
-                        <div class="inline-flex items-center justify-center w-32 h-32 bg-gray-100 rounded-full mb-6">
-                            <i class="fas fa-calendar-plus text-gray-600 text-6xl"></i>
+                        <div class="inline-flex items-center justify-center w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 bg-gray-100 rounded-full mb-4 sm:mb-5 md:mb-6">
+                            <i class="fas fa-calendar-plus text-gray-600 text-4xl sm:text-5xl md:text-6xl"></i>
                         </div>
 
                         <!-- 標題 -->
-                        <h1 class="text-3xl font-bold text-gray-900 mb-4">建立您的第一個活動</h1>
-                        <p class="text-lg text-gray-600 mb-8">
+                        <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4 px-4">建立您的第一個活動</h1>
+                        <p class="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 px-4">
                             您的市集資料已建立完成！<br>
                             現在讓我們發布第一個活動，開始招募攤商吧
                         </p>
 
                         <!-- 活動類型選項 -->
-                        <div class="mb-8">
-                            <h2 class="text-xl font-bold text-gray-900 mb-6">您可以建立的活動類型：</h2>
-                            <div class="grid grid-cols-3 gap-4 text-left">
+                        <div class="mb-6 sm:mb-8">
+                            <h2 class="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">您可以建立的活動類型：</h2>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 text-left">
                                 <div class="bg-gray-50 rounded-lg p-4 border-2 border-transparent hover:border-orange-400 transition-colors">
                                     <div class="flex items-center mb-2">
-                                        <i class="fas fa-sync-alt text-gray-500 text-xl mr-3"></i>
-                                        <h3 class="font-bold text-gray-900">定期活動</h3>
+                                        <i class="fas fa-sync-alt text-gray-500 text-lg sm:text-xl mr-3"></i>
+                                        <h3 class="font-bold text-gray-900 text-sm sm:text-base">定期活動</h3>
                                     </div>
-                                    <p class="text-sm text-gray-600">每週或每月固定舉辦的市集活動</p>
+                                    <p class="text-xs sm:text-sm text-gray-600">每週或每月固定舉辦的市集活動</p>
                                 </div>
                                 <div class="bg-gray-50 rounded-lg p-4 border-2 border-transparent hover:border-orange-400 transition-colors">
                                     <div class="flex items-center mb-2">
-                                        <i class="fas fa-star text-gray-500 text-xl mr-3"></i>
-                                        <h3 class="font-bold text-gray-900">特殊活動</h3>
+                                        <i class="fas fa-star text-gray-500 text-lg sm:text-xl mr-3"></i>
+                                        <h3 class="font-bold text-gray-900 text-sm sm:text-base">特殊活動</h3>
                                     </div>
-                                    <p class="text-sm text-gray-600">節慶、主題市集等特別活動</p>
+                                    <p class="text-xs sm:text-sm text-gray-600">節慶、主題市集等特別活動</p>
                                 </div>
                                 <div class="bg-gray-50 rounded-lg p-4 border-2 border-transparent hover:border-orange-400 transition-colors">
                                     <div class="flex items-center mb-2">
-                                        <i class="fas fa-bolt text-gray-500 text-xl mr-3"></i>
-                                        <h3 class="font-bold text-gray-900">快閃市集</h3>
+                                        <i class="fas fa-bolt text-gray-500 text-lg sm:text-xl mr-3"></i>
+                                        <h3 class="font-bold text-gray-900 text-sm sm:text-base">快閃市集</h3>
                                     </div>
-                                    <p class="text-sm text-gray-600">短期、限定的快閃式市集</p>
+                                    <p class="text-xs sm:text-sm text-gray-600">短期、限定的快閃式市集</p>
                                 </div>
                             </div>
                         </div>
 
                         <!-- 需要填寫的資訊 -->
-                        <div class="bg-gray-50 rounded-lg p-6 mb-8 text-left">
-                            <h2 class="text-lg font-bold text-gray-900 mb-4 text-center">建立活動時需要提供：</h2>
-                            <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-gray-50 rounded-lg p-4 sm:p-6 mb-6 sm:mb-8 text-left">
+                            <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4 text-center">建立活動時需要提供：</h2>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                                 <div class="flex items-start">
-                                    <i class="fas fa-check-circle text-gray-500 mr-3 mt-1"></i>
+                                    <i class="fas fa-check-circle text-gray-500 mr-2 sm:mr-3 mt-1 text-sm"></i>
                                     <div>
-                                        <p class="font-medium text-gray-900">活動名稱與簡介</p>
-                                        <p class="text-sm text-gray-600">吸引攤商的活動說明</p>
+                                        <p class="font-medium text-gray-900 text-sm sm:text-base">活動名稱與簡介</p>
+                                        <p class="text-xs sm:text-sm text-gray-600">吸引攤商的活動說明</p>
                                     </div>
                                 </div>
                                 <div class="flex items-start">
-                                    <i class="fas fa-check-circle text-gray-500 mr-3 mt-1"></i>
+                                    <i class="fas fa-check-circle text-gray-500 mr-2 sm:mr-3 mt-1 text-sm"></i>
                                     <div>
-                                        <p class="font-medium text-gray-900">活動日期與時間</p>
-                                        <p class="text-sm text-gray-600">設定活動舉辦的時段</p>
+                                        <p class="font-medium text-gray-900 text-sm sm:text-base">活動日期與時間</p>
+                                        <p class="text-xs sm:text-sm text-gray-600">設定活動舉辦的時段</p>
                                     </div>
                                 </div>
                                 <div class="flex items-start">
-                                    <i class="fas fa-check-circle text-gray-500 mr-3 mt-1"></i>
+                                    <i class="fas fa-check-circle text-gray-500 mr-2 sm:mr-3 mt-1 text-sm"></i>
                                     <div>
-                                        <p class="font-medium text-gray-900">活動地點</p>
-                                        <p class="text-sm text-gray-600">詳細的地址與交通資訊</p>
+                                        <p class="font-medium text-gray-900 text-sm sm:text-base">活動地點</p>
+                                        <p class="text-xs sm:text-sm text-gray-600">詳細的地址與交通資訊</p>
                                     </div>
                                 </div>
                                 <div class="flex items-start">
-                                    <i class="fas fa-check-circle text-gray-500 mr-3 mt-1"></i>
+                                    <i class="fas fa-check-circle text-gray-500 mr-2 sm:mr-3 mt-1 text-sm"></i>
                                     <div>
-                                        <p class="font-medium text-gray-900">攤位數量與費用</p>
-                                        <p class="text-sm text-gray-600">設定攤位數量和報名費用</p>
+                                        <p class="font-medium text-gray-900 text-sm sm:text-base">攤位數量與費用</p>
+                                        <p class="text-xs sm:text-sm text-gray-600">設定攤位數量和報名費用</p>
                                     </div>
                                 </div>
                                 <div class="flex items-start">
-                                    <i class="fas fa-check-circle text-gray-500 mr-3 mt-1"></i>
+                                    <i class="fas fa-check-circle text-gray-500 mr-2 sm:mr-3 mt-1 text-sm"></i>
                                     <div>
-                                        <p class="font-medium text-gray-900">報名期限</p>
-                                        <p class="text-sm text-gray-600">攤商報名的截止日期</p>
+                                        <p class="font-medium text-gray-900 text-sm sm:text-base">報名期限</p>
+                                        <p class="text-xs sm:text-sm text-gray-600">攤商報名的截止日期</p>
                                     </div>
                                 </div>
                                 <div class="flex items-start">
-                                    <i class="fas fa-check-circle text-gray-500 mr-3 mt-1"></i>
+                                    <i class="fas fa-check-circle text-gray-500 mr-2 sm:mr-3 mt-1 text-sm"></i>
                                     <div>
-                                        <p class="font-medium text-gray-900">活動照片</p>
-                                        <p class="text-sm text-gray-600">上傳活動宣傳圖片</p>
+                                        <p class="font-medium text-gray-900 text-sm sm:text-base">活動照片</p>
+                                        <p class="text-xs sm:text-sm text-gray-600">上傳活動宣傳圖片</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- 提示訊息 -->
-                        <div class="bg-gray-50 border-l-4 border-gray-400 p-4 mb-8 text-left">
+                        <div class="bg-gray-50 border-l-4 border-gray-400 p-3 sm:p-4 mb-6 sm:mb-8 text-left">
                             <div class="flex">
                                 <div class="flex-shrink-0">
                                     <i class="fas fa-lightbulb text-gray-600"></i>
                                 </div>
                                 <div class="ml-3">
-                                    <p class="text-sm text-gray-700">
+                                    <p class="text-xs sm:text-sm text-gray-700">
                                         <strong>溫馨提醒：</strong> 活動發布後，攤商就可以開始報名了。建議您預留充足的報名時間，讓更多攤商有機會參加您的活動。
                                     </p>
                                 </div>
@@ -191,15 +197,15 @@
                         </div>
 
                         <!-- 行動按鈕 -->
-                        <div class="flex justify-center space-x-4">
-                            <a href="market-add.html" class="px-8 py-3 bg-orange-400 text-white rounded-lg hover:bg-amber-600 transition-colors font-medium text-lg">
+                        <div class="flex justify-center">
+                            <a href="market-add.html" class="w-full sm:w-auto px-6 sm:px-8 py-3 bg-orange-400 text-white rounded-lg hover:bg-amber-600 transition-colors font-medium text-base sm:text-lg text-center">
                                 <i class="fas fa-plus mr-2"></i>
                                 立即建立活動
                             </a>
                         </div>
 
                         <!-- 說明文字 -->
-                        <p class="text-sm text-gray-500 mt-6">
+                        <p class="text-xs sm:text-sm text-gray-500 mt-4 sm:mt-6 px-4">
                             <i class="fas fa-info-circle mr-1"></i>
                             在您建立第一個活動之前，此引導頁面會持續顯示
                         </p>

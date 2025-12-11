@@ -19,8 +19,8 @@
 </head>
 <body class="bg-gray-100">
     <div class="min-h-screen flex">
-        <!-- 側邊欄 -->
-        <div class="bg-white w-64 min-h-screen shadow-lg fixed">
+        <!-- 側邊欄 (桌面版) -->
+        <div class="bg-white w-64 min-h-screen shadow-lg fixed hidden md:block">
             <div class="flex items-center justify-center h-16 border-b border-gray-200">
                 <img class="h-8" src="https://images.unsplash.com/photo-1490127252417-7c393f993ee4?w=150&h=50&fit=crop" alt="Logo">
             </div>
@@ -57,22 +57,28 @@
         </div>
 
         <!-- 主要內容區 -->
-        <div class="flex-1 ml-64">
+        <div class="flex-1 md:ml-64">
             <!-- 頂部導航 -->
-            <header class="bg-white shadow-sm">
-                <div class="flex items-center justify-between h-16 px-8">
+            <header class="bg-white shadow-sm sticky top-0 z-10">
+                <div class="flex items-center justify-between h-14 md:h-16 px-4 md:px-8">
                     <div class="flex items-center space-x-4">
-                        <h1 class="text-xl font-bold text-gray-800">攤商儀表板</h1>
-                        <a href="index.html" class="text-gray-600 hover:text-orange-600 transition-colors">
+                        <button class="text-gray-600 hover:text-gray-800 md:hidden">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        <h1 class="text-lg md:text-xl font-bold text-gray-800">攤商儀表板</h1>
+                        <a href="index.html" class="hidden md:inline-flex text-gray-600 hover:text-orange-600 transition-colors">
                             <i class="fas fa-home mr-1"></i>
                             返回首頁
                         </a>
                     </div>
                     <div class="flex items-center space-x-4">
-                        <button class="text-gray-600 hover:text-gray-800">
+                        <a href="index.html" class="md:hidden text-gray-600 hover:text-orange-600">
+                            <i class="fas fa-home text-xl"></i>
+                        </a>
+                        <button class="hidden md:block text-gray-600 hover:text-gray-800">
                             <i class="fas fa-bell"></i>
                         </button>
-                        <button class="flex items-center space-x-2">
+                        <button class="hidden md:flex items-center space-x-2">
                             <img class="h-8 w-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop" alt="使用者頭像">
                             <i class="fas fa-chevron-down text-gray-600"></i>
                         </button>
@@ -81,66 +87,66 @@
             </header>
 
             <!-- 主要內容 -->
-            <main class="p-8">
+            <main class="p-4 sm:p-6 md:p-8">
                 <!-- 引導卡片 -->
                 <div class="max-w-4xl mx-auto">
-                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="bg-white rounded-xl sm:rounded-2xl shadow-lg overflow-hidden">
                         <!-- 頂部圖示區 -->
-                        <div class="bg-gradient-to-r from-gray-50 to-gray-100 p-12 text-center border-b border-gray-200">
-                            <div class="inline-flex items-center justify-center w-24 h-24 bg-white rounded-full mb-6 shadow-sm">
-                                <i class="fas fa-user-circle text-gray-700 text-5xl"></i>
+                        <div class="bg-gradient-to-r from-gray-50 to-gray-100 p-6 sm:p-8 md:p-12 text-center border-b border-gray-200">
+                            <div class="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-white rounded-full mb-4 sm:mb-6 shadow-sm">
+                                <i class="fas fa-user-circle text-gray-700 text-3xl sm:text-4xl md:text-5xl"></i>
                             </div>
-                            <h1 class="text-3xl font-bold text-gray-900 mb-3">完善您的攤商資料</h1>
-                            <p class="text-gray-600 text-lg">建立完整的攤商檔案，讓市集主更了解您</p>
+                            <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-2 sm:mb-3 px-4">完善您的攤商資料</h1>
+                            <p class="text-gray-600 text-sm sm:text-base md:text-lg px-4">建立完整的攤商檔案，讓市集主更了解您</p>
                         </div>
 
                         <!-- 內容區 -->
-                        <div class="p-8">
+                        <div class="p-4 sm:p-6 md:p-8">
                             <!-- 步驟說明 -->
-                            <div class="mb-8">
-                                <h2 class="text-xl font-bold text-gray-900 mb-4">請完成以下資料填寫：</h2>
-                                <div class="space-y-4">
+                            <div class="mb-6 sm:mb-8">
+                                <h2 class="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">請完成以下資料填寫：</h2>
+                                <div class="space-y-3 sm:space-y-4">
                                     <div class="flex items-start">
-                                        <div class="flex-shrink-0 w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center mr-4">
-                                            <span class="text-gray-700 font-bold">1</span>
+                                        <div class="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 bg-gray-200 rounded-full flex items-center justify-center mr-3 sm:mr-4">
+                                            <span class="text-gray-700 font-bold text-sm sm:text-base">1</span>
                                         </div>
                                         <div>
-                                            <h3 class="font-bold text-gray-900 mb-1">攤位基本資訊</h3>
-                                            <p class="text-gray-600">品牌名稱、攤位類型、營業項目等</p>
+                                            <h3 class="font-bold text-gray-900 mb-1 text-sm sm:text-base">攤位基本資訊</h3>
+                                            <p class="text-gray-600 text-sm">品牌名稱、攤位類型、營業項目等</p>
                                         </div>
                                     </div>
                                     <div class="flex items-start">
-                                        <div class="flex-shrink-0 w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center mr-4">
-                                            <span class="text-gray-700 font-bold">2</span>
+                                        <div class="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 bg-gray-200 rounded-full flex items-center justify-center mr-3 sm:mr-4">
+                                            <span class="text-gray-700 font-bold text-sm sm:text-base">2</span>
                                         </div>
                                         <div>
-                                            <h3 class="font-bold text-gray-900 mb-1">商品介紹</h3>
-                                            <p class="text-gray-600">詳細說明您的商品特色與亮點</p>
+                                            <h3 class="font-bold text-gray-900 mb-1 text-sm sm:text-base">商品介紹</h3>
+                                            <p class="text-gray-600 text-sm">詳細說明您的商品特色與亮點</p>
                                         </div>
                                     </div>
                                     <div class="flex items-start">
-                                        <div class="flex-shrink-0 w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center mr-4">
-                                            <span class="text-gray-700 font-bold">3</span>
+                                        <div class="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 bg-gray-200 rounded-full flex items-center justify-center mr-3 sm:mr-4">
+                                            <span class="text-gray-700 font-bold text-sm sm:text-base">3</span>
                                         </div>
                                         <div>
-                                            <h3 class="font-bold text-gray-900 mb-1">上傳商品照片</h3>
-                                            <p class="text-gray-600">展示您的商品，吸引市集主的目光</p>
+                                            <h3 class="font-bold text-gray-900 mb-1 text-sm sm:text-base">上傳商品照片</h3>
+                                            <p class="text-gray-600 text-sm">展示您的商品，吸引市集主的目光</p>
                                         </div>
                                     </div>
                                     <div class="flex items-start">
-                                        <div class="flex-shrink-0 w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center mr-4">
-                                            <span class="text-gray-700 font-bold">4</span>
+                                        <div class="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 bg-gray-200 rounded-full flex items-center justify-center mr-3 sm:mr-4">
+                                            <span class="text-gray-700 font-bold text-sm sm:text-base">4</span>
                                         </div>
                                         <div>
-                                            <h3 class="font-bold text-gray-900 mb-1">聯絡資訊</h3>
-                                            <p class="text-gray-600">提供電話、Email、社群媒體等聯絡方式</p>
+                                            <h3 class="font-bold text-gray-900 mb-1 text-sm sm:text-base">聯絡資訊</h3>
+                                            <p class="text-gray-600 text-sm">提供電話、Email、社群媒體等聯絡方式</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- 提示資訊 -->
-                            <div class="bg-gray-50 border-l-4 border-gray-400 p-4 mb-8">
+                            <div class="bg-gray-50 border-l-4 border-gray-400 p-3 sm:p-4 mb-6 sm:mb-8">
                                 <div class="flex">
                                     <div class="flex-shrink-0">
                                         <i class="fas fa-lightbulb text-gray-600"></i>
@@ -154,32 +160,32 @@
                             </div>
 
                             <!-- 資料完成後的好處 -->
-                            <div class="mb-8">
-                                <h2 class="text-xl font-bold text-gray-900 mb-4">完成資料後，您可以：</h2>
-                                <div class="grid grid-cols-2 gap-6">
+                            <div class="mb-6 sm:mb-8">
+                                <h2 class="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">完成資料後，您可以：</h2>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                                     <div class="flex items-start">
-                                        <i class="fas fa-search text-gray-500 text-2xl mr-4 mt-1"></i>
+                                        <i class="fas fa-search text-gray-500 text-xl sm:text-2xl mr-3 sm:mr-4 mt-1"></i>
                                         <div>
                                             <h3 class="font-medium text-gray-900 mb-1">瀏覽市集活動</h3>
                                             <p class="text-sm text-gray-600">探索全台各地精彩的市集機會</p>
                                         </div>
                                     </div>
                                     <div class="flex items-start">
-                                        <i class="fas fa-paper-plane text-gray-500 text-2xl mr-4 mt-1"></i>
+                                        <i class="fas fa-paper-plane text-gray-500 text-xl sm:text-2xl mr-3 sm:mr-4 mt-1"></i>
                                         <div>
                                             <h3 class="font-medium text-gray-900 mb-1">申請參加市集</h3>
                                             <p class="text-sm text-gray-600">快速報名感興趣的市集活動</p>
                                         </div>
                                     </div>
                                     <div class="flex items-start">
-                                        <i class="fas fa-star text-gray-500 text-2xl mr-4 mt-1"></i>
+                                        <i class="fas fa-star text-gray-500 text-xl sm:text-2xl mr-3 sm:mr-4 mt-1"></i>
                                         <div>
                                             <h3 class="font-medium text-gray-900 mb-1">收藏市集</h3>
                                             <p class="text-sm text-gray-600">追蹤您喜歡的市集和主辦方</p>
                                         </div>
                                     </div>
                                     <div class="flex items-start">
-                                        <i class="fas fa-comments text-gray-500 text-2xl mr-4 mt-1"></i>
+                                        <i class="fas fa-comments text-gray-500 text-xl sm:text-2xl mr-3 sm:mr-4 mt-1"></i>
                                         <div>
                                             <h3 class="font-medium text-gray-900 mb-1">與主辦方互動</h3>
                                             <p class="text-sm text-gray-600">直接聯繫市集主辦方進行溝通</p>
@@ -189,38 +195,38 @@
                             </div>
 
                             <!-- 範例展示 -->
-                            <div class="bg-gray-50 rounded-lg p-6 mb-8">
-                                <h3 class="font-bold text-gray-900 mb-3 text-center">優質攤商資料範例</h3>
-                                <div class="flex items-start space-x-4">
-                                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=200&h=200&fit=crop" alt="商品照片" class="w-32 h-32 rounded-lg object-cover">
+                            <div class="bg-gray-50 rounded-lg p-4 sm:p-6 mb-6 sm:mb-8">
+                                <h3 class="font-bold text-gray-900 mb-3 text-center text-sm sm:text-base">優質攤商資料範例</h3>
+                                <div class="flex flex-col sm:flex-row items-start space-y-3 sm:space-y-0 sm:space-x-4">
+                                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=200&h=200&fit=crop" alt="商品照片" class="w-full sm:w-24 md:w-32 h-32 rounded-lg object-cover">
                                     <div class="flex-1">
-                                        <h4 class="font-bold text-gray-900 mb-2">手作皮革工坊</h4>
-                                        <p class="text-sm text-gray-600 mb-2">
+                                        <h4 class="font-bold text-gray-900 mb-2 text-sm sm:text-base">手作皮革工坊</h4>
+                                        <p class="text-xs sm:text-sm text-gray-600 mb-2">
                                             專注於手工皮革製品設計與製作，每件作品都是獨一無二的手工創作。使用植鞣皮革，注重細節與品質，提供客製化服務。
                                         </p>
                                         <div class="flex flex-wrap gap-2">
-                                            <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">手作工藝</span>
-                                            <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">皮革製品</span>
-                                            <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">可客製化</span>
+                                            <span class="px-2 sm:px-3 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">手作工藝</span>
+                                            <span class="px-2 sm:px-3 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">皮革製品</span>
+                                            <span class="px-2 sm:px-3 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">可客製化</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- 行動按鈕 -->
-                            <div class="flex justify-center space-x-4">
-                                <a href="vendor-profile.html" class="px-8 py-3 bg-orange-400 text-white rounded-lg hover:bg-amber-600 transition-colors font-medium text-lg">
+                            <div class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
+                                <a href="vendor-profile.html" class="w-full sm:w-auto px-6 sm:px-8 py-3 bg-orange-400 text-white rounded-lg hover:bg-amber-600 transition-colors font-medium text-base sm:text-lg text-center">
                                     <i class="fas fa-edit mr-2"></i>
                                     開始填寫資料
                                 </a>
-                                <button onclick="skipGuide()" class="px-8 py-3 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium text-lg">
+                                <button onclick="skipGuide()" class="w-full sm:w-auto px-6 sm:px-8 py-3 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium text-base sm:text-lg">
                                     稍後再說
                                 </button>
                             </div>
 
                             <!-- 警告訊息 -->
-                            <div class="mt-6 text-center">
-                                <p class="text-sm text-gray-500">
+                            <div class="mt-4 sm:mt-6 text-center">
+                                <p class="text-xs sm:text-sm text-gray-500 px-4">
                                     <i class="fas fa-exclamation-triangle mr-1"></i>
                                     未完成攤商資料前，您將無法申請參加市集活動
                                 </p>
