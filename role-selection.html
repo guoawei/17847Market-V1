@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>選擇角色 - 市集媒合平台</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #F3F4F6;
+        }
+        .role-card {
+            transition: all 0.3s ease;
+        }
+        .role-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-screen flex items-center justify-center p-8">
+        <div class="max-w-5xl w-full">
+            <!-- Logo 和標題 -->
+            <div class="text-center mb-12">
+                <img class="h-16 mx-auto mb-6" src="https://images.unsplash.com/photo-1490127252417-7c393f993ee4?w=150&h=50&fit=crop" alt="Logo">
+                <h1 class="text-3xl font-bold text-gray-900 mb-4">歡迎加入 17847Market</h1>
+                <p class="text-lg text-gray-600">請選擇您的身份，開始您的市集之旅</p>
+            </div>
+
+            <!-- 角色選擇卡片 -->
+            <div class="grid grid-cols-2 gap-8 mb-8">
+                <!-- 市集主卡片 -->
+                <div class="role-card bg-white rounded-2xl shadow-lg overflow-hidden cursor-pointer border-2 border-transparent hover:border-orange-400">
+                    <div class="p-8">
+                        <div class="flex justify-center mb-6">
+                            <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-store text-gray-600 text-4xl"></i>
+                            </div>
+                        </div>
+                        <h2 class="text-2xl font-bold text-gray-900 text-center mb-4">我是市集主</h2>
+                        <p class="text-gray-600 text-center mb-6">
+                            創建和管理市集活動，招募攤商，打造精彩的市集體驗
+                        </p>
+
+                        <!-- 功能列表 -->
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center text-gray-700">
+                                <i class="fas fa-check-circle text-gray-500 mr-3"></i>
+                                <span>建立和管理市集資料</span>
+                            </li>
+                            <li class="flex items-center text-gray-700">
+                                <i class="fas fa-check-circle text-gray-500 mr-3"></i>
+                                <span>發布市集活動</span>
+                            </li>
+                            <li class="flex items-center text-gray-700">
+                                <i class="fas fa-check-circle text-gray-500 mr-3"></i>
+                                <span>審核攤商申請</span>
+                            </li>
+                            <li class="flex items-center text-gray-700">
+                                <i class="fas fa-check-circle text-gray-500 mr-3"></i>
+                                <span>數據分析與報表</span>
+                            </li>
+                        </ul>
+
+                        <button onclick="selectOrganizer()" class="w-full px-6 py-3 bg-orange-400 text-white rounded-lg hover:bg-amber-600 transition-colors font-medium">
+                            選擇市集主
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 攤商卡片 -->
+                <div class="role-card bg-white rounded-2xl shadow-lg overflow-hidden cursor-pointer border-2 border-transparent hover:border-orange-400">
+                    <div class="p-8">
+                        <div class="flex justify-center mb-6">
+                            <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-shopping-bag text-gray-600 text-4xl"></i>
+                            </div>
+                        </div>
+                        <h2 class="text-2xl font-bold text-gray-900 text-center mb-4">我是攤商</h2>
+                        <p class="text-gray-600 text-center mb-6">
+                            探索市集機會，參加活動，展示您的商品和創意
+                        </p>
+
+                        <!-- 功能列表 -->
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center text-gray-700">
+                                <i class="fas fa-check-circle text-gray-500 mr-3"></i>
+                                <span>建立攤商資料</span>
+                            </li>
+                            <li class="flex items-center text-gray-700">
+                                <i class="fas fa-check-circle text-gray-500 mr-3"></i>
+                                <span>瀏覽市集活動</span>
+                            </li>
+                            <li class="flex items-center text-gray-700">
+                                <i class="fas fa-check-circle text-gray-500 mr-3"></i>
+                                <span>申請參加市集</span>
+                            </li>
+                            <li class="flex items-center text-gray-700">
+                                <i class="fas fa-check-circle text-gray-500 mr-3"></i>
+                                <span>管理商品資訊</span>
+                            </li>
+                        </ul>
+
+                        <button onclick="selectVendor()" class="w-full px-6 py-3 bg-orange-400 text-white rounded-lg hover:bg-amber-600 transition-colors font-medium">
+                            選擇攤商
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 提示訊息 -->
+            <div class="text-center">
+                <p class="text-sm text-gray-500">
+                    <i class="fas fa-info-circle mr-1"></i>
+                    您可以稍後在帳號設定中變更身份
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function selectOrganizer() {
+            // 儲存角色選擇
+            localStorage.setItem('userRole', 'organizer');
+            // 導向市集主建立市集引導頁
+            window.location.href = 'organizer-create-market-guide.html';
+        }
+
+        function selectVendor() {
+            // 儲存角色選擇
+            localStorage.setItem('userRole', 'vendor');
+            // 導向攤商建立資料引導頁
+            window.location.href = 'vendor-create-profile-guide.html';
+        }
+    </script>
+</body>
+</html>

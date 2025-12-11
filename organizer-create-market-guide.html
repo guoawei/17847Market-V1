@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>建立市集 - 市集媒合平台</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Noto Sans TC", sans-serif;
+        background-color: #f3f4f6;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100">
+    <div class="min-h-screen flex">
+      <!-- 側邊欄 -->
+      <div class="bg-white w-64 min-h-screen shadow-lg fixed">
+        <div
+          class="flex items-center justify-center h-16 border-b border-gray-200"
+        >
+          <a href="organizer-dashboard.html">
+            <img
+              class="h-8"
+              src="https://images.unsplash.com/photo-1490127252417-7c393f993ee4?w=150&h=50&fit=crop"
+              alt="Logo"
+            />
+          </a>
+        </div>
+        <nav class="mt-6">
+          <div class="px-4 py-2">
+            <div class="flex items-center space-x-2 text-sm text-gray-600">
+              <img
+                class="h-8 w-8 rounded-full object-cover"
+                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop"
+                alt="主辦方頭像"
+              />
+              <span>歡迎回來，主辦方</span>
+            </div>
+          </div>
+          <div class="px-2 mt-4">
+            <a
+              href="organizer-dashboard.html"
+              class="flex items-center px-4 py-3 text-gray-700 bg-gray-100 rounded-lg"
+            >
+              <i class="fas fa-home w-5 h-5"></i>
+              <span class="mx-4">首頁</span>
+            </a>
+            <a
+              href="market-management.html"
+              class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+            >
+              <i class="fas fa-store w-5 h-5"></i>
+              <span class="mx-4">我的市集</span>
+            </a>
+            <a
+              href="vendor-review.html"
+              class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+            >
+              <i class="fas fa-users w-5 h-5"></i>
+              <span class="mx-4">攤商審核</span>
+            </a>
+            <a
+              href="market-analytics.html"
+              class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+            >
+              <i class="fas fa-chart-line w-5 h-5"></i>
+              <span class="mx-4">數據分析</span>
+            </a>
+            <a
+              href="market-settings.html"
+              class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+            >
+              <i class="fas fa-cog w-5 h-5"></i>
+              <span class="mx-4">設定</span>
+            </a>
+          </div>
+        </nav>
+      </div>
+
+      <!-- 主要內容區 -->
+      <div class="flex-1 ml-64">
+        <!-- 頂部導航 -->
+        <header class="bg-white shadow-sm">
+          <div class="flex items-center justify-between h-16 px-8">
+            <div class="flex items-center space-x-4">
+              <h1 class="text-xl font-bold text-gray-800">首頁</h1>
+              <a
+                href="index.html"
+                class="text-gray-600 hover:text-orange-600 transition-colors"
+              >
+                <i class="fas fa-home mr-1"></i>
+                返回首頁
+              </a>
+            </div>
+            <div class="flex items-center space-x-4">
+              <a
+                href="organizer-notifications.html"
+                class="text-gray-600 hover:text-gray-800"
+              >
+                <i class="fas fa-bell"></i>
+              </a>
+              <button class="flex items-center space-x-2">
+                <img
+                  class="h-8 w-8 rounded-full object-cover"
+                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop"
+                  alt="主辦方頭像"
+                />
+                <i class="fas fa-chevron-down text-gray-600"></i>
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <!-- 主要內容 -->
+        <main class="p-8">
+          <!-- 引導卡片 -->
+          <div class="max-w-4xl mx-auto">
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+              <!-- 頂部圖示區 -->
+              <div
+                class="bg-gradient-to-r from-gray-50 to-gray-100 p-12 text-center border-b border-gray-200"
+              >
+                <div
+                  class="inline-flex items-center justify-center w-24 h-24 bg-white rounded-full mb-6 shadow-sm"
+                >
+                  <i class="fas fa-store text-gray-700 text-5xl"></i>
+                </div>
+                <h1 class="text-3xl font-bold text-gray-900 mb-3">
+                  建立您的第一個市集
+                </h1>
+                <p class="text-gray-600 text-lg">
+                  讓我們開始創建市集資料，開啟您的市集主之旅
+                </p>
+              </div>
+
+              <!-- 內容區 -->
+              <div class="p-8">
+                <!-- 步驟說明 -->
+                <div class="mb-8">
+                  <h2 class="text-xl font-bold text-gray-900 mb-4">
+                    接下來您需要完成以下步驟：
+                  </h2>
+                  <div class="space-y-4">
+                    <div class="flex items-start">
+                      <div
+                        class="flex-shrink-0 w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center mr-4"
+                      >
+                        <span class="text-gray-700 font-bold">1</span>
+                      </div>
+                      <div>
+                        <h3 class="font-bold text-gray-900 mb-1">
+                          填寫基本資訊
+                        </h3>
+                        <p class="text-gray-600">
+                          包含市集名稱、簡介、聯絡方式等
+                        </p>
+                      </div>
+                    </div>
+                    <div class="flex items-start">
+                      <div
+                        class="flex-shrink-0 w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center mr-4"
+                      >
+                        <span class="text-gray-700 font-bold">2</span>
+                      </div>
+                      <div>
+                        <h3 class="font-bold text-gray-900 mb-1">
+                          上傳市集照片
+                        </h3>
+                        <p class="text-gray-600">
+                          展示您的市集特色，吸引更多攤商
+                        </p>
+                      </div>
+                    </div>
+                    <div class="flex items-start">
+                      <div
+                        class="flex-shrink-0 w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center mr-4"
+                      >
+                        <span class="text-gray-700 font-bold">3</span>
+                      </div>
+                      <div>
+                        <h3 class="font-bold text-gray-900 mb-1">
+                          設定市集類型
+                        </h3>
+                        <p class="text-gray-600">選擇市集的類型和風格定位</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 提示資訊 -->
+                <div class="bg-gray-50 border-l-4 border-gray-400 p-4 mb-8">
+                  <div class="flex">
+                    <div class="flex-shrink-0">
+                      <i class="fas fa-lightbulb text-gray-600"></i>
+                    </div>
+                    <div class="ml-3">
+                      <p class="text-sm text-gray-700">
+                        <strong>小提示：</strong>
+                        完善的市集資料可以幫助您吸引更多優質攤商，建議您仔細填寫每個欄位。
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 功能介紹 -->
+                <div class="mb-8">
+                  <h2 class="text-xl font-bold text-gray-900 mb-4">
+                    建立市集後，您可以：
+                  </h2>
+                  <div class="grid grid-cols-2 gap-6">
+                    <div class="flex items-start">
+                      <i
+                        class="fas fa-calendar-plus text-gray-500 text-2xl mr-4 mt-1"
+                      ></i>
+                      <div>
+                        <h3 class="font-medium text-gray-900 mb-1">發布活動</h3>
+                        <p class="text-sm text-gray-600">
+                          創建市集活動，開放攤商報名
+                        </p>
+                      </div>
+                    </div>
+                    <div class="flex items-start">
+                      <i
+                        class="fas fa-user-check text-gray-500 text-2xl mr-4 mt-1"
+                      ></i>
+                      <div>
+                        <h3 class="font-medium text-gray-900 mb-1">審核攤商</h3>
+                        <p class="text-sm text-gray-600">
+                          管理攤商申請，篩選合適的攤商
+                        </p>
+                      </div>
+                    </div>
+                    <div class="flex items-start">
+                      <i
+                        class="fas fa-chart-bar text-gray-500 text-2xl mr-4 mt-1"
+                      ></i>
+                      <div>
+                        <h3 class="font-medium text-gray-900 mb-1">數據分析</h3>
+                        <p class="text-sm text-gray-600">
+                          查看市集數據，優化營運策略
+                        </p>
+                      </div>
+                    </div>
+                    <div class="flex items-start">
+                      <i
+                        class="fas fa-bullhorn text-gray-500 text-2xl mr-4 mt-1"
+                      ></i>
+                      <div>
+                        <h3 class="font-medium text-gray-900 mb-1">行銷推廣</h3>
+                        <p class="text-sm text-gray-600">
+                          使用平台工具推廣您的市集
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 行動按鈕 -->
+                <div class="flex justify-center space-x-4">
+                  <a
+                    href="market-create.html"
+                    class="px-8 py-3 bg-orange-400 text-white rounded-lg hover:bg-amber-600 transition-colors font-medium text-lg"
+                  >
+                    <i class="fas fa-plus mr-2"></i>
+                    開始建立市集
+                  </a>
+                  <button
+                    onclick="skipGuide()"
+                    class="px-8 py-3 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium text-lg"
+                  >
+                    稍後再說
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      function skipGuide() {
+        // 設定標記表示用戶跳過了引導
+        localStorage.setItem("skipMarketGuide", "true");
+        // 導向主控台
+        window.location.href = "organizer-dashboard.html";
+      }
+    </script>
+  </body>
+</html>
