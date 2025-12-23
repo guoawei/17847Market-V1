@@ -170,6 +170,28 @@
                 </div>
             </header>
 
+            <!-- 重要提示橫幅 -->
+            <div x-data="{ showBanner: true }" x-show="showBanner" class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mx-8 mt-6 rounded-lg shadow-sm">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <i class="fas fa-exclamation-circle text-yellow-600 text-xl mr-3"></i>
+                        <div>
+                            <p class="text-gray-900 font-medium">請完成市集基本設定</p>
+                            <p class="text-gray-600 text-sm mt-1">為了讓您的市集順利運作，請先到市集設定填寫「市集規範」與「匯款帳號」資訊</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <a href="market-settings.html" class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors inline-flex items-center">
+                            <i class="fas fa-cog mr-2"></i>
+                            前往設定
+                        </a>
+                        <button @click="showBanner = false" class="text-gray-400 hover:text-gray-600 transition-colors">
+                            <i class="fas fa-times text-lg"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <!-- 主要內容 -->
             <main class="p-8">
                 <!-- 市集基本資訊 -->
@@ -180,6 +202,19 @@
                             <div>
                                 <h2 class="text-2xl font-bold text-gray-900">週末文創市集</h2>
                                 <p class="text-gray-600 mt-1">一個充滿創意與溫度的文創市集，集結各地文創工作者，為您帶來最獨特的手作體驗。</p>
+
+                                <!-- 設定提示訊息 -->
+                                <div class="mt-3 bg-blue-50 border border-blue-200 rounded-lg p-3">
+                                    <div class="flex items-start">
+                                        <i class="fas fa-info-circle text-blue-500 mt-0.5 mr-2"></i>
+                                        <div class="flex-1">
+                                            <p class="text-sm text-gray-700">
+                                                <span class="font-medium">尚未完成設定：</span>請填寫市集規範與匯款帳號，以便攤商申請與款項收取
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="flex items-center space-x-4 mt-2">
                                     <a href="market-settings.html" class="text-yellow-600 hover:text-yellow-700">
                                         <i class="fas fa-cog mr-1"></i>
@@ -187,6 +222,30 @@
                                     </a>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 設定檢查清單提示 -->
+                <div class="bg-gradient-to-r from-orange-50 to-yellow-50 border border-orange-200 rounded-lg p-5 mb-6 shadow-sm">
+                    <div class="flex items-start">
+                        <i class="fas fa-clipboard-check text-orange-500 text-xl mt-0.5 mr-3"></i>
+                        <div class="flex-1">
+                            <h3 class="text-gray-900 font-semibold mb-2">開始管理活動前，請先完成以下設定</h3>
+                            <div class="space-y-2">
+                                <div class="flex items-center">
+                                    <i class="fas fa-square text-orange-400 text-xs mr-2"></i>
+                                    <span class="text-sm text-gray-700">填寫市集規範（供攤商了解參展規定）</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-square text-orange-400 text-xs mr-2"></i>
+                                    <span class="text-sm text-gray-700">設定匯款帳號（供攤商繳交攤位費用）</span>
+                                </div>
+                            </div>
+                            <a href="market-settings.html" class="inline-flex items-center mt-3 text-sm text-orange-600 hover:text-orange-700 font-medium">
+                                <i class="fas fa-arrow-right mr-1"></i>
+                                立即前往設定
+                            </a>
                         </div>
                     </div>
                 </div>

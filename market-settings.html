@@ -89,6 +89,9 @@
                             <button onclick="showTab('payment-settings')" class="px-6 py-4 text-sm font-medium text-gray-500 hover:text-gray-700">
                                 付款設定
                             </button>
+                            <button onclick="showTab('regulations')" class="px-6 py-4 text-sm font-medium text-gray-500 hover:text-gray-700">
+                                市集規範
+                            </button>
                             <button onclick="showTab('notification-settings')" class="px-6 py-4 text-sm font-medium text-gray-500 hover:text-gray-700">
                                 通知設定
                             </button>
@@ -348,6 +351,161 @@
                         </form>
                     </div>
 
+                    <!-- 市集規範表單 -->
+                    <div id="regulations" class="tab-content hidden p-6">
+                        <form>
+                            <div class="space-y-6">
+                                <!-- 說明文字 -->
+                                <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                                    <div class="flex items-start">
+                                        <i class="fas fa-info-circle text-yellow-600 mt-1 mr-3"></i>
+                                        <div>
+                                            <h4 class="text-sm font-medium text-yellow-800 mb-1">填寫說明</h4>
+                                            <p class="text-sm text-yellow-700">這些資訊將顯示在市集詳情頁面，幫助攤商了解市集的規範、請假退款政策及出攤注意事項。請盡量填寫詳細，以減少後續溝通成本。</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 市集規範 -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                                        市集規範 <span class="text-red-500">*</span>
+                                    </label>
+                                    <textarea
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                                        rows="8"
+                                        placeholder="請輸入市集規範..."
+                                    ></textarea>
+                                    <p class="mt-2 text-sm text-gray-500">請詳細說明攤商需遵守的市集規範，包括時間、空間、行為等規定</p>
+
+                                    <!-- 範例說明區塊 -->
+                                    <div class="mt-3">
+                                        <button type="button" onclick="toggleExample('regulations-example')" class="flex items-center text-sm text-yellow-600 hover:text-yellow-700">
+                                            <i class="fas fa-lightbulb mr-2"></i>
+                                            <span>查看範例</span>
+                                            <i class="fas fa-chevron-down ml-2 transition-transform" id="regulations-example-icon"></i>
+                                        </button>
+                                        <div id="regulations-example" class="hidden mt-3 p-4 bg-gray-50 border border-gray-200 rounded-md">
+                                            <p class="text-sm text-gray-700 whitespace-pre-line">1. 請準時於活動當天早上 8:00 前完成攤位佈置
+2. 攤位範圍為 3m x 3m，請勿超出範圍擺設
+3. 禁止販售違法商品、仿冒品或侵權商品
+4. 請自行處理攤位垃圾，保持場地整潔
+5. 活動結束後請於 30 分鐘內完成清場
+6. 如遇天候不佳，主辦單位保留取消活動的權利</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 請假與退款說明 -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                                        請假與退款說明 <span class="text-red-500">*</span>
+                                    </label>
+                                    <textarea
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                                        rows="8"
+                                        placeholder="請輸入請假與退款說明..."
+                                    ></textarea>
+                                    <p class="mt-2 text-sm text-gray-500">請說明請假流程及退款條件，包括時間限制、退款比例等</p>
+
+                                    <!-- 範例說明區塊 -->
+                                    <div class="mt-3">
+                                        <button type="button" onclick="toggleExample('refund-example')" class="flex items-center text-sm text-yellow-600 hover:text-yellow-700">
+                                            <i class="fas fa-lightbulb mr-2"></i>
+                                            <span>查看範例</span>
+                                            <i class="fas fa-chevron-down ml-2 transition-transform" id="refund-example-icon"></i>
+                                        </button>
+                                        <div id="refund-example" class="hidden mt-3 p-4 bg-gray-50 border border-gray-200 rounded-md">
+                                            <p class="text-sm text-gray-700 whitespace-pre-line">【請假規定】
+• 若需請假，請於活動日 7 天前告知主辦單位
+• 每季最多可請假 2 次，超過次數將取消攤位資格
+
+【退款政策】
+• 活動日 14 天前取消：全額退費（需扣除手續費 10%）
+• 活動日 7-13 天前取消：退費 50%
+• 活動日 7 天內取消：恕不退費
+• 因天候因素取消活動：全額退費或保留至下次使用</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 報名成功後出攤注意事項 -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                                        報名成功後出攤注意事項 <span class="text-red-500">*</span>
+                                    </label>
+                                    <textarea
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                                        rows="8"
+                                        placeholder="請輸入報名成功後的注意事項..."
+                                    ></textarea>
+                                    <p class="mt-2 text-sm text-gray-500">請列出攤商報名成功後需要注意的事項、準備工作及注意事項</p>
+
+                                    <!-- 範例說明區塊 -->
+                                    <div class="mt-3">
+                                        <button type="button" onclick="toggleExample('notice-example')" class="flex items-center text-sm text-yellow-600 hover:text-yellow-700">
+                                            <i class="fas fa-lightbulb mr-2"></i>
+                                            <span>查看範例</span>
+                                            <i class="fas fa-chevron-down ml-2 transition-transform" id="notice-example-icon"></i>
+                                        </button>
+                                        <div id="notice-example" class="hidden mt-3 p-4 bg-gray-50 border border-gray-200 rounded-md">
+                                            <p class="text-sm text-gray-700 whitespace-pre-line">✓ 請於活動日 3 天前完成繳費，逾期視同放棄資格
+✓ 活動當天請攜帶識別證件及繳費證明
+✓ 攤位將於活動日早上 7:30 開放進場佈置
+✓ 請自備桌椅、延長線等攤位所需設備
+✓ 如需用電，請事先告知（限 110V，最大負載 1000W）
+✓ 建議自行投保攤位責任險
+✓ 活動期間如有任何問題，請聯繫現場工作人員</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 其他補充 -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                                        其他補充 <span class="text-gray-400 text-xs">（選填）</span>
+                                    </label>
+                                    <textarea
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                                        rows="6"
+                                        placeholder="請輸入其他補充說明..."
+                                    ></textarea>
+                                    <p class="mt-2 text-sm text-gray-500">其他需要向攤商說明的額外資訊</p>
+
+                                    <!-- 範例說明區塊 -->
+                                    <div class="mt-3">
+                                        <button type="button" onclick="toggleExample('additional-example')" class="flex items-center text-sm text-yellow-600 hover:text-yellow-700">
+                                            <i class="fas fa-lightbulb mr-2"></i>
+                                            <span>查看範例</span>
+                                            <i class="fas fa-chevron-down ml-2 transition-transform" id="additional-example-icon"></i>
+                                        </button>
+                                        <div id="additional-example" class="hidden mt-3 p-4 bg-gray-50 border border-gray-200 rounded-md">
+                                            <p class="text-sm text-gray-700 whitespace-pre-line">【停車資訊】
+市民廣場地下停車場，平日每小時 30 元，假日每小時 50 元
+
+【交通方式】
+捷運：市政府站 2 號出口步行 5 分鐘
+公車：市民廣場站
+
+【周邊設施】
+現場提供飲水機、洗手間，附近有便利商店及餐廳</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 儲存按鈕 -->
+                                <div class="flex justify-end space-x-3">
+                                    <button type="button" class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                                        取消
+                                    </button>
+                                    <button type="submit" class="px-6 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">
+                                        儲存變更
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
                     <!-- 通知設定表單 -->
                     <div id="notification-settings" class="tab-content hidden p-6">
                         <form>
@@ -432,19 +590,33 @@
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.classList.add('hidden');
             });
-            
+
             // 移除所有選項卡的活動狀態
             document.querySelectorAll('nav button').forEach(button => {
                 button.classList.remove('text-yellow-500', 'border-yellow-500');
                 button.classList.add('text-gray-500');
             });
-            
+
             // 顯示選中的內容
             document.getElementById(tabId).classList.remove('hidden');
-            
+
             // 設置選中選項卡的樣式
             event.currentTarget.classList.remove('text-gray-500');
             event.currentTarget.classList.add('text-yellow-500', 'border-yellow-500');
+        }
+
+        // 範例展開/收合功能
+        function toggleExample(exampleId) {
+            const exampleDiv = document.getElementById(exampleId);
+            const icon = document.getElementById(exampleId + '-icon');
+
+            if (exampleDiv.classList.contains('hidden')) {
+                exampleDiv.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            } else {
+                exampleDiv.classList.add('hidden');
+                icon.classList.remove('rotate-180');
+            }
         }
     </script>
 </body>
