@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>市集媒合平台 - 找到最適合的市集</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+        }
+        :root {
+            --primary-yellow: #FBB03B;
+            --hover-yellow: #F59E0B;
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .testimonial-slider {
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+        .testimonial-slider > div {
+            scroll-snap-align: start;
+        }
+        .filter-btn {
+            transition: all 0.2s ease;
+            background-color: white;
+        }
+        .filter-btn:active {
+            transform: scale(0.95);
+        }
+        .filter-btn.active {
+            border-color: #F59E0B !important;
+            background: linear-gradient(135deg, #FBB03B 0%, #F59E0B 100%) !important;
+            color: white !important;
+            box-shadow: 0 4px 6px rgba(251, 176, 59, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 導航欄 -->
+    <nav class="bg-white shadow-lg fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <img class="h-10 w-auto" src="./17847market-logo-v2.jpg" alt="Logo">
+                    </div>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="index2.html" class="border-b-2 border-yellow-500 text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium">
+                            首頁
+                        </a>
+                        <a href="market-list.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            探索市集
+                        </a>
+                        <a href="vendor-dashboard.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            成為攤商
+                        </a>
+                        <a href="about.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            關於我們
+                        </a>
+                        <a href="organizer-dashboard.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            主辦方入口
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <button type="button" onclick="window.location.href='login.html'" class="relative inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-500 shadow-sm hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+                            <i class="fas fa-user-plus mr-2"></i>
+                            註冊/登入
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要內容 -->
+    <main class="pt-16">
+        <!-- Hero區域 + 搜尋 -->
+        <div class="relative bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-8">
+                    <h1 class="text-3xl md:text-4xl font-bold text-white mb-3">
+                        找到最適合您的市集
+                    </h1>
+                    <p class="text-lg text-white/90">
+                        快速篩選，立即配對理想擺攤機會
+                    </p>
+                </div>
+
+                <!-- 搜尋列 -->
+                <div class="bg-white rounded-2xl shadow-2xl p-6 max-w-6xl mx-auto border-4 border-yellow-300/30">
+                    <!-- 關鍵字搜尋 -->
+                    <div class="mb-5">
+                        <div class="relative">
+                            <input type="text" id="searchInput" placeholder="輸入市集名稱、地點或關鍵字..."
+                                class="w-full px-4 py-3 pl-12 pr-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 text-base bg-gray-50 hover:bg-white transition">
+                            <i class="fas fa-search absolute left-4 top-4 text-yellow-500 text-lg"></i>
+                        </div>
+                    </div>
+
+                    <!-- 快速篩選 - 地區 -->
+                    <div class="mb-4">
+                        <div class="flex items-center mb-2">
+                            <div class="bg-gradient-to-r from-yellow-400 to-orange-400 w-1 h-5 rounded-full mr-2"></div>
+                            <h3 class="text-sm font-bold text-gray-800 flex items-center">
+                                <i class="fas fa-map-marker-alt text-yellow-600 mr-2"></i>
+                                找地區
+                            </h3>
+                        </div>
+                        <div class="flex flex-wrap gap-2 bg-gradient-to-r from-gray-50 to-yellow-50/30 p-3 rounded-xl">
+                            <button class="filter-btn region-btn px-3 py-1.5 text-sm rounded-full border-2 border-gray-300 text-gray-700 hover:border-yellow-400 hover:bg-yellow-50 hover:text-yellow-700 hover:shadow-md transition font-medium" data-value="all">
+                                全部
+                            </button>
+                            <button class="filter-btn region-btn px-3 py-1.5 text-sm rounded-full border-2 border-gray-300 text-gray-700 hover:border-yellow-400 hover:bg-yellow-50 hover:text-yellow-700 hover:shadow-md transition font-medium" data-value="taipei">
+                                台北
+                            </button>
+                            <button class="filter-btn region-btn px-3 py-1.5 text-sm rounded-full border-2 border-gray-300 text-gray-700 hover:border-yellow-400 hover:bg-yellow-50 hover:text-yellow-700 hover:shadow-md transition font-medium" data-value="taoyuan">
+                                桃園
+                            </button>
+                            <button class="filter-btn region-btn px-3 py-1.5 text-sm rounded-full border-2 border-gray-300 text-gray-700 hover:border-yellow-400 hover:bg-yellow-50 hover:text-yellow-700 hover:shadow-md transition font-medium" data-value="hsinchu">
+                                新竹
+                            </button>
+                            <button class="filter-btn region-btn px-3 py-1.5 text-sm rounded-full border-2 border-gray-300 text-gray-700 hover:border-yellow-400 hover:bg-yellow-50 hover:text-yellow-700 hover:shadow-md transition font-medium" data-value="taichung">
+                                台中
+                            </button>
+                            <button class="filter-btn region-btn px-3 py-1.5 text-sm rounded-full border-2 border-gray-300 text-gray-700 hover:border-yellow-400 hover:bg-yellow-50 hover:text-yellow-700 hover:shadow-md transition font-medium" data-value="chiayi">
+                                嘉義
+                            </button>
+                            <button class="filter-btn region-btn px-3 py-1.5 text-sm rounded-full border-2 border-gray-300 text-gray-700 hover:border-yellow-400 hover:bg-yellow-50 hover:text-yellow-700 hover:shadow-md transition font-medium" data-value="tainan">
+                                台南
+                            </button>
+                            <button class="filter-btn region-btn px-3 py-1.5 text-sm rounded-full border-2 border-gray-300 text-gray-700 hover:border-yellow-400 hover:bg-yellow-50 hover:text-yellow-700 hover:shadow-md transition font-medium" data-value="kaohsiung">
+                                高雄
+                            </button>
+                            <button class="filter-btn region-btn px-3 py-1.5 text-sm rounded-full border-2 border-gray-300 text-gray-700 hover:border-yellow-400 hover:bg-yellow-50 hover:text-yellow-700 hover:shadow-md transition font-medium" data-value="pingtung">
+                                屏東
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 快速篩選 - 類型 -->
+                    <div class="mb-4">
+                        <div class="flex items-center mb-2">
+                            <div class="bg-gradient-to-r from-yellow-400 to-orange-400 w-1 h-5 rounded-full mr-2"></div>
+                            <h3 class="text-sm font-bold text-gray-800 flex items-center">
+                                <i class="fas fa-tag text-yellow-600 mr-2"></i>
+                                找類型
+                            </h3>
+                        </div>
+                        <div class="flex flex-wrap gap-2 bg-gradient-to-r from-yellow-50/30 to-orange-50/30 p-3 rounded-xl">
+                            <button class="filter-btn type-btn px-3 py-1.5 text-sm rounded-full border-2 border-gray-300 text-gray-700 hover:border-yellow-400 hover:bg-yellow-50 hover:text-yellow-700 hover:shadow-md transition font-medium" data-value="all">
+                                全部
+                            </button>
+                            <button class="filter-btn type-btn px-3 py-1.5 text-sm rounded-full border-2 border-gray-300 text-gray-700 hover:border-yellow-400 hover:bg-yellow-50 hover:text-yellow-700 hover:shadow-md transition font-medium" data-value="creative">
+                                <i class="fas fa-palette mr-1"></i>文創
+                            </button>
+                            <button class="filter-btn type-btn px-3 py-1.5 text-sm rounded-full border-2 border-gray-300 text-gray-700 hover:border-yellow-400 hover:bg-yellow-50 hover:text-yellow-700 hover:shadow-md transition font-medium" data-value="farmer">
+                                <i class="fas fa-seedling mr-1"></i>農夫
+                            </button>
+                            <button class="filter-btn type-btn px-3 py-1.5 text-sm rounded-full border-2 border-gray-300 text-gray-700 hover:border-yellow-400 hover:bg-yellow-50 hover:text-yellow-700 hover:shadow-md transition font-medium" data-value="handmade">
+                                <i class="fas fa-hands mr-1"></i>手作
+                            </button>
+                            <button class="filter-btn type-btn px-3 py-1.5 text-sm rounded-full border-2 border-gray-300 text-gray-700 hover:border-yellow-400 hover:bg-yellow-50 hover:text-yellow-700 hover:shadow-md transition font-medium" data-value="food">
+                                <i class="fas fa-utensils mr-1"></i>美食
+                            </button>
+                            <button class="filter-btn type-btn px-3 py-1.5 text-sm rounded-full border-2 border-gray-300 text-gray-700 hover:border-yellow-400 hover:bg-yellow-50 hover:text-yellow-700 hover:shadow-md transition font-medium" data-value="secondhand">
+                                <i class="fas fa-recycle mr-1"></i>二手
+                            </button>
+                            <button class="filter-btn type-btn px-3 py-1.5 text-sm rounded-full border-2 border-gray-300 text-gray-700 hover:border-yellow-400 hover:bg-yellow-50 hover:text-yellow-700 hover:shadow-md transition font-medium" data-value="art">
+                                <i class="fas fa-paint-brush mr-1"></i>藝術
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 進階篩選 -->
+                    <div class="border-t-2 border-dashed border-gray-200 pt-4 mb-4">
+                        <div class="flex items-center mb-2">
+                            <div class="bg-gradient-to-r from-yellow-400 to-orange-400 w-1 h-5 rounded-full mr-2"></div>
+                            <h3 class="text-sm font-bold text-gray-800 flex items-center">
+                                <i class="fas fa-sliders-h text-yellow-600 mr-2"></i>
+                                更多條件
+                            </h3>
+                        </div>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                            <select class="px-3 py-2 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 text-sm bg-white hover:border-yellow-300 transition">
+                                <option value="">💰 攤位費用</option>
+                                <option value="0-500">NT$ 500以下</option>
+                                <option value="500-1000">NT$ 500-1,000</option>
+                                <option value="1000-2000">NT$ 1,000-2,000</option>
+                                <option value="2000+">NT$ 2,000以上</option>
+                            </select>
+                            <select class="px-3 py-2 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 text-sm bg-white hover:border-yellow-300 transition">
+                                <option value="">🏢 場地類型</option>
+                                <option value="indoor">室內</option>
+                                <option value="outdoor">戶外</option>
+                                <option value="semi">半戶外</option>
+                            </select>
+                            <select class="px-3 py-2 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 text-sm bg-white hover:border-yellow-300 transition">
+                                <option value="">⚡ 設備提供</option>
+                                <option value="power">提供電源</option>
+                                <option value="furniture">提供桌椅</option>
+                                <option value="canopy">有遮陽棚</option>
+                            </select>
+                            <select class="px-3 py-2 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 text-sm bg-white hover:border-yellow-300 transition">
+                                <option value="">📅 活動時間</option>
+                                <option value="week">本週</option>
+                                <option value="month">本月</option>
+                                <option value="quarter">三個月內</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- 清除按鈕 -->
+                    <div class="flex justify-center">
+                        <button id="clearFilters" class="text-gray-500 hover:text-yellow-600 hover:bg-yellow-50 px-4 py-2 rounded-lg text-sm font-medium transition">
+                            <i class="fas fa-redo mr-1"></i>
+                            清除所有篩選
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 市集結果展示區 -->
+        <section class="py-16 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center mb-8">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">找到 6 個市集</h2>
+                        <p class="text-gray-600 mt-1">根據報名截止時間排序（由近到遠）</p>
+                    </div>
+                    <button onclick="window.location.href='market-list.html'" class="text-yellow-600 hover:text-yellow-700 font-medium">
+                        查看全部
+                        <i class="fas fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="marketResults">
+                    <!-- 市集卡片 1 -->
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition duration-300 border border-gray-200">
+                        <img src="https://images.unsplash.com/photo-1533900298318-6b8da08a523e?w=500"
+                             class="w-full h-48 object-cover" alt="市集圖片">
+                        <div class="p-5">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="bg-red-100 text-red-700 text-xs font-bold px-3 py-1 rounded-full">
+                                    <i class="fas fa-clock mr-1"></i>3天後截止
+                                </span>
+                                <span class="text-sm text-gray-500 flex items-center">
+                                    <i class="fas fa-map-marker-alt mr-1 text-yellow-500"></i>台北
+                                </span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">華山文創市集</h3>
+                            <p class="text-gray-600 text-sm mb-1">
+                                <i class="fas fa-calendar mr-1 text-yellow-500"></i>
+                                2026/01/18-01/19
+                            </p>
+                            <p class="text-gray-600 text-sm mb-3">
+                                <i class="fas fa-tag mr-1 text-yellow-500"></i>
+                                文創、手作
+                            </p>
+                            <div class="flex items-center justify-between pt-3 border-t">
+                                <div>
+                                    <span class="text-yellow-600 font-bold text-lg">NT$ 800</span>
+                                    <span class="text-gray-500 text-sm">/攤</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-green-600 font-semibold text-sm">剩餘 3 個攤位</span>
+                                </div>
+                            </div>
+                            <button onclick="window.location.href='market-detail.html'" class="w-full mt-4 bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition font-medium">
+                                查看詳情
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 市集卡片 2 -->
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition duration-300 border border-gray-200">
+                        <img src="https://images.unsplash.com/photo-1567696153798-8ed3c8de8de9?w=500"
+                             class="w-full h-48 object-cover" alt="市集圖片">
+                        <div class="p-5">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="bg-orange-100 text-orange-700 text-xs font-bold px-3 py-1 rounded-full">
+                                    <i class="fas fa-clock mr-1"></i>5天後截止
+                                </span>
+                                <span class="text-sm text-gray-500 flex items-center">
+                                    <i class="fas fa-map-marker-alt mr-1 text-yellow-500"></i>台中
+                                </span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">草悟道美食市集</h3>
+                            <p class="text-gray-600 text-sm mb-1">
+                                <i class="fas fa-calendar mr-1 text-yellow-500"></i>
+                                2026/01/25-01/26
+                            </p>
+                            <p class="text-gray-600 text-sm mb-3">
+                                <i class="fas fa-tag mr-1 text-yellow-500"></i>
+                                美食
+                            </p>
+                            <div class="flex items-center justify-between pt-3 border-t">
+                                <div>
+                                    <span class="text-yellow-600 font-bold text-lg">NT$ 1,200</span>
+                                    <span class="text-gray-500 text-sm">/攤</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-green-600 font-semibold text-sm">剩餘 7 個攤位</span>
+                                </div>
+                            </div>
+                            <button onclick="window.location.href='market-detail.html'" class="w-full mt-4 bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition font-medium">
+                                查看詳情
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 市集卡片 3 -->
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition duration-300 border border-gray-200">
+                        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=500"
+                             class="w-full h-48 object-cover" alt="市集圖片">
+                        <div class="p-5">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="bg-yellow-100 text-yellow-700 text-xs font-bold px-3 py-1 rounded-full">
+                                    <i class="fas fa-clock mr-1"></i>7天後截止
+                                </span>
+                                <span class="text-sm text-gray-500 flex items-center">
+                                    <i class="fas fa-map-marker-alt mr-1 text-yellow-500"></i>高雄
+                                </span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">駁二藝術市集</h3>
+                            <p class="text-gray-600 text-sm mb-1">
+                                <i class="fas fa-calendar mr-1 text-yellow-500"></i>
+                                2026/02/01-02/02
+                            </p>
+                            <p class="text-gray-600 text-sm mb-3">
+                                <i class="fas fa-tag mr-1 text-yellow-500"></i>
+                                藝術、文創
+                            </p>
+                            <div class="flex items-center justify-between pt-3 border-t">
+                                <div>
+                                    <span class="text-yellow-600 font-bold text-lg">NT$ 1,500</span>
+                                    <span class="text-gray-500 text-sm">/攤</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-green-600 font-semibold text-sm">剩餘 5 個攤位</span>
+                                </div>
+                            </div>
+                            <button onclick="window.location.href='market-detail.html'" class="w-full mt-4 bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition font-medium">
+                                查看詳情
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 市集卡片 4 -->
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition duration-300 border border-gray-200">
+                        <img src="https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=500"
+                             class="w-full h-48 object-cover" alt="市集圖片">
+                        <div class="p-5">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full">
+                                    <i class="fas fa-clock mr-1"></i>10天後截止
+                                </span>
+                                <span class="text-sm text-gray-500 flex items-center">
+                                    <i class="fas fa-map-marker-alt mr-1 text-yellow-500"></i>台南
+                                </span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">藍晒圖農夫市集</h3>
+                            <p class="text-gray-600 text-sm mb-1">
+                                <i class="fas fa-calendar mr-1 text-yellow-500"></i>
+                                2026/02/08-02/09
+                            </p>
+                            <p class="text-gray-600 text-sm mb-3">
+                                <i class="fas fa-tag mr-1 text-yellow-500"></i>
+                                農夫、美食
+                            </p>
+                            <div class="flex items-center justify-between pt-3 border-t">
+                                <div>
+                                    <span class="text-yellow-600 font-bold text-lg">NT$ 600</span>
+                                    <span class="text-gray-500 text-sm">/攤</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-green-600 font-semibold text-sm">剩餘 12 個攤位</span>
+                                </div>
+                            </div>
+                            <button onclick="window.location.href='market-detail.html'" class="w-full mt-4 bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition font-medium">
+                                查看詳情
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 市集卡片 5 -->
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition duration-300 border border-gray-200">
+                        <img src="https://images.unsplash.com/photo-1556742111-a301076d9d18?w=500"
+                             class="w-full h-48 object-cover" alt="市集圖片">
+                        <div class="p-5">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full">
+                                    <i class="fas fa-clock mr-1"></i>14天後截止
+                                </span>
+                                <span class="text-sm text-gray-500 flex items-center">
+                                    <i class="fas fa-map-marker-alt mr-1 text-yellow-500"></i>桃園
+                                </span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">中壢二手交流市集</h3>
+                            <p class="text-gray-600 text-sm mb-1">
+                                <i class="fas fa-calendar mr-1 text-yellow-500"></i>
+                                2026/02/15-02/16
+                            </p>
+                            <p class="text-gray-600 text-sm mb-3">
+                                <i class="fas fa-tag mr-1 text-yellow-500"></i>
+                                二手
+                            </p>
+                            <div class="flex items-center justify-between pt-3 border-t">
+                                <div>
+                                    <span class="text-yellow-600 font-bold text-lg">NT$ 400</span>
+                                    <span class="text-gray-500 text-sm">/攤</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-green-600 font-semibold text-sm">剩餘 15 個攤位</span>
+                                </div>
+                            </div>
+                            <button onclick="window.location.href='market-detail.html'" class="w-full mt-4 bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition font-medium">
+                                查看詳情
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 市集卡片 6 -->
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition duration-300 border border-gray-200">
+                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500"
+                             class="w-full h-48 object-cover" alt="市集圖片">
+                        <div class="p-5">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full">
+                                    <i class="fas fa-clock mr-1"></i>20天後截止
+                                </span>
+                                <span class="text-sm text-gray-500 flex items-center">
+                                    <i class="fas fa-map-marker-alt mr-1 text-yellow-500"></i>新竹
+                                </span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">護城河手作市集</h3>
+                            <p class="text-gray-600 text-sm mb-1">
+                                <i class="fas fa-calendar mr-1 text-yellow-500"></i>
+                                2026/02/22-02/23
+                            </p>
+                            <p class="text-gray-600 text-sm mb-3">
+                                <i class="fas fa-tag mr-1 text-yellow-500"></i>
+                                手作、文創
+                            </p>
+                            <div class="flex items-center justify-between pt-3 border-t">
+                                <div>
+                                    <span class="text-yellow-600 font-bold text-lg">NT$ 900</span>
+                                    <span class="text-gray-500 text-sm">/攤</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-green-600 font-semibold text-sm">剩餘 8 個攤位</span>
+                                </div>
+                            </div>
+                            <button onclick="window.location.href='market-detail.html'" class="w-full mt-4 bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition font-medium">
+                                查看詳情
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 查看更多市集 CTA -->
+        <section class="py-12 bg-gray-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">還有更多市集等你探索</h3>
+                <p class="text-gray-600 mb-6">超過 500 個市集機會，總有一個適合你</p>
+                <button onclick="window.location.href='market-list.html'" class="bg-yellow-500 text-white px-8 py-3 rounded-lg hover:bg-yellow-600 transition duration-300 font-medium text-lg">
+                    <i class="fas fa-th-large mr-2"></i>
+                    瀏覽所有市集
+                </button>
+            </div>
+        </div>
+
+        <!-- Block 1: 攤商的困擾，我們都懂 -->
+        <section class="py-20 bg-white fade-in">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">攤商的困擾，我們都懂</h2>
+                    <p class="text-xl text-gray-600">從痛點到解決方案，我們幫您搞定一切</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                    <!-- 困擾列 -->
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-3 bg-red-50 p-4 rounded-lg">
+                            <i class="fas fa-times-circle text-red-500 text-xl mt-1"></i>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">找不到適合的市集</h3>
+                                <p class="text-gray-600 text-sm">資訊分散在各個粉專，要一個個搜尋比對</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3 bg-red-50 p-4 rounded-lg">
+                            <i class="fas fa-times-circle text-red-500 text-xl mt-1"></i>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">報名流程繁瑣</h3>
+                                <p class="text-gray-600 text-sm">填表單、傳訊息、等回覆，耗時又麻煩</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3 bg-red-50 p-4 rounded-lg">
+                            <i class="fas fa-times-circle text-red-500 text-xl mt-1"></i>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">資訊不透明</h3>
+                                <p class="text-gray-600 text-sm">攤位費用、剩餘數量、設備規格都要問</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3 bg-red-50 p-4 rounded-lg">
+                            <i class="fas fa-times-circle text-red-500 text-xl mt-1"></i>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">錯過報名時間</h3>
+                                <p class="text-gray-600 text-sm">沒有統一通知管道，常常來不及報名</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 解決方案列 -->
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-3 bg-green-50 p-4 rounded-lg">
+                            <i class="fas fa-check-circle text-green-500 text-xl mt-1"></i>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">智能篩選快速配對</h3>
+                                <p class="text-gray-600 text-sm">8種篩選條件，3秒找到符合需求的市集</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3 bg-green-50 p-4 rounded-lg">
+                            <i class="fas fa-check-circle text-green-500 text-xl mt-1"></i>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">3步驟完成報名</h3>
+                                <p class="text-gray-600 text-sm">線上填表、即時送出、自動追蹤審核狀態</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3 bg-green-50 p-4 rounded-lg">
+                            <i class="fas fa-check-circle text-green-500 text-xl mt-1"></i>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">完整市集資訊公開</h3>
+                                <p class="text-gray-600 text-sm">費用、攤位、設備、規範，一目了然</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3 bg-green-50 p-4 rounded-lg">
+                            <i class="fas fa-check-circle text-green-500 text-xl mt-1"></i>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">即時通知不漏接</h3>
+                                <p class="text-gray-600 text-sm">新市集上架、截止提醒，主動推播通知</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-12">
+                    <button onclick="window.location.href='login.html'" class="bg-yellow-500 text-white px-8 py-3 rounded-lg hover:bg-yellow-600 transition duration-300 font-medium text-lg">
+                        立即體驗
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Block 2: 三大核心功能 -->
+        <section class="py-20 bg-gray-50 fade-in">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">三大核心功能</h2>
+                    <p class="text-xl text-gray-600">為攤商與市集主打造的專業平台</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- 功能1 -->
+                    <div class="bg-white rounded-xl shadow-lg p-8 text-center hover:shadow-xl transition duration-300">
+                        <div class="bg-yellow-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-search text-4xl text-yellow-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">智能搜尋配對</h3>
+                        <p class="text-gray-600 mb-6">
+                            8種專業篩選條件，包含地區、類型、費用、場地、設備等，讓您精準找到最適合的市集機會
+                        </p>
+                        <ul class="text-left space-y-2 text-gray-700">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                多維度智能篩選
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                報名截止時間排序
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                即時更新攤位資訊
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- 功能2 -->
+                    <div class="bg-white rounded-xl shadow-lg p-8 text-center hover:shadow-xl transition duration-300">
+                        <div class="bg-yellow-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-bolt text-4xl text-yellow-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">快速報名審核</h3>
+                        <p class="text-gray-600 mb-6">
+                            線上報名系統，即時追蹤審核進度，透明化流程讓您安心等待結果，不再錯過任何機會
+                        </p>
+                        <ul class="text-left space-y-2 text-gray-700">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                3步驟完成報名
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                即時審核狀態追蹤
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                自動化通知系統
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- 功能3 -->
+                    <div class="bg-white rounded-xl shadow-lg p-8 text-center hover:shadow-xl transition duration-300">
+                        <div class="bg-yellow-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-comments text-4xl text-yellow-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">直接溝通管道</h3>
+                        <p class="text-gray-600 mb-6">
+                            與市集主辦方建立即時對話，問題秒解決，不用再透過粉專私訊等待回覆，溝通零距離
+                        </p>
+                        <ul class="text-left space-y-2 text-gray-700">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                即時訊息系統
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                歷史訊息記錄
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                24小時內回覆保證
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="text-center mt-12">
+                    <button onclick="window.location.href='market-list.html'" class="bg-white text-yellow-600 border-2 border-yellow-500 px-8 py-3 rounded-lg hover:bg-yellow-50 transition duration-300 font-medium text-lg">
+                        看看有哪些市集
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Block 3: 數據會說話 -->
+        <section class="py-20 bg-white fade-in">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">數據會說話</h2>
+                    <p class="text-xl text-gray-600">值得信賴的市集媒合平台</p>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                    <!-- 數據1 -->
+                    <div class="text-center">
+                        <div class="bg-yellow-100 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-store-alt text-4xl text-yellow-600"></i>
+                        </div>
+                        <div class="text-4xl md:text-5xl font-bold text-gray-900 mb-2">500+</div>
+                        <div class="text-gray-600 font-medium">合作市集</div>
+                        <p class="text-sm text-gray-500 mt-2">遍布全台各地</p>
+                    </div>
+
+                    <!-- 數據2 -->
+                    <div class="text-center">
+                        <div class="bg-yellow-100 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-users text-4xl text-yellow-600"></i>
+                        </div>
+                        <div class="text-4xl md:text-5xl font-bold text-gray-900 mb-2">3,000+</div>
+                        <div class="text-gray-600 font-medium">註冊攤商</div>
+                        <p class="text-sm text-gray-500 mt-2">持續成長中</p>
+                    </div>
+
+                    <!-- 數據3 -->
+                    <div class="text-center">
+                        <div class="bg-yellow-100 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-heart text-4xl text-yellow-600"></i>
+                        </div>
+                        <div class="text-4xl md:text-5xl font-bold text-gray-900 mb-2">95%</div>
+                        <div class="text-gray-600 font-medium">滿意度</div>
+                        <p class="text-sm text-gray-500 mt-2">用戶五星好評</p>
+                    </div>
+
+                    <!-- 數據4 -->
+                    <div class="text-center">
+                        <div class="bg-yellow-100 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-clock text-4xl text-yellow-600"></i>
+                        </div>
+                        <div class="text-4xl md:text-5xl font-bold text-gray-900 mb-2">24hr</div>
+                        <div class="text-gray-600 font-medium">平均回覆時間</div>
+                        <p class="text-sm text-gray-500 mt-2">快速解決問題</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Block 4: 攤商真實心聲 -->
+        <section class="py-20 bg-gray-50 fade-in">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">攤商真實心聲</h2>
+                    <p class="text-xl text-gray-600">聽聽他們怎麼說</p>
+                </div>
+
+                <!-- 見證滑動容器 -->
+                <div class="relative">
+                    <div class="testimonial-slider flex overflow-x-auto gap-6 pb-4 snap-x" id="testimonialSlider">
+                        <!-- 見證1 -->
+                        <div class="flex-none w-full md:w-1/3 bg-white rounded-xl shadow-lg p-8">
+                            <div class="flex items-center mb-4">
+                                <img src="https://ui-avatars.com/api/?name=小美&background=FBB03B&color=fff&size=64"
+                                    class="w-16 h-16 rounded-full mr-4" alt="攤商頭像">
+                                <div>
+                                    <h4 class="font-bold text-gray-900">小美</h4>
+                                    <p class="text-sm text-gray-500">手作文創攤商</p>
+                                    <div class="flex text-yellow-500 mt-1">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 leading-relaxed">
+                                「以前要一個一個找市集粉專私訊，現在一個平台全搞定！篩選功能超好用，可以直接找到符合我預算和地點的市集，報名也變得超簡單。」
+                            </p>
+                        </div>
+
+                        <!-- 見證2 -->
+                        <div class="flex-none w-full md:w-1/3 bg-white rounded-xl shadow-lg p-8">
+                            <div class="flex items-center mb-4">
+                                <img src="https://ui-avatars.com/api/?name=阿傑&background=FBB03B&color=fff&size=64"
+                                    class="w-16 h-16 rounded-full mr-4" alt="攤商頭像">
+                                <div>
+                                    <h4 class="font-bold text-gray-900">阿傑</h4>
+                                    <p class="text-sm text-gray-500">農產品攤商</p>
+                                    <div class="flex text-yellow-500 mt-1">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 leading-relaxed">
+                                「最棒的是可以看到剩餘攤位數，不用浪費時間問已經額滿的市集。而且有主辦方的聯絡方式，有問題可以直接溝通，真的很方便！」
+                            </p>
+                        </div>
+
+                        <!-- 見證3 -->
+                        <div class="flex-none w-full md:w-1/3 bg-white rounded-xl shadow-lg p-8">
+                            <div class="flex items-center mb-4">
+                                <img src="https://ui-avatars.com/api/?name=Linda&background=FBB03B&color=fff&size=64"
+                                    class="w-16 h-16 rounded-full mr-4" alt="攤商頭像">
+                                <div>
+                                    <h4 class="font-bold text-gray-900">Linda</h4>
+                                    <p class="text-sm text-gray-500">美食攤商</p>
+                                    <div class="flex text-yellow-500 mt-1">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 leading-relaxed">
+                                「終於不會再錯過報名時間了！平台會提醒我截止日期，而且可以一次看到所有市集的資訊，包括有沒有提供電源、桌椅，對我這種需要用電的攤商超重要！」
+                            </p>
+                        </div>
+
+                        <!-- 見證4 -->
+                        <div class="flex-none w-full md:w-1/3 bg-white rounded-xl shadow-lg p-8">
+                            <div class="flex items-center mb-4">
+                                <img src="https://ui-avatars.com/api/?name=David&background=FBB03B&color=fff&size=64"
+                                    class="w-16 h-16 rounded-full mr-4" alt="攤商頭像">
+                                <div>
+                                    <h4 class="font-bold text-gray-900">David</h4>
+                                    <p class="text-sm text-gray-500">二手物品攤商</p>
+                                    <div class="flex text-yellow-500 mt-1">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 leading-relaxed">
+                                「這個平台讓我省了好多時間！可以用類型篩選，直接找二手市集，也能看費用範圍，不用一個個問。審核進度也很透明，不會傻傻等不知道有沒有上。」
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 滑動按鈕 -->
+                    <button id="prevBtn" class="hidden md:block absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white rounded-full w-12 h-12 shadow-lg hover:bg-gray-100 transition">
+                        <i class="fas fa-chevron-left text-gray-600"></i>
+                    </button>
+                    <button id="nextBtn" class="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white rounded-full w-12 h-12 shadow-lg hover:bg-gray-100 transition">
+                        <i class="fas fa-chevron-right text-gray-600"></i>
+                    </button>
+                </div>
+
+                <div class="text-center mt-12">
+                    <button onclick="window.location.href='login.html'" class="bg-yellow-500 text-white px-8 py-3 rounded-lg hover:bg-yellow-600 transition duration-300 font-medium text-lg">
+                        加入成功攤商行列
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Block 5: 選擇適合您的方案 -->
+        <section class="py-20 bg-white fade-in">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">選擇適合您的方案</h2>
+                    <p class="text-xl text-gray-600">從免費開始，隨時升級</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                    <!-- 免費方案 -->
+                    <div class="bg-white border-2 border-gray-200 rounded-xl p-8 hover:shadow-xl transition duration-300">
+                        <div class="text-center mb-6">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">免費方案</h3>
+                            <div class="text-4xl font-bold text-gray-900 mb-4">
+                                NT$ 0
+                                <span class="text-lg font-normal text-gray-500">/月</span>
+                            </div>
+                            <p class="text-gray-600">適合剛起步的攤商</p>
+                        </div>
+
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                <span class="text-gray-700">基本市集搜尋與篩選</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                <span class="text-gray-700">線上報名功能</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                <span class="text-gray-700">審核狀態追蹤</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                <span class="text-gray-700">基本訊息溝通</span>
+                            </li>
+                            <li class="flex items-start text-gray-400">
+                                <i class="fas fa-times mt-1 mr-3"></i>
+                                <span>優先新市集通知</span>
+                            </li>
+                            <li class="flex items-start text-gray-400">
+                                <i class="fas fa-times mt-1 mr-3"></i>
+                                <span>報名數據分析</span>
+                            </li>
+                            <li class="flex items-start text-gray-400">
+                                <i class="fas fa-times mt-1 mr-3"></i>
+                                <span>專屬客服支援</span>
+                            </li>
+                        </ul>
+
+                        <button onclick="window.location.href='login.html'" class="w-full bg-gray-200 text-gray-900 py-3 rounded-lg hover:bg-gray-300 transition duration-300 font-medium">
+                            免費開始使用
+                        </button>
+                    </div>
+
+                    <!-- 進階方案 -->
+                    <div class="bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-xl p-8 text-white relative overflow-hidden hover:shadow-xl transition duration-300">
+                        <div class="absolute top-0 right-0 bg-red-500 text-white px-4 py-1 text-sm font-bold">
+                            推薦
+                        </div>
+
+                        <div class="text-center mb-6">
+                            <h3 class="text-2xl font-bold mb-2">進階方案</h3>
+                            <div class="text-4xl font-bold mb-4">
+                                NT$ 299
+                                <span class="text-lg font-normal">/月</span>
+                            </div>
+                            <p class="text-yellow-100">適合專業攤商</p>
+                        </div>
+
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start">
+                                <i class="fas fa-check mt-1 mr-3"></i>
+                                <span>免費方案所有功能</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-crown mt-1 mr-3"></i>
+                                <span class="font-semibold">優先新市集通知</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-crown mt-1 mr-3"></i>
+                                <span class="font-semibold">報名數據分析儀表板</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-crown mt-1 mr-3"></i>
+                                <span class="font-semibold">專屬客服優先處理</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-crown mt-1 mr-3"></i>
+                                <span class="font-semibold">無限市集收藏</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-crown mt-1 mr-3"></i>
+                                <span class="font-semibold">進階篩選條件</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-crown mt-1 mr-3"></i>
+                                <span class="font-semibold">每月市集推薦報告</span>
+                            </li>
+                        </ul>
+
+                        <button onclick="window.location.href='login.html'" class="w-full bg-white text-yellow-600 py-3 rounded-lg hover:bg-yellow-50 transition duration-300 font-bold">
+                            立即升級
+                        </button>
+                        <p class="text-center text-sm mt-4 text-yellow-100">前30天免費試用</p>
+                    </div>
+                </div>
+
+                <div class="text-center mt-12">
+                    <a href="#" class="text-yellow-600 hover:text-yellow-700 font-medium">
+                        查看完整方案比較
+                        <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA 區域 -->
+        <section class="py-16 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+                    準備好開始了嗎？
+                </h2>
+                <p class="text-xl text-white/90 mb-8">
+                    加入我們，找到最適合您的市集機會
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="window.location.href='login.html'" class="bg-white text-yellow-600 px-8 py-4 rounded-lg hover:bg-yellow-50 transition duration-300 font-bold text-lg">
+                        免費註冊
+                    </button>
+                    <button onclick="window.location.href='market-list.html'" class="bg-yellow-700 text-white px-8 py-4 rounded-lg hover:bg-yellow-800 transition duration-300 font-bold text-lg">
+                        瀏覽市集
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 頁尾 -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-bold mb-4">關於我們</h3>
+                    <ul class="space-y-2">
+                        <li><a href="about.html" class="text-gray-400 hover:text-white">公司介紹</a></li>
+                        <li><a href="terms.html" class="text-gray-400 hover:text-white">使用條款</a></li>
+                        <li><a href="privacy.html" class="text-gray-400 hover:text-white">隱私政策</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">攤商服務</h3>
+                    <ul class="space-y-2">
+                        <li><a href="vendor-guide.html" class="text-gray-400 hover:text-white">如何報名</a></li>
+                        <li><a href="vendor-pricing.html" class="text-gray-400 hover:text-white">收費標準</a></li>
+                        <li><a href="vendor-faq.html" class="text-gray-400 hover:text-white">常見問題</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">主辦方服務</h3>
+                    <ul class="space-y-2">
+                        <li><a href="organizer-post.html" class="text-gray-400 hover:text-white">刊登市集</a></li>
+                        <li><a href="organizer-dashboard.html" class="text-gray-400 hover:text-white">管理工具</a></li>
+                        <li><a href="organizer-cases.html" class="text-gray-400 hover:text-white">成功案例</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">聯絡我們</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2"></i>
+                            <a href="mailto:contact@example.com" class="text-gray-400 hover:text-white">contact@example.com</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-2"></i>
+                            <span class="text-gray-400">02-1234-5678</span>
+                        </li>
+                    </ul>
+                    <div class="mt-4 flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-line"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400">
+                <p>&copy; 2024 市集媒合平台. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 篩選按鈕功能
+        const regionBtns = document.querySelectorAll('.region-btn');
+        const typeBtns = document.querySelectorAll('.type-btn');
+        const clearFilters = document.getElementById('clearFilters');
+
+        // 地區按鈕切換
+        regionBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                regionBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+
+        // 類型按鈕切換
+        typeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                typeBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+
+        // 清除所有篩選
+        clearFilters.addEventListener('click', () => {
+            // 重置所有按鈕
+            regionBtns.forEach(b => b.classList.remove('active'));
+            typeBtns.forEach(b => b.classList.remove('active'));
+
+            // 重置下拉選單
+            const selects = document.querySelectorAll('select');
+            selects.forEach(select => {
+                select.selectedIndex = 0;
+            });
+
+            // 清空搜尋框
+            document.getElementById('searchInput').value = '';
+        });
+
+        // 滾動動畫
+        const fadeInElements = document.querySelectorAll('.fade-in');
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        fadeInElements.forEach(element => {
+            observer.observe(element);
+        });
+
+        // 見證滑動功能
+        const slider = document.getElementById('testimonialSlider');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        if (prevBtn && nextBtn) {
+            prevBtn.addEventListener('click', () => {
+                slider.scrollBy({
+                    left: -slider.offsetWidth / 3,
+                    behavior: 'smooth'
+                });
+            });
+
+            nextBtn.addEventListener('click', () => {
+                slider.scrollBy({
+                    left: slider.offsetWidth / 3,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    </script>
+</body>
+</html>

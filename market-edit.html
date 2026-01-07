@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Cropper.js CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css">
     <style>
         body {
             font-family: 'Noto Sans TC', sans-serif;
@@ -32,6 +34,66 @@
 
         ::-webkit-scrollbar-thumb:hover {
             background: #F59E0B;
+        }
+
+        /* 裁切模態框樣式 */
+        #crop-modal .cropper-container {
+            max-height: 350px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        #crop-modal .crop-preview {
+            width: 100%;
+            max-height: 350px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            padding: 2px;
+        }
+
+        #crop-modal .crop-preview-inner {
+            background: #1a1a1a;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        #crop-modal img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* 工具按鈕樣式 */
+        .crop-tool-btn {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .crop-tool-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .crop-tool-btn:active {
+            transform: translateY(0);
+        }
+
+        /* 比例按鈕樣式 */
+        .aspect-ratio-btn {
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .aspect-ratio-btn.active {
+            background: linear-gradient(135deg, #FCD34D 0%, #F59E0B 100%);
+            color: white;
+            border-color: #F59E0B;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+        }
+
+        .aspect-ratio-btn:hover:not(.active) {
+            border-color: #FCD34D;
+            background-color: #FFFBEB;
         }
     </style>
 </head>
@@ -131,12 +193,12 @@
                                     <label class="block text-sm font-medium text-gray-700 mb-1">活動照片</label>
                                     <div class="mt-1">
                                         <div class="relative">
-                                            <img src="https://images.unsplash.com/photo-1534237710431-e2fc698436d0?w=800&h=400&fit=crop" alt="活動照片" class="w-full h-48 object-cover rounded-lg">
+                                            <img id="activity-image" src="https://images.unsplash.com/photo-1534237710431-e2fc698436d0?w=800&h=400&fit=crop" alt="活動照片" class="w-full h-48 object-cover rounded-lg">
                                             <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity rounded-lg">
                                                 <label class="cursor-pointer bg-white px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-100">
                                                     <i class="fas fa-camera mr-2"></i>
                                                     更換照片
-                                                    <input type="file" class="hidden" accept="image/*">
+                                                    <input type="file" id="image-input" class="hidden" accept="image/*">
                                                 </label>
                                             </div>
                                         </div>
@@ -731,6 +793,121 @@
                             </div>
                         </div>
 
+                        <!-- 照片裁切模態框 -->
+                        <div id="crop-modal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 backdrop-blur-sm overflow-y-auto">
+                            <div class="flex items-center justify-center min-h-screen p-4 py-8">
+                                <div class="bg-white rounded-2xl shadow-2xl max-w-5xl w-full overflow-hidden my-auto">
+                                    <!-- 標題區 -->
+                                    <div class="bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 px-6 py-4">
+                                        <div class="flex justify-between items-center">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="bg-white bg-opacity-30 p-2 rounded-lg backdrop-blur-sm">
+                                                    <i class="fas fa-cut text-white text-xl"></i>
+                                                </div>
+                                                <div>
+                                                    <h3 class="text-xl font-bold text-white">裁切活動照片</h3>
+                                                    <p class="text-sm text-white text-opacity-90">調整圖片以符合活動需求</p>
+                                                </div>
+                                            </div>
+                                            <button type="button" onclick="closeCropModal()" class="text-white hover:bg-white hover:bg-opacity-20 rounded-full p-2 transition-all">
+                                                <i class="fas fa-times text-xl"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-4 space-y-4">
+                                        <!-- 裁切預覽區 -->
+                                        <div class="crop-preview">
+                                            <div class="crop-preview-inner">
+                                                <img id="crop-image" src="" alt="待裁切的圖片">
+                                            </div>
+                                        </div>
+
+                                        <!-- 裁切工具列 -->
+                                        <div class="bg-gray-50 rounded-xl p-3">
+                                            <div class="flex items-center justify-start flex-wrap gap-2">
+                                                <span class="text-xs font-semibold text-gray-600 mr-1">
+                                                    <i class="fas fa-tools mr-1"></i>工具：
+                                                </span>
+                                                <button type="button" onclick="cropImage.zoom(0.1)" class="crop-tool-btn px-3 py-1.5 bg-white text-gray-700 rounded-lg shadow-sm hover:bg-blue-50 hover:text-blue-600 border border-gray-200 text-xs" title="放大">
+                                                    <i class="fas fa-search-plus"></i>
+                                                </button>
+                                                <button type="button" onclick="cropImage.zoom(-0.1)" class="crop-tool-btn px-3 py-1.5 bg-white text-gray-700 rounded-lg shadow-sm hover:bg-blue-50 hover:text-blue-600 border border-gray-200 text-xs" title="縮小">
+                                                    <i class="fas fa-search-minus"></i>
+                                                </button>
+                                                <button type="button" onclick="cropImage.rotate(-90)" class="crop-tool-btn px-3 py-1.5 bg-white text-gray-700 rounded-lg shadow-sm hover:bg-purple-50 hover:text-purple-600 border border-gray-200 text-xs" title="逆時針旋轉">
+                                                    <i class="fas fa-undo"></i>
+                                                </button>
+                                                <button type="button" onclick="cropImage.rotate(90)" class="crop-tool-btn px-3 py-1.5 bg-white text-gray-700 rounded-lg shadow-sm hover:bg-purple-50 hover:text-purple-600 border border-gray-200 text-xs" title="順時針旋轉">
+                                                    <i class="fas fa-redo"></i>
+                                                </button>
+                                                <button type="button" onclick="cropImage.scaleX(-cropImage.getData().scaleX || -1)" class="crop-tool-btn px-3 py-1.5 bg-white text-gray-700 rounded-lg shadow-sm hover:bg-green-50 hover:text-green-600 border border-gray-200 text-xs" title="水平翻轉">
+                                                    <i class="fas fa-arrows-alt-h"></i>
+                                                </button>
+                                                <button type="button" onclick="cropImage.scaleY(-cropImage.getData().scaleY || -1)" class="crop-tool-btn px-3 py-1.5 bg-white text-gray-700 rounded-lg shadow-sm hover:bg-green-50 hover:text-green-600 border border-gray-200 text-xs" title="垂直翻轉">
+                                                    <i class="fas fa-arrows-alt-v"></i>
+                                                </button>
+                                                <button type="button" onclick="cropImage.reset()" class="crop-tool-btn px-3 py-1.5 bg-white text-gray-700 rounded-lg shadow-sm hover:bg-red-50 hover:text-red-600 border border-gray-200 text-xs" title="重置">
+                                                    <i class="fas fa-sync-alt"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <!-- 裁切比例選擇 -->
+                                        <div class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl p-4 border border-yellow-200">
+                                            <div class="flex items-center flex-wrap gap-3">
+                                                <div class="flex items-center space-x-2 mr-2">
+                                                    <div class="bg-yellow-500 p-2 rounded-lg">
+                                                        <i class="fas fa-crop-alt text-white"></i>
+                                                    </div>
+                                                    <span class="text-sm font-semibold text-gray-700">裁切比例：</span>
+                                                </div>
+                                                <button type="button" onclick="setAspectRatio(0)" class="aspect-ratio-btn px-4 py-2 text-sm font-medium bg-white text-gray-700 rounded-lg">
+                                                    <i class="fas fa-expand-arrows-alt mr-1"></i>自由
+                                                </button>
+                                                <button type="button" onclick="setAspectRatio(2/1)" class="aspect-ratio-btn active px-4 py-2 text-sm font-medium rounded-lg">
+                                                    <i class="fas fa-star mr-1"></i>2:1
+                                                    <span class="ml-1 text-xs opacity-90">(推薦)</span>
+                                                </button>
+                                                <button type="button" onclick="setAspectRatio(16/9)" class="aspect-ratio-btn px-4 py-2 text-sm font-medium bg-white text-gray-700 rounded-lg">
+                                                    <i class="fas fa-tv mr-1"></i>16:9
+                                                </button>
+                                                <button type="button" onclick="setAspectRatio(4/3)" class="aspect-ratio-btn px-4 py-2 text-sm font-medium bg-white text-gray-700 rounded-lg">
+                                                    <i class="fas fa-image mr-1"></i>4:3
+                                                </button>
+                                                <button type="button" onclick="setAspectRatio(1)" class="aspect-ratio-btn px-4 py-2 text-sm font-medium bg-white text-gray-700 rounded-lg">
+                                                    <i class="fas fa-square mr-1"></i>1:1
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <!-- 提示訊息 -->
+                                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 flex items-start space-x-3">
+                                            <i class="fas fa-info-circle text-blue-500 mt-1"></i>
+                                            <div class="text-sm text-blue-700">
+                                                <p class="font-medium">使用提示：</p>
+                                                <ul class="mt-1 space-y-1 text-xs">
+                                                    <li>• 拖曳圖片或裁切框來調整位置</li>
+                                                    <li>• 滾動滑鼠滾輪可以縮放圖片</li>
+                                                    <li>• 建議使用 2:1 比例以獲得最佳顯示效果</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <!-- 按鈕區 -->
+                                        <div class="flex justify-between items-center pt-2 border-t border-gray-200">
+                                            <button type="button" onclick="closeCropModal()" class="px-6 py-3 border-2 border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 font-medium transition-all hover:border-gray-400">
+                                                <i class="fas fa-times mr-2"></i>取消
+                                            </button>
+                                            <button type="button" onclick="applyCrop()" class="px-8 py-3 bg-gradient-to-r from-yellow-400 to-orange-500 text-white rounded-xl hover:from-yellow-500 hover:to-orange-600 font-bold shadow-lg hover:shadow-xl transition-all transform hover:scale-105">
+                                                <i class="fas fa-check-circle mr-2"></i>確認裁切
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- 新增/編輯設備模態框 -->
                         <div id="equipment-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
                             <div class="flex items-center justify-center min-h-screen p-4">
@@ -837,6 +1014,9 @@
             </main>
         </div>
     </div>
+
+    <!-- Cropper.js JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
 
     <!-- JavaScript -->
     <script>
@@ -1229,83 +1409,6 @@
             });
         }
 
-        // 處理參加日期表單提交
-        document.getElementById('date-group-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('group-name').value;
-            const startTime = document.getElementById('group-start-time').value;
-            const endTime = document.getElementById('group-end-time').value;
-            const quota = calculateTotalQuota(); // 自動計算剩餘名額
-            
-            // 獲取日期
-            const dateInputs = document.querySelectorAll('#date-inputs input[type="date"]');
-            const dates = Array.from(dateInputs).map(input => input.value).filter(date => date);
-            
-            if (dates.length === 0) {
-                alert('請至少新增一個活動日期');
-                return;
-            }
-            
-            // 獲取攤位配置
-            const configElements = document.querySelectorAll('#booth-configs [data-config-id]');
-            const boothConfigs = [];
-            
-            configElements.forEach(configDiv => {
-                const select = configDiv.querySelector('select');
-                const quantityInput = configDiv.querySelector('input[type="number"]:nth-of-type(1)');
-                const priceInput = configDiv.querySelector('input[type="number"]:nth-of-type(2)');
-                
-                if (select.value && quantityInput.value && priceInput.value) {
-                    boothConfigs.push({
-                        id: configDiv.getAttribute('data-config-id'),
-                        boothType: select.value,
-                        quantity: parseInt(quantityInput.value),
-                        price: parseInt(priceInput.value)
-                    });
-                }
-            });
-            
-            if (boothConfigs.length === 0) {
-                alert('請至少新增一個攤位配置');
-                return;
-            }
-            
-            if (editingDateGroupId) {
-                // 編輯現有參加日期
-                dateGroupData[editingDateGroupId] = {
-                    ...dateGroupData[editingDateGroupId],
-                    name,
-                    dates,
-                    startTime,
-                    endTime,
-                    remainingQuota: quota,
-                    boothConfigs
-                };
-            } else {
-                // 新增參加日期
-                const newId = 'group-' + Date.now();
-                dateGroupData[newId] = {
-                    id: newId,
-                    name,
-                    dates,
-                    startTime,
-                    endTime,
-                    remainingQuota: quota,
-                    boothConfigs
-                };
-            }
-            
-            renderDateGroupList();
-            closeDateGroupModal();
-        });
-
-        // 點擊參加日期模態框背景關閉
-        document.getElementById('date-group-modal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeDateGroupModal();
-            }
-        });
 
         // 攤位相關函數
         // 開啟新增攤位模態框
@@ -1396,55 +1499,6 @@
             });
         }
 
-        // 處理攤位表單提交
-        document.getElementById('booth-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('booth-name').value;
-            const description = document.getElementById('booth-description').value;
-            const size = document.getElementById('booth-size').value;
-            const prefix = document.getElementById('booth-prefix').value;
-            const price = parseInt(document.getElementById('booth-price').value);
-            const quantity = parseInt(document.getElementById('booth-quantity').value);
-            const icon = document.getElementById('booth-icon').value;
-            
-            if (editingBoothId) {
-                // 編輯現有攤位
-                boothData[editingBoothId] = {
-                    ...boothData[editingBoothId],
-                    name,
-                    description,
-                    size,
-                    prefix,
-                    price,
-                    quantity,
-                    icon
-                };
-            } else {
-                // 新增攤位
-                const newId = 'booth_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-                boothData[newId] = {
-                    id: newId,
-                    name,
-                    description,
-                    size,
-                    prefix,
-                    price,
-                    quantity,
-                    icon
-                };
-            }
-            
-            renderBoothList();
-            closeBoothModal();
-        });
-
-        // 點擊攤位模態框背景關閉
-        document.getElementById('booth-modal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeBoothModal();
-            }
-        });
 
         // 開啟新增設備模態框
         function openAddEquipmentModal() {
@@ -1539,55 +1593,341 @@
             return 'equipment_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
         }
 
-        // 處理表單提交
-        document.getElementById('equipment-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('equipment-name').value;
-            const description = document.getElementById('equipment-description').value;
-            const price = parseInt(document.getElementById('equipment-price').value);
-            const quantity = parseInt(document.getElementById('equipment-quantity').value);
-            const icon = document.getElementById('equipment-icon').value;
-            
-            if (editingEquipmentId) {
-                // 編輯現有設備
-                equipmentData[editingEquipmentId] = {
-                    ...equipmentData[editingEquipmentId],
-                    name,
-                    description,
-                    price,
-                    quantity,
-                    icon
-                };
-            } else {
-                // 新增設備
-                const newId = generateId();
-                equipmentData[newId] = {
-                    id: newId,
-                    name,
-                    description,
-                    price,
-                    quantity,
-                    icon
-                };
-            }
-            
-            renderEquipmentList();
-            closeEquipmentModal();
-        });
 
-        // 點擊模態框背景關閉
-        document.getElementById('equipment-modal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeEquipmentModal();
+        // 照片裁切相關變數和函數
+        let cropImage = null;
+        let currentImageFile = null;
+
+        // 開啟裁切模態框
+        function openCropModal() {
+            document.getElementById('crop-modal').classList.remove('hidden');
+
+            // 等待圖片載入後再初始化 Cropper
+            setTimeout(function() {
+                const imageElement = document.getElementById('crop-image');
+
+                // 如果已有 cropper 實例，先銷毀
+                if (cropImage) {
+                    cropImage.destroy();
+                }
+
+                // 建立新的 cropper 實例
+                cropImage = new Cropper(imageElement, {
+                    aspectRatio: 2 / 1, // 預設 2:1 比例
+                    viewMode: 1,
+                    dragMode: 'move',
+                    autoCropArea: 1,
+                    restore: false,
+                    guides: true,
+                    center: true,
+                    highlight: true,
+                    cropBoxMovable: true,
+                    cropBoxResizable: true,
+                    toggleDragModeOnDblclick: false,
+                });
+            }, 100);
+        }
+
+        // 關閉裁切模態框
+        function closeCropModal() {
+            document.getElementById('crop-modal').classList.add('hidden');
+
+            // 銷毀 cropper 實例
+            if (cropImage) {
+                cropImage.destroy();
+                cropImage = null;
             }
-        });
+
+            // 清空檔案選擇
+            document.getElementById('image-input').value = '';
+        }
+
+        // 設定裁切比例
+        function setAspectRatio(ratio) {
+            if (cropImage) {
+                cropImage.setAspectRatio(ratio);
+
+                // 更新按鈕的 active 狀態
+                const buttons = document.querySelectorAll('.aspect-ratio-btn');
+                buttons.forEach(btn => {
+                    btn.classList.remove('active');
+                });
+
+                // 找到並標記當前按鈕為 active
+                event.target.classList.add('active');
+            }
+        }
+
+        // 確認裁切
+        function applyCrop() {
+            if (!cropImage) return;
+
+            // 取得裁切後的 canvas
+            const canvas = cropImage.getCroppedCanvas({
+                maxWidth: 1200,
+                maxHeight: 600,
+                fillColor: '#fff',
+                imageSmoothingEnabled: true,
+                imageSmoothingQuality: 'high',
+            });
+
+            // 將 canvas 轉為 blob
+            canvas.toBlob(function(blob) {
+                // 建立新的 File 物件
+                const croppedFile = new File([blob], currentImageFile.name, {
+                    type: currentImageFile.type,
+                    lastModified: Date.now(),
+                });
+
+                // 顯示裁切後的圖片
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('activity-image').src = e.target.result;
+                };
+                reader.readAsDataURL(croppedFile);
+
+                // 這裡可以將 croppedFile 上傳到伺服器
+                console.log('裁切後的檔案:', croppedFile);
+
+                // 關閉模態框
+                closeCropModal();
+            }, currentImageFile.type);
+        }
 
         // 初始化
         document.addEventListener('DOMContentLoaded', function() {
             renderDateGroupList();
             renderBoothList();
             renderEquipmentList();
+
+            // 監聽檔案選擇
+            const imageInput = document.getElementById('image-input');
+            if (imageInput) {
+                imageInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+
+                    if (!file) return;
+
+                    // 檢查檔案大小 (2MB)
+                    if (file.size > 2 * 1024 * 1024) {
+                        alert('檔案大小不能超過 2MB');
+                        e.target.value = '';
+                        return;
+                    }
+
+                    // 檢查檔案類型
+                    if (!file.type.match('image.*')) {
+                        alert('請選擇圖片檔案');
+                        e.target.value = '';
+                        return;
+                    }
+
+                    currentImageFile = file;
+
+                    // 讀取圖片
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const imageElement = document.getElementById('crop-image');
+                        imageElement.src = event.target.result;
+
+                        // 開啟裁切模態框
+                        openCropModal();
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            // 處理參加日期表單提交
+            const dateGroupForm = document.getElementById('date-group-form');
+            if (dateGroupForm) {
+                dateGroupForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    const name = document.getElementById('group-name').value;
+                    const startTime = document.getElementById('group-start-time').value;
+                    const endTime = document.getElementById('group-end-time').value;
+                    const quota = calculateTotalQuota();
+
+                    const dateInputs = document.querySelectorAll('#date-inputs input[type="date"]');
+                    const dates = Array.from(dateInputs).map(input => input.value).filter(date => date);
+
+                    if (dates.length === 0) {
+                        alert('請至少新增一個活動日期');
+                        return;
+                    }
+
+                    const configElements = document.querySelectorAll('#booth-configs [data-config-id]');
+                    const boothConfigs = [];
+
+                    configElements.forEach(configDiv => {
+                        const select = configDiv.querySelector('select');
+                        const quantityInput = configDiv.querySelector('input[type="number"]:nth-of-type(1)');
+                        const priceInput = configDiv.querySelector('input[type="number"]:nth-of-type(2)');
+
+                        if (select.value && quantityInput.value && priceInput.value) {
+                            boothConfigs.push({
+                                id: configDiv.getAttribute('data-config-id'),
+                                boothType: select.value,
+                                quantity: parseInt(quantityInput.value),
+                                price: parseInt(priceInput.value)
+                            });
+                        }
+                    });
+
+                    if (boothConfigs.length === 0) {
+                        alert('請至少新增一個攤位配置');
+                        return;
+                    }
+
+                    if (editingDateGroupId) {
+                        dateGroupData[editingDateGroupId] = {
+                            ...dateGroupData[editingDateGroupId],
+                            name,
+                            dates,
+                            startTime,
+                            endTime,
+                            remainingQuota: quota,
+                            boothConfigs
+                        };
+                    } else {
+                        const newId = 'group-' + Date.now();
+                        dateGroupData[newId] = {
+                            id: newId,
+                            name,
+                            dates,
+                            startTime,
+                            endTime,
+                            remainingQuota: quota,
+                            boothConfigs
+                        };
+                    }
+
+                    renderDateGroupList();
+                    closeDateGroupModal();
+                });
+            }
+
+            // 點擊參加日期模態框背景關閉
+            const dateGroupModal = document.getElementById('date-group-modal');
+            if (dateGroupModal) {
+                dateGroupModal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closeDateGroupModal();
+                    }
+                });
+            }
+
+            // 處理攤位表單提交
+            const boothForm = document.getElementById('booth-form');
+            if (boothForm) {
+                boothForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    const name = document.getElementById('booth-name').value;
+                    const description = document.getElementById('booth-description').value;
+                    const size = document.getElementById('booth-size').value;
+                    const prefix = document.getElementById('booth-prefix').value;
+                    const price = parseInt(document.getElementById('booth-price').value);
+                    const quantity = parseInt(document.getElementById('booth-quantity').value);
+                    const icon = document.getElementById('booth-icon').value;
+
+                    if (editingBoothId) {
+                        boothData[editingBoothId] = {
+                            ...boothData[editingBoothId],
+                            name,
+                            description,
+                            size,
+                            prefix,
+                            price,
+                            quantity,
+                            icon
+                        };
+                    } else {
+                        const newId = 'booth_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                        boothData[newId] = {
+                            id: newId,
+                            name,
+                            description,
+                            size,
+                            prefix,
+                            price,
+                            quantity,
+                            icon
+                        };
+                    }
+
+                    renderBoothList();
+                    closeBoothModal();
+                });
+            }
+
+            // 點擊攤位模態框背景關閉
+            const boothModal = document.getElementById('booth-modal');
+            if (boothModal) {
+                boothModal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closeBoothModal();
+                    }
+                });
+            }
+
+            // 處理設備表單提交
+            const equipmentForm = document.getElementById('equipment-form');
+            if (equipmentForm) {
+                equipmentForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    const name = document.getElementById('equipment-name').value;
+                    const description = document.getElementById('equipment-description').value;
+                    const price = parseInt(document.getElementById('equipment-price').value);
+                    const quantity = parseInt(document.getElementById('equipment-quantity').value);
+                    const icon = document.getElementById('equipment-icon').value;
+
+                    if (editingEquipmentId) {
+                        equipmentData[editingEquipmentId] = {
+                            ...equipmentData[editingEquipmentId],
+                            name,
+                            description,
+                            price,
+                            quantity,
+                            icon
+                        };
+                    } else {
+                        const newId = generateId();
+                        equipmentData[newId] = {
+                            id: newId,
+                            name,
+                            description,
+                            price,
+                            quantity,
+                            icon
+                        };
+                    }
+
+                    renderEquipmentList();
+                    closeEquipmentModal();
+                });
+            }
+
+            // 點擊設備模態框背景關閉
+            const equipmentModal = document.getElementById('equipment-modal');
+            if (equipmentModal) {
+                equipmentModal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closeEquipmentModal();
+                    }
+                });
+            }
+
+            // 點擊裁切模態框背景關閉
+            const cropModal = document.getElementById('crop-modal');
+            if (cropModal) {
+                cropModal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closeCropModal();
+                    }
+                });
+            }
         });
     </script>
 </body>
