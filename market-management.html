@@ -226,6 +226,35 @@
                     </div>
                 </div>
 
+                <!-- 方案過期提示 -->
+                <div class="bg-gradient-to-r from-red-50 to-orange-50 border border-red-200 rounded-lg p-5 mb-6 shadow-sm">
+                    <div class="flex items-start">
+                        <i class="fas fa-crown text-red-500 text-xl mt-0.5 mr-3"></i>
+                        <div class="flex-1">
+                            <h3 class="text-gray-900 font-semibold mb-2">您的方案已過期，目前無法管理市集活動</h3>
+                            <div class="space-y-2">
+                                <div class="flex items-center">
+                                    <i class="fas fa-times-circle text-red-400 text-xs mr-2"></i>
+                                    <span class="text-sm text-gray-700">無法新增或編輯市集活動</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-times-circle text-red-400 text-xs mr-2"></i>
+                                    <span class="text-sm text-gray-700">無法審核攤商申請</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-times-circle text-red-400 text-xs mr-2"></i>
+                                    <span class="text-sm text-gray-700">無法查看進階數據分析</span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-3">方案到期日：2024/03/15</p>
+                            <a href="organizer-profile.html#subscription" class="inline-flex items-center mt-3 text-sm text-red-600 hover:text-red-700 font-medium">
+                                <i class="fas fa-arrow-up mr-1"></i>
+                                立即升級方案
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- 設定檢查清單提示 -->
                 <div class="bg-gradient-to-r from-orange-50 to-yellow-50 border border-orange-200 rounded-lg p-5 mb-6 shadow-sm">
                     <div class="flex items-start">
@@ -253,13 +282,89 @@
                 <!-- 活動列表 -->
                 <div class="bg-white rounded-lg shadow-sm">
                     <!-- 列表標題 -->
-                    <div class="px-6 py-4 border-b border-gray-200">
+                    <div class="px-6 py-4 border-b border-gray-200" x-data="{ showLimitAlert: false, currentCount: 10, maxCount: 10 }">
                         <div class="flex items-center justify-between">
                             <h3 class="text-lg font-bold text-gray-900">活動列表</h3>
-                            <a href="market-add.html" class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors inline-flex items-center">
-                                <i class="fas fa-plus mr-2"></i>
-                                新增活動
-                            </a>
+                            <div class="flex items-center space-x-3">
+                                <span class="text-sm text-gray-500">
+                                    本月已建立 <span class="font-semibold" :class="currentCount >= maxCount ? 'text-red-600' : 'text-gray-700'" x-text="currentCount"></span> / <span x-text="maxCount"></span> 個活動
+                                </span>
+                                <button @click="currentCount >= maxCount ? showLimitAlert = true : window.location.href='market-add.html'"
+                                        class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors inline-flex items-center">
+                                    <i class="fas fa-plus mr-2"></i>
+                                    新增活動
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- 活動數量超額 Alert Modal -->
+                        <div x-show="showLimitAlert"
+                             x-transition:enter="transition ease-out duration-200"
+                             x-transition:enter-start="opacity-0"
+                             x-transition:enter-end="opacity-100"
+                             x-transition:leave="transition ease-in duration-150"
+                             x-transition:leave-start="opacity-100"
+                             x-transition:leave-end="opacity-0"
+                             class="fixed inset-0 z-50 flex items-center justify-center" style="display: none;">
+                            <!-- 遮罩 -->
+                            <div class="absolute inset-0 bg-black bg-opacity-40" @click="showLimitAlert = false"></div>
+                            <!-- 彈窗內容 -->
+                            <div class="relative bg-white rounded-xl shadow-2xl max-w-md w-full mx-4 overflow-hidden"
+                                 x-transition:enter="transition ease-out duration-200"
+                                 x-transition:enter-start="opacity-0 scale-95"
+                                 x-transition:enter-end="opacity-100 scale-100"
+                                 x-transition:leave="transition ease-in duration-150"
+                                 x-transition:leave-start="opacity-100 scale-100"
+                                 x-transition:leave-end="opacity-0 scale-95">
+                                <!-- 頂部圖示區 -->
+                                <div class="bg-gradient-to-r from-red-50 to-orange-50 px-6 py-8 text-center">
+                                    <div class="inline-flex items-center justify-center w-16 h-16 bg-red-100 rounded-full mb-4">
+                                        <i class="fas fa-exclamation-triangle text-red-500 text-2xl"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-gray-900">已達活動建立上限</h3>
+                                </div>
+                                <!-- 內容區 -->
+                                <div class="px-6 py-5">
+                                    <p class="text-gray-600 text-center mb-4">
+                                        您目前的方案每月最多可建立 <span class="font-bold text-gray-900" x-text="maxCount"></span> 個活動，本月已建立 <span class="font-bold text-red-600" x-text="currentCount"></span> 個。
+                                    </p>
+                                    <!-- 每月重置提示 -->
+                                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
+                                        <div class="flex items-center">
+                                            <i class="fas fa-sync-alt text-blue-500 mr-2"></i>
+                                            <p class="text-sm text-blue-700">
+                                                建立活動額度將於<span class="font-bold">每月 1 日</span>自動重置，下次重置日為 <span class="font-bold">2024/04/01</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
+                                        <div class="flex items-start">
+                                            <i class="fas fa-lightbulb text-yellow-500 mt-0.5 mr-2"></i>
+                                            <div class="text-sm text-gray-700">
+                                                <p class="font-medium mb-1">等不及重置？您也可以：</p>
+                                                <ul class="space-y-1 text-gray-600">
+                                                    <li class="flex items-center">
+                                                        <i class="fas fa-arrow-up text-xs text-yellow-500 mr-2"></i>
+                                                        升級至更高階方案，提升每月可建立上限
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 按鈕區 -->
+                                <div class="px-6 pb-6 flex space-x-3">
+                                    <button @click="showLimitAlert = false"
+                                            class="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+                                        我知道了
+                                    </button>
+                                    <a href="organizer-profile.html#subscription"
+                                       class="flex-1 px-4 py-2.5 bg-yellow-500 text-white rounded-lg text-sm font-medium hover:bg-yellow-600 transition-colors text-center inline-flex items-center justify-center">
+                                        <i class="fas fa-arrow-up mr-1"></i>
+                                        升級方案
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

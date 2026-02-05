@@ -95,6 +95,52 @@
             border-color: #FCD34D;
             background-color: #FFFBEB;
         }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #D1D5DB;
+            border-radius: 24px;
+            transition: 0.3s;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .toggle-switch input:checked + .toggle-slider {
+            background-color: #F59E0B;
+        }
+
+        .toggle-switch input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -971,6 +1017,148 @@
                             </div>
                         </div>
 
+                        <!-- 場地須知 -->
+                        <div class="bg-white rounded-lg shadow-sm p-6 mt-8">
+                            <h2 class="text-lg font-bold text-gray-900 mb-4">場地須知</h2>
+                            <p class="text-sm text-gray-500 mb-4">開啟項目後，攤商在活動頁面將會看到對應的場地說明</p>
+                            <div class="space-y-4">
+
+                                <!-- 攤位設備 -->
+                                <div class="venue-item border border-gray-200 rounded-lg p-4" id="venue-booth-equipment">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <div class="flex items-center space-x-3">
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" checked onchange="toggleVenueItem('venue-booth-equipment', this.checked)">
+                                                <span class="toggle-slider"></span>
+                                            </label>
+                                            <div class="p-2 bg-yellow-100 rounded-lg">
+                                                <i class="fas fa-ruler text-yellow-600"></i>
+                                            </div>
+                                            <h3 class="font-medium text-gray-900">攤位設備</h3>
+                                        </div>
+                                    </div>
+                                    <div class="venue-desc ml-14">
+                                        <textarea rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 text-sm">提供桌椅、遮陽棚</textarea>
+                                    </div>
+                                </div>
+
+                                <!-- 供電服務 -->
+                                <div class="venue-item border border-gray-200 rounded-lg p-4 opacity-50" id="venue-power">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <div class="flex items-center space-x-3">
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" onchange="toggleVenueItem('venue-power', this.checked)">
+                                                <span class="toggle-slider"></span>
+                                            </label>
+                                            <div class="p-2 bg-yellow-100 rounded-lg">
+                                                <i class="fas fa-bolt text-yellow-600"></i>
+                                            </div>
+                                            <h3 class="font-medium text-gray-900">供電服務</h3>
+                                        </div>
+                                    </div>
+                                    <div class="venue-desc ml-14">
+                                        <textarea rows="2" disabled class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 text-sm bg-gray-50">每個攤位提供110V/500W電力，如需額外用電請事先申請</textarea>
+                                    </div>
+                                </div>
+
+                                <!-- 電器與用電登記 -->
+                                <div class="venue-item border border-gray-200 rounded-lg p-4 opacity-50" id="venue-appliance">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <div class="flex items-center space-x-3">
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" onchange="toggleVenueItem('venue-appliance', this.checked)">
+                                                <span class="toggle-slider"></span>
+                                            </label>
+                                            <div class="p-2 bg-yellow-100 rounded-lg">
+                                                <i class="fas fa-plug text-yellow-600"></i>
+                                            </div>
+                                            <h3 class="font-medium text-gray-900">電器與用電登記</h3>
+                                        </div>
+                                    </div>
+                                    <div class="venue-desc ml-14">
+                                        <textarea rows="2" disabled class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 text-sm bg-gray-50">請攤商於報名時填寫使用的電器設備及預估用電瓦數（W），以利場地用電規劃</textarea>
+                                    </div>
+                                </div>
+
+                                <!-- 明火使用 -->
+                                <div class="venue-item border border-gray-200 rounded-lg p-4" id="venue-fire">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <div class="flex items-center space-x-3">
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" checked onchange="toggleVenueItem('venue-fire', this.checked)">
+                                                <span class="toggle-slider"></span>
+                                            </label>
+                                            <div class="p-2 bg-yellow-100 rounded-lg">
+                                                <i class="fas fa-fire text-yellow-600"></i>
+                                            </div>
+                                            <h3 class="font-medium text-gray-900">明火使用</h3>
+                                        </div>
+                                    </div>
+                                    <div class="venue-desc ml-14">
+                                        <textarea rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 text-sm">禁止使用明火及瓦斯等危險物品</textarea>
+                                    </div>
+                                </div>
+
+                                <!-- 寄物服務 -->
+                                <div class="venue-item border border-gray-200 rounded-lg p-4 opacity-50" id="venue-storage">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <div class="flex items-center space-x-3">
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" onchange="toggleVenueItem('venue-storage', this.checked)">
+                                                <span class="toggle-slider"></span>
+                                            </label>
+                                            <div class="p-2 bg-yellow-100 rounded-lg">
+                                                <i class="fas fa-box text-yellow-600"></i>
+                                            </div>
+                                            <h3 class="font-medium text-gray-900">寄物服務</h3>
+                                        </div>
+                                    </div>
+                                    <div class="venue-desc ml-14">
+                                        <textarea rows="2" disabled class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 text-sm bg-gray-50">不提供寄物服務，請自行保管貴重物品</textarea>
+                                    </div>
+                                </div>
+
+                                <!-- 垃圾處理 -->
+                                <div class="venue-item border border-gray-200 rounded-lg p-4" id="venue-trash">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <div class="flex items-center space-x-3">
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" checked onchange="toggleVenueItem('venue-trash', this.checked)">
+                                                <span class="toggle-slider"></span>
+                                            </label>
+                                            <div class="p-2 bg-yellow-100 rounded-lg">
+                                                <i class="fas fa-trash text-yellow-600"></i>
+                                            </div>
+                                            <h3 class="font-medium text-gray-900">垃圾處理</h3>
+                                        </div>
+                                    </div>
+                                    <div class="venue-desc ml-14">
+                                        <textarea rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 text-sm">請自行處理垃圾，保持攤位整潔</textarea>
+                                    </div>
+                                </div>
+
+                                <!-- 車輛進場登記 -->
+                                <div class="venue-item border border-gray-200 rounded-lg p-4 opacity-50" id="venue-car">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <div class="flex items-center space-x-3">
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" onchange="toggleVenueItem('venue-car', this.checked)">
+                                                <span class="toggle-slider"></span>
+                                            </label>
+                                            <div class="p-2 bg-yellow-100 rounded-lg">
+                                                <i class="fas fa-car text-yellow-600"></i>
+                                            </div>
+                                            <h3 class="font-medium text-gray-900">車輛進場登記</h3>
+                                        </div>
+                                    </div>
+                                    <div class="venue-desc ml-14">
+                                        <textarea rows="2" disabled class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 text-sm bg-gray-50">需於報名時提供車牌號碼，未登記車輛無法進入場地裝卸貨區域</textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
                         <!-- 報名設定 -->
                         <div class="bg-white rounded-lg shadow-sm p-6 mt-8">
                             <h2 class="text-lg font-bold text-gray-900 mb-4">報名設定</h2>
@@ -1020,6 +1208,21 @@
 
     <!-- JavaScript -->
     <script>
+        // 場地須知 toggle
+        function toggleVenueItem(id, enabled) {
+            const item = document.getElementById(id);
+            const textarea = item.querySelector('textarea');
+            if (enabled) {
+                item.classList.remove('opacity-50');
+                textarea.disabled = false;
+                textarea.classList.remove('bg-gray-50');
+            } else {
+                item.classList.add('opacity-50');
+                textarea.disabled = true;
+                textarea.classList.add('bg-gray-50');
+            }
+        }
+
         // 參加日期資料存儲
         let dateGroupData = {
             'group-1': {

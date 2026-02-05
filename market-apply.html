@@ -358,6 +358,49 @@
                                 </div>
                             </div>
 
+                            <!-- 場地須知填寫 -->
+                            <div>
+                                <h2 class="text-xl font-bold text-gray-900 mb-4">補充資訊</h2>
+                                <p class="text-sm text-gray-600 mb-4">請依照市集方要求填寫以下資訊</p>
+                                <div class="space-y-4">
+                                    <!-- 使用電器 -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">
+                                            使用電器
+                                            <span class="text-red-500 ml-0.5">*</span>
+                                        </label>
+                                        <input type="text" name="appliances" placeholder="例如：電磁爐、果汁機、烤箱" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
+                                        <p class="text-xs text-gray-400 mt-1">請列出所有會使用的電器設備</p>
+                                    </div>
+                                    <!-- 用電瓦數 -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">
+                                            預估用電瓦數（W）
+                                            <span class="text-red-500 ml-0.5">*</span>
+                                        </label>
+                                        <div class="relative">
+                                            <input type="number" name="wattage" placeholder="例如：500" min="0" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 pr-12">
+                                            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-gray-400">W</span>
+                                        </div>
+                                        <p class="text-xs text-gray-400 mt-1">本市集每攤位提供 110V / 500W，超過請事先申請</p>
+                                    </div>
+                                    <!-- 車牌號碼 -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">
+                                            車牌號碼
+                                            <span class="text-red-500 ml-0.5">*</span>
+                                        </label>
+                                        <input type="text" name="license-plate" placeholder="例如：ABC-1234" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
+                                        <p class="text-xs text-gray-400 mt-1">未登記車輛無法進入場地裝卸貨區域</p>
+                                    </div>
+                                    <!-- 備註 -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">備註</label>
+                                        <textarea name="notes" rows="3" placeholder="如有其他需求或特殊事項，請在此說明" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- 費用試算 -->
                             <div>
                                 <h2 class="text-xl font-bold text-gray-900 mb-4">費用試算</h2>
