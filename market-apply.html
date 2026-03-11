@@ -401,6 +401,128 @@
                                 </div>
                             </div>
 
+                            <!-- 租借設備 -->
+                            <div>
+                                <h2 class="text-xl font-bold text-gray-900 mb-4">租借設備</h2>
+                                <p class="text-sm text-gray-600 mb-4">可選擇向市集方租借以下設備，費用依參加天數計算</p>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    <!-- 折疊桌 -->
+                                    <div class="relative">
+                                        <input type="checkbox" id="equip-table" name="equipment" value="table" class="peer sr-only" onchange="calculateTotal()">
+                                        <label for="equip-table" class="flex items-center p-3 border rounded-lg cursor-pointer hover:border-yellow-500 peer-checked:border-yellow-500 peer-checked:bg-yellow-50">
+                                            <div class="p-2 bg-gray-100 rounded-lg peer-checked:bg-yellow-100 mr-3 shrink-0">
+                                                <i class="fas fa-table text-gray-500 peer-checked:text-yellow-600 text-lg w-5 text-center"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <span class="block font-medium text-gray-900 text-sm">折疊桌</span>
+                                                <span class="block text-xs text-gray-500">180cm 長桌</span>
+                                            </div>
+                                            <div class="text-right shrink-0 ml-2">
+                                                <span class="block text-sm font-medium text-gray-900">NT$ 200</span>
+                                                <span class="block text-xs text-gray-400">/天</span>
+                                            </div>
+                                            <i class="fas fa-check-circle text-yellow-500 ml-2 opacity-0 peer-checked:opacity-100 shrink-0"></i>
+                                        </label>
+                                    </div>
+                                    <!-- 折疊椅（2入） -->
+                                    <div class="relative">
+                                        <input type="checkbox" id="equip-chair" name="equipment" value="chair" class="peer sr-only" onchange="calculateTotal()">
+                                        <label for="equip-chair" class="flex items-center p-3 border rounded-lg cursor-pointer hover:border-yellow-500 peer-checked:border-yellow-500 peer-checked:bg-yellow-50">
+                                            <div class="p-2 bg-gray-100 rounded-lg peer-checked:bg-yellow-100 mr-3 shrink-0">
+                                                <i class="fas fa-chair text-gray-500 peer-checked:text-yellow-600 text-lg w-5 text-center"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <span class="block font-medium text-gray-900 text-sm">折疊椅（2入）</span>
+                                                <span class="block text-xs text-gray-500">輕量折疊椅</span>
+                                            </div>
+                                            <div class="text-right shrink-0 ml-2">
+                                                <span class="block text-sm font-medium text-gray-900">NT$ 150</span>
+                                                <span class="block text-xs text-gray-400">/天</span>
+                                            </div>
+                                            <i class="fas fa-check-circle text-yellow-500 ml-2 opacity-0 peer-checked:opacity-100 shrink-0"></i>
+                                        </label>
+                                    </div>
+                                    <!-- 遮陽棚 -->
+                                    <div class="relative">
+                                        <input type="checkbox" id="equip-canopy" name="equipment" value="canopy" class="peer sr-only" onchange="calculateTotal()">
+                                        <label for="equip-canopy" class="flex items-center p-3 border rounded-lg cursor-pointer hover:border-yellow-500 peer-checked:border-yellow-500 peer-checked:bg-yellow-50">
+                                            <div class="p-2 bg-gray-100 rounded-lg peer-checked:bg-yellow-100 mr-3 shrink-0">
+                                                <i class="fas fa-umbrella text-gray-500 peer-checked:text-yellow-600 text-lg w-5 text-center"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <span class="block font-medium text-gray-900 text-sm">遮陽棚</span>
+                                                <span class="block text-xs text-gray-500">3m x 3m 帳篷</span>
+                                            </div>
+                                            <div class="text-right shrink-0 ml-2">
+                                                <span class="block text-sm font-medium text-gray-900">NT$ 800</span>
+                                                <span class="block text-xs text-gray-400">/天</span>
+                                            </div>
+                                            <i class="fas fa-check-circle text-yellow-500 ml-2 opacity-0 peer-checked:opacity-100 shrink-0"></i>
+                                        </label>
+                                    </div>
+                                    <!-- 展示架 -->
+                                    <div class="relative">
+                                        <input type="checkbox" id="equip-rack" name="equipment" value="rack" class="peer sr-only" onchange="calculateTotal()">
+                                        <label for="equip-rack" class="flex items-center p-3 border rounded-lg cursor-pointer hover:border-yellow-500 peer-checked:border-yellow-500 peer-checked:bg-yellow-50">
+                                            <div class="p-2 bg-gray-100 rounded-lg peer-checked:bg-yellow-100 mr-3 shrink-0">
+                                                <i class="fas fa-layer-group text-gray-500 peer-checked:text-yellow-600 text-lg w-5 text-center"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <span class="block font-medium text-gray-900 text-sm">展示架</span>
+                                                <span class="block text-xs text-gray-500">多層網格展示架</span>
+                                            </div>
+                                            <div class="text-right shrink-0 ml-2">
+                                                <span class="block text-sm font-medium text-gray-900">NT$ 300</span>
+                                                <span class="block text-xs text-gray-400">/天</span>
+                                            </div>
+                                            <i class="fas fa-check-circle text-yellow-500 ml-2 opacity-0 peer-checked:opacity-100 shrink-0"></i>
+                                        </label>
+                                    </div>
+                                    <!-- 電源延長線 -->
+                                    <div class="relative">
+                                        <input type="checkbox" id="equip-power" name="equipment" value="power" class="peer sr-only" onchange="calculateTotal()">
+                                        <label for="equip-power" class="flex items-center p-3 border rounded-lg cursor-pointer hover:border-yellow-500 peer-checked:border-yellow-500 peer-checked:bg-yellow-50">
+                                            <div class="p-2 bg-gray-100 rounded-lg peer-checked:bg-yellow-100 mr-3 shrink-0">
+                                                <i class="fas fa-plug text-gray-500 peer-checked:text-yellow-600 text-lg w-5 text-center"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <span class="block font-medium text-gray-900 text-sm">電源延長線</span>
+                                                <span class="block text-xs text-gray-500">10A / 5孔 附開關</span>
+                                            </div>
+                                            <div class="text-right shrink-0 ml-2">
+                                                <span class="block text-sm font-medium text-gray-900">NT$ 100</span>
+                                                <span class="block text-xs text-gray-400">/天</span>
+                                            </div>
+                                            <i class="fas fa-check-circle text-yellow-500 ml-2 opacity-0 peer-checked:opacity-100 shrink-0"></i>
+                                        </label>
+                                    </div>
+                                    <!-- 行動收銀機 -->
+                                    <div class="relative">
+                                        <input type="checkbox" id="equip-pos" name="equipment" value="pos" class="peer sr-only" onchange="calculateTotal()">
+                                        <label for="equip-pos" class="flex items-center p-3 border rounded-lg cursor-pointer hover:border-yellow-500 peer-checked:border-yellow-500 peer-checked:bg-yellow-50">
+                                            <div class="p-2 bg-gray-100 rounded-lg peer-checked:bg-yellow-100 mr-3 shrink-0">
+                                                <i class="fas fa-cash-register text-gray-500 peer-checked:text-yellow-600 text-lg w-5 text-center"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <span class="block font-medium text-gray-900 text-sm">行動收銀機</span>
+                                                <span class="block text-xs text-gray-500">支援信用卡感應付款</span>
+                                            </div>
+                                            <div class="text-right shrink-0 ml-2">
+                                                <span class="block text-sm font-medium text-gray-900">NT$ 400</span>
+                                                <span class="block text-xs text-gray-400">/天</span>
+                                            </div>
+                                            <i class="fas fa-check-circle text-yellow-500 ml-2 opacity-0 peer-checked:opacity-100 shrink-0"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mt-3 p-3 bg-blue-50 rounded-lg">
+                                    <div class="flex items-start">
+                                        <i class="fas fa-info-circle text-blue-500 mt-0.5 mr-2"></i>
+                                        <p class="text-sm text-blue-700">設備租借費用依您選擇的參加天數計算，請事先確認需求，現場無法臨時加租。</p>
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- 費用試算 -->
                             <div>
                                 <h2 class="text-xl font-bold text-gray-900 mb-4">費用試算</h2>
@@ -443,8 +565,18 @@
             large: 4500,
             small: 2000
         };
-        
+
         const depositAmount = 1000; // 保證金
+
+        // 設備租借價格設定（每天）
+        const equipmentPrices = {
+            table:  { name: '折疊桌', price: 200 },
+            chair:  { name: '折疊椅（2入）', price: 150 },
+            canopy: { name: '遮陽棚', price: 800 },
+            rack:   { name: '展示架', price: 300 },
+            power:  { name: '電源延長線', price: 100 },
+            pos:    { name: '行動收銀機', price: 400 }
+        };
         
         // 更新攤位選擇顯示
         function updateBoothSelection() {
@@ -479,12 +611,16 @@
         function calculateTotal() {
             const breakdown = document.getElementById('cost-breakdown');
             const totalCost = document.getElementById('total-cost');
-            
+
             let total = 0;
             let breakdownItems = [];
-            
-            // 檢查3/16的選擇
+
+            // 先計算勾選的天數（只看日期勾選，不需要攤位也選好）
             const day1Checkbox = document.getElementById('day1');
+            const day2Checkbox = document.getElementById('day2');
+            let selectedDaysCount = (day1Checkbox.checked ? 1 : 0) + (day2Checkbox.checked ? 1 : 0);
+
+            // 檢查3/16的攤位選擇
             if (day1Checkbox.checked) {
                 const day1Booth = document.querySelector('input[name="booth-size-day1"]:checked');
                 if (day1Booth) {
@@ -497,9 +633,8 @@
                     });
                 }
             }
-            
-            // 檢查3/17的選擇
-            const day2Checkbox = document.getElementById('day2');
+
+            // 檢查3/17的攤位選擇
             if (day2Checkbox.checked) {
                 const day2Booth = document.querySelector('input[name="booth-size-day2"]:checked');
                 if (day2Booth) {
@@ -512,22 +647,52 @@
                     });
                 }
             }
-            
+
+            // 計算租借設備費用
+            const selectedEquipment = document.querySelectorAll('input[name="equipment"]:checked');
+            if (selectedEquipment.length > 0 && selectedDaysCount > 0) {
+                selectedEquipment.forEach((equip, index) => {
+                    const info = equipmentPrices[equip.value];
+                    const cost = info.price * selectedDaysCount;
+                    total += cost;
+                    breakdownItems.push({
+                        description: `${info.name} × ${selectedDaysCount}天`,
+                        amount: cost,
+                        isEquip: true,
+                        isFirstEquip: index === 0
+                    });
+                });
+            } else if (selectedEquipment.length > 0 && selectedDaysCount === 0) {
+                // 有選設備但尚未勾選日期，顯示提示（不計費）
+                breakdownItems.push({
+                    description: '租借設備（請先勾選參加日期）',
+                    amount: 0,
+                    isHint: true
+                });
+            }
+
             // 更新費用明細
-            if (breakdownItems.length === 0) {
-                breakdown.innerHTML = '<div class="text-center text-gray-500 py-4">請選擇參加日期和攤位類型來查看費用明細</div>';
+            if (breakdownItems.length === 0 || breakdownItems.every(i => i.isHint)) {
+                const hint = breakdownItems.some(i => i.isHint)
+                    ? breakdownItems.find(i => i.isHint).description
+                    : '請選擇參加日期和攤位類型來查看費用明細';
+                breakdown.innerHTML = `<div class="text-center text-gray-500 py-4">${hint}</div>`;
                 totalCost.textContent = 'NT$ 0';
             } else {
                 let breakdownHTML = '';
                 breakdownItems.forEach(item => {
+                    if (item.isHint) return;
+                    if (item.isFirstEquip) {
+                        breakdownHTML += `<div class="pt-1 pb-0.5 text-xs font-medium text-gray-400 uppercase tracking-wide">租借設備</div>`;
+                    }
                     breakdownHTML += `
-                        <div class="flex justify-between text-sm">
-                            <span class="text-gray-500">${item.description}</span>
-                            <span class="text-gray-900">NT$ ${item.amount.toLocaleString()}</span>
+                        <div class="flex justify-between text-sm ${item.isEquip ? 'ml-2' : ''}">
+                            <span class="${item.isEquip ? 'text-gray-500' : 'text-gray-500'}">${item.description}</span>
+                            <span class="${item.isEquip ? 'text-yellow-700 font-medium' : 'text-gray-900'}">NT$ ${item.amount.toLocaleString()}</span>
                         </div>
                     `;
                 });
-                
+
                 // 如果有選擇任何攤位，顯示保證金
                 if (total > 0) {
                     breakdownHTML += `
@@ -538,7 +703,7 @@
                     `;
                     total += depositAmount;
                 }
-                
+
                 breakdown.innerHTML = breakdownHTML;
                 totalCost.textContent = `NT$ ${total.toLocaleString()}`;
             }

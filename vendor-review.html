@@ -12,15 +12,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- SheetJS for Excel export -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
     <style>
         body {
             font-family: 'Noto Sans TC', sans-serif;
             background-color: #F3F4F6;
         }
+        [x-cloak] { display: none !important; }
     </style>
 </head>
 <body class="bg-gray-100">
-    <div class="min-h-screen flex">
+    <div class="min-h-screen flex" x-data="vendorReview()">
         <!-- 側邊欄 -->
         <div class="bg-white w-64 min-h-screen shadow-lg fixed">
             <div class="flex items-center justify-center h-16 border-b border-gray-200">
@@ -241,6 +244,11 @@
                                     <option value="large">大型攤位</option>
                                     <option value="food">飲食攤位</option>
                                 </select>
+                                <button @click="showExportModal = true"
+                                        class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors flex items-center space-x-2">
+                                    <i class="fas fa-file-excel"></i>
+                                    <span>匯出 Excel</span>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -330,19 +338,258 @@
                         </div>
                     </div>
                 </div>
+                <!-- 匯出 Excel Modal -->
+                <div x-show="showExportModal"
+                     class="fixed inset-0 z-50 flex items-center justify-center"
+                     x-cloak>
+                    <!-- 遮罩 -->
+                    <div class="absolute inset-0 bg-black bg-opacity-50" @click="showExportModal = false"></div>
+                    <!-- Modal 內容 -->
+                    <div class="relative bg-white rounded-xl shadow-2xl w-full max-w-lg mx-4 max-h-[85vh] overflow-y-auto">
+                        <!-- Modal 標題 -->
+                        <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+                            <h3 class="text-lg font-bold text-gray-900">
+                                <i class="fas fa-file-excel text-green-600 mr-2"></i>匯出報名資料
+                            </h3>
+                            <button @click="showExportModal = false" class="text-gray-400 hover:text-gray-600">
+                                <i class="fas fa-times text-lg"></i>
+                            </button>
+                        </div>
+
+                        <div class="px-6 py-5 space-y-6">
+                            <!-- 匯出範圍 -->
+                            <div>
+                                <h4 class="text-sm font-bold text-gray-700 mb-3">匯出範圍</h4>
+                                <div class="space-y-2">
+                                    <label class="flex items-center space-x-3 cursor-pointer">
+                                        <input type="radio" name="exportScope" value="all" x-model="exportScope"
+                                               class="w-4 h-4 text-yellow-500 focus:ring-yellow-500">
+                                        <span class="text-sm text-gray-700">全部攤商（該活動所有報名者）</span>
+                                    </label>
+                                    <label class="flex items-center space-x-3 cursor-pointer">
+                                        <input type="radio" name="exportScope" value="filtered" x-model="exportScope"
+                                               class="w-4 h-4 text-yellow-500 focus:ring-yellow-500">
+                                        <span class="text-sm text-gray-700">僅目前篩選結果</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- 狀態篩選 -->
+                            <div>
+                                <h4 class="text-sm font-bold text-gray-700 mb-3">狀態篩選</h4>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <label class="flex items-center space-x-3 cursor-pointer">
+                                        <input type="checkbox" x-model="exportStatus.pending"
+                                               class="w-4 h-4 rounded text-yellow-500 focus:ring-yellow-500">
+                                        <span class="text-sm text-gray-700">待審核</span>
+                                    </label>
+                                    <label class="flex items-center space-x-3 cursor-pointer">
+                                        <input type="checkbox" x-model="exportStatus.approved"
+                                               class="w-4 h-4 rounded text-yellow-500 focus:ring-yellow-500">
+                                        <span class="text-sm text-gray-700">已核准</span>
+                                    </label>
+                                    <label class="flex items-center space-x-3 cursor-pointer">
+                                        <input type="checkbox" x-model="exportStatus.rejected"
+                                               class="w-4 h-4 rounded text-yellow-500 focus:ring-yellow-500">
+                                        <span class="text-sm text-gray-700">已拒絕</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- 匯出欄位 -->
+                            <div>
+                                <div class="flex items-center justify-between mb-3">
+                                    <h4 class="text-sm font-bold text-gray-700">匯出欄位</h4>
+                                    <button @click="toggleAllFields()" class="text-xs text-yellow-600 hover:text-yellow-700">
+                                        <span x-text="allFieldsSelected ? '取消全選' : '全選'"></span>
+                                    </button>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <template x-for="field in exportFieldOptions" :key="field.key">
+                                        <label class="flex items-center space-x-3 cursor-pointer">
+                                            <input type="checkbox" :value="field.key" x-model="exportFields"
+                                                   class="w-4 h-4 rounded text-yellow-500 focus:ring-yellow-500">
+                                            <span class="text-sm text-gray-700" x-text="field.label"></span>
+                                        </label>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal 底部按鈕 -->
+                        <div class="flex items-center justify-end space-x-3 px-6 py-4 border-t border-gray-200 bg-gray-50 rounded-b-xl">
+                            <button @click="showExportModal = false"
+                                    class="px-5 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors">
+                                取消
+                            </button>
+                            <button @click="handleExport()"
+                                    :disabled="exportFields.length === 0 || (!exportStatus.pending && !exportStatus.approved && !exportStatus.rejected)"
+                                    :class="exportFields.length === 0 || (!exportStatus.pending && !exportStatus.approved && !exportStatus.rejected) ? 'bg-gray-300 cursor-not-allowed' : 'bg-yellow-500 hover:bg-yellow-600'"
+                                    class="px-5 py-2 text-white rounded-lg transition-colors flex items-center space-x-2">
+                                <i class="fas fa-download"></i>
+                                <span>確認匯出</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Toast 通知 -->
+                <div x-show="showToast"
+                     x-transition:enter="transition ease-out duration-300"
+                     x-transition:enter-start="opacity-0 translate-y-2"
+                     x-transition:enter-end="opacity-100 translate-y-0"
+                     x-transition:leave="transition ease-in duration-200"
+                     x-transition:leave-start="opacity-100 translate-y-0"
+                     x-transition:leave-end="opacity-0 translate-y-2"
+                     class="fixed bottom-6 right-6 z-50 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center space-x-2"
+                     x-cloak>
+                    <i class="fas fa-check-circle"></i>
+                    <span>匯出成功！檔案已下載</span>
+                </div>
             </main>
         </div>
     </div>
 
     <script>
-        document.addEventListener('alpine:init', () => {
-            Alpine.data('vendorReview', () => ({
+        function vendorReview() {
+            return {
                 selectedEvent: null,
                 currentPage: 1,
                 totalPages: 3,
-                eventsPerPage: 6
-            }))
-        })
+                eventsPerPage: 6,
+
+                // 匯出相關
+                showExportModal: false,
+                showToast: false,
+                exportScope: 'all',
+                exportStatus: {
+                    pending: true,
+                    approved: true,
+                    rejected: false
+                },
+                exportFieldOptions: [
+                    { key: 'name', label: '攤商名稱' },
+                    { key: 'contact', label: '聯絡人' },
+                    { key: 'phone', label: '聯絡電話' },
+                    { key: 'email', label: '電子郵件' },
+                    { key: 'description', label: '商品描述' },
+                    { key: 'boothType', label: '攤位類型' },
+                    { key: 'applyTime', label: '申請時間' },
+                    { key: 'status', label: '審核狀態' },
+                    { key: 'paymentStatus', label: '匯款狀態' },
+                    { key: 'socialMedia', label: '社群媒體連結' }
+                ],
+                exportFields: ['name', 'contact', 'phone', 'email', 'description', 'boothType', 'applyTime', 'status', 'paymentStatus'],
+
+                get allFieldsSelected() {
+                    return this.exportFields.length === this.exportFieldOptions.length;
+                },
+
+                toggleAllFields() {
+                    if (this.allFieldsSelected) {
+                        this.exportFields = [];
+                    } else {
+                        this.exportFields = this.exportFieldOptions.map(f => f.key);
+                    }
+                },
+
+                handleExport() {
+                    // 模擬資料（實際應從 API 取得）
+                    const mockData = [
+                        {
+                            name: '小草工作室', contact: '林小草', phone: '0912-345-678',
+                            email: 'grassstudio@example.com', description: '手工製作的精美飾品，包括項鍊、耳環、手鍊等。',
+                            boothType: '手作飾品區', applyTime: '2024/02/15 14:30',
+                            status: '待審核', paymentStatus: '尚未匯款', socialMedia: 'facebook.com/grassstudio'
+                        },
+                        {
+                            name: '美食天地', contact: '王大明', phone: '0912-345-679',
+                            email: 'food@example.com', description: '特色小吃、飲品、甜點',
+                            boothType: '飲食攤位', applyTime: '2024/03/10 15:45',
+                            status: '待審核', paymentStatus: '尚未匯款', socialMedia: 'instagram.com/foodheaven'
+                        },
+                        {
+                            name: '木頭人工坊', contact: '陳志明', phone: '0933-456-789',
+                            email: 'woodman@example.com', description: '手工木製家具、擺飾、文具',
+                            boothType: '一般攤位', applyTime: '2024/02/20 09:15',
+                            status: '已核准', paymentStatus: '已匯款', socialMedia: 'facebook.com/woodman'
+                        },
+                        {
+                            name: '花草茶屋', contact: '李芳儀', phone: '0955-123-456',
+                            email: 'herbaltea@example.com', description: '手工花草茶包、乾燥花束',
+                            boothType: '飲食攤位', applyTime: '2024/02/18 11:00',
+                            status: '已核准', paymentStatus: '已匯款', socialMedia: ''
+                        },
+                        {
+                            name: '塗鴉小舖', contact: '張藝術', phone: '0922-987-654',
+                            email: 'graffiti@example.com', description: '原創插畫明信片、貼紙、海報',
+                            boothType: '一般攤位', applyTime: '2024/03/01 16:20',
+                            status: '已拒絕', paymentStatus: '尚未匯款', socialMedia: 'instagram.com/graffitishop'
+                        }
+                    ];
+
+                    // 依狀態篩選
+                    const statusMap = {
+                        '待審核': this.exportStatus.pending,
+                        '已核准': this.exportStatus.approved,
+                        '已拒絕': this.exportStatus.rejected
+                    };
+                    const filtered = mockData.filter(row => statusMap[row.status]);
+
+                    if (filtered.length === 0) {
+                        alert('沒有符合條件的資料可匯出');
+                        return;
+                    }
+
+                    // 建立欄位對應
+                    const fieldLabelMap = {};
+                    this.exportFieldOptions.forEach(f => { fieldLabelMap[f.key] = f.label; });
+
+                    // 組合匯出資料（僅包含選取的欄位）
+                    const exportData = filtered.map(row => {
+                        const obj = {};
+                        this.exportFields.forEach(key => {
+                            obj[fieldLabelMap[key]] = row[key] || '';
+                        });
+                        return obj;
+                    });
+
+                    // 使用 SheetJS 產生 Excel
+                    const ws = XLSX.utils.json_to_sheet(exportData);
+
+                    // 設定欄寬
+                    const colWidths = this.exportFields.map(key => {
+                        const maxLen = Math.max(
+                            fieldLabelMap[key].length * 2,
+                            ...filtered.map(row => (row[key] || '').length)
+                        );
+                        return { wch: Math.min(Math.max(maxLen, 10), 40) };
+                    });
+                    ws['!cols'] = colWidths;
+
+                    const wb = XLSX.utils.book_new();
+                    XLSX.utils.book_append_sheet(wb, ws, '攤商報名資料');
+
+                    // 下載檔案
+                    const eventNames = {
+                        event1: '2024年3月場',
+                        event2: '2024年4月場',
+                        event3: '2024年2月場',
+                        event4: '2024年5月場',
+                        event5: '2024年6月場',
+                        event6: '2024年7月場'
+                    };
+                    const eventName = eventNames[this.selectedEvent] || '活動';
+                    const fileName = `${eventName}_攤商報名資料.xlsx`;
+                    XLSX.writeFile(wb, fileName);
+
+                    // 關閉 modal 並顯示 toast
+                    this.showExportModal = false;
+                    this.showToast = true;
+                    setTimeout(() => { this.showToast = false; }, 3000);
+                }
+            }
+        }
     </script>
 </body>
 </html> 
