@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>出攤準備 - 市集媒合平台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #F3F4F6; }
+        @media print {
+            .no-print { display: none !important; }
+            .lg\:ml-64 { margin-left: 0 !important; }
+            body { background: white; }
+            table th, table td { display: table-cell !important; }
+        }
+    </style>
+</head>
+<body class="bg-gray-100" x-data="{ activeSession: 1 }">
+    <div class="min-h-screen flex">
+
+        <!-- 側邊欄 -->
+        <div class="hidden lg:block bg-white w-64 min-h-screen shadow-lg fixed z-30 no-print">
+            <div class="flex items-center justify-center h-16 border-b border-gray-200">
+                <img class="h-8" src="https://images.unsplash.com/photo-1490127252417-7c393f993ee4?w=150&h=50&fit=crop" alt="Logo">
+            </div>
+            <nav class="mt-6 px-2">
+                <a href="organizer-dashboard.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                    <i class="fas fa-home w-5 h-5"></i><span class="mx-4">首頁</span>
+                </a>
+                <a href="market-management.html" class="flex items-center px-4 py-3 mt-2 text-gray-700 bg-yellow-50 rounded-lg">
+                    <i class="fas fa-store w-5 h-5"></i><span class="mx-4">我的市集</span>
+                </a>
+                <a href="vendor-review.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                    <i class="fas fa-users w-5 h-5"></i><span class="mx-4">攤商審核</span>
+                </a>
+                <a href="market-analytics.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                    <i class="fas fa-chart-line w-5 h-5"></i><span class="mx-4">數據分析</span>
+                </a>
+                <a href="market-settings.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                    <i class="fas fa-cog w-5 h-5"></i><span class="mx-4">設定</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- 主要內容 -->
+        <div class="flex-1 lg:ml-64">
+
+            <!-- 頂部導航 -->
+            <header class="bg-white border-b border-gray-200 no-print">
+                <div class="flex items-center justify-between h-16 px-6">
+                    <div class="flex items-center gap-3">
+                        <a href="market-management.html" class="text-gray-400 hover:text-gray-600 transition-colors">
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                        <div>
+                            <h1 class="text-base font-bold text-gray-900 leading-tight">出攤準備</h1>
+                            <p class="text-xs text-gray-400">2024年3月場・活動進行中</p>
+                        </div>
+                    </div>
+                    <button onclick="window.print()" class="flex items-center gap-2 px-3 py-1.5 text-sm border border-gray-200 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors">
+                        <i class="fas fa-print text-xs"></i>
+                        <span>列印清單</span>
+                    </button>
+                </div>
+            </header>
+
+            <main class="p-4 lg:p-6">
+                <div class="max-w-5xl mx-auto space-y-5">
+
+                    <!-- 場次切換 Tabs -->
+                    <div class="bg-white border border-gray-200 rounded-lg p-1 flex gap-1 no-print">
+                        <button @click="activeSession = 1"
+                            :class="activeSession === 1 ? 'bg-gray-900 text-white shadow-sm' : 'text-gray-500 hover:bg-gray-50'"
+                            class="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-md text-sm font-medium transition-all">
+                            場次 1
+                            <span :class="activeSession === 1 ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-500'"
+                                class="text-xs px-1.5 py-0.5 rounded tabular-nums">10 攤</span>
+                        </button>
+                        <button @click="activeSession = 2"
+                            :class="activeSession === 2 ? 'bg-gray-900 text-white shadow-sm' : 'text-gray-500 hover:bg-gray-50'"
+                            class="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-md text-sm font-medium transition-all">
+                            場次 2
+                            <span :class="activeSession === 2 ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-500'"
+                                class="text-xs px-1.5 py-0.5 rounded tabular-nums">9 攤</span>
+                        </button>
+                    </div>
+
+                    <!-- =================== 場次 1 =================== -->
+                    <div x-show="activeSession === 1" x-cloak>
+
+                        <div class="flex items-center gap-3 text-sm text-gray-500 mb-5">
+                            <i class="fas fa-calendar-day text-gray-300"></i>
+                            <span>2024/03/16 (六)</span>
+                            <span class="text-gray-300">·</span>
+                            <i class="fas fa-clock text-gray-300"></i>
+                            <span>10:00–18:00</span>
+                        </div>
+
+                        <!-- 設備備料 -->
+                        <h2 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">設備備料</h2>
+                        <div class="grid grid-cols-3 lg:grid-cols-5 gap-3 mb-5">
+                            <div class="bg-white border border-gray-200 rounded-lg p-4">
+                                <p class="text-xs font-medium text-amber-500 mb-1">電力</p>
+                                <p class="text-2xl font-bold tracking-tight text-gray-900">5</p>
+                            </div>
+                            <div class="bg-white border border-gray-200 rounded-lg p-4">
+                                <p class="text-xs font-medium text-blue-500 mb-1">只租大桌</p>
+                                <p class="text-2xl font-bold tracking-tight text-gray-900">3</p>
+                            </div>
+                            <div class="bg-white border border-gray-200 rounded-lg p-4">
+                                <p class="text-xs font-medium text-rose-500 mb-1">只租小桌</p>
+                                <p class="text-2xl font-bold tracking-tight text-gray-900">2</p>
+                            </div>
+                            <div class="bg-white border border-gray-200 rounded-lg p-4">
+                                <p class="text-xs font-medium text-green-500 mb-1">帳篷</p>
+                                <p class="text-2xl font-bold tracking-tight text-gray-900">3</p>
+                            </div>
+                            <div class="bg-white border border-gray-200 rounded-lg p-4">
+                                <p class="text-xs font-medium text-purple-500 mb-1">展示架</p>
+                                <p class="text-2xl font-bold tracking-tight text-gray-900">3</p>
+                            </div>
+                        </div>
+
+                        <!-- 攤商清單 -->
+                        <h2 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">攤商清單</h2>
+                        <div class="bg-white border border-gray-200 rounded-lg overflow-hidden">
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full">
+                                    <thead>
+                                        <tr class="border-b border-gray-100 bg-gray-50">
+                                            <th class="py-3 pl-4 pr-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">攤位</th>
+                                            <th class="py-3 px-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">攤商名稱</th>
+                                            <th class="py-3 px-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider hidden md:table-cell">類型</th>
+                                            <th class="py-3 px-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider hidden lg:table-cell">聯絡方式</th>
+                                            <th class="py-3 px-3 text-center text-xs font-medium text-amber-500 tracking-wider">電力</th>
+                                            <th class="py-3 px-3 text-center text-xs font-medium text-blue-500 tracking-wider">只租大桌</th>
+                                            <th class="py-3 px-3 text-center text-xs font-medium text-rose-500 tracking-wider">只租小桌</th>
+                                            <th class="py-3 px-3 text-center text-xs font-medium text-green-500 tracking-wider">帳篷</th>
+                                            <th class="py-3 pl-3 pr-4 text-center text-xs font-medium text-purple-500 tracking-wider">展示架</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-100">
+                                        <!-- A01 小島手作: 只租小桌, 展示架 -->
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="py-3.5 pl-4 pr-3"><span class="text-sm font-mono font-semibold text-gray-500">A01</span></td>
+                                            <td class="py-3.5 px-3"><span class="text-sm font-medium text-gray-800">小島手作</span></td>
+                                            <td class="py-3.5 px-3 hidden md:table-cell"><span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">手工藝</span></td>
+                                            <td class="py-3.5 px-3 hidden lg:table-cell"><div class="flex items-center gap-2 text-xs text-gray-500"><i class="fas fa-phone text-gray-300"></i><span>0912-345-678</span></div></td>
+                                            <td class="py-3.5 px-3 text-center text-gray-200">—</td>
+                                            <td class="py-3.5 px-3 text-center text-gray-200">—</td>
+                                            <td class="py-3.5 px-3 text-center"><i class="fas fa-check text-rose-500 text-sm"></i></td>
+                                            <td class="py-3.5 px-3 text-center text-gray-200">—</td>
+                                            <td class="py-3.5 pl-3 pr-4 text-center"><i class="fas fa-check text-purple-500 text-sm"></i></td>
+                                        </tr>
+                                        <!-- A02 森林咖啡: 電力, 只租大桌 -->
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="py-3.5 pl-4 pr-3"><span class="text-sm font-mono font-semibold text-gray-500">A02</span></td>
+                                            <td class="py-3.5 px-3"><span class="text-sm font-medium text-gray-800">森林咖啡</span></td>
+                                            <td class="py-3.5 px-3 hidden md:table-cell"><span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">飲食</span></td>
+                                            <td class="py-3.5 px-3 hidden lg:table-cell"><div class="flex items-center gap-2 text-xs text-gray-500"><i class="fas fa-phone text-gray-300"></i><span>0923-456-789</span></div></td>
+                                            <td class="py-3.5 px-3 text-center"><i class="fas fa-check text-amber-500 text-sm"></i></td>
+                                            <td class="py-3.5 px-3 text-center"><i class="fas fa-check text-blue-500 text-sm"></i></td>
+                                            <td class="py-3.5 px-3 text-center text-gray-200">—</td>
+                                            <td class="py-3.5 px-3 text-center text-gray-200">—</td>
+                                            <td class="py-3.5 pl-3 pr-4 text-center text-gray-200">—</td>
+                                        </tr>
+                                        <!-- A03 日光陶器: 只租大桌 -->
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="py-3.5 pl-4 pr-3"><span class="text-sm font-mono font-semibold text-gray-500">A03</span></td>
+                                            <td class="py-3.5 px-3"><span class="text-sm font-medium text-gray-800">日光陶器</span></td>
+                                            <td class="py-3.5 px-3 hidden md:table-cell"><span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">手工藝</span></td>
+                                            <td class="py-3.5 px-3 hidden lg:table-cell"><div class="flex items-center gap-2 text-xs text-gray-500"><i class="fas fa-phone text-gray-300"></i><span>0934-567-890</span></div></td>
+                                            <td class="py-3.5 px-3 text-center text-gray-200">—</td>
+                                            <td class="py-3.5 px-3 text-center"><i class="fas fa-check text-blue-500 text-sm"></i></td>
+                                            <td class="py-3.5 px-3 text-center text-gray-200">—</td>
+                                            <td class="py-3.5 px-3 text-center text-gray-200">—</td>
+                                            <td class="py-3.5 pl-3 pr-4 text-center text-gray-200">—</td>
+                                        </tr>
+                                        <!-- A04 溫室植物: 帳篷 -->
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="py-3.5 pl-4 pr-3"><span class="text-sm font-mono font-semibold text-gray-500">A04</span></td>
+                                            <td class="py-3.5 px-3"><span class="text-sm font-medium text-gray-800">溫室植物</span></td>
+                                            <td class="py-3.5 px-3 hidden md:table-cell"><span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">植栽</span></td>
+                                            <td class="py-3.5 px-3 hidden lg:table-cell"><div class="flex items-center gap-2 text-xs text-gray-500"><i class="fas fa-phone text-gray-300"></i><span>0945-678-901</span></div></td>
+                                            <td class="py-3.5 px-3 text-center text-gray-200">—</td>
+                                            <td class="py-3.5 px-3 text-center text-gray-200">—</td>
+                                            <td class="py-3.5 px-3 text-center text-gray-200">—</td>
+                                            <td class="py-3.5 px-3 text-center"><i class="fas fa-check text-green-500 text-sm"></i></td>
+                                            <td class="py-3.5 pl-3 pr-4 text-center text-gray-200">—</td>
+                                        </tr>
+                                        <!-- A05 紙上旅行: 只租小桌 -->
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="py-3.5 pl-4 pr-3"><span class="text-sm font-mono font-semibold text-gray-500">A05</span></td>
+                                            <td class="py-3.5 px-3"><span class="text-sm font-medium text-gray-800">紙上旅行</span></td>
+                                            <td class="py-3.5 px-3 hidden md:table-cell"><span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">文創</span></td>
+                                            <td class="py-3.5 px-3 hidden lg:table-cell"><div class="flex items-center gap-2 text-xs text-gray-500"><i class="fas fa-phone text-gray-300"></i><span>0956-789-012</span></div></td>
+                                            <td class="py-3.5 px-3 text-center text-gray-200">—</td>
+                                            <td class="py-3.5 px-3 text-center text-gray-200">—</td>
+                                            <td class="py-3.5 px-3 text-center"><i class="fas fa-check text-rose-500 text-sm"></i></td>
+                                            <td class="py-3.5 px-3 text-center text-gray-200">—</td>
+                                            <td class="py-3.5 pl-3 pr-4 text-center text-gray-200">—</td>
+                                        </tr>
+                                        <!-- B01 甜點工坊: 電力, 只租大桌, 帳篷 -->
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="py-3.5 pl-4 pr-3"><span class="text-sm font-mono font-semibold text-gray-500">B01</span></td>
+                                            <td class="py-3.5 px-3"><span class="text-sm font-medium text-gray-800">甜點工坊</span></td>
+                                            <td class="py-3.5 px-3 hidden md:table-cell"><span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">飲食</span></td>
+                                            <td class="py-3.5 px-3 hidden lg:table-cell"><div class="flex items-center gap-2 text-xs text-gray-500"><i class="fas fa-phone text-gray-300"></i><span>0967-890-123</span></div></td>
+                                            <td class="py-3.5 px-3 text-center"><i class="fas fa-check text-amber-500 text-sm"></i></td>
+                                            <td class="py-3.5 px-3 text-center"><i class="fas fa-check text-blue-500 text-sm"></i></td>
+                                            <td class="py-3.5 px-3 text-center text-gray-200">—</td>
+                                            <td class="py-3.5 px-3 text-center"><i class="fas fa-check text-green-500 text-sm"></i></td>
+                                            <td class="py-3.5 pl-3 pr-4 text-center text-gray-200">—</td>
+                                        </tr>
+                                        <!-- B02 古著衣飾: 展示架 -->
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="py-3.5 pl-4 pr-3"><span class="text-sm font-mono font-semibold text-gray-500">B02</span></td>
+                                            <td class="py-3.5 px-3"><span class="text-sm font-medium text-gray-800">古著衣飾</span></td>
+                                            <td class="py-3.5 px-3 hidden md:table-cell"><span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">服飾</span></td>
+                                            <td class="py-3.5 px-3 hidden lg:table-cell"><div class="flex items-center gap-2 text-xs text-gray-500"><i class="fas fa-phone text-gray-300"></i><span>0978-901-234</span></div></td>
+                                            <td class="py-3.5 px-3 text-center text-gray-200">—</td>
+                                            <td class="py-3.5 px-3 text-center text-gray-200">—</td>
+                                            <td class="py-3.5 px-3 text-center text-gray-200">—</td>
+                                            <td class="py-3.5 px-3 text-center text-gray-200">—</td>
+                                            <td class="py-3.5 pl-3 pr-4 text-center"><i class="fas fa-check text-purple-500 text-sm"></i></td>
+                                        </tr>
+                                        <!-- B03 木工生活: 電力, 只租大桌 -->
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="py-3.5 pl-4 pr-3"><span class="text-sm font-mono font-semibold text-gray-500">B03</span></td>
+                                            <td class="py-3.5 px-3"><span class="text-sm font-medium text-gray-800">木工生活</span></td>
+                                            <td class="py-3.5 px-3 hidden md:table-cell"><span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">手工藝</span></td>
+                                            <td class="py-3.5 px-3 hidden lg:table-cell"><div class="flex items-center gap-2 text-xs text-gray-500"><i class="fas fa-phone text-gray-300"></i><span>0989-012-345</span></div></td>
+                                            <td class="py-3.5 px-3 text-center"><i class="fas fa-check text-amber-500 text-sm"></i></td>
+                                            <td class="py-3.5 px-3 text-center"><i class="fas fa-check text-blue-500 text-sm"></i></td>
+                                            <td class="py-3.5 px-3 text-center text-gray-200">—</td>
+                                            <td class="py-3.5 px-3 text-center text-gray-200">—</td>
+                                            <td class="py-3.5 pl-3 pr-4 text-center text-gray-200">—</td>
+                                        </tr>
+                                        <!-- B04 阿嬤的菜: 電力, 帳篷 -->
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="py-3.5 pl-4 pr-3"><span class="text-sm font-mono font-semibold text-gray-500">B04</span></td>
+                                            <td class="py-3.5 px-3"><span class="text-sm font-medium text-gray-800">阿嬤的菜</span></td>
+                                            <td class="py-3.5 px-3 hidden md:table-cell"><span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">飲食</span></td>
+                                            <td class="py-3.5 px-3 hidden lg:table-cell"><div class="flex items-center gap-2 text-xs text-gray-500"><i class="fas fa-phone text-gray-300"></i><span>0912-123-456</span></div></td>
+                                            <td class="py-3.5 px-3 text-center"><i class="fas fa-check text-amber-500 text-sm"></i></td>
+                                            <td class="py-3.5 px-3 text-center text-gray-200">—</td>
+                                            <td class="py-3.5 px-3 text-center text-gray-200">—</td>
+                                            <td class="py-3.5 px-3 text-center"><i class="fas fa-check text-green-500 text-sm"></i></td>
+                                            <td class="py-3.5 pl-3 pr-4 text-center text-gray-200">—</td>
+                                        </tr>
+                                        <!-- B05 光影攝影: 電力, 展示架 -->
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="py-3.5 pl-4 pr-3"><span class="text-sm font-mono font-semibold text-gray-500">B05</span></td>
+                                            <td class="py-3.5 px-3"><span class="text-sm font-medium text-gray-800">光影攝影</span></td>
+                                            <td class="py-3.5 px-3 hidden md:table-cell"><span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">藝術</span></td>
+                                            <td class="py-3.5 px-3 hidden lg:table-cell"><div class="flex items-center gap-2 text-xs text-gray-500"><i class="fas fa-phone text-gray-300"></i><span>0923-234-567</span></div></td>
+                                            <td class="py-3.5 px-3 text-center"><i class="fas fa-check text-amber-500 text-sm"></i></td>
+                                            <td class="py-3.5 px-3 text-center text-gray-200">—</td>
+                                            <td class="py-3.5 px-3 text-center text-gray-200">—</td>
+                                            <td class="py-3.5 px-3 text-center text-gray-200">—</td>
+                                            <td class="py-3.5 pl-3 pr-4 text-center"><i class="fas fa-check text-purple-500 text-sm"></i></td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="border-t-2 border-gray-200 bg-gray-50">
+                                            <td class="py-3 pl-4 pr-3 text-xs font-semibold text-gray-500" colspan="4">合計 10 攤</td>
+                                            <td class="py-3 px-3 text-center text-sm font-bold text-gray-700 tabular-nums">5</td>
+                                            <td class="py-3 px-3 text-center text-sm font-bold text-gray-700 tabular-nums">3</td>
+                                            <td class="py-3 px-3 text-center text-sm font-bold text-gray-700 tabular-nums">2</td>
+                                            <td class="py-3 px-3 text-center text-sm font-bold text-gray-700 tabular-nums">3</td>
+                                            <td class="py-3 pl-3 pr-4 text-center text-sm font-bold text-gray-700 tabular-nums">3</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- =================== 場次 2 =================== -->
+                    <div x-show="activeSession === 2" x-cloak>
+
+                        <div class="flex items-center gap-3 text-sm text-gray-500 mb-5">
+                            <i class="fas fa-calendar-day text-gray-300"></i>
+                            <span>2024/03/17 (日)</span>
+                            <span class="text-gray-300">·</span>
+                            <i class="fas fa-clock text-gray-300"></i>
+                            <span>10:00–18:00</span>
+                        </div>
+
+                        <!-- 設備備料 -->
+                        <h2 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">設備備料</h2>
+                        <div class="grid grid-cols-2 gap-3 mb-5">
+                            <div class="bg-white border border-gray-200 rounded-lg p-4">
+                                <p class="text-xs font-medium text-amber-500 mb-1">電力</p>
+                                <p class="text-2xl font-bold tracking-tight text-gray-900">4</p>
+                            </div>
+                            <div class="bg-white border border-gray-200 rounded-lg p-4">
+                                <p class="text-xs font-medium text-green-500 mb-1">帳篷</p>
+                                <p class="text-2xl font-bold tracking-tight text-gray-900">2</p>
+                            </div>
+                        </div>
+
+                        <!-- 攤商清單 -->
+                        <h2 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">攤商清單</h2>
+                        <div class="bg-white border border-gray-200 rounded-lg overflow-hidden">
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full">
+                                    <thead>
+                                        <tr class="border-b border-gray-100 bg-gray-50">
+                                            <th class="py-3 pl-4 pr-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">攤位</th>
+                                            <th class="py-3 px-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">攤商名稱</th>
+                                            <th class="py-3 px-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider hidden md:table-cell">類型</th>
+                                            <th class="py-3 px-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider hidden lg:table-cell">聯絡方式</th>
+                                            <th class="py-3 px-3 text-center text-xs font-medium text-amber-500 tracking-wider">電力</th>
+                                            <th class="py-3 pl-3 pr-4 text-center text-xs font-medium text-green-500 tracking-wider">帳篷</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-100">
+                                        <!-- A01 小島手作: 電力, 帳篷 -->
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="py-3.5 pl-4 pr-3"><span class="text-sm font-mono font-semibold text-gray-500">A01</span></td>
+                                            <td class="py-3.5 px-3"><span class="text-sm font-medium text-gray-800">小島手作</span></td>
+                                            <td class="py-3.5 px-3 hidden md:table-cell"><span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">手工藝</span></td>
+                                            <td class="py-3.5 px-3 hidden lg:table-cell"><div class="flex items-center gap-2 text-xs text-gray-500"><i class="fas fa-phone text-gray-300"></i><span>0912-345-678</span></div></td>
+                                            <td class="py-3.5 px-3 text-center"><i class="fas fa-check text-amber-500 text-sm"></i></td>
+                                            <td class="py-3.5 pl-3 pr-4 text-center"><i class="fas fa-check text-green-500 text-sm"></i></td>
+                                        </tr>
+                                        <!-- A02 森林咖啡: 電力 -->
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="py-3.5 pl-4 pr-3"><span class="text-sm font-mono font-semibold text-gray-500">A02</span></td>
+                                            <td class="py-3.5 px-3"><span class="text-sm font-medium text-gray-800">森林咖啡</span></td>
+                                            <td class="py-3.5 px-3 hidden md:table-cell"><span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">飲食</span></td>
+                                            <td class="py-3.5 px-3 hidden lg:table-cell"><div class="flex items-center gap-2 text-xs text-gray-500"><i class="fas fa-phone text-gray-300"></i><span>0923-456-789</span></div></td>
+                                            <td class="py-3.5 px-3 text-center"><i class="fas fa-check text-amber-500 text-sm"></i></td>
+                                            <td class="py-3.5 pl-3 pr-4 text-center text-gray-200">—</td>
+                                        </tr>
+                                        <!-- A03 蠟燭香氛: — -->
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="py-3.5 pl-4 pr-3"><span class="text-sm font-mono font-semibold text-gray-500">A03</span></td>
+                                            <td class="py-3.5 px-3"><span class="text-sm font-medium text-gray-800">蠟燭香氛</span></td>
+                                            <td class="py-3.5 px-3 hidden md:table-cell"><span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">手工藝</span></td>
+                                            <td class="py-3.5 px-3 hidden lg:table-cell"><div class="flex items-center gap-2 text-xs text-gray-500"><i class="fas fa-phone text-gray-300"></i><span>0934-567-890</span></div></td>
+                                            <td class="py-3.5 px-3 text-center text-gray-200">—</td>
+                                            <td class="py-3.5 pl-3 pr-4 text-center text-gray-200">—</td>
+                                        </tr>
+                                        <!-- A04 溫室植物: 帳篷 -->
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="py-3.5 pl-4 pr-3"><span class="text-sm font-mono font-semibold text-gray-500">A04</span></td>
+                                            <td class="py-3.5 px-3"><span class="text-sm font-medium text-gray-800">溫室植物</span></td>
+                                            <td class="py-3.5 px-3 hidden md:table-cell"><span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">植栽</span></td>
+                                            <td class="py-3.5 px-3 hidden lg:table-cell"><div class="flex items-center gap-2 text-xs text-gray-500"><i class="fas fa-phone text-gray-300"></i><span>0945-678-901</span></div></td>
+                                            <td class="py-3.5 px-3 text-center text-gray-200">—</td>
+                                            <td class="py-3.5 pl-3 pr-4 text-center"><i class="fas fa-check text-green-500 text-sm"></i></td>
+                                        </tr>
+                                        <!-- A05 紙上旅行: — -->
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="py-3.5 pl-4 pr-3"><span class="text-sm font-mono font-semibold text-gray-500">A05</span></td>
+                                            <td class="py-3.5 px-3"><span class="text-sm font-medium text-gray-800">紙上旅行</span></td>
+                                            <td class="py-3.5 px-3 hidden md:table-cell"><span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">文創</span></td>
+                                            <td class="py-3.5 px-3 hidden lg:table-cell"><div class="flex items-center gap-2 text-xs text-gray-500"><i class="fas fa-phone text-gray-300"></i><span>0956-789-012</span></div></td>
+                                            <td class="py-3.5 px-3 text-center text-gray-200">—</td>
+                                            <td class="py-3.5 pl-3 pr-4 text-center text-gray-200">—</td>
+                                        </tr>
+                                        <!-- B01 甜點工坊: 電力 -->
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="py-3.5 pl-4 pr-3"><span class="text-sm font-mono font-semibold text-gray-500">B01</span></td>
+                                            <td class="py-3.5 px-3"><span class="text-sm font-medium text-gray-800">甜點工坊</span></td>
+                                            <td class="py-3.5 px-3 hidden md:table-cell"><span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">飲食</span></td>
+                                            <td class="py-3.5 px-3 hidden lg:table-cell"><div class="flex items-center gap-2 text-xs text-gray-500"><i class="fas fa-phone text-gray-300"></i><span>0967-890-123</span></div></td>
+                                            <td class="py-3.5 px-3 text-center"><i class="fas fa-check text-amber-500 text-sm"></i></td>
+                                            <td class="py-3.5 pl-3 pr-4 text-center text-gray-200">—</td>
+                                        </tr>
+                                        <!-- B02 手繪明信片: — -->
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="py-3.5 pl-4 pr-3"><span class="text-sm font-mono font-semibold text-gray-500">B02</span></td>
+                                            <td class="py-3.5 px-3"><span class="text-sm font-medium text-gray-800">手繪明信片</span></td>
+                                            <td class="py-3.5 px-3 hidden md:table-cell"><span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">藝術</span></td>
+                                            <td class="py-3.5 px-3 hidden lg:table-cell"><div class="flex items-center gap-2 text-xs text-gray-500"><i class="fas fa-phone text-gray-300"></i><span>0978-901-234</span></div></td>
+                                            <td class="py-3.5 px-3 text-center text-gray-200">—</td>
+                                            <td class="py-3.5 pl-3 pr-4 text-center text-gray-200">—</td>
+                                        </tr>
+                                        <!-- B03 木工生活: 電力 -->
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="py-3.5 pl-4 pr-3"><span class="text-sm font-mono font-semibold text-gray-500">B03</span></td>
+                                            <td class="py-3.5 px-3"><span class="text-sm font-medium text-gray-800">木工生活</span></td>
+                                            <td class="py-3.5 px-3 hidden md:table-cell"><span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">手工藝</span></td>
+                                            <td class="py-3.5 px-3 hidden lg:table-cell"><div class="flex items-center gap-2 text-xs text-gray-500"><i class="fas fa-phone text-gray-300"></i><span>0989-012-345</span></div></td>
+                                            <td class="py-3.5 px-3 text-center"><i class="fas fa-check text-amber-500 text-sm"></i></td>
+                                            <td class="py-3.5 pl-3 pr-4 text-center text-gray-200">—</td>
+                                        </tr>
+                                        <!-- B04 阿嬤的菜: — -->
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="py-3.5 pl-4 pr-3"><span class="text-sm font-mono font-semibold text-gray-500">B04</span></td>
+                                            <td class="py-3.5 px-3"><span class="text-sm font-medium text-gray-800">阿嬤的菜</span></td>
+                                            <td class="py-3.5 px-3 hidden md:table-cell"><span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">飲食</span></td>
+                                            <td class="py-3.5 px-3 hidden lg:table-cell"><div class="flex items-center gap-2 text-xs text-gray-500"><i class="fas fa-phone text-gray-300"></i><span>0912-123-456</span></div></td>
+                                            <td class="py-3.5 px-3 text-center text-gray-200">—</td>
+                                            <td class="py-3.5 pl-3 pr-4 text-center text-gray-200">—</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="border-t-2 border-gray-200 bg-gray-50">
+                                            <td class="py-3 pl-4 pr-3 text-xs font-semibold text-gray-500" colspan="4">合計 9 攤</td>
+                                            <td class="py-3 px-3 text-center text-sm font-bold text-gray-700 tabular-nums">4</td>
+                                            <td class="py-3 pl-3 pr-4 text-center text-sm font-bold text-gray-700 tabular-nums">2</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>
