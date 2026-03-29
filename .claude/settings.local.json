@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(grep -l \"活動\\\\|event\\\\|statistics\" /Users/awei/Documents/Workspace/Cursor/17847Market/*.html)",
-      "Bash(ls -la /Users/awei/Documents/Workspace/Cursor/17847Market/*.html)"
+      "Bash(ls -la /Users/awei/Documents/Workspace/Cursor/17847Market/*.html)",
+      "Bash(grep:*)"
     ]
   }
 }
