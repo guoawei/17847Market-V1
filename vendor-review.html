@@ -26,6 +26,14 @@
       [x-cloak] {
         display: none !important;
       }
+      .card-dimmed {
+        opacity: 0.35;
+        filter: grayscale(100%);
+        transition: all 0.2s;
+      }
+      .card-dimmed:hover {
+        opacity: 0.65;
+      }
     </style>
   </head>
   <body class="bg-gray-100">
@@ -277,36 +285,36 @@
 
           <!-- 統計摘要 -->
           <div class="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-4">
-            <div class="bg-white border border-blue-100 rounded-lg p-4 text-center cursor-pointer hover:border-blue-300 transition-colors"
-                 :class="filters.reviewStatus === '待審核' ? 'ring-2 ring-blue-400' : ''"
+            <div class="bg-white border border-blue-100 rounded-lg p-4 text-center cursor-pointer transition-all duration-200"
+                 :class="filters.reviewStatus === '待審核' ? 'ring-2 ring-blue-400' : (anyCardActive ? 'card-dimmed' : 'hover:border-blue-300')"
                  @click="filters.reviewStatus = filters.reviewStatus === '待審核' ? '' : '待審核'; currentPage = 1">
               <i class="fas fa-hourglass-half text-blue-500 text-lg mb-1.5 block"></i>
               <div class="text-2xl font-bold text-blue-600 tabular-nums" x-text="statsWaitingForReviews"></div>
               <div class="text-xs text-gray-400 mt-0.5">待審核</div>
             </div>
-            <div class="bg-white border border-blue-100 rounded-lg p-4 text-center cursor-pointer hover:border-blue-300 transition-colors"
-                 :class="filters.paymentStatus === '待繳費' ? 'ring-2 ring-blue-400' : ''"
+            <div class="bg-white border border-blue-100 rounded-lg p-4 text-center cursor-pointer transition-all duration-200"
+                 :class="filters.paymentStatus === '待繳費' ? 'ring-2 ring-blue-400' : (anyCardActive ? 'card-dimmed' : 'hover:border-blue-300')"
                  @click="filters.paymentStatus = filters.paymentStatus === '待繳費' ? '' : '待繳費'; currentPage = 1">
               <i class="fas fa-wallet text-blue-500 text-lg mb-1.5 block"></i>
               <div class="text-2xl font-bold text-blue-600 tabular-nums" x-text="statsWaitingForPayments"></div>
               <div class="text-xs text-gray-400 mt-0.5">待繳費</div>
             </div>
-            <div class="bg-white border border-purple-100 rounded-lg p-4 text-center cursor-pointer hover:border-purple-300 transition-colors"
-                 :class="filters.paymentStatus === '繳費待確認' ? 'ring-2 ring-purple-400' : ''"
+            <div class="bg-white border border-purple-100 rounded-lg p-4 text-center cursor-pointer transition-all duration-200"
+                 :class="filters.paymentStatus === '繳費待確認' ? 'ring-2 ring-purple-400' : (anyCardActive ? 'card-dimmed' : 'hover:border-purple-300')"
                  @click="filters.paymentStatus = filters.paymentStatus === '繳費待確認' ? '' : '繳費待確認'; currentPage = 1">
               <i class="fas fa-file-invoice text-purple-500 text-lg mb-1.5 block"></i>
               <div class="text-2xl font-bold text-purple-600 tabular-nums" x-text="statsCheckPayments"></div>
               <div class="text-xs text-gray-400 mt-0.5">繳費待確認</div>
             </div>
-            <div class="bg-white border border-purple-100 rounded-lg p-4 text-center cursor-pointer hover:border-purple-300 transition-colors"
-                 :class="filters.paymentStatus === '現場繳費' ? 'ring-2 ring-purple-400' : ''"
+            <div class="bg-white border border-purple-100 rounded-lg p-4 text-center cursor-pointer transition-all duration-200"
+                 :class="filters.paymentStatus === '現場繳費' ? 'ring-2 ring-purple-400' : (anyCardActive ? 'card-dimmed' : 'hover:border-purple-300')"
                  @click="filters.paymentStatus = filters.paymentStatus === '現場繳費' ? '' : '現場繳費'; currentPage = 1">
               <i class="fas fa-store text-purple-500 text-lg mb-1.5 block"></i>
               <div class="text-2xl font-bold text-purple-600 tabular-nums" x-text="statsOnSitePayment"></div>
               <div class="text-xs text-gray-400 mt-0.5">現場繳費</div>
             </div>
-            <div class="bg-white border border-green-100 rounded-lg p-4 text-center cursor-pointer hover:border-green-300 transition-colors"
-                 :class="filters.paymentStatus === '已繳費' ? 'ring-2 ring-green-400' : ''"
+            <div class="bg-white border border-green-100 rounded-lg p-4 text-center cursor-pointer transition-all duration-200"
+                 :class="filters.paymentStatus === '已繳費' ? 'ring-2 ring-green-400' : (anyCardActive ? 'card-dimmed' : 'hover:border-green-300')"
                  @click="filters.paymentStatus = filters.paymentStatus === '已繳費' ? '' : '已繳費'; currentPage = 1">
               <i class="fas fa-check-circle text-green-600 text-lg mb-1.5 block"></i>
               <div class="text-2xl font-bold text-green-600 tabular-nums" x-text="statsSuccess"></div>
@@ -1139,6 +1147,13 @@
                 total,
               ];
             return [1, "...", current - 1, current, current + 1, "...", total];
+          },
+
+          get anyCardActive() {
+            return (
+              this.filters.reviewStatus === "待審核" ||
+              ["待繳費", "繳費待確認", "現場繳費", "已繳費"].includes(this.filters.paymentStatus)
+            );
           },
 
           get statsWaitingForReviews() {
