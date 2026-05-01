@@ -1,595 +1,1266 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-Hant">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>攤商審核 - 市集媒合平台</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Alpine.js CDN -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <!-- SheetJS for Excel export -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
     <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
     <style>
-        body {
-            font-family: 'Noto Sans TC', sans-serif;
-            background-color: #F3F4F6;
-        }
-        [x-cloak] { display: none !important; }
+      body {
+        font-family: "Noto Sans TC", sans-serif;
+        background-color: #f3f4f6;
+      }
+      [x-cloak] {
+        display: none !important;
+      }
     </style>
-</head>
-<body class="bg-gray-100">
+  </head>
+  <body class="bg-gray-100">
     <div class="min-h-screen flex" x-data="vendorReview()">
-        <!-- 側邊欄 -->
-        <div class="bg-white w-64 min-h-screen shadow-lg fixed">
-            <div class="flex items-center justify-center h-16 border-b border-gray-200">
-                <a href="organizer-dashboard.html">
-                    <img class="h-8" src="https://images.unsplash.com/photo-1490127252417-7c393f993ee4?w=150&h=50&fit=crop" alt="Logo">
-                </a>
+      <!-- 側邊欄 -->
+      <div
+        class="hidden lg:block bg-white w-64 min-h-screen shadow-lg fixed z-30"
+      >
+        <div
+          class="flex items-center justify-center h-16 border-b border-gray-200"
+        >
+          <a href="organizer-dashboard.html">
+            <img
+              class="h-8"
+              src="https://images.unsplash.com/photo-1490127252417-7c393f993ee4?w=150&h=50&fit=crop"
+              alt="Logo"
+            />
+          </a>
+        </div>
+        <nav class="mt-6">
+          <div class="px-4 py-2">
+            <div class="flex items-center space-x-2 text-sm text-gray-600">
+              <img
+                class="h-8 w-8 rounded-full object-cover"
+                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop"
+                alt="主辦方頭像"
+              />
+              <span>歡迎回來，主辦方</span>
             </div>
-            <nav class="mt-6">
-                <div class="px-4 py-2">
-                    <div class="flex items-center space-x-2 text-sm text-gray-600">
-                        <img class="h-8 w-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop" alt="主辦方頭像">
-                        <span>歡迎回來，主辦方</span>
-                    </div>
-                </div>
-                <div class="px-2 mt-4">
-                    <a href="organizer-dashboard.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
-                        <i class="fas fa-home w-5 h-5"></i>
-                        <span class="mx-4">首頁</span>
-                    </a>
-                    <a href="market-management.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
-                        <i class="fas fa-store w-5 h-5"></i>
-                        <span class="mx-4">我的市集</span>
-                    </a>
-                    <a href="vendor-review.html" class="flex items-center px-4 py-3 mt-2 text-gray-700 bg-yellow-50 rounded-lg">
-                        <i class="fas fa-users w-5 h-5"></i>
-                        <span class="mx-4">攤商審核</span>
-                    </a>
-                    <a href="market-analytics.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
-                        <i class="fas fa-chart-line w-5 h-5"></i>
-                        <span class="mx-4">數據分析</span>
-                    </a>
-                    <a href="market-settings.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
-                        <i class="fas fa-cog w-5 h-5"></i>
-                        <span class="mx-4">設定</span>
-                    </a>
-                </div>
-            </nav>
-        </div>
+          </div>
+          <div class="px-2 mt-4">
+            <a
+              href="organizer-dashboard.html"
+              class="flex items-center px-4 py-3 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors"
+            >
+              <i class="fas fa-home w-5"></i>
+              <span class="mx-4">首頁</span>
+            </a>
+            <a
+              href="market-management.html"
+              class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors"
+            >
+              <i class="fas fa-store w-5"></i>
+              <span class="mx-4">我的市集</span>
+            </a>
+            <a
+              href="vendor-review.html"
+              class="flex items-center px-4 py-3 mt-2 text-gray-700 bg-yellow-50 rounded-lg font-medium"
+            >
+              <i class="fas fa-users w-5"></i>
+              <span class="mx-4">攤商審核</span>
+            </a>
+            <a
+              href="market-analytics.html"
+              class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors"
+            >
+              <i class="fas fa-chart-line w-5"></i>
+              <span class="mx-4">數據分析</span>
+            </a>
+            <a
+              href="market-settings.html"
+              class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors"
+            >
+              <i class="fas fa-cog w-5"></i>
+              <span class="mx-4">設定</span>
+            </a>
+          </div>
+        </nav>
+      </div>
 
-        <!-- 主要內容區 -->
-        <div class="flex-1 ml-64">
-            <!-- 頂部導航 -->
-            <header class="bg-white shadow-sm">
-                <div class="flex items-center justify-between h-16 px-8">
-                    <h1 class="text-xl font-bold text-gray-800">攤商審核</h1>
-                    <div class="flex items-center space-x-4">
-                        <a href="organizer-notifications.html" class="text-gray-600 hover:text-gray-800">
-                            <i class="fas fa-bell"></i>
+      <!-- 主要內容區 -->
+      <div class="flex-1 lg:ml-64 min-w-0">
+        <!-- 頂部導航 -->
+        <header class="bg-white shadow-sm sticky top-0 z-20">
+          <div class="flex items-center justify-between h-16 px-4 lg:px-8">
+            <h1 class="text-xl font-bold text-gray-800">攤商審核</h1>
+            <div class="flex items-center space-x-3">
+              <!-- 固定匯出按鈕 -->
+              <button
+                @click="showExportModal = true"
+                class="flex items-center gap-2 px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-black transition-colors"
+              >
+                <i class="fas fa-file-excel"></i>
+                <span class="hidden sm:inline">匯出報名資料</span>
+              </button>
+              <a
+                href="organizer-notifications.html"
+                class="text-gray-600 hover:text-gray-800 px-1"
+              >
+                <i class="fas fa-bell"></i>
+              </a>
+              <div class="relative" x-data="{ open: false }">
+                <button
+                  @click="open = !open"
+                  class="flex items-center space-x-2"
+                >
+                  <img
+                    class="h-8 w-8 rounded-full object-cover"
+                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop"
+                    alt="主辦方頭像"
+                  />
+                  <i class="fas fa-chevron-down text-gray-600 text-xs"></i>
+                </button>
+                <div
+                  x-show="open"
+                  @click.away="open = false"
+                  class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-10"
+                >
+                  <a
+                    href="organizer-profile.html"
+                    class="block px-4 py-2 text-gray-700 hover:bg-yellow-50"
+                  >
+                    <i class="fas fa-user mr-2"></i>個人資料
+                  </a>
+                  <a
+                    href="market-settings.html"
+                    class="block px-4 py-2 text-gray-700 hover:bg-yellow-50"
+                  >
+                    <i class="fas fa-cog mr-2"></i>帳號設定
+                  </a>
+                  <hr class="my-1 border-gray-200" />
+                  <a
+                    href="login.html"
+                    class="block px-4 py-2 text-red-600 hover:bg-red-50"
+                  >
+                    <i class="fas fa-sign-out-alt mr-2"></i>登出
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- 主要內容 -->
+        <main class="p-4 lg:p-8">
+          <!-- 篩選區 -->
+          <div class="bg-white rounded-lg shadow-sm p-4 lg:p-5 mb-4">
+            <div class="flex items-center gap-2 mb-3">
+              <i class="fas fa-filter text-gray-400 text-sm"></i>
+              <h3 class="text-sm font-semibold text-gray-700">篩選條件</h3>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+              <!-- 活動名稱 -->
+              <div>
+                <label class="block text-xs font-medium text-gray-500 mb-1"
+                  >活動名稱</label
+                >
+                <select
+                  x-model="filters.event"
+                  @change="currentPage = 1; filters.date = ''"
+                  class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-yellow-500 bg-white text-gray-700"
+                >
+                  <option value="">全部活動</option>
+                  <template x-for="event in uniqueEvents" :key="event">
+                    <option :value="event" x-text="event"></option>
+                  </template>
+                </select>
+              </div>
+              <!-- 活動日期 -->
+              <div>
+                <label class="block text-xs font-medium text-gray-500 mb-1"
+                  >活動日期</label
+                >
+                <select
+                  x-model="filters.date"
+                  @change="currentPage = 1"
+                  class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-yellow-500 bg-white text-gray-700"
+                >
+                  <option value="">全部日期</option>
+                  <template x-for="date in filteredDates" :key="date">
+                    <option :value="date" x-text="date"></option>
+                  </template>
+                </select>
+              </div>
+              <!-- 審核狀態 -->
+              <div>
+                <label class="block text-xs font-medium text-gray-500 mb-1"
+                  >審核狀態</label
+                >
+                <select
+                  x-model="filters.reviewStatus"
+                  @change="currentPage = 1"
+                  class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-yellow-500 bg-white text-gray-700"
+                >
+                  <option value="">全部狀態</option>
+                  <option value="待審核">待審核</option>
+                  <option value="審核通過">審核通過</option>
+                  <option value="不通過">不通過</option>
+                </select>
+              </div>
+              <!-- 繳費狀態 -->
+              <div>
+                <label class="block text-xs font-medium text-gray-500 mb-1"
+                  >繳費狀態</label
+                >
+                <select
+                  x-model="filters.paymentStatus"
+                  @change="currentPage = 1"
+                  class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-yellow-500 bg-white text-gray-700"
+                >
+                  <option value="">全部狀態</option>
+                  <option value="待繳費">待繳費</option>
+                  <option value="繳費待確認">繳費待確認</option>
+                  <option value="已繳費">已繳費</option>
+                  <option value="現場繳費">現場繳費</option>
+                  <option value="逾期繳費">逾期繳費</option>
+                </select>
+              </div>
+              <!-- 搜尋攤商名稱 -->
+              <div>
+                <label class="block text-xs font-medium text-gray-500 mb-1"
+                  >攤商名稱</label
+                >
+                <div class="relative">
+                  <input
+                    type="text"
+                    x-model="filters.vendorName"
+                    @input="currentPage = 1"
+                    placeholder="搜尋攤商名稱..."
+                    class="w-full border border-gray-200 rounded-lg pl-9 pr-3 py-2 text-sm focus:outline-none focus:border-yellow-500 text-gray-700"
+                  />
+                  <i
+                    class="fas fa-search absolute left-3 top-2.5 text-gray-400 text-xs"
+                  ></i>
+                </div>
+              </div>
+            </div>
+            <!-- 篩選結果摘要 -->
+            <div
+              class="flex items-center justify-between mt-3 pt-3 border-t border-gray-100"
+            >
+              <span class="text-sm text-gray-500">
+                共找到
+                <span
+                  class="font-semibold text-gray-900"
+                  x-text="filteredVendors.length"
+                ></span>
+                筆資料
+              </span>
+              <button
+                @click="clearFilters()"
+                class="flex items-center gap-1.5 text-sm text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <i class="fas fa-times-circle text-xs"></i>
+                清除篩選
+              </button>
+            </div>
+          </div>
+
+          <!-- 統計摘要 -->
+          <div class="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-4">
+            <div class="bg-white border border-blue-100 rounded-lg p-4 text-center cursor-pointer hover:border-blue-300 transition-colors"
+                 :class="filters.reviewStatus === '待審核' ? 'ring-2 ring-blue-400' : ''"
+                 @click="filters.reviewStatus = filters.reviewStatus === '待審核' ? '' : '待審核'; currentPage = 1">
+              <i class="fas fa-hourglass-half text-blue-500 text-lg mb-1.5 block"></i>
+              <div class="text-2xl font-bold text-blue-600 tabular-nums" x-text="statsWaitingForReviews"></div>
+              <div class="text-xs text-gray-400 mt-0.5">待審核</div>
+            </div>
+            <div class="bg-white border border-blue-100 rounded-lg p-4 text-center cursor-pointer hover:border-blue-300 transition-colors"
+                 :class="filters.paymentStatus === '待繳費' ? 'ring-2 ring-blue-400' : ''"
+                 @click="filters.paymentStatus = filters.paymentStatus === '待繳費' ? '' : '待繳費'; currentPage = 1">
+              <i class="fas fa-wallet text-blue-500 text-lg mb-1.5 block"></i>
+              <div class="text-2xl font-bold text-blue-600 tabular-nums" x-text="statsWaitingForPayments"></div>
+              <div class="text-xs text-gray-400 mt-0.5">待繳費</div>
+            </div>
+            <div class="bg-white border border-purple-100 rounded-lg p-4 text-center cursor-pointer hover:border-purple-300 transition-colors"
+                 :class="filters.paymentStatus === '繳費待確認' ? 'ring-2 ring-purple-400' : ''"
+                 @click="filters.paymentStatus = filters.paymentStatus === '繳費待確認' ? '' : '繳費待確認'; currentPage = 1">
+              <i class="fas fa-file-invoice text-purple-500 text-lg mb-1.5 block"></i>
+              <div class="text-2xl font-bold text-purple-600 tabular-nums" x-text="statsCheckPayments"></div>
+              <div class="text-xs text-gray-400 mt-0.5">繳費待確認</div>
+            </div>
+            <div class="bg-white border border-purple-100 rounded-lg p-4 text-center cursor-pointer hover:border-purple-300 transition-colors"
+                 :class="filters.paymentStatus === '現場繳費' ? 'ring-2 ring-purple-400' : ''"
+                 @click="filters.paymentStatus = filters.paymentStatus === '現場繳費' ? '' : '現場繳費'; currentPage = 1">
+              <i class="fas fa-store text-purple-500 text-lg mb-1.5 block"></i>
+              <div class="text-2xl font-bold text-purple-600 tabular-nums" x-text="statsOnSitePayment"></div>
+              <div class="text-xs text-gray-400 mt-0.5">現場繳費</div>
+            </div>
+            <div class="bg-white border border-green-100 rounded-lg p-4 text-center cursor-pointer hover:border-green-300 transition-colors"
+                 :class="filters.paymentStatus === '已繳費' ? 'ring-2 ring-green-400' : ''"
+                 @click="filters.paymentStatus = filters.paymentStatus === '已繳費' ? '' : '已繳費'; currentPage = 1">
+              <i class="fas fa-check-circle text-green-600 text-lg mb-1.5 block"></i>
+              <div class="text-2xl font-bold text-green-600 tabular-nums" x-text="statsSuccess"></div>
+              <div class="text-xs text-gray-400 mt-0.5">報名成功</div>
+            </div>
+          </div>
+
+          <!-- 結果列表 -->
+          <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full">
+                <thead>
+                  <tr class="border-b border-gray-200 bg-gray-50 text-left">
+                    <th
+                      class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap"
+                    >
+                      活動名稱
+                    </th>
+                    <th
+                      class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap"
+                    >
+                      攤商名稱
+                    </th>
+                    <th
+                      class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap"
+                    >
+                      參加日期
+                    </th>
+                    <th
+                      class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap"
+                    >
+                      攤位配置
+                    </th>
+                    <th
+                      class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap"
+                    >
+                      審核狀態
+                    </th>
+                    <th
+                      class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap"
+                    >
+                      繳費狀態
+                    </th>
+                    <th
+                      class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap"
+                    >
+                      繳費期限
+                    </th>
+                    <th
+                      class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap"
+                    >
+                      申請時間
+                    </th>
+                    <th
+                      class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap"
+                    ></th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                  <!-- 空狀態 -->
+                  <template x-if="filteredVendors.length === 0">
+                    <tr>
+                      <td colspan="9" class="px-4 py-20 text-center">
+                        <div class="flex flex-col items-center gap-3">
+                          <i class="fas fa-search text-gray-200 text-5xl"></i>
+                          <p class="text-gray-400 text-sm">
+                            沒有符合條件的資料
+                          </p>
+                          <button
+                            @click="clearFilters()"
+                            class="text-sm text-yellow-600 hover:text-yellow-700 font-medium"
+                          >
+                            清除篩選條件
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </template>
+                  <!-- 資料列 -->
+                  <template x-for="vendor in paginatedVendors" :key="vendor.id">
+                    <tr class="hover:bg-gray-50 transition-colors">
+                      <td class="px-4 py-3.5 whitespace-nowrap">
+                        <span
+                          class="text-sm font-medium text-gray-900"
+                          x-text="vendor.eventName"
+                        ></span>
+                      </td>
+                      <td class="px-4 py-3.5 whitespace-nowrap">
+                        <span
+                          class="text-sm text-gray-800"
+                          x-text="vendor.vendorName"
+                        ></span>
+                      </td>
+                      <td class="px-4 py-3.5 whitespace-nowrap">
+                        <span
+                          class="text-sm text-gray-600"
+                          x-text="formatDateWithDay(vendor.eventDate)"
+                        ></span>
+                      </td>
+                      <td class="px-4 py-3.5 whitespace-nowrap">
+                        <span
+                          class="text-sm text-gray-600"
+                          x-text="vendor.boothConfig"
+                        ></span>
+                      </td>
+                      <!-- 審核狀態 -->
+                      <td class="px-4 py-3.5 whitespace-nowrap">
+                        <span
+                          class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+                          :class="{
+                                                'bg-blue-100 text-blue-800': vendor.reviewStatus === '待審核',
+                                                'bg-green-100 text-green-800': vendor.reviewStatus === '審核通過',
+                                                'bg-gray-100 text-gray-500': vendor.reviewStatus === '不通過'
+                                              }"
+                          x-text="vendor.reviewStatus"
+                        >
+                        </span>
+                      </td>
+                      <!-- 繳費狀態 -->
+                      <td class="px-4 py-3.5 whitespace-nowrap">
+                        <span
+                          class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+                          :class="{
+                                                'bg-blue-100 text-blue-800': vendor.paymentStatus === '待繳費',
+                                                'bg-purple-100 text-purple-800': vendor.paymentStatus === '繳費待確認' || vendor.paymentStatus === '現場繳費',
+                                                'bg-green-100 text-green-800': vendor.paymentStatus === '已繳費',
+                                                'bg-gray-100 text-gray-500': vendor.paymentStatus === '逾期繳費' || vendor.paymentStatus === '—'
+                                              }"
+                          x-text="vendor.paymentStatus"
+                        >
+                        </span>
+                      </td>
+                      <td class="px-4 py-3.5 whitespace-nowrap">
+                        <span
+                          class="text-sm"
+                          :class="vendor.paymentDeadline === '—' ? 'text-gray-400' : 'text-gray-600'"
+                          x-text="vendor.paymentDeadline"
+                        ></span>
+                      </td>
+                      <td class="px-4 py-3.5 whitespace-nowrap">
+                        <span
+                          class="text-sm text-gray-500"
+                          x-text="vendor.applyTime"
+                        ></span>
+                      </td>
+                      <td class="px-4 py-3.5 whitespace-nowrap text-right">
+                        <a
+                          href="organizer-vendor-review.html"
+                          class="inline-flex items-center gap-1 text-sm text-yellow-600 hover:text-yellow-700 font-medium"
+                        >
+                          查看 <i class="fas fa-chevron-right text-xs"></i>
                         </a>
-                        <div class="relative" x-data="{ open: false }">
-                            <button @click="open = !open" class="flex items-center space-x-2">
-                                <img class="h-8 w-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop" alt="主辦方頭像">
-                                <i class="fas fa-chevron-down text-gray-600"></i>
-                            </button>
-                            <div x-show="open" 
-                                 @click.away="open = false"
-                                 class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-10">
-                                <a href="organizer-profile.html" class="block px-4 py-2 text-gray-700 hover:bg-yellow-50">
-                                    <i class="fas fa-user mr-2"></i>個人資料
-                                </a>
-                                <a href="organizer-settings.html" class="block px-4 py-2 text-gray-700 hover:bg-yellow-50">
-                                    <i class="fas fa-cog mr-2"></i>帳號設定
-                                </a>
-                                <hr class="my-2 border-gray-200">
-                                <a href="login.html" class="block px-4 py-2 text-red-600 hover:bg-red-50">
-                                    <i class="fas fa-sign-out-alt mr-2"></i>登出
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                      </td>
+                    </tr>
+                  </template>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- 分頁區 -->
+            <div
+              class="px-4 lg:px-6 py-4 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-3 bg-gray-50"
+            >
+              <!-- 左側：頁碼資訊 & 每頁筆數 -->
+              <div class="flex items-center gap-4 text-sm text-gray-500">
+                <span>
+                  第
+                  <span
+                    class="font-semibold text-gray-900"
+                    x-text="currentPage"
+                  ></span>
+                  頁， 共
+                  <span
+                    class="font-semibold text-gray-900"
+                    x-text="totalPages"
+                  ></span>
+                  頁
+                </span>
+                <div class="flex items-center gap-1.5">
+                  <span>每頁</span>
+                  <select
+                    x-model="pageSize"
+                    @change="currentPage = 1"
+                    class="border border-gray-200 rounded-lg px-2 py-1 text-sm focus:outline-none focus:border-yellow-500 bg-white"
+                  >
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                  </select>
+                  <span>筆</span>
                 </div>
-            </header>
+              </div>
+              <!-- 右側：頁碼按鈕 -->
+              <div class="flex items-center gap-1">
+                <button
+                  @click="currentPage = 1"
+                  :disabled="currentPage === 1"
+                  class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 hover:bg-white disabled:opacity-40 disabled:cursor-not-allowed text-xs transition-colors"
+                >
+                  <i class="fas fa-angle-double-left"></i>
+                </button>
+                <button
+                  @click="currentPage > 1 && currentPage--"
+                  :disabled="currentPage === 1"
+                  class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 hover:bg-white disabled:opacity-40 disabled:cursor-not-allowed text-xs transition-colors"
+                >
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+                <template
+                  x-for="page in pageNumbers"
+                  :key="page + '-' + Math.random()"
+                >
+                  <button
+                    @click="typeof page === 'number' && (currentPage = page)"
+                    class="w-8 h-8 flex items-center justify-center rounded-lg text-sm transition-colors"
+                    :class="{
+                                        'bg-yellow-500 text-white font-semibold border border-yellow-500': page === currentPage,
+                                        'border border-gray-200 text-gray-600 hover:bg-white': page !== currentPage && page !== '...',
+                                        'text-gray-400 cursor-default': page === '...'
+                                    }"
+                    x-text="page"
+                  ></button>
+                </template>
+                <button
+                  @click="currentPage < totalPages && currentPage++"
+                  :disabled="currentPage >= totalPages"
+                  class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 hover:bg-white disabled:opacity-40 disabled:cursor-not-allowed text-xs transition-colors"
+                >
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+                <button
+                  @click="currentPage = totalPages"
+                  :disabled="currentPage >= totalPages"
+                  class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 hover:bg-white disabled:opacity-40 disabled:cursor-not-allowed text-xs transition-colors"
+                >
+                  <i class="fas fa-angle-double-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
 
-            <!-- 主要內容 -->
-            <main class="p-8">
-                <!-- 活動選擇 -->
-                <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
-                    <div class="flex items-center justify-between">
-                        <div class="flex-1">
-                            <h2 class="text-lg font-bold text-gray-900 mb-4">選擇活動</h2>
-                            <div class="grid grid-cols-3 gap-4">
-                                <!-- 活動卡片 1 -->
-                                <div class="border rounded-lg p-4 cursor-pointer hover:border-yellow-500 transition-colors" 
-                                     :class="{ 'border-yellow-500 bg-yellow-50': selectedEvent === 'event1' }"
-                                     @click="selectedEvent = 'event1'">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <h3 class="font-bold text-gray-900">2024年3月場</h3>
-                                        <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">進行中</span>
-                                    </div>
-                                    <p class="text-sm text-gray-600">2024/03/16-17</p>
-                                    <p class="text-sm text-gray-600">松山文創園區</p>
-                                    <div class="mt-2 flex items-center justify-between">
-                                        <span class="text-sm text-gray-500">待審核：12</span>
-                                        <span class="text-sm text-gray-500">已核准：35</span>
-                                    </div>
-                                </div>
-
-                                <!-- 活動卡片 2 -->
-                                <div class="border rounded-lg p-4 cursor-pointer hover:border-yellow-500 transition-colors"
-                                     :class="{ 'border-yellow-500 bg-yellow-50': selectedEvent === 'event2' }"
-                                     @click="selectedEvent = 'event2'">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <h3 class="font-bold text-gray-900">2024年4月場</h3>
-                                        <span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs">即將開始</span>
-                                    </div>
-                                    <p class="text-sm text-gray-600">2024/04/20-21</p>
-                                    <p class="text-sm text-gray-600">松山文創園區</p>
-                                    <div class="mt-2 flex items-center justify-between">
-                                        <span class="text-sm text-gray-500">待審核：8</span>
-                                        <span class="text-sm text-gray-500">已核准：20</span>
-                                    </div>
-                                </div>
-
-                                <!-- 活動卡片 3 -->
-                                <div class="border rounded-lg p-4 cursor-pointer hover:border-yellow-500 transition-colors"
-                                     :class="{ 'border-yellow-500 bg-yellow-50': selectedEvent === 'event3' }"
-                                     @click="selectedEvent = 'event3'">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <h3 class="font-bold text-gray-900">2024年2月場</h3>
-                                        <span class="px-2 py-1 bg-gray-100 text-gray-800 rounded-full text-xs">已結束</span>
-                                    </div>
-                                    <p class="text-sm text-gray-600">2024/02/17-18</p>
-                                    <p class="text-sm text-gray-600">松山文創園區</p>
-                                    <div class="mt-2 flex items-center justify-between">
-                                        <span class="text-sm text-gray-500">總申請：65</span>
-                                        <span class="text-sm text-gray-500">已核准：48</span>
-                                    </div>
-                                </div>
-
-                                <!-- 活動卡片 4 -->
-                                <div class="border rounded-lg p-4 cursor-pointer hover:border-yellow-500 transition-colors"
-                                     :class="{ 'border-yellow-500 bg-yellow-50': selectedEvent === 'event4' }"
-                                     @click="selectedEvent = 'event4'">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <h3 class="font-bold text-gray-900">2024年5月場</h3>
-                                        <span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs">即將開始</span>
-                                    </div>
-                                    <p class="text-sm text-gray-600">2024/05/18-19</p>
-                                    <p class="text-sm text-gray-600">松山文創園區</p>
-                                    <div class="mt-2 flex items-center justify-between">
-                                        <span class="text-sm text-gray-500">待審核：5</span>
-                                        <span class="text-sm text-gray-500">已核准：15</span>
-                                    </div>
-                                </div>
-
-                                <!-- 活動卡片 5 -->
-                                <div class="border rounded-lg p-4 cursor-pointer hover:border-yellow-500 transition-colors"
-                                     :class="{ 'border-yellow-500 bg-yellow-50': selectedEvent === 'event5' }"
-                                     @click="selectedEvent = 'event5'">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <h3 class="font-bold text-gray-900">2024年6月場</h3>
-                                        <span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs">即將開始</span>
-                                    </div>
-                                    <p class="text-sm text-gray-600">2024/06/15-16</p>
-                                    <p class="text-sm text-gray-600">松山文創園區</p>
-                                    <div class="mt-2 flex items-center justify-between">
-                                        <span class="text-sm text-gray-500">待審核：3</span>
-                                        <span class="text-sm text-gray-500">已核准：10</span>
-                                    </div>
-                                </div>
-
-                                <!-- 活動卡片 6 -->
-                                <div class="border rounded-lg p-4 cursor-pointer hover:border-yellow-500 transition-colors"
-                                     :class="{ 'border-yellow-500 bg-yellow-50': selectedEvent === 'event6' }"
-                                     @click="selectedEvent = 'event6'">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <h3 class="font-bold text-gray-900">2024年7月場</h3>
-                                        <span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs">即將開始</span>
-                                    </div>
-                                    <p class="text-sm text-gray-600">2024/07/20-21</p>
-                                    <p class="text-sm text-gray-600">松山文創園區</p>
-                                    <div class="mt-2 flex items-center justify-between">
-                                        <span class="text-sm text-gray-500">待審核：2</span>
-                                        <span class="text-sm text-gray-500">已核准：8</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- 分頁控制 -->
-                            <div class="mt-6 flex items-center justify-between">
-                                <div class="flex items-center space-x-2">
-                                    <button class="px-3 py-2 rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50" 
-                                            :class="{ 'opacity-50 cursor-not-allowed': currentPage === 1 }"
-                                            @click="currentPage > 1 && currentPage--">
-                                        <i class="fas fa-chevron-left"></i>
-                                    </button>
-                                    <button class="px-4 py-2 rounded-lg bg-yellow-500 text-white">1</button>
-                                    <button class="px-4 py-2 rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50">2</button>
-                                    <button class="px-4 py-2 rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50">3</button>
-                                    <button class="px-3 py-2 rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50"
-                                            :class="{ 'opacity-50 cursor-not-allowed': currentPage === totalPages }"
-                                            @click="currentPage < totalPages && currentPage++">
-                                        <i class="fas fa-chevron-right"></i>
-                                    </button>
-                                </div>
-                                <div class="text-sm text-gray-500">
-                                    共 18 個活動
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 審核列表 -->
-                <div class="bg-white rounded-lg shadow-sm" x-show="selectedEvent">
-                    <!-- 列表標題 -->
-                    <div class="px-6 py-4 border-b border-gray-200">
-                        <div class="flex items-center justify-between">
-                            <h3 class="text-lg font-bold text-gray-900">待審核申請</h3>
-                            <div class="flex items-center space-x-4">
-                                <div class="relative">
-                                    <input type="text" placeholder="搜尋攤商..." class="pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500">
-                                    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
-                                </div>
-                                <select class="px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500">
-                                    <option value="">所有攤位類型</option>
-                                    <option value="standard">一般攤位</option>
-                                    <option value="large">大型攤位</option>
-                                    <option value="food">飲食攤位</option>
-                                </select>
-                                <button @click="showExportModal = true"
-                                        class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors flex items-center space-x-2">
-                                    <i class="fas fa-file-excel"></i>
-                                    <span>匯出 Excel</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 申請列表 -->
-                    <div class="divide-y divide-gray-200">
-                        <!-- 申請項目 1 -->
-                        <a href="organizer-vendor-review.html" class="block p-6 hover:bg-gray-50 transition-colors">
-                            <div class="flex items-start justify-between">
-                                <div class="flex-1">
-                                    <div class="flex items-center space-x-4">
-                                        <img class="h-12 w-12 rounded-full object-cover" src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=200&h=200&fit=crop" alt="攤商頭像">
-                                        <div>
-                                            <h4 class="font-bold text-gray-900">小草工作室</h4>
-                                            <p class="text-sm text-gray-600">手作飾品</p>
-                                        </div>
-                                    </div>
-                                    <div class="mt-4 grid grid-cols-3 gap-4">
-                                        <div>
-                                            <p class="text-sm text-gray-500">申請時間</p>
-                                            <p class="text-gray-900">2024/02/15 14:30</p>
-                                        </div>
-                                        <div>
-                                            <p class="text-sm text-gray-500">聯絡電話</p>
-                                            <p class="text-gray-900">0912-345-678</p>
-                                        </div>
-                                        <div>
-                                            <p class="text-sm text-gray-500">電子郵件</p>
-                                            <p class="text-gray-900">grassstudio@example.com</p>
-                                        </div>
-                                    </div>
-                                    <div class="mt-4">
-                                        <p class="text-sm text-gray-500">商品描述</p>
-                                        <p class="text-gray-900 mt-1">手工製作的精美飾品，包括項鍊、耳環、手鍊等。使用天然材料，每件作品都是獨一無二的。</p>
-                                    </div>
-                                </div>
-                                <div class="ml-6 flex items-center space-x-2">
-                                    <button class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600" onclick="event.stopPropagation();">
-                                        拒絕
-                                    </button>
-                                    <button class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600" onclick="event.stopPropagation();">
-                                        核准
-                                    </button>
-                                </div>
-                            </div>
-                        </a>
-
-                        <!-- 申請項目 2 -->
-                        <div class="p-6 hover:bg-gray-50 transition-colors">
-                            <div class="flex items-start justify-between">
-                                <div class="flex-1">
-                                    <div class="flex items-center space-x-4">
-                                        <img class="h-12 w-12 rounded-full object-cover" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=48&h=48&fit=crop" alt="攤商頭像">
-                                        <div>
-                                            <h4 class="font-bold text-gray-900">美食天地</h4>
-                                            <p class="text-sm text-gray-600">飲食攤位</p>
-                                        </div>
-                                    </div>
-                                    <div class="mt-4 grid grid-cols-3 gap-4">
-                                        <div>
-                                            <p class="text-sm text-gray-500">申請時間</p>
-                                            <p class="text-gray-900">2024/03/10 15:45</p>
-                                        </div>
-                                        <div>
-                                            <p class="text-sm text-gray-500">聯絡電話</p>
-                                            <p class="text-gray-900">0912-345-679</p>
-                                        </div>
-                                        <div>
-                                            <p class="text-sm text-gray-500">電子郵件</p>
-                                            <p class="text-gray-900">food@example.com</p>
-                                        </div>
-                                    </div>
-                                    <div class="mt-4">
-                                        <p class="text-sm text-gray-500">商品描述</p>
-                                        <p class="text-gray-900 mt-1">特色小吃、飲品、甜點</p>
-                                    </div>
-                                </div>
-                                <div class="ml-6 flex items-center space-x-2">
-                                    <button class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">
-                                        拒絕
-                                    </button>
-                                    <button class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600">
-                                        核准
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 匯出 Excel Modal -->
-                <div x-show="showExportModal"
-                     class="fixed inset-0 z-50 flex items-center justify-center"
-                     x-cloak>
-                    <!-- 遮罩 -->
-                    <div class="absolute inset-0 bg-black bg-opacity-50" @click="showExportModal = false"></div>
-                    <!-- Modal 內容 -->
-                    <div class="relative bg-white rounded-xl shadow-2xl w-full max-w-lg mx-4 max-h-[85vh] overflow-y-auto">
-                        <!-- Modal 標題 -->
-                        <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-                            <h3 class="text-lg font-bold text-gray-900">
-                                <i class="fas fa-file-excel text-green-600 mr-2"></i>匯出報名資料
-                            </h3>
-                            <button @click="showExportModal = false" class="text-gray-400 hover:text-gray-600">
-                                <i class="fas fa-times text-lg"></i>
-                            </button>
-                        </div>
-
-                        <div class="px-6 py-5 space-y-6">
-                            <!-- 匯出範圍 -->
-                            <div>
-                                <h4 class="text-sm font-bold text-gray-700 mb-3">匯出範圍</h4>
-                                <div class="space-y-2">
-                                    <label class="flex items-center space-x-3 cursor-pointer">
-                                        <input type="radio" name="exportScope" value="all" x-model="exportScope"
-                                               class="w-4 h-4 text-yellow-500 focus:ring-yellow-500">
-                                        <span class="text-sm text-gray-700">全部攤商（該活動所有報名者）</span>
-                                    </label>
-                                    <label class="flex items-center space-x-3 cursor-pointer">
-                                        <input type="radio" name="exportScope" value="filtered" x-model="exportScope"
-                                               class="w-4 h-4 text-yellow-500 focus:ring-yellow-500">
-                                        <span class="text-sm text-gray-700">僅目前篩選結果</span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <!-- 狀態篩選 -->
-                            <div>
-                                <h4 class="text-sm font-bold text-gray-700 mb-3">狀態篩選</h4>
-                                <div class="grid grid-cols-2 gap-2">
-                                    <label class="flex items-center space-x-3 cursor-pointer">
-                                        <input type="checkbox" x-model="exportStatus.pending"
-                                               class="w-4 h-4 rounded text-yellow-500 focus:ring-yellow-500">
-                                        <span class="text-sm text-gray-700">待審核</span>
-                                    </label>
-                                    <label class="flex items-center space-x-3 cursor-pointer">
-                                        <input type="checkbox" x-model="exportStatus.approved"
-                                               class="w-4 h-4 rounded text-yellow-500 focus:ring-yellow-500">
-                                        <span class="text-sm text-gray-700">已核准</span>
-                                    </label>
-                                    <label class="flex items-center space-x-3 cursor-pointer">
-                                        <input type="checkbox" x-model="exportStatus.rejected"
-                                               class="w-4 h-4 rounded text-yellow-500 focus:ring-yellow-500">
-                                        <span class="text-sm text-gray-700">已拒絕</span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <!-- 匯出欄位 -->
-                            <div>
-                                <div class="flex items-center justify-between mb-3">
-                                    <h4 class="text-sm font-bold text-gray-700">匯出欄位</h4>
-                                    <button @click="toggleAllFields()" class="text-xs text-yellow-600 hover:text-yellow-700">
-                                        <span x-text="allFieldsSelected ? '取消全選' : '全選'"></span>
-                                    </button>
-                                </div>
-                                <div class="grid grid-cols-2 gap-2">
-                                    <template x-for="field in exportFieldOptions" :key="field.key">
-                                        <label class="flex items-center space-x-3 cursor-pointer">
-                                            <input type="checkbox" :value="field.key" x-model="exportFields"
-                                                   class="w-4 h-4 rounded text-yellow-500 focus:ring-yellow-500">
-                                            <span class="text-sm text-gray-700" x-text="field.label"></span>
-                                        </label>
-                                    </template>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Modal 底部按鈕 -->
-                        <div class="flex items-center justify-end space-x-3 px-6 py-4 border-t border-gray-200 bg-gray-50 rounded-b-xl">
-                            <button @click="showExportModal = false"
-                                    class="px-5 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors">
-                                取消
-                            </button>
-                            <button @click="handleExport()"
-                                    :disabled="exportFields.length === 0 || (!exportStatus.pending && !exportStatus.approved && !exportStatus.rejected)"
-                                    :class="exportFields.length === 0 || (!exportStatus.pending && !exportStatus.approved && !exportStatus.rejected) ? 'bg-gray-300 cursor-not-allowed' : 'bg-yellow-500 hover:bg-yellow-600'"
-                                    class="px-5 py-2 text-white rounded-lg transition-colors flex items-center space-x-2">
-                                <i class="fas fa-download"></i>
-                                <span>確認匯出</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Toast 通知 -->
-                <div x-show="showToast"
-                     x-transition:enter="transition ease-out duration-300"
-                     x-transition:enter-start="opacity-0 translate-y-2"
-                     x-transition:enter-end="opacity-100 translate-y-0"
-                     x-transition:leave="transition ease-in duration-200"
-                     x-transition:leave-start="opacity-100 translate-y-0"
-                     x-transition:leave-end="opacity-0 translate-y-2"
-                     class="fixed bottom-6 right-6 z-50 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center space-x-2"
-                     x-cloak>
-                    <i class="fas fa-check-circle"></i>
-                    <span>匯出成功！檔案已下載</span>
-                </div>
-            </main>
+    <!-- 匯出 Modal -->
+    <div
+      x-show="showExportModal"
+      class="fixed inset-0 z-50 flex items-center justify-center"
+      x-cloak
+    >
+      <div
+        class="absolute inset-0 bg-black bg-opacity-50"
+        @click="showExportModal = false"
+      ></div>
+      <div
+        class="relative bg-white rounded-xl shadow-2xl w-full max-w-lg mx-4 max-h-[85vh] overflow-y-auto"
+      >
+        <div
+          class="flex items-center justify-between px-6 py-4 border-b border-gray-200"
+        >
+          <h3 class="text-lg font-bold text-gray-900">
+            <i class="fas fa-file-excel text-green-600 mr-2"></i>匯出報名資料
+          </h3>
+          <button
+            @click="showExportModal = false"
+            class="text-gray-400 hover:text-gray-600"
+          >
+            <i class="fas fa-times text-lg"></i>
+          </button>
         </div>
+        <div class="px-6 py-5 space-y-6">
+          <!-- 匯出範圍 -->
+          <div>
+            <h4 class="text-sm font-bold text-gray-700 mb-3">匯出範圍</h4>
+            <div class="space-y-2">
+              <label class="flex items-center space-x-3 cursor-pointer">
+                <input
+                  type="radio"
+                  name="exportScope"
+                  value="all"
+                  x-model="exportScope"
+                  class="w-4 h-4 text-yellow-500 focus:ring-yellow-500"
+                />
+                <span class="text-sm text-gray-700"
+                  >全部攤商（所有報名者）</span
+                >
+              </label>
+              <label class="flex items-center space-x-3 cursor-pointer">
+                <input
+                  type="radio"
+                  name="exportScope"
+                  value="filtered"
+                  x-model="exportScope"
+                  class="w-4 h-4 text-yellow-500 focus:ring-yellow-500"
+                />
+                <span class="text-sm text-gray-700"
+                  >僅目前篩選結果（<span x-text="filteredVendors.length"></span>
+                  筆）</span
+                >
+              </label>
+            </div>
+          </div>
+          <!-- 狀態篩選 -->
+          <div>
+            <h4 class="text-sm font-bold text-gray-700 mb-3">審核狀態篩選</h4>
+            <div class="flex flex-wrap gap-3">
+              <label class="flex items-center space-x-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  x-model="exportStatus.pending"
+                  class="w-4 h-4 rounded text-yellow-500 focus:ring-yellow-500"
+                />
+                <span class="text-sm text-gray-700">待審核</span>
+              </label>
+              <label class="flex items-center space-x-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  x-model="exportStatus.approved"
+                  class="w-4 h-4 rounded text-yellow-500 focus:ring-yellow-500"
+                />
+                <span class="text-sm text-gray-700">審核通過</span>
+              </label>
+              <label class="flex items-center space-x-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  x-model="exportStatus.rejected"
+                  class="w-4 h-4 rounded text-yellow-500 focus:ring-yellow-500"
+                />
+                <span class="text-sm text-gray-700">不通過</span>
+              </label>
+            </div>
+          </div>
+          <!-- 匯出欄位 -->
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <h4 class="text-sm font-bold text-gray-700">匯出欄位</h4>
+              <button
+                @click="toggleAllFields()"
+                class="text-xs text-yellow-600 hover:text-yellow-700"
+              >
+                <span x-text="allFieldsSelected ? '取消全選' : '全選'"></span>
+              </button>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <template x-for="field in exportFieldOptions" :key="field.key">
+                <label class="flex items-center space-x-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    :value="field.key"
+                    x-model="exportFields"
+                    class="w-4 h-4 rounded text-yellow-500 focus:ring-yellow-500"
+                  />
+                  <span
+                    class="text-sm text-gray-700"
+                    x-text="field.label"
+                  ></span>
+                </label>
+              </template>
+            </div>
+          </div>
+        </div>
+        <div
+          class="flex items-center justify-end space-x-3 px-6 py-4 border-t border-gray-200 bg-gray-50 rounded-b-xl"
+        >
+          <button
+            @click="showExportModal = false"
+            class="px-5 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors text-sm"
+          >
+            取消
+          </button>
+          <button
+            @click="handleExport()"
+            :disabled="exportFields.length === 0 || (!exportStatus.pending && !exportStatus.approved && !exportStatus.rejected)"
+            :class="exportFields.length === 0 || (!exportStatus.pending && !exportStatus.approved && !exportStatus.rejected)
+                        ? 'bg-gray-300 cursor-not-allowed' : 'bg-yellow-500 hover:bg-yellow-600'"
+            class="px-5 py-2 text-white rounded-lg transition-colors flex items-center gap-2 text-sm"
+          >
+            <i class="fas fa-download"></i>
+            確認匯出
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast 通知 -->
+    <div
+      x-show="showToast"
+      x-transition:enter="transition ease-out duration-300"
+      x-transition:enter-start="opacity-0 translate-y-2"
+      x-transition:enter-end="opacity-100 translate-y-0"
+      x-transition:leave="transition ease-in duration-200"
+      x-transition:leave-start="opacity-100 translate-y-0"
+      x-transition:leave-end="opacity-0 translate-y-2"
+      class="fixed bottom-6 right-6 z-50 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center space-x-2"
+      x-cloak
+    >
+      <i class="fas fa-check-circle"></i>
+      <span>匯出成功！檔案已下載</span>
     </div>
 
     <script>
-        function vendorReview() {
-            return {
-                selectedEvent: null,
-                currentPage: 1,
-                totalPages: 3,
-                eventsPerPage: 6,
+      function vendorReview() {
+        return {
+          filters: {
+            event: "",
+            date: "",
+            reviewStatus: "",
+            paymentStatus: "",
+            vendorName: "",
+          },
+          currentPage: 1,
+          pageSize: 10,
 
-                // 匯出相關
-                showExportModal: false,
-                showToast: false,
-                exportScope: 'all',
-                exportStatus: {
-                    pending: true,
-                    approved: true,
-                    rejected: false
-                },
-                exportFieldOptions: [
-                    { key: 'name', label: '攤商名稱' },
-                    { key: 'contact', label: '聯絡人' },
-                    { key: 'phone', label: '聯絡電話' },
-                    { key: 'email', label: '電子郵件' },
-                    { key: 'description', label: '商品描述' },
-                    { key: 'boothType', label: '攤位類型' },
-                    { key: 'applyTime', label: '申請時間' },
-                    { key: 'status', label: '審核狀態' },
-                    { key: 'paymentStatus', label: '匯款狀態' },
-                    { key: 'socialMedia', label: '社群媒體連結' }
-                ],
-                exportFields: ['name', 'contact', 'phone', 'email', 'description', 'boothType', 'applyTime', 'status', 'paymentStatus'],
+          showExportModal: false,
+          showToast: false,
+          exportScope: "all",
+          exportStatus: { pending: true, approved: true, rejected: false },
+          exportFieldOptions: [
+            { key: "eventName", label: "活動名稱" },
+            { key: "vendorName", label: "攤商名稱" },
+            { key: "eventDate", label: "參加日期" },
+            { key: "boothConfig", label: "攤位配置" },
+            { key: "reviewStatus", label: "審核狀態" },
+            { key: "paymentStatus", label: "繳費狀態" },
+            { key: "paymentDeadline", label: "繳費期限" },
+            { key: "applyTime", label: "申請時間" },
+            { key: "contact", label: "聯絡人" },
+            { key: "phone", label: "聯絡電話" },
+            { key: "email", label: "電子郵件" },
+          ],
+          exportFields: [
+            "eventName",
+            "vendorName",
+            "eventDate",
+            "boothConfig",
+            "reviewStatus",
+            "paymentStatus",
+            "paymentDeadline",
+            "applyTime",
+          ],
 
-                get allFieldsSelected() {
-                    return this.exportFields.length === this.exportFieldOptions.length;
-                },
+          vendors: [
+            {
+              id: 1,
+              eventName: "2024年3月場",
+              vendorName: "小草工作室",
+              eventDate: "2024/03/16",
+              boothConfig: "一般攤位 (1格)",
+              reviewStatus: "審核通過",
+              paymentStatus: "已繳費",
+              paymentDeadline: "2024/02/28 23:59",
+              applyTime: "2024/02/15 14:30",
+              contact: "林小草",
+              phone: "0912-345-678",
+              email: "grassstudio@example.com",
+            },
+            {
+              id: 2,
+              eventName: "2024年3月場",
+              vendorName: "美食天地",
+              eventDate: "2024/03/16",
+              boothConfig: "飲食攤位 (1格)",
+              reviewStatus: "審核通過",
+              paymentStatus: "已繳費",
+              paymentDeadline: "2024/02/28 23:59",
+              applyTime: "2024/02/16 09:45",
+              contact: "王大明",
+              phone: "0912-345-679",
+              email: "food@example.com",
+            },
+            {
+              id: 3,
+              eventName: "2024年3月場",
+              vendorName: "木頭人工坊",
+              eventDate: "2024/03/17",
+              boothConfig: "雙格攤位 (2格)",
+              reviewStatus: "審核通過",
+              paymentStatus: "繳費待確認",
+              paymentDeadline: "2024/02/28 23:59",
+              applyTime: "2024/02/17 11:20",
+              contact: "陳志明",
+              phone: "0933-456-789",
+              email: "woodman@example.com",
+            },
+            {
+              id: 4,
+              eventName: "2024年3月場",
+              vendorName: "花草茶屋",
+              eventDate: "2024/03/16",
+              boothConfig: "一般攤位 (1格)",
+              reviewStatus: "待審核",
+              paymentStatus: "—",
+              paymentDeadline: "—",
+              applyTime: "2024/02/18 16:10",
+              contact: "李芳儀",
+              phone: "0955-123-456",
+              email: "herbaltea@example.com",
+            },
+            {
+              id: 5,
+              eventName: "2024年3月場",
+              vendorName: "塗鴉小舖",
+              eventDate: "2024/03/17",
+              boothConfig: "一般攤位 (1格)",
+              reviewStatus: "不通過",
+              paymentStatus: "—",
+              paymentDeadline: "—",
+              applyTime: "2024/02/19 13:55",
+              contact: "張藝術",
+              phone: "0922-987-654",
+              email: "graffiti@example.com",
+            },
+            {
+              id: 6,
+              eventName: "2024年3月場",
+              vendorName: "布藝生活",
+              eventDate: "2024/03/16",
+              boothConfig: "大型攤位 (3格)",
+              reviewStatus: "審核通過",
+              paymentStatus: "待繳費",
+              paymentDeadline: "2024/02/28 23:59",
+              applyTime: "2024/02/20 08:30",
+              contact: "吳布布",
+              phone: "0988-111-222",
+              email: "fabric@example.com",
+            },
+            {
+              id: 7,
+              eventName: "2024年3月場",
+              vendorName: "老派咖啡",
+              eventDate: "2024/03/17",
+              boothConfig: "飲食攤位 (1格)",
+              reviewStatus: "審核通過",
+              paymentStatus: "已繳費",
+              paymentDeadline: "2024/02/28 23:59",
+              applyTime: "2024/02/21 10:05",
+              contact: "劉老派",
+              phone: "0977-333-444",
+              email: "oldcafe@example.com",
+            },
+            {
+              id: 8,
+              eventName: "2024年3月場",
+              vendorName: "星光陶藝",
+              eventDate: "2024/03/16",
+              boothConfig: "雙格攤位 (2格)",
+              reviewStatus: "待審核",
+              paymentStatus: "—",
+              paymentDeadline: "—",
+              applyTime: "2024/02/22 15:20",
+              contact: "周星光",
+              phone: "0966-555-666",
+              email: "ceramic@example.com",
+            },
+            {
+              id: 9,
+              eventName: "2024年4月場",
+              vendorName: "陶瓷工房",
+              eventDate: "2024/04/20",
+              boothConfig: "一般攤位 (1格)",
+              reviewStatus: "待審核",
+              paymentStatus: "—",
+              paymentDeadline: "—",
+              applyTime: "2024/03/10 10:00",
+              contact: "趙陶藝",
+              phone: "0955-777-888",
+              email: "pottery@example.com",
+            },
+            {
+              id: 10,
+              eventName: "2024年4月場",
+              vendorName: "植物研究所",
+              eventDate: "2024/04/21",
+              boothConfig: "雙格攤位 (2格)",
+              reviewStatus: "審核通過",
+              paymentStatus: "已繳費",
+              paymentDeadline: "2024/03/31 23:59",
+              applyTime: "2024/03/11 14:20",
+              contact: "林植物",
+              phone: "0944-999-000",
+              email: "plants@example.com",
+            },
+            {
+              id: 11,
+              eventName: "2024年4月場",
+              vendorName: "紙本時光",
+              eventDate: "2024/04/21",
+              boothConfig: "一般攤位 (1格)",
+              reviewStatus: "待審核",
+              paymentStatus: "—",
+              paymentDeadline: "—",
+              applyTime: "2024/03/12 09:15",
+              contact: "鄭紙本",
+              phone: "0933-123-456",
+              email: "paper@example.com",
+            },
+            {
+              id: 12,
+              eventName: "2024年4月場",
+              vendorName: "銀飾手作坊",
+              eventDate: "2024/04/20",
+              boothConfig: "一般攤位 (1格)",
+              reviewStatus: "審核通過",
+              paymentStatus: "逾期繳費",
+              paymentDeadline: "2024/03/31 23:59",
+              applyTime: "2024/03/13 15:40",
+              contact: "何銀飾",
+              phone: "0922-234-567",
+              email: "silver@example.com",
+            },
+            {
+              id: 13,
+              eventName: "2024年4月場",
+              vendorName: "香氛實驗室",
+              eventDate: "2024/04/20",
+              boothConfig: "一般攤位 (1格)",
+              reviewStatus: "審核通過",
+              paymentStatus: "繳費待確認",
+              paymentDeadline: "2024/03/31 23:59",
+              applyTime: "2024/03/14 11:30",
+              contact: "施香香",
+              phone: "0911-345-678",
+              email: "aroma@example.com",
+            },
+            {
+              id: 14,
+              eventName: "2024年4月場",
+              vendorName: "復古選品店",
+              eventDate: "2024/04/21",
+              boothConfig: "雙格攤位 (2格)",
+              reviewStatus: "不通過",
+              paymentStatus: "—",
+              paymentDeadline: "—",
+              applyTime: "2024/03/15 16:00",
+              contact: "孫復古",
+              phone: "0900-456-789",
+              email: "vintage@example.com",
+            },
+            {
+              id: 15,
+              eventName: "2024年5月場",
+              vendorName: "日式選物",
+              eventDate: "2024/05/18",
+              boothConfig: "雙格攤位 (2格)",
+              reviewStatus: "待審核",
+              paymentStatus: "—",
+              paymentDeadline: "—",
+              applyTime: "2024/04/05 10:50",
+              contact: "田日式",
+              phone: "0988-567-890",
+              email: "japan@example.com",
+            },
+            {
+              id: 16,
+              eventName: "2024年5月場",
+              vendorName: "蠟燭工作室",
+              eventDate: "2024/05/18",
+              boothConfig: "一般攤位 (1格)",
+              reviewStatus: "待審核",
+              paymentStatus: "—",
+              paymentDeadline: "—",
+              applyTime: "2024/04/06 14:00",
+              contact: "黃蠟燭",
+              phone: "0977-678-901",
+              email: "candle@example.com",
+            },
+            {
+              id: 17,
+              eventName: "2024年5月場",
+              vendorName: "皮革職人",
+              eventDate: "2024/05/19",
+              boothConfig: "大型攤位 (3格)",
+              reviewStatus: "審核通過",
+              paymentStatus: "待繳費",
+              paymentDeadline: "2024/04/30 23:59",
+              applyTime: "2024/04/07 09:30",
+              contact: "楊皮革",
+              phone: "0966-789-012",
+              email: "leather@example.com",
+            },
+            {
+              id: 18,
+              eventName: "2024年5月場",
+              vendorName: "森林系飾品",
+              eventDate: "2024/05/18",
+              boothConfig: "一般攤位 (1格)",
+              reviewStatus: "不通過",
+              paymentStatus: "—",
+              paymentDeadline: "—",
+              applyTime: "2024/04/08 16:45",
+              contact: "朱森林",
+              phone: "0955-890-123",
+              email: "forest@example.com",
+            },
+            {
+              id: 19,
+              eventName: "2024年2月場",
+              vendorName: "手作包包店",
+              eventDate: "2024/02/17",
+              boothConfig: "一般攤位 (1格)",
+              reviewStatus: "審核通過",
+              paymentStatus: "已繳費",
+              paymentDeadline: "2024/01/31 23:59",
+              applyTime: "2024/01/20 10:15",
+              contact: "許手作",
+              phone: "0944-901-234",
+              email: "bag@example.com",
+            },
+            {
+              id: 20,
+              eventName: "2024年2月場",
+              vendorName: "復古玩具舖",
+              eventDate: "2024/02/18",
+              boothConfig: "雙格攤位 (2格)",
+              reviewStatus: "審核通過",
+              paymentStatus: "已繳費",
+              paymentDeadline: "2024/01/31 23:59",
+              applyTime: "2024/01/21 13:25",
+              contact: "謝復古",
+              phone: "0933-012-345",
+              email: "toy@example.com",
+            },
+            {
+              id: 21,
+              eventName: "2024年2月場",
+              vendorName: "水彩世界",
+              eventDate: "2024/02/17",
+              boothConfig: "一般攤位 (1格)",
+              reviewStatus: "審核通過",
+              paymentStatus: "已繳費",
+              paymentDeadline: "2024/01/31 23:59",
+              applyTime: "2024/01/22 09:00",
+              contact: "江水彩",
+              phone: "0922-123-456",
+              email: "watercolor@example.com",
+            },
+            {
+              id: 22,
+              eventName: "2024年2月場",
+              vendorName: "街頭美食車",
+              eventDate: "2024/02/18",
+              boothConfig: "飲食攤位 (1格)",
+              reviewStatus: "不通過",
+              paymentStatus: "—",
+              paymentDeadline: "—",
+              applyTime: "2024/01/23 15:10",
+              contact: "方街頭",
+              phone: "0911-234-567",
+              email: "streetfood@example.com",
+            },
+            {
+              id: 23,
+              eventName: "2024年2月場",
+              vendorName: "藍染工藝",
+              eventDate: "2024/02/17",
+              boothConfig: "雙格攤位 (2格)",
+              reviewStatus: "審核通過",
+              paymentStatus: "已繳費",
+              paymentDeadline: "2024/01/31 23:59",
+              applyTime: "2024/01/24 11:40",
+              contact: "石藍染",
+              phone: "0900-345-678",
+              email: "indigo@example.com",
+            },
+          ],
 
-                toggleAllFields() {
-                    if (this.allFieldsSelected) {
-                        this.exportFields = [];
-                    } else {
-                        this.exportFields = this.exportFieldOptions.map(f => f.key);
-                    }
-                },
+          get uniqueEvents() {
+            return [...new Set(this.vendors.map((v) => v.eventName))];
+          },
 
-                handleExport() {
-                    // 模擬資料（實際應從 API 取得）
-                    const mockData = [
-                        {
-                            name: '小草工作室', contact: '林小草', phone: '0912-345-678',
-                            email: 'grassstudio@example.com', description: '手工製作的精美飾品，包括項鍊、耳環、手鍊等。',
-                            boothType: '手作飾品區', applyTime: '2024/02/15 14:30',
-                            status: '待審核', paymentStatus: '尚未匯款', socialMedia: 'facebook.com/grassstudio'
-                        },
-                        {
-                            name: '美食天地', contact: '王大明', phone: '0912-345-679',
-                            email: 'food@example.com', description: '特色小吃、飲品、甜點',
-                            boothType: '飲食攤位', applyTime: '2024/03/10 15:45',
-                            status: '待審核', paymentStatus: '尚未匯款', socialMedia: 'instagram.com/foodheaven'
-                        },
-                        {
-                            name: '木頭人工坊', contact: '陳志明', phone: '0933-456-789',
-                            email: 'woodman@example.com', description: '手工木製家具、擺飾、文具',
-                            boothType: '一般攤位', applyTime: '2024/02/20 09:15',
-                            status: '已核准', paymentStatus: '已匯款', socialMedia: 'facebook.com/woodman'
-                        },
-                        {
-                            name: '花草茶屋', contact: '李芳儀', phone: '0955-123-456',
-                            email: 'herbaltea@example.com', description: '手工花草茶包、乾燥花束',
-                            boothType: '飲食攤位', applyTime: '2024/02/18 11:00',
-                            status: '已核准', paymentStatus: '已匯款', socialMedia: ''
-                        },
-                        {
-                            name: '塗鴉小舖', contact: '張藝術', phone: '0922-987-654',
-                            email: 'graffiti@example.com', description: '原創插畫明信片、貼紙、海報',
-                            boothType: '一般攤位', applyTime: '2024/03/01 16:20',
-                            status: '已拒絕', paymentStatus: '尚未匯款', socialMedia: 'instagram.com/graffitishop'
-                        }
-                    ];
+          get filteredDates() {
+            const source = this.filters.event
+              ? this.vendors.filter((v) => v.eventName === this.filters.event)
+              : this.vendors;
+            return [...new Set(source.map((v) => v.eventDate))].sort();
+          },
 
-                    // 依狀態篩選
-                    const statusMap = {
-                        '待審核': this.exportStatus.pending,
-                        '已核准': this.exportStatus.approved,
-                        '已拒絕': this.exportStatus.rejected
-                    };
-                    const filtered = mockData.filter(row => statusMap[row.status]);
+          get filteredVendors() {
+            return this.vendors.filter((v) => {
+              if (this.filters.event && v.eventName !== this.filters.event)
+                return false;
+              if (this.filters.date && v.eventDate !== this.filters.date)
+                return false;
+              if (
+                this.filters.reviewStatus &&
+                v.reviewStatus !== this.filters.reviewStatus
+              )
+                return false;
+              if (
+                this.filters.paymentStatus &&
+                v.paymentStatus !== this.filters.paymentStatus
+              )
+                return false;
+              if (
+                this.filters.vendorName &&
+                !v.vendorName.includes(this.filters.vendorName)
+              )
+                return false;
+              return true;
+            });
+          },
 
-                    if (filtered.length === 0) {
-                        alert('沒有符合條件的資料可匯出');
-                        return;
-                    }
+          get totalPages() {
+            return Math.max(
+              1,
+              Math.ceil(this.filteredVendors.length / parseInt(this.pageSize)),
+            );
+          },
 
-                    // 建立欄位對應
-                    const fieldLabelMap = {};
-                    this.exportFieldOptions.forEach(f => { fieldLabelMap[f.key] = f.label; });
+          get paginatedVendors() {
+            const size = parseInt(this.pageSize);
+            const start = (this.currentPage - 1) * size;
+            return this.filteredVendors.slice(start, start + size);
+          },
 
-                    // 組合匯出資料（僅包含選取的欄位）
-                    const exportData = filtered.map(row => {
-                        const obj = {};
-                        this.exportFields.forEach(key => {
-                            obj[fieldLabelMap[key]] = row[key] || '';
-                        });
-                        return obj;
-                    });
+          get pageNumbers() {
+            const total = this.totalPages;
+            const current = this.currentPage;
+            if (total <= 7)
+              return Array.from({ length: total }, (_, i) => i + 1);
+            if (current <= 4) return [1, 2, 3, 4, 5, "...", total];
+            if (current >= total - 3)
+              return [
+                1,
+                "...",
+                total - 4,
+                total - 3,
+                total - 2,
+                total - 1,
+                total,
+              ];
+            return [1, "...", current - 1, current, current + 1, "...", total];
+          },
 
-                    // 使用 SheetJS 產生 Excel
-                    const ws = XLSX.utils.json_to_sheet(exportData);
+          get statsWaitingForReviews() {
+            return this.filteredVendors.filter(
+              (v) => v.reviewStatus === "待審核",
+            ).length;
+          },
 
-                    // 設定欄寬
-                    const colWidths = this.exportFields.map(key => {
-                        const maxLen = Math.max(
-                            fieldLabelMap[key].length * 2,
-                            ...filtered.map(row => (row[key] || '').length)
-                        );
-                        return { wch: Math.min(Math.max(maxLen, 10), 40) };
-                    });
-                    ws['!cols'] = colWidths;
+          get statsWaitingForPayments() {
+            return this.filteredVendors.filter(
+              (v) =>
+                v.reviewStatus === "審核通過" &&
+                (v.paymentStatus === "待繳費" ||
+                  v.paymentStatus === "逾期繳費"),
+            ).length;
+          },
 
-                    const wb = XLSX.utils.book_new();
-                    XLSX.utils.book_append_sheet(wb, ws, '攤商報名資料');
+          get statsCheckPayments() {
+            return this.filteredVendors.filter(
+              (v) => v.paymentStatus === "繳費待確認",
+            ).length;
+          },
 
-                    // 下載檔案
-                    const eventNames = {
-                        event1: '2024年3月場',
-                        event2: '2024年4月場',
-                        event3: '2024年2月場',
-                        event4: '2024年5月場',
-                        event5: '2024年6月場',
-                        event6: '2024年7月場'
-                    };
-                    const eventName = eventNames[this.selectedEvent] || '活動';
-                    const fileName = `${eventName}_攤商報名資料.xlsx`;
-                    XLSX.writeFile(wb, fileName);
+          get statsOnSitePayment() {
+            return this.filteredVendors.filter(
+              (v) => v.paymentStatus === "現場繳費",
+            ).length;
+          },
 
-                    // 關閉 modal 並顯示 toast
-                    this.showExportModal = false;
-                    this.showToast = true;
-                    setTimeout(() => { this.showToast = false; }, 3000);
-                }
+          get statsSuccess() {
+            return this.filteredVendors.filter(
+              (v) => v.paymentStatus === "已繳費",
+            ).length;
+          },
+
+          formatDateWithDay(dateStr) {
+            if (!dateStr || dateStr === "—") return dateStr;
+            const days = ["日", "一", "二", "三", "四", "五", "六"];
+            const [y, m, d] = dateStr.split("/");
+            const day = new Date(y, m - 1, d).getDay();
+            return `${dateStr} (${days[day]})`;
+          },
+
+          clearFilters() {
+            this.filters = {
+              event: "",
+              date: "",
+              reviewStatus: "",
+              paymentStatus: "",
+              vendorName: "",
+            };
+            this.currentPage = 1;
+          },
+
+          get allFieldsSelected() {
+            return this.exportFields.length === this.exportFieldOptions.length;
+          },
+
+          toggleAllFields() {
+            this.exportFields = this.allFieldsSelected
+              ? []
+              : this.exportFieldOptions.map((f) => f.key);
+          },
+
+          handleExport() {
+            const statusMap = {
+              待審核: this.exportStatus.pending,
+              審核通過: this.exportStatus.approved,
+              不通過: this.exportStatus.rejected,
+            };
+
+            const source =
+              this.exportScope === "filtered"
+                ? this.filteredVendors
+                : this.vendors;
+            const filtered = source.filter(
+              (row) => statusMap[row.reviewStatus],
+            );
+
+            if (filtered.length === 0) {
+              alert("沒有符合條件的資料可匯出");
+              return;
             }
-        }
+
+            const fieldLabelMap = {};
+            this.exportFieldOptions.forEach((f) => {
+              fieldLabelMap[f.key] = f.label;
+            });
+
+            const exportData = filtered.map((row) => {
+              const obj = {};
+              this.exportFields.forEach((key) => {
+                obj[fieldLabelMap[key]] = row[key] || "";
+              });
+              return obj;
+            });
+
+            const ws = XLSX.utils.json_to_sheet(exportData);
+            const colWidths = this.exportFields.map((key) => {
+              const maxLen = Math.max(
+                fieldLabelMap[key].length * 2,
+                ...filtered.map((row) => (row[key] || "").length),
+              );
+              return { wch: Math.min(Math.max(maxLen, 10), 40) };
+            });
+            ws["!cols"] = colWidths;
+
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "攤商報名資料");
+
+            const now = new Date();
+            const dateStr = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}`;
+            XLSX.writeFile(wb, `攤商報名資料_${dateStr}.xlsx`);
+
+            this.showExportModal = false;
+            this.showToast = true;
+            setTimeout(() => {
+              this.showToast = false;
+            }, 3000);
+          },
+        };
+      }
     </script>
-</body>
-</html> 
+  </body>
+</html>
