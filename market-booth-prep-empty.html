@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>出攤準備 - 市集媒合平台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #F3F4F6; }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-screen flex">
+
+        <!-- 側邊欄 -->
+        <div class="hidden lg:block bg-white w-64 min-h-screen shadow-lg fixed z-30">
+            <div class="flex items-center justify-center h-16 border-b border-gray-200">
+                <img class="h-8" src="https://images.unsplash.com/photo-1490127252417-7c393f993ee4?w=150&h=50&fit=crop" alt="Logo">
+            </div>
+            <nav class="mt-6 px-2">
+                <a href="organizer-dashboard.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                    <i class="fas fa-home w-5 h-5"></i><span class="mx-4">首頁</span>
+                </a>
+                <a href="market-management.html" class="flex items-center px-4 py-3 mt-2 text-gray-700 bg-yellow-50 rounded-lg">
+                    <i class="fas fa-store w-5 h-5"></i><span class="mx-4">我的市集</span>
+                </a>
+                <a href="vendor-review.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                    <i class="fas fa-users w-5 h-5"></i><span class="mx-4">攤商審核</span>
+                </a>
+                <a href="market-analytics.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                    <i class="fas fa-chart-line w-5 h-5"></i><span class="mx-4">數據分析</span>
+                </a>
+                <a href="market-settings.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                    <i class="fas fa-cog w-5 h-5"></i><span class="mx-4">設定</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- 主要內容 -->
+        <div class="flex-1 lg:ml-64">
+
+            <!-- 頂部導航 -->
+            <header class="bg-white border-b border-gray-200">
+                <div class="flex items-center justify-between h-16 px-6">
+                    <div class="flex items-center gap-3">
+                        <a href="market-management.html" class="text-gray-400 hover:text-gray-600 transition-colors">
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                        <div>
+                            <h1 class="text-base font-bold text-gray-900 leading-tight">出攤準備</h1>
+                            <p class="text-xs text-gray-400">找不到活動資料</p>
+                        </div>
+                    </div>
+                    <button disabled class="flex items-center gap-2 px-3 py-1.5 text-sm border border-gray-200 rounded-lg text-gray-300 cursor-not-allowed">
+                        <i class="fas fa-print text-xs"></i>
+                        <span>列印清單</span>
+                    </button>
+                </div>
+            </header>
+
+            <main class="p-4 lg:p-6">
+                <div class="max-w-5xl mx-auto">
+
+                    <!-- 空狀態 -->
+                    <div class="flex flex-col items-center justify-center py-24 px-6">
+
+                        <!-- 插圖 -->
+                        <div class="relative mb-8">
+                            <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- 日曆底板 -->
+                                <rect x="16" y="24" width="88" height="76" rx="8" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="2"/>
+                                <!-- 日曆頂條 -->
+                                <rect x="16" y="24" width="88" height="28" rx="8" fill="#F3F4F6" stroke="#E5E7EB" stroke-width="2"/>
+                                <rect x="16" y="40" width="88" height="12" fill="#F3F4F6"/>
+                                <!-- 環扣 -->
+                                <rect x="38" y="16" width="6" height="18" rx="3" fill="#D1D5DB"/>
+                                <rect x="76" y="16" width="6" height="18" rx="3" fill="#D1D5DB"/>
+                                <!-- 格線 -->
+                                <line x1="16" y1="65" x2="104" y2="65" stroke="#F3F4F6" stroke-width="1.5"/>
+                                <line x1="16" y1="83" x2="104" y2="83" stroke="#F3F4F6" stroke-width="1.5"/>
+                                <!-- 空白格子 -->
+                                <rect x="24" y="72" width="10" height="7" rx="2" fill="#F3F4F6"/>
+                                <rect x="40" y="72" width="10" height="7" rx="2" fill="#F3F4F6"/>
+                                <rect x="56" y="72" width="10" height="7" rx="2" fill="#F3F4F6"/>
+                                <rect x="72" y="72" width="10" height="7" rx="2" fill="#F3F4F6"/>
+                                <rect x="88" y="72" width="10" height="7" rx="2" fill="#F3F4F6"/>
+                                <rect x="24" y="90" width="10" height="7" rx="2" fill="#F3F4F6"/>
+                                <rect x="40" y="90" width="10" height="7" rx="2" fill="#F3F4F6"/>
+                                <!-- 放大鏡 -->
+                                <circle cx="84" cy="80" r="18" fill="white" stroke="#E5E7EB" stroke-width="1.5"/>
+                                <circle cx="84" cy="80" r="13" fill="#FEF9EE" stroke="#FDE68A" stroke-width="2"/>
+                                <line x1="94" y1="90" x2="103" y2="99" stroke="#D1D5DB" stroke-width="3" stroke-linecap="round"/>
+                                <!-- 問號 -->
+                                <text x="79" y="86" font-family="sans-serif" font-size="14" font-weight="700" fill="#D97706">?</text>
+                            </svg>
+                        </div>
+
+                        <!-- 文字 -->
+                        <h2 class="text-lg font-semibold text-gray-700 mb-2">找不到活動資料</h2>
+                        <p class="text-sm text-gray-400 text-center max-w-xs leading-relaxed mb-8">
+                            目前沒有進行中或即將開始的活動，<br>請先建立活動後再來查看出攤資訊。
+                        </p>
+
+                        <!-- 操作按鈕 -->
+                        <div class="flex flex-col sm:flex-row items-center gap-3">
+                            <a href="market-management.html"
+                                class="flex items-center gap-2 px-5 py-2.5 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-700 transition-colors">
+                                <i class="fas fa-plus text-xs"></i>
+                                建立活動
+                            </a>
+                            <a href="market-management.html"
+                                class="flex items-center gap-2 px-5 py-2.5 border border-gray-200 text-gray-600 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors">
+                                <i class="fas fa-arrow-left text-xs"></i>
+                                回到市集管理
+                            </a>
+                        </div>
+
+                    </div>
+
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>
