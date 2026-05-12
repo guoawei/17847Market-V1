@@ -50,6 +50,21 @@
                         <i class="fas fa-users w-5 h-5"></i>
                         <span class="mx-4">攤商審核</span>
                     </a>
+                    <!-- 報名費代收 -->
+                    <div x-data="{ paymentOpen: false }">
+                        <button @click="paymentOpen = !paymentOpen" class="w-full flex items-center justify-between px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                            <div class="flex items-center">
+                                <i class="fas fa-hand-holding-usd w-5 h-5"></i>
+                                <span class="mx-4">報名費代收</span>
+                            </div>
+                            <i class="fas fa-chevron-right text-xs text-gray-400 transition-transform duration-200" :class="paymentOpen ? 'rotate-90' : ''"></i>
+                        </button>
+                        <div x-show="paymentOpen" class="pl-3 mt-1 space-y-0.5">
+                            <a href="payment-report.html" class="flex items-center px-4 py-2 text-sm text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors"><span>對帳報表</span></a>
+                            <a href="payment-settlement.html" class="flex items-center px-4 py-2 text-sm text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors"><span>結算撥款</span></a>
+                            <a href="payment-payout-list.html" class="flex items-center px-4 py-2 text-sm text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors"><span>撥款紀錄</span></a>
+                        </div>
+                    </div>
                     <a href="market-analytics.html" class="flex items-center px-4 py-3 mt-2 text-gray-700 bg-yellow-50 rounded-lg">
                         <i class="fas fa-chart-line w-5 h-5"></i>
                         <span class="mx-4">數據分析</span>

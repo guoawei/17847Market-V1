@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      body {
+        font-family: "Arial", "Microsoft JhengHei", sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 600px;
+        margin: 40px auto;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+      .content {
+        padding: 40px 30px;
+      }
+      .logo-container {
+        text-align: center;
+        margin-bottom: 8px;
+      }
+      .logo {
+        border-radius: 8px;
+      }
+      .info-text {
+        color: #666;
+        font-size: 14px;
+        line-height: 1.8;
+      }
+      .atm-box {
+        background-color: #eff6ff;
+        border: 2px solid #3b82f6;
+        border-radius: 10px;
+        padding: 24px 20px;
+        margin: 24px 0;
+        text-align: center;
+      }
+      .atm-label {
+        font-size: 11px;
+        color: #6b7280;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+      .atm-account {
+        font-size: 30px;
+        font-weight: bold;
+        letter-spacing: 4px;
+        color: #1d4ed8;
+        margin: 8px 0;
+        font-family: "Courier New", monospace;
+      }
+      .atm-note {
+        font-size: 12px;
+        color: #9ca3af;
+        margin-top: 6px;
+      }
+      .amount-box {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 16px 20px;
+        margin: 20px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .amount-label {
+        font-size: 14px;
+        color: #666;
+      }
+      .amount-value {
+        font-size: 24px;
+        font-weight: bold;
+        color: #111;
+      }
+      .detail-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 16px 0;
+      }
+      .detail-table td {
+        padding: 10px 0;
+        font-size: 14px;
+        border-bottom: 1px solid #f0f0f0;
+        vertical-align: top;
+      }
+      .detail-table td:first-child {
+        color: #9ca3af;
+        width: 38%;
+      }
+      .detail-table td:last-child {
+        color: #111;
+        font-weight: 500;
+      }
+      .deadline-badge {
+        display: inline-block;
+        background-color: #fef3c7;
+        color: #92400e;
+        padding: 3px 10px;
+        border-radius: 4px;
+        font-size: 13px;
+        font-weight: bold;
+      }
+      .warning-box {
+        background-color: #fffbeb;
+        border-left: 3px solid #f59e0b;
+        padding: 14px 16px;
+        margin: 24px 0;
+        border-radius: 0 6px 6px 0;
+      }
+      .warning-box p {
+        margin: 5px 0;
+        font-size: 13px;
+        color: #92400e;
+        line-height: 1.6;
+      }
+      .warning-title {
+        font-weight: bold;
+        margin-bottom: 8px !important;
+      }
+      .check-button {
+        font-size: 14px;
+        padding: 12px 20px;
+        border: 0;
+        border-radius: 4px;
+        background-color: #333;
+        color: white;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 8px;
+      }
+      .footer {
+        background-color: #f8f9fa;
+        padding: 20px;
+        text-align: center;
+        color: #6c757d;
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="content">
+        <div class="logo-container">
+          <img
+            src="https://17847market-dev-bucket.s3.ap-east-2.amazonaws.com/mail/17847market-logo-square.png"
+            width="80px"
+            height="100%"
+            class="logo"
+          />
+        </div>
+
+        <h1 style="font-size: 22px; margin-bottom: 8px;">審核通過，請完成繳費</h1>
+        <p class="info-text">
+          恭喜！你報名 <strong>歡樂市集</strong> 的
+          <strong>2026年4月文創市集</strong> 活動已審核通過。<br />
+          請使用下方專屬 ATM 虛擬帳號完成繳費，系統將<strong>自動確認</strong>您的付款狀態，無需回報。
+        </p>
+
+        <div class="atm-box">
+          <div class="atm-label">專屬 ATM 虛擬帳號</div>
+          <div class="atm-account">8120026041501</div>
+          <div class="atm-note">此帳號專屬於本次報名，請勿用於其他用途</div>
+        </div>
+
+        <div class="amount-box">
+          <span class="amount-label">應繳金額</span>
+          <span class="amount-value">NT$ 3,000</span>
+        </div>
+
+        <table class="detail-table">
+          <tr>
+            <td>銀行代號</td>
+            <td>812 台新銀行</td>
+          </tr>
+          <tr>
+            <td>虛擬帳號</td>
+            <td style="font-family: 'Courier New', monospace; letter-spacing: 1px;">8120026041501</td>
+          </tr>
+          <tr>
+            <td>繳費截止日</td>
+            <td><span class="deadline-badge">2026-04-27 23:59</span></td>
+          </tr>
+          <tr>
+            <td>報名編號</td>
+            <td>R2026041501</td>
+          </tr>
+          <tr>
+            <td>活動名稱</td>
+            <td>2026年4月文創市集</td>
+          </tr>
+          <tr>
+            <td>攤位類型</td>
+            <td>標準攤位（2026-04-20）</td>
+          </tr>
+        </table>
+
+        <div class="warning-box">
+          <p class="warning-title">注意事項</p>
+          <p>• 請務必轉帳<strong>正確金額</strong> NT$ 3,000，金額不符將無法自動確認。</p>
+          <p>• 繳費後系統將於 <strong>1 個工作日內</strong>自動更新繳費狀態。</p>
+          <p>• 逾期未繳費（2026-04-27 23:59 前）將視為放棄報名資格。</p>
+          <p>• 此虛擬帳號為本次報名專屬，請勿重複轉帳或用於其他報名。</p>
+        </div>
+
+        <a href="https://17847market.com.tw" target="_blank" class="check-button">
+          查看報名資訊
+        </a>
+
+        <p class="info-text" style="margin-top: 28px;">
+          如有任何問題，歡迎聯繫我們的客服團隊。<br />
+          service@17847market.com.tw
+        </p>
+      </div>
+      <div class="footer">
+        <p>此為系統自動發送的郵件，請勿直接回覆</p>
+        <p>&copy; 2026 擺個市集 17847Market. All rights reserved.</p>
+      </div>
+    </div>
+  </body>
+</html>

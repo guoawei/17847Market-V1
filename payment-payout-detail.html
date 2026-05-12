@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>撥款明細 - 市集媒合平台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+    <style>
+      body { font-family: 'Noto Sans TC', sans-serif; background-color: #F3F4F6; }
+      [x-cloak] { display: none !important; }
+    </style>
+  </head>
+  <body class="bg-gray-100">
+    <div class="min-h-screen flex" x-data="payoutDetail()">
+
+      <!-- 側邊欄 -->
+      <div class="hidden lg:block bg-white w-64 min-h-screen shadow-lg fixed z-30">
+        <div class="flex items-center justify-center h-16 border-b border-gray-200">
+          <a href="organizer-dashboard.html">
+            <img class="h-8" src="https://images.unsplash.com/photo-1490127252417-7c393f993ee4?w=150&h=50&fit=crop" alt="Logo" />
+          </a>
+        </div>
+        <nav class="mt-6">
+          <div class="px-4 py-2">
+            <div class="flex items-center space-x-2 text-sm text-gray-600">
+              <img class="h-8 w-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop" alt="主辦方頭像" />
+              <span>歡迎回來，主辦方</span>
+            </div>
+          </div>
+          <div class="px-2 mt-4">
+            <a href="organizer-dashboard.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+              <i class="fas fa-home w-5"></i>
+              <span class="mx-4">首頁</span>
+            </a>
+            <a href="market-management.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+              <i class="fas fa-store w-5"></i>
+              <span class="mx-4">我的市集</span>
+            </a>
+            <a href="vendor-review.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+              <i class="fas fa-users w-5"></i>
+              <span class="mx-4">攤商審核</span>
+            </a>
+            <!-- 報名費代收 -->
+            <div x-data="{ paymentOpen: true }">
+              <button @click="paymentOpen = !paymentOpen" class="w-full flex items-center justify-between px-4 py-3 mt-2 text-gray-700 bg-yellow-50 rounded-lg font-medium">
+                <div class="flex items-center">
+                  <i class="fas fa-hand-holding-usd w-5"></i>
+                  <span class="mx-4">報名費代收</span>
+                </div>
+                <i class="fas fa-chevron-right text-xs text-gray-500 transition-transform duration-200" :class="paymentOpen ? 'rotate-90' : ''"></i>
+              </button>
+              <div x-show="paymentOpen" class="pl-3 mt-1 space-y-0.5">
+                <a href="payment-report.html" class="flex items-center px-4 py-2 text-sm text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                  <span>對帳報表</span>
+                </a>
+                <a href="payment-settlement.html" class="flex items-center px-4 py-2 text-sm text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+                  <span>結算撥款</span>
+                </a>
+                <a href="payment-payout-list.html" class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-yellow-100 rounded-lg">
+                  <span>撥款紀錄</span>
+                </a>
+              </div>
+            </div>
+            <a href="market-analytics.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+              <i class="fas fa-chart-line w-5"></i>
+              <span class="mx-4">數據分析</span>
+            </a>
+            <a href="market-settings.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
+              <i class="fas fa-cog w-5"></i>
+              <span class="mx-4">設定</span>
+            </a>
+          </div>
+        </nav>
+      </div>
+
+      <!-- 主要內容區 -->
+      <div class="flex-1 lg:ml-64 min-w-0">
+        <!-- 頂部導航 -->
+        <header class="bg-white shadow-sm sticky top-0 z-20">
+          <div class="flex items-center justify-between h-16 px-4 lg:px-8">
+            <div class="flex items-center gap-3">
+              <a href="payment-payout-list.html" class="text-gray-400 hover:text-gray-600 transition-colors">
+                <i class="fas fa-arrow-left"></i>
+              </a>
+              <h1 class="text-xl font-bold text-gray-800">撥款明細</h1>
+            </div>
+            <div class="flex items-center space-x-3">
+              <a href="organizer-notifications.html" class="text-gray-600 hover:text-gray-800 px-1">
+                <i class="fas fa-bell"></i>
+              </a>
+              <div class="relative" x-data="{ open: false }">
+                <button @click="open = !open" class="flex items-center space-x-2">
+                  <img class="h-8 w-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop" alt="主辦方頭像" />
+                  <i class="fas fa-chevron-down text-gray-600 text-xs"></i>
+                </button>
+                <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-10">
+                  <a href="organizer-profile.html" class="block px-4 py-2 text-gray-700 hover:bg-yellow-50"><i class="fas fa-user mr-2"></i>個人資料</a>
+                  <a href="market-settings.html" class="block px-4 py-2 text-gray-700 hover:bg-yellow-50"><i class="fas fa-cog mr-2"></i>帳號設定</a>
+                  <hr class="my-1 border-gray-200" />
+                  <a href="login.html" class="block px-4 py-2 text-red-600 hover:bg-red-50"><i class="fas fa-sign-out-alt mr-2"></i>登出</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- 主要內容 -->
+        <main class="p-4 lg:p-8">
+
+          <!-- 撥款狀態橫幅 -->
+          <div class="bg-white rounded-lg shadow-sm p-5 mb-6">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div>
+                <div class="flex items-center gap-3 mb-1">
+                  <span class="text-xs font-mono text-gray-400" x-text="payout.id"></span>
+                  <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+                    <span class="w-1.5 h-1.5 rounded-full bg-green-500 mr-1.5"></span>
+                    <span x-text="payout.status"></span>
+                  </span>
+                </div>
+                <h2 class="text-lg font-bold text-gray-900">撥款申請 <span x-text="payout.id"></span></h2>
+              </div>
+              <div class="flex gap-2">
+                <button @click="downloadSummary()" class="flex items-center gap-2 px-4 py-2 border border-gray-200 text-gray-700 text-sm rounded-lg hover:bg-gray-50 transition-colors">
+                  <i class="fas fa-download text-xs"></i>
+                  下載撥款摘要
+                </button>
+                <button @click="downloadOrders()" class="flex items-center gap-2 px-4 py-2 bg-gray-900 text-white text-sm rounded-lg hover:bg-black transition-colors">
+                  <i class="fas fa-file-excel text-xs"></i>
+                  下載訂單列表
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+            <!-- 撥款資訊 -->
+            <div class="lg:col-span-2 bg-white rounded-lg shadow-sm p-5">
+              <h3 class="text-sm font-semibold text-gray-700 mb-4">撥款資訊</h3>
+              <div class="grid grid-cols-2 gap-x-8 gap-y-4">
+                <div>
+                  <div class="text-xs text-gray-400 mb-0.5">撥款編號</div>
+                  <div class="text-sm font-medium text-gray-800 font-mono" x-text="payout.id"></div>
+                </div>
+                <div>
+                  <div class="text-xs text-gray-400 mb-0.5">申請日期</div>
+                  <div class="text-sm font-medium text-gray-800" x-text="payout.applyDate"></div>
+                </div>
+                <div>
+                  <div class="text-xs text-gray-400 mb-0.5">完成日期</div>
+                  <div class="text-sm font-medium text-gray-800" x-text="payout.completeDate"></div>
+                </div>
+                <div>
+                  <div class="text-xs text-gray-400 mb-0.5">付款方式</div>
+                  <div class="text-sm font-medium text-gray-800" x-text="payout.paymentMethod"></div>
+                </div>
+                <div>
+                  <div class="text-xs text-gray-400 mb-0.5">市集聯絡人</div>
+                  <div class="text-sm font-medium text-gray-800" x-text="payout.contact"></div>
+                </div>
+                <div>
+                  <div class="text-xs text-gray-400 mb-0.5">收款帳號</div>
+                  <div class="text-sm font-medium text-gray-800 font-mono" x-text="payout.bankAccount"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 金額摘要 -->
+            <div class="bg-white rounded-lg shadow-sm p-5">
+              <h3 class="text-sm font-semibold text-gray-700 mb-4">金額摘要</h3>
+              <div class="space-y-3">
+                <div class="flex justify-between items-center">
+                  <span class="text-sm text-gray-500">申請金額</span>
+                  <span class="text-sm font-medium text-gray-800 tabular-nums" x-text="'NT$ ' + payout.totalAmount.toLocaleString()"></span>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span class="text-sm text-gray-500">平台手續費</span>
+                  <span class="text-sm font-medium text-orange-600 tabular-nums" x-text="'- NT$ ' + payout.platformFee.toLocaleString()"></span>
+                </div>
+                <div class="flex justify-between items-center pt-3 border-t border-gray-100">
+                  <span class="text-sm font-semibold text-gray-700">實際撥款金額</span>
+                  <span class="text-lg font-bold text-gray-900 tabular-nums" x-text="'NT$ ' + payout.netPayout.toLocaleString()"></span>
+                </div>
+              </div>
+              <div class="mt-4 p-3 bg-gray-50 rounded-lg">
+                <div class="text-xs text-gray-400 mb-1">手續費計算方式</div>
+                <div class="text-xs text-gray-600">轉帳金額 × 6% + NT$10／筆</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 訂單明細 -->
+          <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+            <div class="px-4 py-4 border-b border-gray-100 flex items-center justify-between">
+              <h3 class="text-sm font-semibold text-gray-700">包含訂單 <span class="text-gray-400 font-normal" x-text="'（共 ' + payout.orders.length + ' 筆）'"></span></h3>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full">
+                <thead>
+                  <tr class="border-b border-gray-200 bg-gray-50 text-left">
+                    <th class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap">報名編號</th>
+                    <th class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap">攤商名稱</th>
+                    <th class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap">活動名稱</th>
+                    <th class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap">參加日期</th>
+                    <th class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap text-right">轉帳金額</th>
+                    <th class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap text-right">平台手續費</th>
+                    <th class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap text-right">撥款金額</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                  <template x-for="o in payout.orders" :key="o.id">
+                    <tr class="hover:bg-gray-50 transition-colors">
+                      <td class="px-4 py-3.5 whitespace-nowrap">
+                        <span class="text-xs font-mono text-gray-500" x-text="o.id"></span>
+                      </td>
+                      <td class="px-4 py-3.5 whitespace-nowrap">
+                        <span class="text-sm font-medium text-gray-900" x-text="o.vendor"></span>
+                      </td>
+                      <td class="px-4 py-3.5 whitespace-nowrap">
+                        <span class="text-sm text-gray-600" x-text="o.event"></span>
+                      </td>
+                      <td class="px-4 py-3.5 whitespace-nowrap">
+                        <span class="text-sm text-gray-600" x-text="o.date"></span>
+                      </td>
+                      <td class="px-4 py-3.5 whitespace-nowrap text-right">
+                        <span class="text-sm text-gray-700 tabular-nums" x-text="'NT$ ' + o.transferred.toLocaleString()"></span>
+                      </td>
+                      <td class="px-4 py-3.5 whitespace-nowrap text-right">
+                        <span class="text-sm text-orange-600 tabular-nums" x-text="'NT$ ' + o.platformFee.toLocaleString()"></span>
+                      </td>
+                      <td class="px-4 py-3.5 whitespace-nowrap text-right">
+                        <span class="text-sm font-semibold text-gray-900 tabular-nums" x-text="'NT$ ' + o.netPayout.toLocaleString()"></span>
+                      </td>
+                    </tr>
+                  </template>
+                </tbody>
+                <tfoot>
+                  <tr class="border-t-2 border-gray-200 bg-gray-50">
+                    <td colspan="4" class="px-4 py-3 text-sm font-semibold text-gray-600">合計</td>
+                    <td class="px-4 py-3 text-right text-sm font-semibold text-gray-800 tabular-nums" x-text="'NT$ ' + payout.totalAmount.toLocaleString()"></td>
+                    <td class="px-4 py-3 text-right text-sm font-semibold text-orange-600 tabular-nums" x-text="'NT$ ' + payout.platformFee.toLocaleString()"></td>
+                    <td class="px-4 py-3 text-right text-sm font-bold text-gray-900 tabular-nums" x-text="'NT$ ' + payout.netPayout.toLocaleString()"></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+
+        </main>
+      </div>
+    </div>
+
+    <script>
+      function payoutDetail() {
+        return {
+          payout: {
+            id: 'P20260215001',
+            status: '撥款完成',
+            applyDate: '2026-02-15',
+            completeDate: '2026-02-18',
+            paymentMethod: '銀行轉帳',
+            contact: '王小美',
+            bankAccount: '004-0001-234567890',
+            totalAmount: 9500,
+            platformFee: 600,
+            netPayout: 8900,
+            orders: [
+              { id: 'R2026011501', vendor: '小白貓手作', event: '2026年1月文創市集', date: '2026-01-20', transferred: 3000, platformFee: 190, netPayout: 2810 },
+              { id: 'R2026011502', vendor: '木工好物',   event: '2026年1月文創市集', date: '2026-01-20', transferred: 3500, platformFee: 220, netPayout: 3280 },
+              { id: 'R2026011503', vendor: '棉花糖工坊', event: '2026年1月文創市集', date: '2026-01-20', transferred: 3000, platformFee: 190, netPayout: 2810 },
+            ]
+          },
+
+          downloadSummary() {
+            const p = this.payout;
+            const summaryData = [
+              ['撥款編號', p.id],
+              ['申請日期', p.applyDate],
+              ['完成日期', p.completeDate],
+              ['狀態', p.status],
+              ['市集聯絡人', p.contact],
+              ['付款方式', p.paymentMethod],
+              ['收款帳號', p.bankAccount],
+              [''],
+              ['申請金額', p.totalAmount],
+              ['平台手續費', p.platformFee],
+              ['實際撥款金額', p.netPayout],
+            ];
+            const ws = XLSX.utils.aoa_to_sheet(summaryData);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, '撥款摘要');
+            XLSX.writeFile(wb, `撥款摘要_${p.id}.xlsx`);
+          },
+
+          downloadOrders() {
+            const data = this.payout.orders.map(o => ({
+              '報名編號': o.id,
+              '攤商名稱': o.vendor,
+              '活動名稱': o.event,
+              '參加日期': o.date,
+              '轉帳金額': o.transferred,
+              '平台手續費': o.platformFee,
+              '撥款金額': o.netPayout,
+            }));
+            const ws = XLSX.utils.json_to_sheet(data);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, '訂單列表');
+            XLSX.writeFile(wb, `訂單列表_${this.payout.id}.xlsx`);
+          }
+        };
+      }
+    </script>
+  </body>
+</html>
