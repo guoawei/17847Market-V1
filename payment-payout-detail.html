@@ -115,14 +115,14 @@
           <div class="bg-white rounded-lg shadow-sm p-5 mb-6">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
-                <div class="flex items-center gap-3 mb-1">
-                  <span class="text-xs font-mono text-gray-400" x-text="payout.id"></span>
+                <div class="text-xs text-gray-400 mb-1">撥款編號</div>
+                <div class="flex items-center gap-3">
+                  <h2 class="text-lg font-bold text-gray-900 font-mono" x-text="payout.id"></h2>
                   <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
                     <span class="w-1.5 h-1.5 rounded-full bg-green-500 mr-1.5"></span>
                     <span x-text="payout.status"></span>
                   </span>
                 </div>
-                <h2 class="text-lg font-bold text-gray-900">撥款申請 <span x-text="payout.id"></span></h2>
               </div>
               <div class="flex gap-2">
                 <button @click="downloadSummary()" class="flex items-center gap-2 px-4 py-2 border border-gray-200 text-gray-700 text-sm rounded-lg hover:bg-gray-50 transition-colors">
@@ -143,10 +143,6 @@
               <h3 class="text-sm font-semibold text-gray-700 mb-4">撥款資訊</h3>
               <div class="grid grid-cols-2 gap-x-8 gap-y-4">
                 <div>
-                  <div class="text-xs text-gray-400 mb-0.5">撥款編號</div>
-                  <div class="text-sm font-medium text-gray-800 font-mono" x-text="payout.id"></div>
-                </div>
-                <div>
                   <div class="text-xs text-gray-400 mb-0.5">申請日期</div>
                   <div class="text-sm font-medium text-gray-800" x-text="payout.applyDate"></div>
                 </div>
@@ -165,6 +161,14 @@
                 <div>
                   <div class="text-xs text-gray-400 mb-0.5">收款帳號</div>
                   <div class="text-sm font-medium text-gray-800 font-mono" x-text="payout.bankAccount"></div>
+                </div>
+                <div>
+                  <div class="text-xs text-gray-400 mb-0.5">公司抬頭</div>
+                  <div class="text-sm font-medium text-gray-800" x-text="payout.invoiceTitle"></div>
+                </div>
+                <div class="col-span-2">
+                  <div class="text-xs text-gray-400 mb-0.5">統一編號</div>
+                  <div class="text-sm font-medium text-gray-800" x-text="payout.taxId"></div>
                 </div>
               </div>
             </div>
@@ -190,6 +194,32 @@
                 <div class="text-xs text-gray-400 mb-1">手續費計算方式</div>
                 <div class="text-xs text-gray-600">轉帳金額 × 6% + NT$10／筆</div>
               </div>
+            </div>
+          </div>
+
+          <!-- 狀態歷程 -->
+          <div class="bg-white rounded-lg shadow-sm p-5 mb-6">
+            <h3 class="text-sm font-semibold text-gray-700 mb-5">狀態歷程</h3>
+            <div class="relative">
+              <!-- 垂直線 -->
+              <div class="absolute left-3.5 top-1 bottom-1 w-px bg-gray-200"></div>
+              <ul class="space-y-5">
+                <template x-for="(ev, i) in payout.statusHistory" :key="i">
+                  <li class="flex items-start gap-4 relative">
+                    <!-- 圓點 -->
+                    <div class="flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center z-10"
+                      :class="i === 0 ? 'bg-green-500' : 'bg-white border-2 border-gray-300'">
+                      <i class="text-xs"
+                        :class="i === 0 ? 'fas fa-check text-white' : 'fas fa-circle text-gray-300'"></i>
+                    </div>
+                    <div class="pb-1">
+                      <div class="text-sm font-medium text-gray-800" x-text="ev.label"></div>
+                      <div class="text-xs text-gray-400 mt-0.5" x-text="ev.time"></div>
+                      <div x-show="ev.note" class="text-xs text-gray-500 mt-1 bg-gray-50 rounded px-2 py-1" x-text="ev.note"></div>
+                    </div>
+                  </li>
+                </template>
+              </ul>
             </div>
           </div>
 
@@ -265,9 +295,17 @@
             paymentMethod: '銀行轉帳',
             contact: '王小美',
             bankAccount: '004-0001-234567890',
+            invoiceTitle: '市集媒合有限公司',
+            taxId: '83201456',
             totalAmount: 9500,
             platformFee: 600,
             netPayout: 8900,
+            statusHistory: [
+              { label: '撥款完成',   time: '2026-02-18 14:32',  note: '款項已匯入收款帳戶 004-0001-234567890' },
+              { label: '審核通過',   time: '2026-02-17 09:15',  note: '' },
+              { label: '審核中',     time: '2026-02-15 18:03',  note: '預計 1–3 個工作天完成審核' },
+              { label: '申請已送出', time: '2026-02-15 17:58',  note: '' },
+            ],
             orders: [
               { id: 'R2026011501', vendor: '小白貓手作', event: '2026年1月文創市集', date: '2026-01-20', transferred: 3000, platformFee: 190, netPayout: 2810 },
               { id: 'R2026011502', vendor: '木工好物',   event: '2026年1月文創市集', date: '2026-01-20', transferred: 3500, platformFee: 220, netPayout: 3280 },
