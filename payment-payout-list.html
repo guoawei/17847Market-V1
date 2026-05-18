@@ -111,9 +111,7 @@
 
           <!-- 狀態摘要卡片 -->
           <div class="grid grid-cols-3 gap-4 mb-6">
-            <div class="bg-white rounded-lg shadow-sm p-5 cursor-pointer transition-all"
-              :class="filters.status === '平台審核中' ? 'ring-2 ring-yellow-400' : 'hover:shadow-md'"
-              @click="filters.status = filters.status === '平台審核中' ? '' : '平台審核中'">
+            <div class="bg-white rounded-lg shadow-sm p-5">
               <div class="flex items-center gap-3 mb-2">
                 <div class="p-2 bg-yellow-50 rounded-lg">
                   <i class="fas fa-clock text-yellow-500 text-sm"></i>
@@ -123,9 +121,7 @@
               <div class="text-2xl font-bold text-yellow-600 tabular-nums" x-text="statusCount('平台審核中')"></div>
               <div class="text-xs text-gray-400 mt-1">筆申請</div>
             </div>
-            <div class="bg-white rounded-lg shadow-sm p-5 cursor-pointer transition-all"
-              :class="filters.status === '撥款中' ? 'ring-2 ring-blue-400' : 'hover:shadow-md'"
-              @click="filters.status = filters.status === '撥款中' ? '' : '撥款中'">
+            <div class="bg-white rounded-lg shadow-sm p-5">
               <div class="flex items-center gap-3 mb-2">
                 <div class="p-2 bg-blue-50 rounded-lg">
                   <i class="fas fa-paper-plane text-blue-500 text-sm"></i>
@@ -135,9 +131,7 @@
               <div class="text-2xl font-bold text-blue-600 tabular-nums" x-text="statusCount('撥款中')"></div>
               <div class="text-xs text-gray-400 mt-1">筆申請</div>
             </div>
-            <div class="bg-white rounded-lg shadow-sm p-5 cursor-pointer transition-all"
-              :class="filters.status === '撥款完成' ? 'ring-2 ring-green-400' : 'hover:shadow-md'"
-              @click="filters.status = filters.status === '撥款完成' ? '' : '撥款完成'">
+            <div class="bg-white rounded-lg shadow-sm p-5">
               <div class="flex items-center gap-3 mb-2">
                 <div class="p-2 bg-green-50 rounded-lg">
                   <i class="fas fa-check-circle text-green-500 text-sm"></i>
