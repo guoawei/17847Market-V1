@@ -64,6 +64,8 @@
             document.getElementById('expired-notice').classList.add('hidden');
             document.getElementById('rejected-notice').classList.add('hidden');
 
+            currentStatus = status;
+
             // 顯示選定的狀態
             switch(status) {
                 case 'unpaid':
@@ -91,33 +93,60 @@
                     document.getElementById('rejected-notice').classList.remove('hidden');
                     break;
             }
+
+            updateMatchingInfoVisibility();
         }
 
-        // 處理匯款確認表單提交
-        document.getElementById('paymentForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // 獲取表單數據
-            const transferDate = document.getElementById('transferDate').value;
-            const transferTime = document.getElementById('transferTime').value;
-            const accountLast5 = document.getElementById('accountLast5').value;
+        let paymentMode = 'atm';
+        let currentStatus = 'reviewing';
 
-            // 驗證末5碼格式
-            if (!/^\d{5}$/.test(accountLast5)) {
-                alert('請輸入正確的帳號末5碼（5位數字）');
-                return;
-            }
+        function updateMatchingInfoVisibility() {
+            const hide = paymentMode === 'virtual' &&
+                (currentStatus === 'reviewing' || currentStatus === 'rejected');
+            document.getElementById('matching-info-display').classList.toggle('hidden', hide);
+        }
 
-            // 這裡可以添加API調用來保存匯款資訊
-            // 暫時用alert模擬
-            alert('匯款資訊已送出，我們將盡快確認您的付款！');
-            
-            // 切換到確認匯款資訊中狀態
-            showStatus('payment-reviewing');
-        });
+        function setPaymentMode(mode) {
+            paymentMode = mode;
 
-        // 移除原本的測試按鈕生成代碼
+            document.querySelectorAll('.atm-only').forEach(el => {
+                el.classList.toggle('hidden', mode !== 'atm');
+            });
+            document.querySelectorAll('.virtual-only').forEach(el => {
+                el.classList.toggle('hidden', mode !== 'virtual');
+            });
+
+            const btnAtm = document.getElementById('btn-mode-atm');
+            const btnVirtual = document.getElementById('btn-mode-virtual');
+            btnAtm.className = mode === 'atm'
+                ? 'px-4 py-2 bg-gray-800 text-white rounded-lg text-sm transition-colors'
+                : 'px-4 py-2 bg-gray-200 text-gray-600 rounded-lg text-sm transition-colors';
+            btnVirtual.className = mode === 'virtual'
+                ? 'px-4 py-2 bg-gray-800 text-white rounded-lg text-sm transition-colors'
+                : 'px-4 py-2 bg-gray-200 text-gray-600 rounded-lg text-sm transition-colors';
+
+            updateMatchingInfoVisibility();
+        }
+
         window.addEventListener('load', function() {
+            // 處理匯款確認表單提交
+            document.getElementById('paymentForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const transferDate = document.getElementById('transferDate').value;
+                const transferTime = document.getElementById('transferTime').value;
+                const accountLast5 = document.getElementById('accountLast5').value;
+
+                if (!/^\d{5}$/.test(accountLast5)) {
+                    alert('請輸入正確的帳號末5碼（5位數字）');
+                    return;
+                }
+
+                alert('匯款資訊已送出，我們將盡快確認您的付款！');
+                showStatus('payment-reviewing');
+            });
+
+            setPaymentMode('atm');
             showStatus('reviewing'); // 預設顯示審核中狀態
         });
     </script>
@@ -225,6 +254,7 @@
 
                             <!-- 匯款資訊 -->
                             <div class="border-t border-gray-200 mt-6 pt-6">
+                                <div id="matching-info-display">
                                 <h3 class="text-lg font-medium text-gray-900 mb-4">匯款資訊</h3>
                                 <div class="grid grid-cols-2 gap-4 mb-4">
                                     <div>
@@ -239,17 +269,28 @@
                                         <p class="text-sm text-gray-500">戶名</p>
                                         <p class="font-medium">文創市集有限公司</p>
                                     </div>
-                                    <div>
+                                    <!-- ATM 帳號 -->
+                                    <div class="atm-only">
                                         <p class="text-sm text-gray-500">帳號</p>
                                         <p class="font-medium">1234-5678-9012-3456</p>
                                     </div>
+                                    <!-- 虛擬帳號 -->
+                                    <div class="virtual-only hidden col-span-2">
+                                        <p class="text-sm text-gray-500">虛擬帳號</p>
+                                        <div class="flex items-center space-x-3 mt-1">
+                                            <p class="font-bold text-xl font-mono tracking-widest">24567890123456</p>
+                                            <span class="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded">專屬帳號，請勿與他人共用</span>
+                                        </div>
+                                    </div>
                                 </div>
+                                </div><!-- /matching-info-display -->
 
                                 <!-- 未繳費狀態顯示 -->
                                 <div id="unpaid-notice" class="bg-yellow-50 p-4 rounded-lg">
                                     <p class="text-sm text-yellow-800">
                                         <i class="fas fa-info-circle mr-2"></i>
-                                        請於3天內完成匯款並填寫匯款帳號末5碼，逾期報名將自動取消。
+                                        <span class="atm-only">請於3天內完成匯款並填寫匯款帳號末5碼，逾期報名將自動取消。</span>
+                                        <span class="virtual-only hidden">請於3天內完成匯款，轉帳後系統將自動確認，逾期報名將自動取消。</span>
                                     </p>
                                     <div class="mt-2 flex items-center">
                                         <i class="fas fa-clock text-yellow-500 mr-2"></i>
@@ -257,8 +298,8 @@
                                             匯款期限：2024/01/08 23:59
                                         </p>
                                     </div>
-                                    <!-- 匯款確認表單 -->
-                                    <form id="paymentForm" class="mt-4">
+                                    <!-- ATM 匯款確認表單 -->
+                                    <form id="paymentForm" class="atm-only mt-4">
                                         <div class="space-y-4">
                                             <div class="grid grid-cols-2 gap-4">
                                                 <div>
@@ -286,6 +327,13 @@
                                             </div>
                                         </div>
                                     </form>
+                                    <!-- 虛擬帳號自動確認提示 -->
+                                    <div class="virtual-only hidden mt-4 bg-white rounded-lg p-3 border border-yellow-200">
+                                        <p class="text-sm text-yellow-800">
+                                            <i class="fas fa-bolt mr-2 text-yellow-500"></i>
+                                            轉帳完成後，系統將自動偵測款項並確認繳費，無需填寫任何資訊。
+                                        </p>
+                                    </div>
                                 </div>
 
                                 <!-- 審核中狀態顯示（審核攤商資料） -->
@@ -312,7 +360,8 @@
                                 <div id="payment-reviewing-notice" class="hidden bg-purple-50 p-4 rounded-lg">
                                     <p class="text-sm text-purple-800">
                                         <i class="fas fa-info-circle mr-2"></i>
-                                        我們已收到您的匯款資訊，正在進行確認，請耐心等候。
+                                        <span class="atm-only">我們已收到您的匯款資訊，正在進行確認，請耐心等候。</span>
+                                        <span class="virtual-only hidden">系統偵測到您已完成轉帳，正在自動確認款項，請稍候。</span>
                                     </p>
                                     <div class="mt-2 flex items-center">
                                         <i class="fas fa-clock text-purple-500 mr-2"></i>
@@ -325,9 +374,13 @@
                                             <p class="text-sm text-gray-500">匯款時間</p>
                                             <p class="font-medium">2024/01/06 14:30</p>
                                         </div>
-                                        <div>
+                                        <div class="atm-only">
                                             <p class="text-sm text-gray-500">匯款帳號末5碼</p>
                                             <p class="font-medium">12345</p>
+                                        </div>
+                                        <div class="virtual-only hidden">
+                                            <p class="text-sm text-gray-500">確認方式</p>
+                                            <p class="font-medium">系統自動確認</p>
                                         </div>
                                     </div>
                                 </div>
@@ -349,9 +402,13 @@
                                             <p class="text-sm text-gray-500">匯款時間</p>
                                             <p class="font-medium">2024/01/06 14:30</p>
                                         </div>
-                                        <div>
+                                        <div class="atm-only">
                                             <p class="text-sm text-gray-500">匯款帳號末5碼</p>
                                             <p class="font-medium">12345</p>
+                                        </div>
+                                        <div class="virtual-only hidden">
+                                            <p class="text-sm text-gray-500">確認方式</p>
+                                            <p class="font-medium">虛擬帳號自動確認</p>
                                         </div>
                                     </div>
                                 </div>
@@ -533,6 +590,17 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- 付款模式切換（測試用） -->
+                    <div class="flex justify-center items-center space-x-3 mb-4">
+                        <span class="text-sm text-gray-500">付款模式：</span>
+                        <button id="btn-mode-atm" onclick="setPaymentMode('atm')" class="px-4 py-2 bg-gray-800 text-white rounded-lg text-sm transition-colors">
+                            一般匯款
+                        </button>
+                        <button id="btn-mode-virtual" onclick="setPaymentMode('virtual')" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg text-sm transition-colors">
+                            虛擬帳號
+                        </button>
                     </div>
 
                     <!-- 狀態切換按鈕（測試用） -->
