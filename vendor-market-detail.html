@@ -101,8 +101,8 @@
         let currentStatus = 'reviewing';
 
         function updateMatchingInfoVisibility() {
-            const hide = paymentMode === 'virtual' &&
-                (currentStatus === 'reviewing' || currentStatus === 'rejected');
+            const hide = paymentMode === 'credit' ||
+                (paymentMode === 'virtual' && (currentStatus === 'reviewing' || currentStatus === 'rejected'));
             document.getElementById('matching-info-display').classList.toggle('hidden', hide);
         }
 
@@ -115,17 +115,33 @@
             document.querySelectorAll('.virtual-only').forEach(el => {
                 el.classList.toggle('hidden', mode !== 'virtual');
             });
+            document.querySelectorAll('.credit-only').forEach(el => {
+                el.classList.toggle('hidden', mode !== 'credit');
+            });
 
-            const btnAtm = document.getElementById('btn-mode-atm');
-            const btnVirtual = document.getElementById('btn-mode-virtual');
-            btnAtm.className = mode === 'atm'
-                ? 'px-4 py-2 bg-gray-800 text-white rounded-lg text-sm transition-colors'
-                : 'px-4 py-2 bg-gray-200 text-gray-600 rounded-lg text-sm transition-colors';
-            btnVirtual.className = mode === 'virtual'
-                ? 'px-4 py-2 bg-gray-800 text-white rounded-lg text-sm transition-colors'
-                : 'px-4 py-2 bg-gray-200 text-gray-600 rounded-lg text-sm transition-colors';
+            const activeClass = 'px-4 py-2 bg-gray-800 text-white rounded-lg text-sm transition-colors';
+            const inactiveClass = 'px-4 py-2 bg-gray-200 text-gray-600 rounded-lg text-sm transition-colors';
+            document.getElementById('btn-mode-atm').className = mode === 'atm' ? activeClass : inactiveClass;
+            document.getElementById('btn-mode-virtual').className = mode === 'virtual' ? activeClass : inactiveClass;
+            document.getElementById('btn-mode-credit').className = mode === 'credit' ? activeClass : inactiveClass;
 
             updateMatchingInfoVisibility();
+        }
+
+        function selectPaymentMethod(method) {
+            const atmBtn = document.getElementById('unpaid-method-atm');
+            const creditBtn = document.getElementById('unpaid-method-credit');
+            if (!atmBtn || !creditBtn) { setPaymentMode(method); return; }
+
+            const atmSelected = 'flex items-center gap-3 p-4 rounded-lg border-2 text-left transition-all border-gray-800 bg-gray-50 w-full';
+            const creditSelected = 'flex items-center gap-3 p-4 rounded-lg border-2 text-left transition-all border-blue-500 bg-blue-50 w-full';
+            const unselectedAtm = 'flex items-center gap-3 p-4 rounded-lg border-2 text-left transition-all border-gray-200 bg-white hover:border-gray-400 w-full';
+            const unselectedCredit = 'flex items-center gap-3 p-4 rounded-lg border-2 text-left transition-all border-gray-200 bg-white hover:border-blue-300 w-full';
+
+            atmBtn.className = method === 'atm' ? atmSelected : unselectedAtm;
+            creditBtn.className = method === 'credit' ? creditSelected : unselectedCredit;
+
+            setPaymentMode(method);
         }
 
         window.addEventListener('load', function() {
@@ -146,7 +162,7 @@
                 showStatus('payment-reviewing');
             });
 
-            setPaymentMode('atm');
+            selectPaymentMethod('atm');
             showStatus('reviewing'); // 預設顯示審核中狀態
         });
     </script>
@@ -287,19 +303,38 @@
 
                                 <!-- 未繳費狀態顯示 -->
                                 <div id="unpaid-notice" class="bg-yellow-50 p-4 rounded-lg">
-                                    <p class="text-sm text-yellow-800">
-                                        <i class="fas fa-info-circle mr-2"></i>
-                                        <span class="atm-only">請於3天內完成匯款並填寫匯款帳號末5碼，逾期報名將自動取消。</span>
-                                        <span class="virtual-only hidden">請於3天內完成匯款，轉帳後系統將自動確認，逾期報名將自動取消。</span>
-                                    </p>
-                                    <div class="mt-2 flex items-center">
-                                        <i class="fas fa-clock text-yellow-500 mr-2"></i>
-                                        <p class="text-sm text-yellow-800">
-                                            匯款期限：2024/01/08 23:59
-                                        </p>
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <i class="fas fa-clock text-yellow-500"></i>
+                                        <p class="text-sm font-medium text-yellow-800">繳費期限：2024/01/08 23:59</p>
                                     </div>
+                                    <p class="text-xs text-yellow-700 mb-4">請選擇繳費方式並於期限內完成繳費，逾期報名將自動取消。</p>
+
+                                    <!-- 繳費方式選擇卡片 -->
+                                    <div class="grid grid-cols-2 gap-3 mb-4">
+                                        <button id="unpaid-method-atm" onclick="selectPaymentMethod('atm')"
+                                            class="flex items-center gap-3 p-4 rounded-lg border-2 text-left transition-all border-gray-200 bg-white hover:border-gray-400 w-full">
+                                            <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center bg-gray-100">
+                                                <i class="fas fa-university text-gray-500"></i>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-semibold text-gray-800">ATM 轉帳</p>
+                                                <p class="text-xs text-gray-500 mt-0.5">匯款後填寫帳號末5碼確認</p>
+                                            </div>
+                                        </button>
+                                        <button id="unpaid-method-credit" onclick="selectPaymentMethod('credit')"
+                                            class="flex items-center gap-3 p-4 rounded-lg border-2 text-left transition-all border-gray-200 bg-white hover:border-blue-300 w-full">
+                                            <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center bg-blue-50">
+                                                <i class="fas fa-credit-card text-blue-500"></i>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-semibold text-gray-800">信用卡</p>
+                                                <p class="text-xs text-gray-500 mt-0.5">線上刷卡，系統自動確認</p>
+                                            </div>
+                                        </button>
+                                    </div>
+
                                     <!-- ATM 匯款確認表單 -->
-                                    <form id="paymentForm" class="atm-only mt-4">
+                                    <form id="paymentForm" class="atm-only">
                                         <div class="space-y-4">
                                             <div class="grid grid-cols-2 gap-4">
                                                 <div>
@@ -328,11 +363,29 @@
                                         </div>
                                     </form>
                                     <!-- 虛擬帳號自動確認提示 -->
-                                    <div class="virtual-only hidden mt-4 bg-white rounded-lg p-3 border border-yellow-200">
+                                    <div class="virtual-only hidden bg-white rounded-lg p-3 border border-yellow-200">
                                         <p class="text-sm text-yellow-800">
                                             <i class="fas fa-bolt mr-2 text-yellow-500"></i>
                                             轉帳完成後，系統將自動偵測款項並確認繳費，無需填寫任何資訊。
                                         </p>
+                                    </div>
+                                    <!-- 信用卡繳費區塊 -->
+                                    <div class="credit-only hidden bg-white rounded-lg p-4 border border-blue-200">
+                                        <p class="text-sm text-gray-600 mb-4">
+                                            <i class="fas fa-shield-alt mr-2 text-blue-400"></i>
+                                            透過安全的信用卡付款頁面完成繳費，付款後系統將自動確認，無需填寫任何資訊。
+                                        </p>
+                                        <div class="flex items-center gap-2 mb-3 text-xs text-gray-400">
+                                            <i class="fab fa-cc-visa text-blue-600 text-base"></i>
+                                            <i class="fab fa-cc-mastercard text-red-500 text-base"></i>
+                                            <i class="fab fa-cc-jcb text-green-600 text-base"></i>
+                                            <span>支援 VISA / Mastercard / JCB</span>
+                                        </div>
+                                        <button onclick="showStatus('payment-reviewing')"
+                                            class="w-full px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm font-medium transition-colors flex items-center justify-center gap-2">
+                                            <i class="fas fa-credit-card"></i>
+                                            前往信用卡繳費（NT$ 6,000）
+                                        </button>
                                     </div>
                                 </div>
 
@@ -362,6 +415,7 @@
                                         <i class="fas fa-info-circle mr-2"></i>
                                         <span class="atm-only">我們已收到您的匯款資訊，正在進行確認，請耐心等候。</span>
                                         <span class="virtual-only hidden">系統偵測到您已完成轉帳，正在自動確認款項，請稍候。</span>
+                                        <span class="credit-only hidden">您的信用卡付款正在處理中，系統將自動確認。</span>
                                     </p>
                                     <div class="mt-2 flex items-center">
                                         <i class="fas fa-clock text-purple-500 mr-2"></i>
@@ -371,7 +425,7 @@
                                     </div>
                                     <div class="mt-4 grid grid-cols-2 gap-4">
                                         <div>
-                                            <p class="text-sm text-gray-500">匯款時間</p>
+                                            <p class="text-sm text-gray-500">繳費時間</p>
                                             <p class="font-medium">2024/01/06 14:30</p>
                                         </div>
                                         <div class="atm-only">
@@ -382,6 +436,10 @@
                                             <p class="text-sm text-gray-500">確認方式</p>
                                             <p class="font-medium">系統自動確認</p>
                                         </div>
+                                        <div class="credit-only hidden">
+                                            <p class="text-sm text-gray-500">繳費方式</p>
+                                            <p class="font-medium">信用卡</p>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -389,7 +447,9 @@
                                 <div id="confirmed-notice" class="hidden bg-green-50 p-4 rounded-lg">
                                     <p class="text-sm text-green-800">
                                         <i class="fas fa-check-circle mr-2"></i>
-                                        您的匯款已確認，報名成功！
+                                        <span class="atm-only">您的匯款已確認，報名成功！</span>
+                                        <span class="virtual-only hidden">虛擬帳號轉帳已確認，報名成功！</span>
+                                        <span class="credit-only hidden">您的信用卡繳費已完成，報名成功！</span>
                                     </p>
                                     <div class="mt-2 flex items-center">
                                         <i class="fas fa-info-circle text-green-500 mr-2"></i>
@@ -399,7 +459,7 @@
                                     </div>
                                     <div class="mt-4 grid grid-cols-2 gap-4">
                                         <div>
-                                            <p class="text-sm text-gray-500">匯款時間</p>
+                                            <p class="text-sm text-gray-500">繳費時間</p>
                                             <p class="font-medium">2024/01/06 14:30</p>
                                         </div>
                                         <div class="atm-only">
@@ -409,6 +469,10 @@
                                         <div class="virtual-only hidden">
                                             <p class="text-sm text-gray-500">確認方式</p>
                                             <p class="font-medium">虛擬帳號自動確認</p>
+                                        </div>
+                                        <div class="credit-only hidden">
+                                            <p class="text-sm text-gray-500">繳費方式</p>
+                                            <p class="font-medium">信用卡</p>
                                         </div>
                                     </div>
                                 </div>
@@ -600,6 +664,9 @@
                         </button>
                         <button id="btn-mode-virtual" onclick="setPaymentMode('virtual')" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg text-sm transition-colors">
                             虛擬帳號
+                        </button>
+                        <button id="btn-mode-credit" onclick="setPaymentMode('credit')" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg text-sm transition-colors">
+                            信用卡
                         </button>
                     </div>
 
