@@ -3,7 +3,11 @@
     "allow": [
       "Bash(grep -l \"活動\\\\|event\\\\|statistics\" /Users/awei/Documents/Workspace/Cursor/17847Market/*.html)",
       "Bash(ls -la /Users/awei/Documents/Workspace/Cursor/17847Market/*.html)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Skill(run)",
+      "Bash(python3 -c \"import playwright\")",
+      "Bash(npx --yes playwright --version)",
+      "Bash(python3 -)"
     ]
   }
 }

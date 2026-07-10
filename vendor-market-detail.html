@@ -1,752 +1,1206 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-Hant">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>週末文創市集 - 報名詳情</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        body {
-            font-family: 'Noto Sans TC', sans-serif;
-            background-color: #F3F4F6;
-        }
+      body {
+        font-family: "Noto Sans TC", sans-serif;
+        background-color: #f3f4f6;
+      }
     </style>
     <script>
-        function toggleChatWindow() {
-            const chatWindow = document.getElementById('chatWindow');
-            const chatBody = document.getElementById('chatBody');
-            const toggleIcon = document.getElementById('toggleIcon');
-            
-            if (chatWindow.classList.contains('h-[500px]')) {
-                chatWindow.classList.remove('h-[500px]');
-                chatWindow.classList.add('h-[60px]');
-                chatBody.classList.add('hidden');
-                toggleIcon.classList.remove('fa-chevron-down');
-                toggleIcon.classList.add('fa-chevron-up');
-            } else {
-                chatWindow.classList.remove('h-[60px]');
-                chatWindow.classList.add('h-[500px]');
-                chatBody.classList.remove('hidden');
-                toggleIcon.classList.remove('fa-chevron-up');
-                toggleIcon.classList.add('fa-chevron-down');
-            }
+      function toggleChatWindow() {
+        const chatWindow = document.getElementById("chatWindow");
+        const chatBody = document.getElementById("chatBody");
+        const toggleIcon = document.getElementById("toggleIcon");
+
+        if (chatWindow.classList.contains("h-[500px]")) {
+          chatWindow.classList.remove("h-[500px]");
+          chatWindow.classList.add("h-[60px]");
+          chatBody.classList.add("hidden");
+          toggleIcon.classList.remove("fa-chevron-down");
+          toggleIcon.classList.add("fa-chevron-up");
+        } else {
+          chatWindow.classList.remove("h-[60px]");
+          chatWindow.classList.add("h-[500px]");
+          chatBody.classList.remove("hidden");
+          toggleIcon.classList.remove("fa-chevron-up");
+          toggleIcon.classList.add("fa-chevron-down");
+        }
+      }
+
+      function openChat() {
+        const chatWindow = document.getElementById("chatWindow");
+        chatWindow.classList.remove("hidden");
+        chatWindow.classList.add("h-[500px]");
+        const chatBody = document.getElementById("chatBody");
+        chatBody.classList.remove("hidden");
+        const toggleIcon = document.getElementById("toggleIcon");
+        toggleIcon.classList.remove("fa-chevron-up");
+        toggleIcon.classList.add("fa-chevron-down");
+      }
+
+      // 狀態切換函數
+      function showStatus(status) {
+        // 隱藏所有狀態
+        document.getElementById("status-unpaid").classList.add("hidden");
+        document.getElementById("status-reviewing").classList.add("hidden");
+        document
+          .getElementById("status-payment-reviewing")
+          .classList.add("hidden");
+        document.getElementById("status-confirmed").classList.add("hidden");
+        document.getElementById("status-expired").classList.add("hidden");
+        document.getElementById("status-rejected").classList.add("hidden");
+        document.getElementById("unpaid-notice").classList.add("hidden");
+        document.getElementById("reviewing-notice").classList.add("hidden");
+        document
+          .getElementById("payment-reviewing-notice")
+          .classList.add("hidden");
+        document.getElementById("confirmed-notice").classList.add("hidden");
+        document.getElementById("expired-notice").classList.add("hidden");
+        document.getElementById("rejected-notice").classList.add("hidden");
+
+        currentStatus = status;
+
+        // 顯示選定的狀態
+        switch (status) {
+          case "unpaid":
+            document.getElementById("status-unpaid").classList.remove("hidden");
+            document.getElementById("unpaid-notice").classList.remove("hidden");
+            break;
+          case "reviewing":
+            document
+              .getElementById("status-reviewing")
+              .classList.remove("hidden");
+            document
+              .getElementById("reviewing-notice")
+              .classList.remove("hidden");
+            break;
+          case "payment-reviewing":
+            document
+              .getElementById("status-payment-reviewing")
+              .classList.remove("hidden");
+            document
+              .getElementById("payment-reviewing-notice")
+              .classList.remove("hidden");
+            break;
+          case "confirmed":
+            document
+              .getElementById("status-confirmed")
+              .classList.remove("hidden");
+            document
+              .getElementById("confirmed-notice")
+              .classList.remove("hidden");
+            break;
+          case "expired":
+            document
+              .getElementById("status-expired")
+              .classList.remove("hidden");
+            document
+              .getElementById("expired-notice")
+              .classList.remove("hidden");
+            break;
+          case "rejected":
+            document
+              .getElementById("status-rejected")
+              .classList.remove("hidden");
+            document
+              .getElementById("rejected-notice")
+              .classList.remove("hidden");
+            break;
         }
 
-        function openChat() {
-            const chatWindow = document.getElementById('chatWindow');
-            chatWindow.classList.remove('hidden');
-            chatWindow.classList.add('h-[500px]');
-            const chatBody = document.getElementById('chatBody');
-            chatBody.classList.remove('hidden');
-            const toggleIcon = document.getElementById('toggleIcon');
-            toggleIcon.classList.remove('fa-chevron-up');
-            toggleIcon.classList.add('fa-chevron-down');
-        }
+        updateMatchingInfoVisibility();
+      }
 
-        // 狀態切換函數
-        function showStatus(status) {
-            // 隱藏所有狀態
-            document.getElementById('status-unpaid').classList.add('hidden');
-            document.getElementById('status-reviewing').classList.add('hidden');
-            document.getElementById('status-payment-reviewing').classList.add('hidden');
-            document.getElementById('status-confirmed').classList.add('hidden');
-            document.getElementById('status-expired').classList.add('hidden');
-            document.getElementById('status-rejected').classList.add('hidden');
-            document.getElementById('unpaid-notice').classList.add('hidden');
-            document.getElementById('reviewing-notice').classList.add('hidden');
-            document.getElementById('payment-reviewing-notice').classList.add('hidden');
-            document.getElementById('confirmed-notice').classList.add('hidden');
-            document.getElementById('expired-notice').classList.add('hidden');
-            document.getElementById('rejected-notice').classList.add('hidden');
+      let paymentMode = "atm";
+      let currentStatus = "reviewing";
 
-            currentStatus = status;
+      function updateMatchingInfoVisibility() {
+        const hide =
+          paymentMode === "credit" ||
+          (paymentMode === "virtual" &&
+            (currentStatus === "reviewing" || currentStatus === "rejected"));
+        document
+          .getElementById("matching-info-display")
+          .classList.toggle("hidden", hide);
+      }
 
-            // 顯示選定的狀態
-            switch(status) {
-                case 'unpaid':
-                    document.getElementById('status-unpaid').classList.remove('hidden');
-                    document.getElementById('unpaid-notice').classList.remove('hidden');
-                    break;
-                case 'reviewing':
-                    document.getElementById('status-reviewing').classList.remove('hidden');
-                    document.getElementById('reviewing-notice').classList.remove('hidden');
-                    break;
-                case 'payment-reviewing':
-                    document.getElementById('status-payment-reviewing').classList.remove('hidden');
-                    document.getElementById('payment-reviewing-notice').classList.remove('hidden');
-                    break;
-                case 'confirmed':
-                    document.getElementById('status-confirmed').classList.remove('hidden');
-                    document.getElementById('confirmed-notice').classList.remove('hidden');
-                    break;
-                case 'expired':
-                    document.getElementById('status-expired').classList.remove('hidden');
-                    document.getElementById('expired-notice').classList.remove('hidden');
-                    break;
-                case 'rejected':
-                    document.getElementById('status-rejected').classList.remove('hidden');
-                    document.getElementById('rejected-notice').classList.remove('hidden');
-                    break;
-            }
+      function setPaymentMode(mode) {
+        paymentMode = mode;
 
-            updateMatchingInfoVisibility();
-        }
-
-        let paymentMode = 'atm';
-        let currentStatus = 'reviewing';
-
-        function updateMatchingInfoVisibility() {
-            const hide = paymentMode === 'credit' ||
-                (paymentMode === 'virtual' && (currentStatus === 'reviewing' || currentStatus === 'rejected'));
-            document.getElementById('matching-info-display').classList.toggle('hidden', hide);
-        }
-
-        function setPaymentMode(mode) {
-            paymentMode = mode;
-
-            document.querySelectorAll('.atm-only').forEach(el => {
-                el.classList.toggle('hidden', mode !== 'atm');
-            });
-            document.querySelectorAll('.virtual-only').forEach(el => {
-                el.classList.toggle('hidden', mode !== 'virtual');
-            });
-            document.querySelectorAll('.credit-only').forEach(el => {
-                el.classList.toggle('hidden', mode !== 'credit');
-            });
-
-            const activeClass = 'px-4 py-2 bg-gray-800 text-white rounded-lg text-sm transition-colors';
-            const inactiveClass = 'px-4 py-2 bg-gray-200 text-gray-600 rounded-lg text-sm transition-colors';
-            document.getElementById('btn-mode-atm').className = mode === 'atm' ? activeClass : inactiveClass;
-            document.getElementById('btn-mode-virtual').className = mode === 'virtual' ? activeClass : inactiveClass;
-            document.getElementById('btn-mode-credit').className = mode === 'credit' ? activeClass : inactiveClass;
-
-            updateMatchingInfoVisibility();
-        }
-
-        function selectPaymentMethod(method) {
-            const atmBtn = document.getElementById('unpaid-method-atm');
-            const creditBtn = document.getElementById('unpaid-method-credit');
-            if (!atmBtn || !creditBtn) { setPaymentMode(method); return; }
-
-            const atmSelected = 'flex items-center gap-3 p-4 rounded-lg border-2 text-left transition-all border-gray-800 bg-gray-50 w-full';
-            const creditSelected = 'flex items-center gap-3 p-4 rounded-lg border-2 text-left transition-all border-blue-500 bg-blue-50 w-full';
-            const unselectedAtm = 'flex items-center gap-3 p-4 rounded-lg border-2 text-left transition-all border-gray-200 bg-white hover:border-gray-400 w-full';
-            const unselectedCredit = 'flex items-center gap-3 p-4 rounded-lg border-2 text-left transition-all border-gray-200 bg-white hover:border-blue-300 w-full';
-
-            atmBtn.className = method === 'atm' ? atmSelected : unselectedAtm;
-            creditBtn.className = method === 'credit' ? creditSelected : unselectedCredit;
-
-            setPaymentMode(method);
-        }
-
-        window.addEventListener('load', function() {
-            // 處理匯款確認表單提交
-            document.getElementById('paymentForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-
-                const transferDate = document.getElementById('transferDate').value;
-                const transferTime = document.getElementById('transferTime').value;
-                const accountLast5 = document.getElementById('accountLast5').value;
-
-                if (!/^\d{5}$/.test(accountLast5)) {
-                    alert('請輸入正確的帳號末5碼（5位數字）');
-                    return;
-                }
-
-                alert('匯款資訊已送出，我們將盡快確認您的付款！');
-                showStatus('payment-reviewing');
-            });
-
-            selectPaymentMethod('atm');
-            showStatus('reviewing'); // 預設顯示審核中狀態
+        document.querySelectorAll(".atm-only").forEach((el) => {
+          el.classList.toggle("hidden", mode !== "atm");
         });
+        document.querySelectorAll(".virtual-only").forEach((el) => {
+          el.classList.toggle("hidden", mode !== "virtual");
+        });
+        document.querySelectorAll(".credit-only").forEach((el) => {
+          el.classList.toggle("hidden", mode !== "credit");
+        });
+
+        const activeClass =
+          "px-4 py-2 bg-gray-800 text-white rounded-lg text-sm transition-colors";
+        const inactiveClass =
+          "px-4 py-2 bg-gray-200 text-gray-600 rounded-lg text-sm transition-colors";
+        document.getElementById("btn-mode-atm").className =
+          mode === "atm" ? activeClass : inactiveClass;
+        document.getElementById("btn-mode-virtual").className =
+          mode === "virtual" ? activeClass : inactiveClass;
+        document.getElementById("btn-mode-credit").className =
+          mode === "credit" ? activeClass : inactiveClass;
+
+        updateMatchingInfoVisibility();
+      }
+
+      function selectPaymentMethod(method) {
+        const atmBtn = document.getElementById("unpaid-method-atm");
+        const creditBtn = document.getElementById("unpaid-method-credit");
+        if (!atmBtn || !creditBtn) {
+          setPaymentMode(method);
+          return;
+        }
+
+        const atmSelected =
+          "flex items-center gap-3 p-4 rounded-lg border-2 text-left transition-all border-gray-800 bg-gray-50 w-full";
+        const creditSelected =
+          "flex items-center gap-3 p-4 rounded-lg border-2 text-left transition-all border-blue-500 bg-blue-50 w-full";
+        const unselectedAtm =
+          "flex items-center gap-3 p-4 rounded-lg border-2 text-left transition-all border-gray-200 bg-white hover:border-gray-400 w-full";
+        const unselectedCredit =
+          "flex items-center gap-3 p-4 rounded-lg border-2 text-left transition-all border-gray-200 bg-white hover:border-blue-300 w-full";
+
+        atmBtn.className = method === "atm" ? atmSelected : unselectedAtm;
+        creditBtn.className =
+          method === "credit" ? creditSelected : unselectedCredit;
+
+        setPaymentMode(method);
+      }
+
+      window.addEventListener("load", function () {
+        // 處理匯款確認表單提交
+        document
+          .getElementById("paymentForm")
+          .addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const transferDate = document.getElementById("transferDate").value;
+            const transferTime = document.getElementById("transferTime").value;
+            const accountLast5 = document.getElementById("accountLast5").value;
+
+            if (!/^\d{5}$/.test(accountLast5)) {
+              alert("請輸入正確的帳號末5碼（5位數字）");
+              return;
+            }
+
+            alert("匯款資訊已送出，我們將盡快確認您的付款！");
+            showStatus("payment-reviewing");
+          });
+
+        selectPaymentMethod("atm");
+        showStatus("reviewing"); // 預設顯示審核中狀態
+      });
     </script>
-</head>
-<body class="bg-gray-100">
+  </head>
+  <body class="bg-gray-100">
     <div class="min-h-screen flex">
-        <!-- 側邊欄 -->
-        <div class="bg-white w-64 min-h-screen shadow-lg fixed">
-            <div class="flex items-center justify-center h-16 border-b border-gray-200">
-                <a href="home.html">
-                    <img class="h-8" src="https://via.placeholder.com/150x50" alt="Logo">
-                </a>
+      <!-- 側邊欄 -->
+      <div class="bg-white w-64 min-h-screen shadow-lg fixed">
+        <div
+          class="flex items-center justify-center h-16 border-b border-gray-200"
+        >
+          <a href="home.html">
+            <img
+              class="h-8"
+              src="https://via.placeholder.com/150x50"
+              alt="Logo"
+            />
+          </a>
+        </div>
+        <nav class="mt-6">
+          <div class="px-4 py-2">
+            <div class="flex items-center space-x-2 text-sm text-gray-600">
+              <img
+                class="h-8 w-8 rounded-full object-cover"
+                src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=32&h=32&fit=crop"
+                alt="攤商頭像"
+              />
+              <span>歡迎回來，小草工作室</span>
             </div>
-            <nav class="mt-6">
-                <div class="px-4 py-2">
-                    <div class="flex items-center space-x-2 text-sm text-gray-600">
-                        <img class="h-8 w-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=32&h=32&fit=crop" alt="攤商頭像">
-                        <span>歡迎回來，小草工作室</span>
-                    </div>
+          </div>
+          <div class="px-2 mt-4">
+            <a
+              href="vendor-dashboard.html"
+              class="flex items-center px-4 py-3 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors"
+            >
+              <i class="fas fa-home w-5 h-5"></i>
+              <span class="mx-4">首頁</span>
+            </a>
+            <a
+              href="vendor-profile.html"
+              class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors"
+            >
+              <i class="fas fa-user w-5 h-5"></i>
+              <span class="mx-4">基本資料</span>
+            </a>
+            <a
+              href="vendor-markets.html"
+              class="flex items-center px-4 py-3 mt-2 text-gray-700 bg-yellow-50 rounded-lg"
+            >
+              <i class="fas fa-store w-5 h-5"></i>
+              <span class="mx-4">我的市集</span>
+            </a>
+            <a
+              href="vendor-products.html"
+              class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors"
+            >
+              <i class="fas fa-box w-5 h-5"></i>
+              <span class="mx-4">商品管理</span>
+            </a>
+            <a
+              href="vendor-settings.html"
+              class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors"
+            >
+              <i class="fas fa-cog w-5 h-5"></i>
+              <span class="mx-4">設定</span>
+            </a>
+          </div>
+        </nav>
+      </div>
+
+      <!-- 主要內容區 -->
+      <div class="flex-1 ml-64">
+        <!-- 頂部導航 -->
+        <header class="bg-white shadow-sm">
+          <div class="flex items-center justify-between h-16 px-8">
+            <div class="flex items-center space-x-4">
+              <a
+                href="vendor-markets.html"
+                class="text-gray-600 hover:text-gray-800"
+              >
+                <i class="fas fa-arrow-left"></i>
+                <span class="ml-2">返回我的市集</span>
+              </a>
+              <h1 class="text-xl font-bold text-gray-800">
+                週末文創市集 - 報名詳情
+              </h1>
+            </div>
+          </div>
+        </header>
+
+        <!-- 主要內容 -->
+        <main class="p-8">
+          <div class="max-w-4xl mx-auto">
+            <!-- 報名狀態卡片 -->
+            <div class="bg-white rounded-lg shadow-sm mb-6">
+              <div class="p-6">
+                <div class="flex items-center justify-between mb-4">
+                  <div>
+                    <h2 class="text-xl font-bold text-gray-900">報名狀態</h2>
+                    <p class="text-sm text-gray-500 mt-1">
+                      報名編號：MKT20240120001
+                    </p>
+                  </div>
+                  <div class="flex items-center space-x-2">
+                    <!-- 未繳費狀態 -->
+                    <span
+                      id="status-unpaid"
+                      class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm"
+                      >待付款</span
+                    >
+                    <!-- 審核中狀態（審核攤商資料） -->
+                    <span
+                      id="status-reviewing"
+                      class="hidden px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm"
+                      >審核中</span
+                    >
+                    <!-- 確認匯款資訊中狀態 -->
+                    <span
+                      id="status-payment-reviewing"
+                      class="hidden px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm"
+                      >確認匯款資訊中</span
+                    >
+                    <!-- 已確認狀態 -->
+                    <span
+                      id="status-confirmed"
+                      class="hidden px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm"
+                      >已確認</span
+                    >
+                    <!-- 已過期狀態 -->
+                    <span
+                      id="status-expired"
+                      class="hidden px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm"
+                      >已過期</span
+                    >
+                    <!-- 審核未通過狀態 -->
+                    <span
+                      id="status-rejected"
+                      class="hidden px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm"
+                      >審核未通過</span
+                    >
+                  </div>
                 </div>
-                <div class="px-2 mt-4">
-                    <a href="vendor-dashboard.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
-                        <i class="fas fa-home w-5 h-5"></i>
-                        <span class="mx-4">首頁</span>
-                    </a>
-                    <a href="vendor-profile.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
-                        <i class="fas fa-user w-5 h-5"></i>
-                        <span class="mx-4">基本資料</span>
-                    </a>
-                    <a href="vendor-markets.html" class="flex items-center px-4 py-3 mt-2 text-gray-700 bg-yellow-50 rounded-lg">
-                        <i class="fas fa-store w-5 h-5"></i>
-                        <span class="mx-4">我的市集</span>
-                    </a>
-                    <a href="vendor-products.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
-                        <i class="fas fa-box w-5 h-5"></i>
-                        <span class="mx-4">商品管理</span>
-                    </a>
-                    <a href="vendor-settings.html" class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors">
-                        <i class="fas fa-cog w-5 h-5"></i>
-                        <span class="mx-4">設定</span>
-                    </a>
+
+                <!-- 訂單摘要 -->
+                <div class="space-y-4">
+                  <div class="flex justify-between text-sm">
+                    <span class="text-gray-500">標準攤位 x 2日</span>
+                    <span class="text-gray-900">NT$ 5,000</span>
+                  </div>
+                  <div class="flex justify-between text-sm">
+                    <span class="text-gray-500">保證金（可退還）</span>
+                    <span class="text-gray-900">NT$ 1,000</span>
+                  </div>
+                  <div class="pt-2 border-t border-gray-200">
+                    <div class="flex justify-between">
+                      <span class="font-medium text-gray-900">總計</span>
+                      <span class="font-medium text-gray-900">NT$ 6,000</span>
+                    </div>
+                  </div>
                 </div>
-            </nav>
-        </div>
 
-        <!-- 主要內容區 -->
-        <div class="flex-1 ml-64">
-            <!-- 頂部導航 -->
-            <header class="bg-white shadow-sm">
-                <div class="flex items-center justify-between h-16 px-8">
-                    <div class="flex items-center space-x-4">
-                        <a href="vendor-markets.html" class="text-gray-600 hover:text-gray-800">
-                            <i class="fas fa-arrow-left"></i>
-                            <span class="ml-2">返回我的市集</span>
-                        </a>
-                        <h1 class="text-xl font-bold text-gray-800">週末文創市集 - 報名詳情</h1>
-                    </div>
-                </div>
-            </header>
-
-            <!-- 主要內容 -->
-            <main class="p-8">
-                <div class="max-w-4xl mx-auto">
-                    <!-- 報名狀態卡片 -->
-                    <div class="bg-white rounded-lg shadow-sm mb-6">
-                        <div class="p-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <div>
-                                    <h2 class="text-xl font-bold text-gray-900">報名狀態</h2>
-                                    <p class="text-sm text-gray-500 mt-1">報名編號：MKT20240120001</p>
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <!-- 未繳費狀態 -->
-                                    <span id="status-unpaid" class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">待付款</span>
-                                    <!-- 審核中狀態（審核攤商資料） -->
-                                    <span id="status-reviewing" class="hidden px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">審核中</span>
-                                    <!-- 確認匯款資訊中狀態 -->
-                                    <span id="status-payment-reviewing" class="hidden px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">確認匯款資訊中</span>
-                                    <!-- 已確認狀態 -->
-                                    <span id="status-confirmed" class="hidden px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">已確認</span>
-                                    <!-- 已過期狀態 -->
-                                    <span id="status-expired" class="hidden px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">已過期</span>
-                                    <!-- 審核未通過狀態 -->
-                                    <span id="status-rejected" class="hidden px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">審核未通過</span>
-                                </div>
-                            </div>
-
-                            <!-- 訂單摘要 -->
-                            <div class="space-y-4">
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500">標準攤位 x 2日</span>
-                                    <span class="text-gray-900">NT$ 5,000</span>
-                                </div>
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500">保證金（可退還）</span>
-                                    <span class="text-gray-900">NT$ 1,000</span>
-                                </div>
-                                <div class="pt-2 border-t border-gray-200">
-                                    <div class="flex justify-between">
-                                        <span class="font-medium text-gray-900">總計</span>
-                                        <span class="font-medium text-gray-900">NT$ 6,000</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- 匯款資訊 -->
-                            <div class="border-t border-gray-200 mt-6 pt-6">
-                                <div id="matching-info-display">
-                                <h3 class="text-lg font-medium text-gray-900 mb-4">匯款資訊</h3>
-                                <div class="grid grid-cols-2 gap-4 mb-4">
-                                    <div>
-                                        <p class="text-sm text-gray-500">銀行名稱</p>
-                                        <p class="font-medium">國泰世華銀行</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm text-gray-500">分行</p>
-                                        <p class="font-medium">松山分行</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm text-gray-500">戶名</p>
-                                        <p class="font-medium">文創市集有限公司</p>
-                                    </div>
-                                    <!-- ATM 帳號 -->
-                                    <div class="atm-only">
-                                        <p class="text-sm text-gray-500">帳號</p>
-                                        <p class="font-medium">1234-5678-9012-3456</p>
-                                    </div>
-                                    <!-- 虛擬帳號 -->
-                                    <div class="virtual-only hidden col-span-2">
-                                        <p class="text-sm text-gray-500">虛擬帳號</p>
-                                        <div class="flex items-center space-x-3 mt-1">
-                                            <p class="font-bold text-xl font-mono tracking-widest">24567890123456</p>
-                                            <span class="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded">專屬帳號，請勿與他人共用</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                </div><!-- /matching-info-display -->
-
-                                <!-- 未繳費狀態顯示 -->
-                                <div id="unpaid-notice" class="bg-yellow-50 p-4 rounded-lg">
-                                    <div class="flex items-center gap-2 mb-1">
-                                        <i class="fas fa-clock text-yellow-500"></i>
-                                        <p class="text-sm font-medium text-yellow-800">繳費期限：2024/01/08 23:59</p>
-                                    </div>
-                                    <p class="text-xs text-yellow-700 mb-4">請選擇繳費方式並於期限內完成繳費，逾期報名將自動取消。</p>
-
-                                    <!-- 繳費方式選擇卡片 -->
-                                    <div class="grid grid-cols-2 gap-3 mb-4">
-                                        <button id="unpaid-method-atm" onclick="selectPaymentMethod('atm')"
-                                            class="flex items-center gap-3 p-4 rounded-lg border-2 text-left transition-all border-gray-200 bg-white hover:border-gray-400 w-full">
-                                            <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center bg-gray-100">
-                                                <i class="fas fa-university text-gray-500"></i>
-                                            </div>
-                                            <div>
-                                                <p class="text-sm font-semibold text-gray-800">ATM 轉帳</p>
-                                                <p class="text-xs text-gray-500 mt-0.5">匯款後填寫帳號末5碼確認</p>
-                                            </div>
-                                        </button>
-                                        <button id="unpaid-method-credit" onclick="selectPaymentMethod('credit')"
-                                            class="flex items-center gap-3 p-4 rounded-lg border-2 text-left transition-all border-gray-200 bg-white hover:border-blue-300 w-full">
-                                            <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center bg-blue-50">
-                                                <i class="fas fa-credit-card text-blue-500"></i>
-                                            </div>
-                                            <div>
-                                                <p class="text-sm font-semibold text-gray-800">信用卡</p>
-                                                <p class="text-xs text-gray-500 mt-0.5">線上刷卡，系統自動確認</p>
-                                            </div>
-                                        </button>
-                                    </div>
-
-                                    <!-- ATM 匯款確認表單 -->
-                                    <form id="paymentForm" class="atm-only">
-                                        <div class="space-y-4">
-                                            <div class="grid grid-cols-2 gap-4">
-                                                <div>
-                                                    <label for="transferDate" class="block text-sm font-medium text-gray-700">匯款日期</label>
-                                                    <input type="date" id="transferDate" name="transferDate" required
-                                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500">
-                                                </div>
-                                                <div>
-                                                    <label for="transferTime" class="block text-sm font-medium text-gray-700">匯款時間</label>
-                                                    <input type="time" id="transferTime" name="transferTime" required
-                                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500">
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <label for="accountLast5" class="block text-sm font-medium text-gray-700">匯款帳號末5碼</label>
-                                                <input type="text" id="accountLast5" name="accountLast5" required maxlength="5" pattern="\d{5}"
-                                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
-                                                    placeholder="請輸入末5碼">
-                                                <p class="mt-1 text-sm text-gray-500">請輸入您匯款帳戶的末5碼，以利我們核對款項</p>
-                                            </div>
-                                            <div class="flex justify-end">
-                                                <button type="submit" class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">
-                                                    確認送出
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                    <!-- 虛擬帳號自動確認提示 -->
-                                    <div class="virtual-only hidden bg-white rounded-lg p-3 border border-yellow-200">
-                                        <p class="text-sm text-yellow-800">
-                                            <i class="fas fa-bolt mr-2 text-yellow-500"></i>
-                                            轉帳完成後，系統將自動偵測款項並確認繳費，無需填寫任何資訊。
-                                        </p>
-                                    </div>
-                                    <!-- 信用卡繳費區塊 -->
-                                    <div class="credit-only hidden bg-white rounded-lg p-4 border border-blue-200">
-                                        <p class="text-sm text-gray-600 mb-4">
-                                            <i class="fas fa-shield-alt mr-2 text-blue-400"></i>
-                                            透過安全的信用卡付款頁面完成繳費，付款後系統將自動確認，無需填寫任何資訊。
-                                        </p>
-                                        <div class="flex items-center gap-2 mb-3 text-xs text-gray-400">
-                                            <i class="fab fa-cc-visa text-blue-600 text-base"></i>
-                                            <i class="fab fa-cc-mastercard text-red-500 text-base"></i>
-                                            <i class="fab fa-cc-jcb text-green-600 text-base"></i>
-                                            <span>支援 VISA / Mastercard / JCB</span>
-                                        </div>
-                                        <button onclick="showStatus('payment-reviewing')"
-                                            class="w-full px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm font-medium transition-colors flex items-center justify-center gap-2">
-                                            <i class="fas fa-credit-card"></i>
-                                            前往信用卡繳費（NT$ 6,000）
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <!-- 審核中狀態顯示（審核攤商資料） -->
-                                <div id="reviewing-notice" class="hidden bg-blue-50 p-4 rounded-lg">
-                                    <p class="text-sm text-blue-800">
-                                        <i class="fas fa-info-circle mr-2"></i>
-                                        我們正在審核您的攤商資料，請耐心等候。
-                                    </p>
-                                    <div class="mt-2 flex items-center">
-                                        <i class="fas fa-clock text-blue-500 mr-2"></i>
-                                        <p class="text-sm text-blue-800">
-                                            預計作業時間：1-2個工作天
-                                        </p>
-                                    </div>
-                                    <div class="mt-4">
-                                        <p class="text-sm text-blue-800">
-                                            <i class="fas fa-envelope mr-2"></i>
-                                            審核結果將會寄送至您的信箱，請留意通知。
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <!-- 確認匯款資訊中狀態顯示 -->
-                                <div id="payment-reviewing-notice" class="hidden bg-purple-50 p-4 rounded-lg">
-                                    <p class="text-sm text-purple-800">
-                                        <i class="fas fa-info-circle mr-2"></i>
-                                        <span class="atm-only">我們已收到您的匯款資訊，正在進行確認，請耐心等候。</span>
-                                        <span class="virtual-only hidden">系統偵測到您已完成轉帳，正在自動確認款項，請稍候。</span>
-                                        <span class="credit-only hidden">您的信用卡付款正在處理中，系統將自動確認。</span>
-                                    </p>
-                                    <div class="mt-2 flex items-center">
-                                        <i class="fas fa-clock text-purple-500 mr-2"></i>
-                                        <p class="text-sm text-purple-800">
-                                            預計作業時間：1-2個工作天
-                                        </p>
-                                    </div>
-                                    <div class="mt-4 grid grid-cols-2 gap-4">
-                                        <div>
-                                            <p class="text-sm text-gray-500">繳費時間</p>
-                                            <p class="font-medium">2024/01/06 14:30</p>
-                                        </div>
-                                        <div class="atm-only">
-                                            <p class="text-sm text-gray-500">匯款帳號末5碼</p>
-                                            <p class="font-medium">12345</p>
-                                        </div>
-                                        <div class="virtual-only hidden">
-                                            <p class="text-sm text-gray-500">確認方式</p>
-                                            <p class="font-medium">系統自動確認</p>
-                                        </div>
-                                        <div class="credit-only hidden">
-                                            <p class="text-sm text-gray-500">繳費方式</p>
-                                            <p class="font-medium">信用卡</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 已確認狀態顯示 -->
-                                <div id="confirmed-notice" class="hidden bg-green-50 p-4 rounded-lg">
-                                    <p class="text-sm text-green-800">
-                                        <i class="fas fa-check-circle mr-2"></i>
-                                        <span class="atm-only">您的匯款已確認，報名成功！</span>
-                                        <span class="virtual-only hidden">虛擬帳號轉帳已確認，報名成功！</span>
-                                        <span class="credit-only hidden">您的信用卡繳費已完成，報名成功！</span>
-                                    </p>
-                                    <div class="mt-2 flex items-center">
-                                        <i class="fas fa-info-circle text-green-500 mr-2"></i>
-                                        <p class="text-sm text-green-800">
-                                            確認時間：2024/01/06 15:30
-                                        </p>
-                                    </div>
-                                    <div class="mt-4 grid grid-cols-2 gap-4">
-                                        <div>
-                                            <p class="text-sm text-gray-500">繳費時間</p>
-                                            <p class="font-medium">2024/01/06 14:30</p>
-                                        </div>
-                                        <div class="atm-only">
-                                            <p class="text-sm text-gray-500">匯款帳號末5碼</p>
-                                            <p class="font-medium">12345</p>
-                                        </div>
-                                        <div class="virtual-only hidden">
-                                            <p class="text-sm text-gray-500">確認方式</p>
-                                            <p class="font-medium">虛擬帳號自動確認</p>
-                                        </div>
-                                        <div class="credit-only hidden">
-                                            <p class="text-sm text-gray-500">繳費方式</p>
-                                            <p class="font-medium">信用卡</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 已過期狀態顯示 -->
-                                <div id="expired-notice" class="hidden bg-gray-50 p-4 rounded-lg">
-                                    <p class="text-sm text-gray-800">
-                                        <i class="fas fa-exclamation-circle mr-2"></i>
-                                        您的報名已過期。因未在期限內完成匯款，系統已自動取消您的報名。
-                                    </p>
-                                    <div class="mt-2 flex items-center">
-                                        <i class="fas fa-clock text-gray-500 mr-2"></i>
-                                        <p class="text-sm text-gray-800">
-                                            過期時間：2024/01/08 23:59
-                                        </p>
-                                    </div>
-                                    <div class="mt-4">
-                                        <a href="market-list.html" class="inline-flex items-center text-yellow-600 hover:text-yellow-700">
-                                            <i class="fas fa-search mr-2"></i>
-                                            探索其他市集
-                                        </a>
-                                    </div>
-                                </div>
-
-                                <!-- 審核未通過狀態顯示 -->
-                                <div id="rejected-notice" class="hidden bg-red-50 p-4 rounded-lg">
-                                    <p class="text-sm text-red-800">
-                                        <i class="fas fa-times-circle mr-2"></i>
-                                        很抱歉，您的攤商資料審核未通過。
-                                    </p>
-                                    <div class="mt-2 flex items-center">
-                                        <i class="fas fa-clock text-red-500 mr-2"></i>
-                                        <p class="text-sm text-red-800">
-                                            審核時間：2024/01/06 16:30
-                                        </p>
-                                    </div>
-                                    <div class="mt-4">
-                                        <h4 class="text-sm font-medium text-red-800 mb-2">未通過原因：</h4>
-                                        <ul class="text-sm text-red-700 list-disc list-inside space-y-1">
-                                            <li>商品照片品質不符合要求</li>
-                                            <li>攤位佈置方案需要調整</li>
-                                        </ul>
-                                    </div>
-                                    <div class="mt-4 space-y-2">
-                                        <a href="vendor-profile.html" class="inline-flex items-center text-yellow-600 hover:text-yellow-700 mr-4">
-                                            <i class="fas fa-edit mr-2"></i>
-                                            修改攤商資料
-                                        </a>
-                                        <a href="market-list.html" class="inline-flex items-center text-yellow-600 hover:text-yellow-700">
-                                            <i class="fas fa-search mr-2"></i>
-                                            探索其他市集
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+                <!-- 匯款資訊 -->
+                <div class="border-t border-gray-200 mt-6 pt-6">
+                  <div id="matching-info-display">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">
+                      匯款資訊
+                    </h3>
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                      <div>
+                        <p class="text-sm text-gray-500">銀行名稱</p>
+                        <p class="font-medium">國泰世華銀行</p>
+                      </div>
+                      <div>
+                        <p class="text-sm text-gray-500">分行</p>
+                        <p class="font-medium">松山分行</p>
+                      </div>
+                      <div>
+                        <p class="text-sm text-gray-500">戶名</p>
+                        <p class="font-medium">文創市集有限公司</p>
+                      </div>
+                      <!-- ATM 帳號 -->
+                      <div class="atm-only">
+                        <p class="text-sm text-gray-500">帳號</p>
+                        <p class="font-medium">1234-5678-9012-3456</p>
+                      </div>
+                      <!-- 虛擬帳號 -->
+                      <div class="virtual-only hidden col-span-2">
+                        <p class="text-sm text-gray-500">虛擬帳號</p>
+                        <div class="flex items-center space-x-3 mt-1">
+                          <p
+                            class="font-bold text-xl font-mono tracking-widest"
+                          >
+                            24567890123456
+                          </p>
+                          <span
+                            class="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded"
+                            >專屬帳號，請勿與他人共用</span
+                          >
                         </div>
+                      </div>
                     </div>
+                  </div>
+                  <!-- /matching-info-display -->
 
-                    <!-- 市集資訊 -->
-                    <div class="bg-white rounded-lg shadow-sm mb-6">
-                        <div class="p-6">
-                            <h2 class="text-xl font-bold text-gray-900 mb-4">市集資訊</h2>
-                            <div class="space-y-4">
-                                <div class="flex items-start">
-                                    <i class="fas fa-map-marker-alt text-yellow-500 mt-1 mr-3"></i>
-                                    <div>
-                                        <h3 class="font-medium">活動地點</h3>
-                                        <p class="text-gray-600">台北市中正區重慶南路一段122號</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-start">
-                                    <i class="fas fa-calendar text-yellow-500 mt-1 mr-3"></i>
-                                    <div>
-                                        <h3 class="font-medium">活動時間</h3>
-                                        <p class="text-gray-600">2024/1/20-1/21 10:00-18:00</p>
-                                        <p class="text-sm text-gray-500">進場時間：當天早上 08:00-09:30</p>
-                                        <p class="text-sm text-gray-500">撤場時間：當天晚上 18:00-19:30</p>
-                                    </div>
-                                </div>
-                            </div>
+                  <!-- 未繳費狀態顯示 -->
+                  <div id="unpaid-notice" class="bg-yellow-50 p-4 rounded-lg">
+                    <div class="flex items-center gap-2 mb-1">
+                      <i class="fas fa-clock text-yellow-500"></i>
+                      <p class="text-sm font-medium text-yellow-800">
+                        繳費期限：2024/01/08 23:59
+                      </p>
+                    </div>
+                    <p class="text-xs text-yellow-700 mb-4">
+                      請選擇繳費方式並於期限內完成繳費，逾期報名將自動取消。
+                    </p>
+
+                    <!-- 繳費方式選擇卡片 -->
+                    <div class="grid grid-cols-2 gap-3 mb-4">
+                      <button
+                        id="unpaid-method-atm"
+                        onclick="selectPaymentMethod('atm')"
+                        class="flex items-center gap-3 p-4 rounded-lg border-2 text-left transition-all border-gray-200 bg-white hover:border-gray-400 w-full"
+                      >
+                        <div
+                          class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center bg-gray-100"
+                        >
+                          <i class="fas fa-university text-gray-500"></i>
                         </div>
-                    </div>
-
-                    <!-- 報名內容 -->
-                    <div class="bg-white rounded-lg shadow-sm mb-6">
-                        <div class="p-6">
-                            <h2 class="text-xl font-bold text-gray-900 mb-4">報名內容</h2>
-                            <div class="space-y-6">
-                                <div>
-                                    <h3 class="font-medium text-gray-900 mb-2">參加日期</h3>
-                                    <div class="flex items-center space-x-4">
-                                        <span class="px-3 py-1 bg-yellow-50 text-yellow-800 rounded-lg text-sm">1/20（六）</span>
-                                        <span class="px-3 py-1 bg-yellow-50 text-yellow-800 rounded-lg text-sm">1/21（日）</span>
-                                    </div>
-                                </div>
-                                <div>
-                                    <h3 class="font-medium text-gray-900 mb-2">攤位資訊</h3>
-                                    <div class="bg-gray-50 p-4 rounded-lg">
-                                        <div class="flex justify-between items-center">
-                                            <div>
-                                                <p class="font-medium">標準攤位</p>
-                                                <p class="text-sm text-gray-500">3m x 3m</p>
-                                            </div>
-                                            <p class="font-medium">攤位編號：A-12</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <h3 class="font-medium text-gray-900 mb-2">展售商品</h3>
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                        <div class="flex items-start p-4 border rounded-lg">
-                                            <img src="https://images.unsplash.com/photo-1612336307429-8a898d10e223?w=100&h=100&fit=crop" 
-                                                 alt="商品照片" class="w-16 h-16 rounded-lg object-cover">
-                                            <div class="ml-4">
-                                                <h4 class="font-medium">手工編織手鍊</h4>
-                                                <p class="text-sm text-gray-500">NT$ 350-500</p>
-                                            </div>
-                                        </div>
-                                        <div class="flex items-start p-4 border rounded-lg">
-                                            <img src="https://images.unsplash.com/photo-1612336307429-8a898d10e223?w=100&h=100&fit=crop" 
-                                                 alt="商品照片" class="w-16 h-16 rounded-lg object-cover">
-                                            <div class="ml-4">
-                                                <h4 class="font-medium">天然石項鍊</h4>
-                                                <p class="text-sm text-gray-500">NT$ 800-1,200</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div>
+                          <p class="text-sm font-semibold text-gray-800">
+                            ATM 轉帳
+                          </p>
+                          <p class="text-xs text-gray-500 mt-0.5">
+                            匯款後填寫帳號末5碼確認
+                          </p>
                         </div>
-                    </div>
-
-                    <!-- 費用明細 -->
-                    <div class="bg-white rounded-lg shadow-sm mb-6">
-                        <div class="p-6">
-                            <h2 class="text-xl font-bold text-gray-900 mb-4">費用明細</h2>
-                            <div class="space-y-2">
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500">標準攤位 x 2日</span>
-                                    <span class="text-gray-900">NT$ 5,000</span>
-                                </div>
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500">保證金（可退還）</span>
-                                    <span class="text-gray-900">NT$ 1,000</span>
-                                </div>
-                                <div class="pt-2 border-t border-gray-200">
-                                    <div class="flex justify-between">
-                                        <span class="font-medium text-gray-900">總計</span>
-                                        <span class="font-medium text-gray-900">NT$ 6,000</span>
-                                    </div>
-                                </div>
-                            </div>
+                      </button>
+                      <button
+                        id="unpaid-method-credit"
+                        onclick="selectPaymentMethod('credit')"
+                        class="flex items-center gap-3 p-4 rounded-lg border-2 text-left transition-all border-gray-200 bg-white hover:border-blue-300 w-full"
+                      >
+                        <div
+                          class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center bg-blue-50"
+                        >
+                          <i class="fas fa-credit-card text-blue-500"></i>
                         </div>
-                    </div>
-
-                    <!-- 聯絡資訊 -->
-                    <div class="bg-white rounded-lg shadow-sm mb-6">
-                        <div class="p-6">
-                            <h2 class="text-xl font-bold text-gray-900 mb-4">聯絡資訊</h2>
-                            <div class="space-y-4">
-                                <div class="flex items-start">
-                                    <i class="fas fa-user text-yellow-500 mt-1 mr-3"></i>
-                                    <div>
-                                        <h3 class="font-medium">主辦單位</h3>
-                                        <p class="text-gray-600">文創市集有限公司</p>
-                                        <p class="text-sm text-gray-500">聯絡電話：02-1234-5678</p>
-                                        <p class="text-sm text-gray-500">Email：contact@example.com</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-start">
-                                    <i class="fas fa-comments text-yellow-500 mt-1 mr-3"></i>
-                                    <div>
-                                        <h3 class="font-medium">聯絡主辦方</h3>
-                                        <button onclick="openChat()" class="mt-2 inline-flex items-center px-4 py-2 border border-yellow-500 text-sm font-medium rounded-md text-yellow-500 hover:bg-yellow-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
-                                            <i class="fas fa-paper-plane mr-2"></i>
-                                            發送訊息
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 付款模式切換（測試用） -->
-                    <div class="flex justify-center items-center space-x-3 mb-4">
-                        <span class="text-sm text-gray-500">付款模式：</span>
-                        <button id="btn-mode-atm" onclick="setPaymentMode('atm')" class="px-4 py-2 bg-gray-800 text-white rounded-lg text-sm transition-colors">
-                            一般匯款
-                        </button>
-                        <button id="btn-mode-virtual" onclick="setPaymentMode('virtual')" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg text-sm transition-colors">
-                            虛擬帳號
-                        </button>
-                        <button id="btn-mode-credit" onclick="setPaymentMode('credit')" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg text-sm transition-colors">
+                        <div>
+                          <p class="text-sm font-semibold text-gray-800">
                             信用卡
-                        </button>
+                          </p>
+                          <p class="text-xs text-gray-500 mt-0.5">
+                            線上刷卡，系統自動確認
+                          </p>
+                        </div>
+                      </button>
                     </div>
 
-                    <!-- 狀態切換按鈕（測試用） -->
-                    <div class="flex justify-center space-x-4 mb-6">
-                        <button onclick="showStatus('unpaid')" class="px-6 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors">
-                            未繳費
-                        </button>
-                        <button onclick="showStatus('reviewing')" class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
-                            審核中
-                        </button>
-                        <button onclick="showStatus('payment-reviewing')" class="px-6 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors">
-                            確認匯款資訊中
-                        </button>
-                        <button onclick="showStatus('confirmed')" class="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors">
-                            已確認
-                        </button>
-                        <button onclick="showStatus('expired')" class="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors">
-                            已過期
-                        </button>
-                        <button onclick="showStatus('rejected')" class="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">
-                            審核未通過
-                        </button>
+                    <!-- ATM 匯款確認表單 -->
+                    <form id="paymentForm" class="atm-only">
+                      <div class="space-y-4">
+                        <div class="grid grid-cols-2 gap-4">
+                          <div>
+                            <label
+                              for="transferDate"
+                              class="block text-sm font-medium text-gray-700"
+                              >匯款日期</label
+                            >
+                            <input
+                              type="date"
+                              id="transferDate"
+                              name="transferDate"
+                              required
+                              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+                            />
+                          </div>
+                          <div>
+                            <label
+                              for="transferTime"
+                              class="block text-sm font-medium text-gray-700"
+                              >匯款時間</label
+                            >
+                            <input
+                              type="time"
+                              id="transferTime"
+                              name="transferTime"
+                              required
+                              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <label
+                            for="accountLast5"
+                            class="block text-sm font-medium text-gray-700"
+                            >匯款帳號末5碼</label
+                          >
+                          <input
+                            type="text"
+                            id="accountLast5"
+                            name="accountLast5"
+                            required
+                            maxlength="5"
+                            pattern="\d{5}"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+                            placeholder="請輸入末5碼"
+                          />
+                          <p class="mt-1 text-sm text-gray-500">
+                            請輸入您匯款帳戶的末5碼，以利我們核對款項
+                          </p>
+                        </div>
+                        <div class="flex justify-end">
+                          <button
+                            type="submit"
+                            class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600"
+                          >
+                            確認送出
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                    <!-- 虛擬帳號自動確認提示 -->
+                    <div
+                      class="virtual-only hidden bg-white rounded-lg p-3 border border-yellow-200"
+                    >
+                      <p class="text-sm text-yellow-800">
+                        <i class="fas fa-bolt mr-2 text-yellow-500"></i>
+                        轉帳完成後，系統將自動偵測款項並確認繳費，無需填寫任何資訊。
+                      </p>
                     </div>
+                    <!-- 信用卡繳費區塊 -->
+                    <div
+                      class="credit-only hidden bg-white rounded-lg p-4 border border-blue-200"
+                    >
+                      <p class="text-sm text-gray-600 mb-4">
+                        <i class="fas fa-shield-alt mr-2 text-blue-400"></i>
+                        透過安全的信用卡付款頁面完成繳費，付款後系統將自動確認，無需填寫任何資訊。
+                      </p>
+                      <div
+                        class="flex items-center gap-2 mb-3 text-xs text-gray-400"
+                      >
+                        <i class="fab fa-cc-visa text-blue-600 text-base"></i>
+                        <i
+                          class="fab fa-cc-mastercard text-red-500 text-base"
+                        ></i>
+                        <i class="fab fa-cc-jcb text-green-600 text-base"></i>
+                        <span>支援 VISA / Mastercard / JCB</span>
+                      </div>
+                      <button
+                        onclick="openCreditCardModal()"
+                        class="w-full px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm font-medium transition-colors flex items-center justify-center gap-2"
+                      >
+                        <i class="fas fa-credit-card"></i>
+                        信用卡繳費（NT$ 6,000）
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- 審核中狀態顯示（審核攤商資料） -->
+                  <div
+                    id="reviewing-notice"
+                    class="hidden bg-blue-50 p-4 rounded-lg"
+                  >
+                    <p class="text-sm text-blue-800">
+                      <i class="fas fa-info-circle mr-2"></i>
+                      我們正在審核您的攤商資料，請耐心等候。
+                    </p>
+                    <div class="mt-2 flex items-center">
+                      <i class="fas fa-clock text-blue-500 mr-2"></i>
+                      <p class="text-sm text-blue-800">
+                        預計作業時間：1-2個工作天
+                      </p>
+                    </div>
+                    <div class="mt-4">
+                      <p class="text-sm text-blue-800">
+                        <i class="fas fa-envelope mr-2"></i>
+                        審核結果將會寄送至您的信箱，請留意通知。
+                      </p>
+                    </div>
+                  </div>
+
+                  <!-- 確認匯款資訊中狀態顯示 -->
+                  <div
+                    id="payment-reviewing-notice"
+                    class="hidden bg-purple-50 p-4 rounded-lg"
+                  >
+                    <p class="text-sm text-purple-800">
+                      <i class="fas fa-info-circle mr-2"></i>
+                      <span class="atm-only"
+                        >我們已收到您的匯款資訊，正在進行確認，請耐心等候。</span
+                      >
+                      <span class="virtual-only hidden"
+                        >系統偵測到您已完成轉帳，正在自動確認款項，請稍候。</span
+                      >
+                      <span class="credit-only hidden"
+                        >您的信用卡付款正在處理中，系統將自動確認。</span
+                      >
+                    </p>
+                    <div class="mt-2 flex items-center">
+                      <i class="fas fa-clock text-purple-500 mr-2"></i>
+                      <p class="text-sm text-purple-800">
+                        預計作業時間：1-2個工作天
+                      </p>
+                    </div>
+                    <div class="mt-4 grid grid-cols-2 gap-4">
+                      <div>
+                        <p class="text-sm text-gray-500">繳費時間</p>
+                        <p class="font-medium">2024/01/06 14:30</p>
+                      </div>
+                      <div class="atm-only">
+                        <p class="text-sm text-gray-500">匯款帳號末5碼</p>
+                        <p class="font-medium">12345</p>
+                      </div>
+                      <div class="virtual-only hidden">
+                        <p class="text-sm text-gray-500">確認方式</p>
+                        <p class="font-medium">系統自動確認</p>
+                      </div>
+                      <div class="credit-only hidden">
+                        <p class="text-sm text-gray-500">繳費方式</p>
+                        <p class="font-medium">信用卡</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 已確認狀態顯示 -->
+                  <div
+                    id="confirmed-notice"
+                    class="hidden bg-green-50 p-4 rounded-lg"
+                  >
+                    <p class="text-sm text-green-800">
+                      <i class="fas fa-check-circle mr-2"></i>
+                      <span class="atm-only">您的匯款已確認，報名成功！</span>
+                      <span class="virtual-only hidden"
+                        >虛擬帳號轉帳已確認，報名成功！</span
+                      >
+                      <span class="credit-only hidden"
+                        >您的信用卡繳費已完成，報名成功！</span
+                      >
+                    </p>
+                    <div class="mt-2 flex items-center">
+                      <i class="fas fa-info-circle text-green-500 mr-2"></i>
+                      <p class="text-sm text-green-800">
+                        確認時間：2024/01/06 15:30
+                      </p>
+                    </div>
+                    <div class="mt-4 grid grid-cols-2 gap-4">
+                      <div>
+                        <p class="text-sm text-gray-500">繳費時間</p>
+                        <p class="font-medium">2024/01/06 14:30</p>
+                      </div>
+                      <div class="atm-only">
+                        <p class="text-sm text-gray-500">匯款帳號末5碼</p>
+                        <p class="font-medium">12345</p>
+                      </div>
+                      <div class="virtual-only hidden">
+                        <p class="text-sm text-gray-500">確認方式</p>
+                        <p class="font-medium">虛擬帳號自動確認</p>
+                      </div>
+                      <div class="credit-only hidden">
+                        <p class="text-sm text-gray-500">繳費方式</p>
+                        <p class="font-medium">信用卡</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 已過期狀態顯示 -->
+                  <div
+                    id="expired-notice"
+                    class="hidden bg-gray-50 p-4 rounded-lg"
+                  >
+                    <p class="text-sm text-gray-800">
+                      <i class="fas fa-exclamation-circle mr-2"></i>
+                      您的報名已過期。因未在期限內完成匯款，系統已自動取消您的報名。
+                    </p>
+                    <div class="mt-2 flex items-center">
+                      <i class="fas fa-clock text-gray-500 mr-2"></i>
+                      <p class="text-sm text-gray-800">
+                        過期時間：2024/01/08 23:59
+                      </p>
+                    </div>
+                    <div class="mt-4">
+                      <a
+                        href="market-list.html"
+                        class="inline-flex items-center text-yellow-600 hover:text-yellow-700"
+                      >
+                        <i class="fas fa-search mr-2"></i>
+                        探索其他市集
+                      </a>
+                    </div>
+                  </div>
+
+                  <!-- 審核未通過狀態顯示 -->
+                  <div
+                    id="rejected-notice"
+                    class="hidden bg-red-50 p-4 rounded-lg"
+                  >
+                    <p class="text-sm text-red-800">
+                      <i class="fas fa-times-circle mr-2"></i>
+                      很抱歉，您的攤商資料審核未通過。
+                    </p>
+                    <div class="mt-2 flex items-center">
+                      <i class="fas fa-clock text-red-500 mr-2"></i>
+                      <p class="text-sm text-red-800">
+                        審核時間：2024/01/06 16:30
+                      </p>
+                    </div>
+                    <div class="mt-4">
+                      <h4 class="text-sm font-medium text-red-800 mb-2">
+                        未通過原因：
+                      </h4>
+                      <ul
+                        class="text-sm text-red-700 list-disc list-inside space-y-1"
+                      >
+                        <li>商品照片品質不符合要求</li>
+                        <li>攤位佈置方案需要調整</li>
+                      </ul>
+                    </div>
+                    <div class="mt-4 space-y-2">
+                      <a
+                        href="vendor-profile.html"
+                        class="inline-flex items-center text-yellow-600 hover:text-yellow-700 mr-4"
+                      >
+                        <i class="fas fa-edit mr-2"></i>
+                        修改攤商資料
+                      </a>
+                      <a
+                        href="market-list.html"
+                        class="inline-flex items-center text-yellow-600 hover:text-yellow-700"
+                      >
+                        <i class="fas fa-search mr-2"></i>
+                        探索其他市集
+                      </a>
+                    </div>
+                  </div>
                 </div>
-            </main>
-        </div>
+              </div>
+            </div>
+
+            <!-- 市集資訊 -->
+            <div class="bg-white rounded-lg shadow-sm mb-6">
+              <div class="p-6">
+                <h2 class="text-xl font-bold text-gray-900 mb-4">市集資訊</h2>
+                <div class="space-y-4">
+                  <div class="flex items-start">
+                    <i
+                      class="fas fa-map-marker-alt text-yellow-500 mt-1 mr-3"
+                    ></i>
+                    <div>
+                      <h3 class="font-medium">活動地點</h3>
+                      <p class="text-gray-600">台北市中正區重慶南路一段122號</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start">
+                    <i class="fas fa-calendar text-yellow-500 mt-1 mr-3"></i>
+                    <div>
+                      <h3 class="font-medium">活動時間</h3>
+                      <p class="text-gray-600">2024/1/20-1/21 10:00-18:00</p>
+                      <p class="text-sm text-gray-500">
+                        進場時間：當天早上 08:00-09:30
+                      </p>
+                      <p class="text-sm text-gray-500">
+                        撤場時間：當天晚上 18:00-19:30
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 報名內容 -->
+            <div class="bg-white rounded-lg shadow-sm mb-6">
+              <div class="p-6">
+                <h2 class="text-xl font-bold text-gray-900 mb-4">報名內容</h2>
+                <div class="space-y-6">
+                  <div>
+                    <h3 class="font-medium text-gray-900 mb-2">參加日期</h3>
+                    <div class="flex items-center space-x-4">
+                      <span
+                        class="px-3 py-1 bg-yellow-50 text-yellow-800 rounded-lg text-sm"
+                        >1/20（六）</span
+                      >
+                      <span
+                        class="px-3 py-1 bg-yellow-50 text-yellow-800 rounded-lg text-sm"
+                        >1/21（日）</span
+                      >
+                    </div>
+                  </div>
+                  <div>
+                    <h3 class="font-medium text-gray-900 mb-2">攤位資訊</h3>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                      <div class="flex justify-between items-center">
+                        <div>
+                          <p class="font-medium">標準攤位</p>
+                          <p class="text-sm text-gray-500">3m x 3m</p>
+                        </div>
+                        <p class="font-medium">攤位編號：A-12</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <h3 class="font-medium text-gray-900 mb-2">展售商品</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div class="flex items-start p-4 border rounded-lg">
+                        <img
+                          src="https://images.unsplash.com/photo-1612336307429-8a898d10e223?w=100&h=100&fit=crop"
+                          alt="商品照片"
+                          class="w-16 h-16 rounded-lg object-cover"
+                        />
+                        <div class="ml-4">
+                          <h4 class="font-medium">手工編織手鍊</h4>
+                          <p class="text-sm text-gray-500">NT$ 350-500</p>
+                        </div>
+                      </div>
+                      <div class="flex items-start p-4 border rounded-lg">
+                        <img
+                          src="https://images.unsplash.com/photo-1612336307429-8a898d10e223?w=100&h=100&fit=crop"
+                          alt="商品照片"
+                          class="w-16 h-16 rounded-lg object-cover"
+                        />
+                        <div class="ml-4">
+                          <h4 class="font-medium">天然石項鍊</h4>
+                          <p class="text-sm text-gray-500">NT$ 800-1,200</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 費用明細 -->
+            <div class="bg-white rounded-lg shadow-sm mb-6">
+              <div class="p-6">
+                <h2 class="text-xl font-bold text-gray-900 mb-4">費用明細</h2>
+                <div class="space-y-2">
+                  <div class="flex justify-between text-sm">
+                    <span class="text-gray-500">標準攤位 x 2日</span>
+                    <span class="text-gray-900">NT$ 5,000</span>
+                  </div>
+                  <div class="flex justify-between text-sm">
+                    <span class="text-gray-500">保證金（可退還）</span>
+                    <span class="text-gray-900">NT$ 1,000</span>
+                  </div>
+                  <div class="pt-2 border-t border-gray-200">
+                    <div class="flex justify-between">
+                      <span class="font-medium text-gray-900">總計</span>
+                      <span class="font-medium text-gray-900">NT$ 6,000</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 聯絡資訊 -->
+            <div class="bg-white rounded-lg shadow-sm mb-6">
+              <div class="p-6">
+                <h2 class="text-xl font-bold text-gray-900 mb-4">聯絡資訊</h2>
+                <div class="space-y-4">
+                  <div class="flex items-start">
+                    <i class="fas fa-user text-yellow-500 mt-1 mr-3"></i>
+                    <div>
+                      <h3 class="font-medium">主辦單位</h3>
+                      <p class="text-gray-600">文創市集有限公司</p>
+                      <p class="text-sm text-gray-500">
+                        聯絡電話：02-1234-5678
+                      </p>
+                      <p class="text-sm text-gray-500">
+                        Email：contact@example.com
+                      </p>
+                    </div>
+                  </div>
+                  <div class="flex items-start">
+                    <i class="fas fa-comments text-yellow-500 mt-1 mr-3"></i>
+                    <div>
+                      <h3 class="font-medium">聯絡主辦方</h3>
+                      <button
+                        onclick="openChat()"
+                        class="mt-2 inline-flex items-center px-4 py-2 border border-yellow-500 text-sm font-medium rounded-md text-yellow-500 hover:bg-yellow-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
+                      >
+                        <i class="fas fa-paper-plane mr-2"></i>
+                        發送訊息
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 付款模式切換（測試用） -->
+            <div class="flex justify-center items-center space-x-3 mb-4">
+              <span class="text-sm text-gray-500">付款模式：</span>
+              <button
+                id="btn-mode-atm"
+                onclick="setPaymentMode('atm')"
+                class="px-4 py-2 bg-gray-800 text-white rounded-lg text-sm transition-colors"
+              >
+                一般匯款
+              </button>
+              <button
+                id="btn-mode-virtual"
+                onclick="setPaymentMode('virtual')"
+                class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg text-sm transition-colors"
+              >
+                虛擬帳號
+              </button>
+              <button
+                id="btn-mode-credit"
+                onclick="setPaymentMode('credit')"
+                class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg text-sm transition-colors"
+              >
+                信用卡
+              </button>
+            </div>
+
+            <!-- 狀態切換按鈕（測試用） -->
+            <div class="flex justify-center space-x-4 mb-6">
+              <button
+                onclick="showStatus('unpaid')"
+                class="px-6 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors"
+              >
+                未繳費
+              </button>
+              <button
+                onclick="showStatus('reviewing')"
+                class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+              >
+                審核中
+              </button>
+              <button
+                onclick="showStatus('payment-reviewing')"
+                class="px-6 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors"
+              >
+                確認匯款資訊中
+              </button>
+              <button
+                onclick="showStatus('confirmed')"
+                class="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+              >
+                已確認
+              </button>
+              <button
+                onclick="showStatus('expired')"
+                class="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
+              >
+                已過期
+              </button>
+              <button
+                onclick="showStatus('rejected')"
+                class="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+              >
+                審核未通過
+              </button>
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
 
     <!-- 即時通訊視窗 -->
-    <div id="chatWindow" class="fixed bottom-0 right-4 w-[350px] h-[60px] bg-white rounded-t-lg shadow-lg transition-all duration-300 ease-in-out z-50">
-        <!-- 聊天視窗標題列 -->
-        <div class="flex items-center justify-between px-4 py-3 bg-yellow-500 rounded-t-lg cursor-pointer" onclick="toggleChatWindow()">
-            <div class="flex items-center">
-                <img class="h-8 w-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop" alt="主辦方頭像">
-                <div class="ml-3">
-                    <p class="text-white font-medium">文創市集有限公司</p>
-                    <p class="text-yellow-100 text-xs">線上</p>
-                </div>
+    <div
+      id="chatWindow"
+      class="fixed bottom-0 right-4 w-[350px] h-[60px] bg-white rounded-t-lg shadow-lg transition-all duration-300 ease-in-out z-50"
+    >
+      <!-- 聊天視窗標題列 -->
+      <div
+        class="flex items-center justify-between px-4 py-3 bg-yellow-500 rounded-t-lg cursor-pointer"
+        onclick="toggleChatWindow()"
+      >
+        <div class="flex items-center">
+          <img
+            class="h-8 w-8 rounded-full object-cover"
+            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop"
+            alt="主辦方頭像"
+          />
+          <div class="ml-3">
+            <p class="text-white font-medium">文創市集有限公司</p>
+            <p class="text-yellow-100 text-xs">線上</p>
+          </div>
+        </div>
+        <i id="toggleIcon" class="fas fa-chevron-up text-white"></i>
+      </div>
+
+      <!-- 聊天內容區域 -->
+      <div id="chatBody" class="flex flex-col h-[calc(100%-60px)] hidden">
+        <!-- 訊息列表 -->
+        <div class="flex-1 p-4 overflow-y-auto space-y-4">
+          <!-- 系統訊息 -->
+          <div class="flex justify-center">
+            <span class="text-xs text-gray-500">2024年1月5日</span>
+          </div>
+
+          <!-- 對方的訊息 -->
+          <div class="flex items-start space-x-2">
+            <img
+              class="h-8 w-8 rounded-full object-cover"
+              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop"
+              alt="主辦方頭像"
+            />
+            <div class="bg-gray-100 rounded-lg p-3 max-w-[70%]">
+              <p class="text-sm text-gray-800">
+                您好！有什麼我可以協助您的嗎？
+              </p>
+              <span class="text-xs text-gray-500 mt-1">14:30</span>
             </div>
-            <i id="toggleIcon" class="fas fa-chevron-up text-white"></i>
+          </div>
+
+          <!-- 自己的訊息 -->
+          <div class="flex items-start justify-end space-x-2">
+            <div class="bg-yellow-500 rounded-lg p-3 max-w-[70%]">
+              <p class="text-sm text-white">請問攤位可以提前佈置嗎？</p>
+              <span class="text-xs text-yellow-100 mt-1">14:35</span>
+            </div>
+          </div>
         </div>
 
-        <!-- 聊天內容區域 -->
-        <div id="chatBody" class="flex flex-col h-[calc(100%-60px)] hidden">
-            <!-- 訊息列表 -->
-            <div class="flex-1 p-4 overflow-y-auto space-y-4">
-                <!-- 系統訊息 -->
-                <div class="flex justify-center">
-                    <span class="text-xs text-gray-500">2024年1月5日</span>
-                </div>
-
-                <!-- 對方的訊息 -->
-                <div class="flex items-start space-x-2">
-                    <img class="h-8 w-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop" alt="主辦方頭像">
-                    <div class="bg-gray-100 rounded-lg p-3 max-w-[70%]">
-                        <p class="text-sm text-gray-800">您好！有什麼我可以協助您的嗎？</p>
-                        <span class="text-xs text-gray-500 mt-1">14:30</span>
-                    </div>
-                </div>
-
-                <!-- 自己的訊息 -->
-                <div class="flex items-start justify-end space-x-2">
-                    <div class="bg-yellow-500 rounded-lg p-3 max-w-[70%]">
-                        <p class="text-sm text-white">請問攤位可以提前佈置嗎？</p>
-                        <span class="text-xs text-yellow-100 mt-1">14:35</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 輸入區域 -->
-            <div class="p-4 border-t">
-                <div class="flex items-center space-x-2">
-                    <input type="text" placeholder="輸入訊息..." class="flex-1 px-4 py-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-yellow-500">
-                    <button class="p-2 text-yellow-500 hover:text-yellow-600">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </div>
-            </div>
+        <!-- 輸入區域 -->
+        <div class="p-4 border-t">
+          <div class="flex items-center space-x-2">
+            <input
+              type="text"
+              placeholder="輸入訊息..."
+              class="flex-1 px-4 py-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-yellow-500"
+            />
+            <button class="p-2 text-yellow-500 hover:text-yellow-600">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
         </div>
+      </div>
     </div>
-</body>
-</html> 
+  <!-- 信用卡付款 Modal -->
+  <div id="creditCardModal" class="fixed inset-0 z-50 hidden items-center justify-center">
+    <div class="absolute inset-0 bg-black bg-opacity-50" onclick="closeCreditCardModal()"></div>
+    <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-sm mx-4 overflow-hidden">
+      <!-- Header -->
+      <div class="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-2 text-white">
+          <i class="fas fa-lock text-sm"></i>
+          <span class="font-semibold">安全信用卡付款</span>
+        </div>
+        <button onclick="closeCreditCardModal()" class="text-white text-opacity-80 hover:text-opacity-100 transition-opacity">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <!-- Card brand icons -->
+      <div class="flex items-center gap-2 px-6 py-3 bg-gray-50 border-b">
+        <i class="fab fa-cc-visa text-blue-600 text-xl"></i>
+        <i class="fab fa-cc-mastercard text-red-500 text-xl"></i>
+        <i class="fab fa-cc-jcb text-green-600 text-xl"></i>
+        <span class="text-xs text-gray-400 ml-1">支援 VISA / Mastercard / JCB</span>
+      </div>
+
+      <!-- Form -->
+      <div class="px-6 py-5 space-y-4">
+        <!-- Card Number -->
+        <div>
+          <label class="block text-xs font-medium text-gray-600 mb-1">信用卡號</label>
+          <div class="relative">
+            <input
+              id="cardNumber"
+              type="text"
+              inputmode="numeric"
+              maxlength="19"
+              placeholder="1234 5678 9012 3456"
+              oninput="formatCardNumber(this)"
+              class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm tracking-widest focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-10"
+            />
+            <i id="cardBrandIcon" class="fab fa-credit-card absolute right-3 top-1/2 -translate-y-1/2 text-gray-300 text-lg"></i>
+          </div>
+        </div>
+
+        <!-- Expiry + CCV -->
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">到期日（月 / 年）</label>
+            <input
+              id="cardExpiry"
+              type="text"
+              inputmode="numeric"
+              maxlength="5"
+              placeholder="MM / YY"
+              oninput="formatExpiry(this)"
+              class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">
+              安全碼（CVV）
+              <span class="ml-1 cursor-pointer text-gray-400" title="卡片背面 3 位數字">
+                <i class="fas fa-question-circle"></i>
+              </span>
+            </label>
+            <input
+              id="cardCvv"
+              type="password"
+              inputmode="numeric"
+              maxlength="4"
+              placeholder="•••"
+              class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+        </div>
+
+        <!-- Save card checkbox -->
+        <label class="flex items-center gap-3 cursor-pointer select-none">
+          <div class="relative flex-shrink-0">
+            <input type="checkbox" id="saveCard" class="peer sr-only" />
+            <div class="w-5 h-5 border-2 border-gray-300 rounded peer-checked:bg-blue-600 peer-checked:border-blue-600 transition-colors flex items-center justify-center">
+              <i class="fas fa-check text-white text-xs hidden peer-checked:block" id="saveCardCheck"></i>
+            </div>
+          </div>
+          <span class="text-sm text-gray-600">保存此付款方式，方便下次使用</span>
+        </label>
+      </div>
+
+      <!-- Pay button -->
+      <div class="px-6 pb-6">
+        <button
+          onclick="submitCreditCardPayment()"
+          class="w-full py-4 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white rounded-xl font-semibold text-base transition-all flex items-center justify-center gap-2 shadow-md shadow-blue-200"
+        >
+          <i class="fas fa-lock text-sm"></i>
+          NT$3,000 — 安全付款
+        </button>
+        <p class="text-center text-xs text-gray-400 mt-3 flex items-center justify-center gap-1">
+          <i class="fas fa-shield-alt"></i>
+          您的付款資訊已加密保護
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openCreditCardModal() {
+      const modal = document.getElementById('creditCardModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCreditCardModal() {
+      const modal = document.getElementById('creditCardModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.style.overflow = '';
+    }
+
+    function formatCardNumber(input) {
+      let v = input.value.replace(/\D/g, '').substring(0, 16);
+      input.value = v.replace(/(.{4})/g, '$1 ').trim();
+      const icon = document.getElementById('cardBrandIcon');
+      if (v.startsWith('4')) {
+        icon.className = 'fab fa-cc-visa absolute right-3 top-1/2 -translate-y-1/2 text-blue-600 text-lg';
+      } else if (/^5[1-5]/.test(v) || /^2[2-7]/.test(v)) {
+        icon.className = 'fab fa-cc-mastercard absolute right-3 top-1/2 -translate-y-1/2 text-red-500 text-lg';
+      } else if (/^35/.test(v)) {
+        icon.className = 'fab fa-cc-jcb absolute right-3 top-1/2 -translate-y-1/2 text-green-600 text-lg';
+      } else {
+        icon.className = 'fab fa-credit-card absolute right-3 top-1/2 -translate-y-1/2 text-gray-300 text-lg';
+      }
+    }
+
+    function formatExpiry(input) {
+      let v = input.value.replace(/\D/g, '').substring(0, 4);
+      if (v.length >= 3) {
+        input.value = v.substring(0, 2) + ' / ' + v.substring(2);
+      } else if (v.length === 2 && !input.value.includes('/')) {
+        input.value = v + ' / ';
+      } else {
+        input.value = v;
+      }
+    }
+
+    // sync checkbox checkmark visibility
+    document.getElementById('saveCard').addEventListener('change', function () {
+      document.getElementById('saveCardCheck').classList.toggle('hidden', !this.checked);
+    });
+
+    function submitCreditCardPayment() {
+      closeCreditCardModal();
+      if (typeof showStatus === 'function') showStatus('confirmed');
+    }
+
+    // close on Escape
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeCreditCardModal();
+    });
+  </script>
+
+  </body>
+</html>

@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>報名費代收服務 - 市集媒合平台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Noto Sans TC", sans-serif;
+        background-color: #f3f4f6;
+      }
+      [x-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100">
+    <div class="min-h-screen flex" x-data="paymentServiceApply()">
+      <!-- 側邊欄 -->
+      <div
+        class="hidden lg:block bg-white w-64 min-h-screen shadow-lg fixed z-30"
+      >
+        <div
+          class="flex items-center justify-center h-16 border-b border-gray-200"
+        >
+          <a href="organizer-dashboard.html">
+            <img
+              class="h-8"
+              src="https://images.unsplash.com/photo-1490127252417-7c393f993ee4?w=150&h=50&fit=crop"
+              alt="Logo"
+            />
+          </a>
+        </div>
+        <nav class="mt-6">
+          <div class="px-4 py-2">
+            <div class="flex items-center space-x-2 text-sm text-gray-600">
+              <img
+                class="h-8 w-8 rounded-full object-cover"
+                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop"
+                alt="主辦方頭像"
+              />
+              <span>歡迎回來，主辦方</span>
+            </div>
+          </div>
+          <div class="px-2 mt-4">
+            <a
+              href="organizer-dashboard.html"
+              class="flex items-center px-4 py-3 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors"
+            >
+              <i class="fas fa-home w-5"></i>
+              <span class="mx-4">首頁</span>
+            </a>
+            <a
+              href="market-management.html"
+              class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors"
+            >
+              <i class="fas fa-store w-5"></i>
+              <span class="mx-4">我的市集</span>
+            </a>
+            <a
+              href="vendor-review.html"
+              class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors"
+            >
+              <i class="fas fa-users w-5"></i>
+              <span class="mx-4">攤商審核</span>
+            </a>
+            <!-- 報名費代收 -->
+            <div x-data="{ paymentOpen: true, paymentServiceStatus: localStorage.getItem('paymentServiceStatus') || 'none' }">
+              <template x-if="paymentServiceStatus === 'approved'">
+                <div>
+                  <button
+                    @click="paymentOpen = !paymentOpen"
+                    class="w-full flex items-center justify-between px-4 py-3 mt-2 text-gray-700 bg-yellow-50 rounded-lg font-medium"
+                  >
+                    <div class="flex items-center">
+                      <i class="fas fa-hand-holding-usd w-5"></i>
+                      <span class="mx-4">報名費代收</span>
+                    </div>
+                    <i
+                      class="fas fa-chevron-right text-xs text-gray-500 transition-transform duration-200"
+                      :class="paymentOpen ? 'rotate-90' : ''"
+                    ></i>
+                  </button>
+                  <div x-show="paymentOpen" class="pl-3 mt-1 space-y-0.5">
+                    <a
+                      href="payment-service-apply.html"
+                      class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-yellow-100 rounded-lg"
+                    >
+                      <span>服務申請狀態</span>
+                    </a>
+                    <a
+                      href="payment-report.html"
+                      class="flex items-center px-4 py-2 text-sm text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors"
+                    >
+                      <span>對帳報表</span>
+                    </a>
+                    <a
+                      href="payment-settlement.html"
+                      class="flex items-center px-4 py-2 text-sm text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors"
+                    >
+                      <span>結算撥款</span>
+                    </a>
+                    <a
+                      href="payment-payout-list.html"
+                      class="flex items-center px-4 py-2 text-sm text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors"
+                    >
+                      <span>撥款紀錄</span>
+                    </a>
+                  </div>
+                </div>
+              </template>
+              <template x-if="paymentServiceStatus !== 'approved'">
+                <a
+                  href="payment-service-apply.html"
+                  class="flex items-center px-4 py-3 mt-2 text-gray-700 bg-yellow-50 rounded-lg font-medium"
+                >
+                  <i class="fas fa-hand-holding-usd w-5"></i>
+                  <span class="mx-4">報名費代收服務</span>
+                </a>
+              </template>
+            </div>
+            <a
+              href="market-analytics.html"
+              class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors"
+            >
+              <i class="fas fa-chart-line w-5"></i>
+              <span class="mx-4">數據分析</span>
+            </a>
+            <a
+              href="market-settings.html"
+              class="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-yellow-50 rounded-lg transition-colors"
+            >
+              <i class="fas fa-cog w-5"></i>
+              <span class="mx-4">設定</span>
+            </a>
+          </div>
+        </nav>
+      </div>
+
+      <!-- 主要內容區 -->
+      <div class="flex-1 lg:ml-64 min-w-0">
+        <!-- 頂部導航 -->
+        <header class="bg-white shadow-sm sticky top-0 z-20">
+          <div class="flex items-center justify-between h-16 px-4 lg:px-8">
+            <h1 class="text-xl font-bold text-gray-800">報名費代收服務</h1>
+            <div class="flex items-center space-x-3">
+              <a
+                href="organizer-notifications.html"
+                class="text-gray-600 hover:text-gray-800 px-1"
+              >
+                <i class="fas fa-bell"></i>
+              </a>
+              <div class="relative" x-data="{ open: false }">
+                <button
+                  @click="open = !open"
+                  class="flex items-center space-x-2"
+                >
+                  <img
+                    class="h-8 w-8 rounded-full object-cover"
+                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop"
+                    alt="主辦方頭像"
+                  />
+                  <i class="fas fa-chevron-down text-gray-600 text-xs"></i>
+                </button>
+                <div
+                  x-show="open"
+                  @click.away="open = false"
+                  class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-10"
+                >
+                  <a
+                    href="organizer-profile.html"
+                    class="block px-4 py-2 text-gray-700 hover:bg-yellow-50"
+                    ><i class="fas fa-user mr-2"></i>個人資料</a
+                  >
+                  <a
+                    href="market-settings.html"
+                    class="block px-4 py-2 text-gray-700 hover:bg-yellow-50"
+                    ><i class="fas fa-cog mr-2"></i>帳號設定</a
+                  >
+                  <hr class="my-1 border-gray-200" />
+                  <a
+                    href="login.html"
+                    class="block px-4 py-2 text-red-600 hover:bg-red-50"
+                    ><i class="fas fa-sign-out-alt mr-2"></i>登出</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- 主要內容 -->
+        <main class="p-4 lg:p-8">
+          <!-- 已核准 -->
+          <template x-if="status === 'approved'">
+            <div class="bg-white rounded-lg shadow-sm p-8 text-center">
+              <i class="fas fa-check-circle text-4xl text-green-500 mb-3"></i>
+              <p class="text-gray-700 font-medium">報名費代收服務已開通</p>
+              <p class="text-sm text-gray-500 mt-1">
+                您可以前往「報名費代收」查看對帳報表、結算撥款與撥款紀錄。
+              </p>
+              <a
+                href="payment-report.html"
+                class="inline-block mt-5 px-6 py-2.5 bg-yellow-500 text-white text-sm font-medium rounded-lg hover:bg-yellow-600 transition-colors"
+              >
+                前往對帳報表
+              </a>
+            </div>
+          </template>
+
+          <template x-if="status !== 'approved'">
+            <div>
+              <!-- 介紹區 -->
+              <div class="bg-white rounded-lg shadow-sm p-6 lg:p-8 mb-6">
+                <div class="flex items-start gap-4">
+                  <div class="p-3 bg-amber-50 rounded-lg shrink-0">
+                    <i class="fas fa-hand-holding-usd text-amber-500 text-xl"></i>
+                  </div>
+                  <div>
+                    <h2 class="text-xl lg:text-2xl font-bold text-gray-900">
+                      讓報名費「自動入帳、自動對帳」
+                    </h2>
+                    <p class="text-gray-600 mt-2 leading-relaxed">
+                      開通報名費代收服務後，攤商繳交的報名費將透過第三方金流服務
+                      TapPay 代為處理，經核帳撥款程序後直接匯入您的市集帳戶，系統同步產生對帳明細，不用再自己核對匯款單、逐筆通知攤商繳費結果。
+                    </p>
+                  </div>
+                </div>
+
+                <!-- 申請流程 -->
+                <div class="mt-6 pt-6 border-t border-gray-100">
+                  <h3 class="text-sm font-semibold text-gray-700 mb-4">申請流程</h3>
+                  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="flex gap-3">
+                      <div class="w-7 h-7 rounded-full bg-amber-500 text-white text-sm font-bold flex items-center justify-center shrink-0">1</div>
+                      <div>
+                        <p class="text-sm font-medium text-gray-800">填寫申請表單</p>
+                        <p class="text-xs text-gray-500 mt-0.5">留下聯絡方式與市集資訊</p>
+                      </div>
+                    </div>
+                    <div class="flex gap-3">
+                      <div class="w-7 h-7 rounded-full bg-amber-500 text-white text-sm font-bold flex items-center justify-center shrink-0">2</div>
+                      <div>
+                        <p class="text-sm font-medium text-gray-800">專人聯繫審核</p>
+                        <p class="text-xs text-gray-500 mt-0.5">1–2 個工作天內與您確認合作內容與收款帳戶</p>
+                      </div>
+                    </div>
+                    <div class="flex gap-3">
+                      <div class="w-7 h-7 rounded-full bg-amber-500 text-white text-sm font-bold flex items-center justify-center shrink-0">3</div>
+                      <div>
+                        <p class="text-sm font-medium text-gray-800">完成簽署並開通</p>
+                        <p class="text-xs text-gray-500 mt-0.5">簽署合作條款後即可啟用服務</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 尚未申請：申請表單 -->
+              <div x-show="status === 'none'" class="bg-white rounded-lg shadow-sm p-6 lg:p-8">
+                <h3 class="text-lg font-bold text-gray-900">立即申請開通</h3>
+                <p class="text-sm text-gray-500 mt-1 mb-6">
+                  填寫以下資料，表單送出後將有專人與您聯繫，協助完成後續開通程序。
+                </p>
+
+                <form @submit.prevent="submit()">
+                  <div class="grid grid-cols-1 gap-4">
+                    <div>
+                      <label class="block text-xs font-medium text-gray-500 mb-1">要建立的 TapPay 會員帳號 <span class="text-red-500">*</span></label>
+                      <input
+                        type="text"
+                        x-model="form.tapPayAccount"
+                        placeholder="用於登入 TapPay 收款後台的帳號"
+                        class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-yellow-500 text-gray-700"
+                        :class="errors.tapPayAccount ? 'border-red-400' : 'border-gray-200'"
+                      />
+                      <p x-show="errors.tapPayAccount" class="text-xs text-red-500 mt-1">請填寫要建立的 TapPay 會員帳號</p>
+                    </div>
+                    <div>
+                      <label class="block text-xs font-medium text-gray-500 mb-1">要建立的會員電子郵件 <span class="text-red-500">*</span></label>
+                      <input
+                        type="email"
+                        x-model="form.memberEmail"
+                        placeholder="you@example.com"
+                        class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-yellow-500 text-gray-700"
+                        :class="errors.memberEmail ? 'border-red-400' : 'border-gray-200'"
+                      />
+                      <p x-show="errors.memberEmail" class="text-xs text-red-500 mt-1">請填寫要建立的會員電子郵件</p>
+                    </div>
+                    <div>
+                      <label class="block text-xs font-medium text-gray-500 mb-1">對外營業名稱 <span class="text-red-500">*</span></label>
+                      <input
+                        type="text"
+                        x-model="form.businessName"
+                        placeholder="顯示於繳費頁面與收據的名稱"
+                        class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-yellow-500 text-gray-700"
+                        :class="errors.businessName ? 'border-red-400' : 'border-gray-200'"
+                      />
+                      <p x-show="errors.businessName" class="text-xs text-red-500 mt-1">請填寫對外營業名稱</p>
+                    </div>
+                    <div>
+                      <label class="block text-xs font-medium text-gray-500 mb-1">統一編號 <span class="text-red-500">*</span></label>
+                      <input
+                        type="text"
+                        x-model="form.taxId"
+                        placeholder="請輸入 8 碼統一編號"
+                        class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-yellow-500 text-gray-700"
+                        :class="errors.taxId ? 'border-red-400' : 'border-gray-200'"
+                      />
+                      <p x-show="errors.taxId" class="text-xs text-red-500 mt-1">請填寫統一編號</p>
+                    </div>
+                    <div>
+                      <label class="block text-xs font-medium text-gray-500 mb-1">身份證字號 <span class="text-red-500">*</span></label>
+                      <input
+                        type="text"
+                        x-model="form.nationalId"
+                        placeholder="用於 TapPay 實名身份查核"
+                        class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-yellow-500 text-gray-700"
+                        :class="errors.nationalId ? 'border-red-400' : 'border-gray-200'"
+                      />
+                      <p x-show="errors.nationalId" class="text-xs text-red-500 mt-1">請填寫身份證字號</p>
+                      <p class="text-xs text-gray-400 mt-1">僅提供予 TapPay 進行帳戶身份查核，將加密儲存並保密處理。</p>
+                    </div>
+                  </div>
+
+                  <div class="mt-4">
+                    <label class="block text-xs font-medium text-gray-500 mb-1">備註</label>
+                    <textarea
+                      x-model="form.note"
+                      rows="3"
+                      placeholder="有任何想讓我們了解的需求嗎？"
+                      class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-yellow-500 text-gray-700"
+                    ></textarea>
+                  </div>
+
+                  <div class="mt-5">
+                    <label class="flex items-start gap-2 text-sm text-gray-700">
+                      <input type="checkbox" x-model="form.agree" class="mt-0.5 rounded border-gray-300 text-yellow-500 focus:ring-yellow-500">
+                      <span>我已閱讀並同意《報名費代收服務條款》，並同意將必要資料提供予 TapPay 進行金流串接作業。</span>
+                    </label>
+                    <p x-show="errors.agree" class="text-xs text-red-500 mt-1">請先閱讀並同意服務條款</p>
+                  </div>
+
+                  <div class="mt-6 flex justify-center">
+                    <button
+                      type="submit"
+                      class="w-full sm:w-auto px-8 py-3 bg-yellow-500 text-white font-medium rounded-lg hover:bg-yellow-600 transition-colors"
+                    >
+                      送出申請
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+              <!-- 已申請：申請進度 -->
+              <div x-show="status === 'pending'" class="bg-white rounded-lg shadow-sm p-6 lg:p-8">
+                <div class="flex items-center justify-between flex-wrap gap-3 mb-6">
+                  <h3 class="text-lg font-bold text-gray-900">申請進度</h3>
+                  <span class="px-3 py-1 bg-amber-100 text-amber-700 text-xs font-medium rounded-full">
+                    <i class="fas fa-hourglass-half mr-1"></i>審核中
+                  </span>
+                </div>
+
+                <p class="text-sm text-gray-600 mb-6">
+                  您的申請已於
+                  <span class="font-medium text-gray-800" x-text="submittedAt"></span>
+                  送出，我們的專人將於 1–2 個工作天內主動與您聯繫，協助確認合作內容、收款帳戶與費率說明，完成簽署後即可開通服務。
+                </p>
+
+                <!-- 進度時間軸 -->
+                <div class="space-y-0">
+                  <div class="flex gap-3">
+                    <div class="flex flex-col items-center">
+                      <div class="w-7 h-7 rounded-full bg-green-500 text-white flex items-center justify-center shrink-0">
+                        <i class="fas fa-check text-xs"></i>
+                      </div>
+                      <div class="w-px flex-1 bg-gray-200"></div>
+                    </div>
+                    <div class="pb-6">
+                      <p class="text-sm font-medium text-gray-800">已送出申請</p>
+                      <p class="text-xs text-gray-400 mt-0.5" x-text="submittedAt"></p>
+                    </div>
+                  </div>
+                  <div class="flex gap-3">
+                    <div class="flex flex-col items-center">
+                      <div class="w-7 h-7 rounded-full bg-amber-500 text-white flex items-center justify-center shrink-0">
+                        <i class="fas fa-user-clock text-xs"></i>
+                      </div>
+                      <div class="w-px flex-1 bg-gray-200"></div>
+                    </div>
+                    <div class="pb-6">
+                      <p class="text-sm font-medium text-gray-800">專人審核聯繫中</p>
+                      <p class="text-xs text-gray-400 mt-0.5">我們將主動與您聯繫，確認合作內容與收款帳戶</p>
+                    </div>
+                  </div>
+                  <div class="flex gap-3">
+                    <div class="flex flex-col items-center">
+                      <div class="w-7 h-7 rounded-full bg-gray-200 text-gray-400 flex items-center justify-center shrink-0">
+                        <i class="fas fa-flag-checkered text-xs"></i>
+                      </div>
+                    </div>
+                    <div>
+                      <p class="text-sm font-medium text-gray-400">完成開通</p>
+                      <p class="text-xs text-gray-400 mt-0.5">簽署合作條款後即可開始使用報名費代收服務</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-6 pt-6 border-t border-gray-100 bg-gray-50 -mx-6 -mb-6 lg:-mx-8 lg:-mb-8 px-6 py-5 lg:px-8 rounded-b-lg">
+                  <p class="text-xs font-medium text-gray-500 mb-1.5">有問題想先詢問？</p>
+                  <p class="text-sm text-gray-700">
+                    <i class="fas fa-envelope text-gray-400 mr-1.5"></i>service@17847market.com
+                    <span class="mx-3 text-gray-300">|</span>
+                    <i class="fab fa-line text-gray-400 mr-1.5"></i>LINE 客服 @17847market（週一至週五 09:00–18:00）
+                  </p>
+                </div>
+              </div>
+            </div>
+          </template>
+
+          <!-- 狀態切換（測試用） -->
+          <div class="flex justify-center items-center gap-3 mt-8 pb-4">
+            <span class="text-xs text-gray-400">狀態切換（測試用）：</span>
+            <button @click="setTestStatus('none')" class="px-3 py-1.5 text-xs bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300 transition-colors">尚未申請</button>
+            <button @click="setTestStatus('pending')" class="px-3 py-1.5 text-xs bg-amber-100 text-amber-700 rounded-lg hover:bg-amber-200 transition-colors">審核中</button>
+            <button @click="setTestStatus('approved')" class="px-3 py-1.5 text-xs bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors">已核准（模擬開通）</button>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      function paymentServiceApply() {
+        return {
+          status: "none",
+          submittedAt: "",
+          form: {
+            tapPayAccount: "",
+            memberEmail: "",
+            businessName: "",
+            taxId: "",
+            nationalId: "",
+            note: "",
+            agree: false,
+          },
+          errors: {},
+          init() {
+            this.status = localStorage.getItem("paymentServiceStatus") || "none";
+            this.submittedAt = localStorage.getItem("paymentServiceSubmittedAt") || "";
+          },
+          validate() {
+            this.errors = {};
+            if (!this.form.tapPayAccount.trim()) this.errors.tapPayAccount = true;
+            if (!this.form.memberEmail.trim()) this.errors.memberEmail = true;
+            if (!this.form.businessName.trim()) this.errors.businessName = true;
+            if (!this.form.taxId.trim()) this.errors.taxId = true;
+            if (!this.form.nationalId.trim()) this.errors.nationalId = true;
+            if (!this.form.agree) this.errors.agree = true;
+            return Object.keys(this.errors).length === 0;
+          },
+          submit() {
+            if (!this.validate()) return;
+            this.submittedAt = new Date().toLocaleString("zh-Hant-TW", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+              hour: "2-digit",
+              minute: "2-digit",
+            });
+            localStorage.setItem("paymentServiceStatus", "pending");
+            localStorage.setItem("paymentServiceSubmittedAt", this.submittedAt);
+            this.status = "pending";
+          },
+          setTestStatus(s) {
+            localStorage.setItem("paymentServiceStatus", s);
+            if (s === "pending" && !localStorage.getItem("paymentServiceSubmittedAt")) {
+              localStorage.setItem(
+                "paymentServiceSubmittedAt",
+                new Date().toLocaleString("zh-Hant-TW", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                }),
+              );
+            }
+            window.location.reload();
+          },
+        };
+      }
+    </script>
+  </body>
+</html>
