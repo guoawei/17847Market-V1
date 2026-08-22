@@ -343,6 +343,48 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- 外部表單類型的市集卡片（外部報名連結，無日期/攤位資訊） -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow flex flex-col">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d" alt="市集照片" class="w-full h-48 object-cover">
+                            <!-- 類型標籤：讓使用者一眼分辨這是外部表單報名的活動 -->
+                            <span class="absolute top-3 left-3 inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-white/95 text-gray-700 shadow-sm">
+                                <i class="fas fa-file-lines mr-1.5 text-gray-500"></i>
+                                外部表單報名
+                            </span>
+                        </div>
+                        <div class="p-4 flex flex-col flex-1">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-lg font-bold text-gray-900">在地職人徵件市集</h3>
+                                <button class="text-gray-400 hover:text-yellow-500">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
+                            <div class="space-y-2 mb-4">
+                                <div class="flex items-center text-sm text-gray-600">
+                                    <i class="fas fa-map-marker-alt w-4 h-4 mr-2 text-yellow-500"></i>
+                                    台北市南港區三重路
+                                </div>
+                                <!-- 沒有日期與攤位資訊，改為一列「報名方式」提示，維持與其他卡片一致的 icon+文字節奏 -->
+                                <div class="flex items-center text-sm text-gray-500">
+                                    <i class="fas fa-info-circle w-4 h-4 mr-2 text-gray-400"></i>
+                                    詳細時間、攤位資訊請見報名表單
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between mt-auto pt-2">
+                                <div class="flex items-center space-x-2">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                        開放報名中
+                                    </span>
+                                </div>
+                                <a href="market-detail-external-form.html" class="text-yellow-600 hover:text-yellow-700 text-sm font-medium whitespace-nowrap">
+                                    查看詳情
+                                    <i class="fas fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- 分頁 -->
