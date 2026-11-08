@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>建立招商活動 - 17847 Market</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; }
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body class="bg-white text-gray-900">
+<main class="max-w-5xl mx-auto px-4 sm:px-6 py-10"
+      x-data="createEvent()">
+
+    <h1 class="text-2xl font-bold mb-5">建立招商活動</h1>
+
+    <form class="space-y-4" @submit.prevent="submit()">
+
+        <!-- ========== 基本資訊 ========== -->
+        <section class="border border-gray-200 rounded-xl shadow-sm p-5 space-y-5">
+            <div>
+                <label class="block font-bold mb-2">活動名稱<span>*</span></label>
+                <input type="text" class="w-full h-9 border border-gray-200 rounded-md px-3 text-sm focus:outline-none focus:ring-2 focus:ring-gray-300">
+            </div>
+            <div>
+                <label class="block font-bold mb-2">活動描述<span>*</span></label>
+                <textarea rows="5" placeholder="請輸入市集描述" class="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-300"></textarea>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-[180px_1fr] gap-2">
+                <div>
+                    <label class="block font-bold mb-2">城市<span>*</span></label>
+                    <select class="w-full h-9 border border-gray-200 rounded-md px-3 text-sm text-gray-500 bg-white">
+                        <option>選擇城市</option><option>台北市</option><option>新北市</option><option>台中市</option><option>台南市</option><option>高雄市</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-bold mb-2">活動地點<span>*</span></label>
+                    <input type="text" placeholder="中山捷運站出口" class="w-full h-9 border border-gray-200 rounded-md px-3 text-sm focus:outline-none focus:ring-2 focus:ring-gray-300">
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== 【新增】招商條件與媒合資訊 ========== -->
+        <section class="border border-gray-200 rounded-xl shadow-sm p-5">
+            <div class="flex items-start justify-between gap-4 mb-1">
+                <h2 class="font-bold text-lg">招商條件與媒合資訊</h2>
+                <span class="text-xs text-gray-500 whitespace-nowrap mt-1">
+                    已填寫 <span class="font-semibold text-gray-900" x-text="filledGroups"></span>/4 項
+                </span>
+            </div>
+            <p class="text-sm text-gray-500 mb-5">
+                填寫越完整，攤商越容易透過篩選條件找到你的活動，也能減少不符資格的報名。
+            </p>
+
+            <!-- 招商類別 -->
+            <div class="mb-6">
+                <div class="flex items-baseline gap-2 mb-1">
+                    <label class="font-bold">招商類別<span>*</span></label>
+                    <span class="text-sm text-gray-500">(可複選)</span>
+                </div>
+                <p class="text-xs text-gray-500 mb-3">你希望招募哪些類型的攤商？</p>
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+                    <template x-for="opt in options.categories" :key="opt.value">
+                        <button type="button"
+                                @click="toggle('categories', opt.value)"
+                                :aria-pressed="form.categories.includes(opt.value)"
+                                class="flex items-center gap-3 h-12 px-4 rounded-lg border text-sm transition-colors text-left"
+                                :class="form.categories.includes(opt.value)
+                                    ? 'border-gray-900 bg-gray-900 text-white'
+                                    : 'border-gray-200 hover:border-gray-400 text-gray-700'">
+                            <i class="fa-solid w-4 text-center" :class="opt.icon"></i>
+                            <span class="flex-1" x-text="opt.label"></span>
+                            <i class="fa-solid fa-check text-xs" x-show="form.categories.includes(opt.value)"></i>
+                        </button>
+                    </template>
+                </div>
+                <p x-cloak x-show="errors.categories" class="text-xs text-red-500 mt-2">
+                    <i class="fa-solid fa-circle-exclamation mr-1"></i>請至少選擇一個招商類別
+                </p>
+            </div>
+
+            <hr class="border-gray-100 mb-6">
+
+            <!-- 客群 -->
+            <div class="mb-6">
+                <div class="flex items-baseline gap-2 mb-1">
+                    <label class="font-bold">主要客群</label>
+                    <span class="text-sm text-gray-500">(可複選)</span>
+                </div>
+                <p class="text-xs text-gray-500 mb-3">活動現場主要的來客族群，協助攤商評估商品是否合適。</p>
+                <div class="flex flex-wrap gap-2">
+                    <template x-for="opt in options.audiences" :key="opt.value">
+                        <button type="button"
+                                @click="toggle('audiences', opt.value)"
+                                :aria-pressed="form.audiences.includes(opt.value)"
+                                class="inline-flex items-center gap-2 h-9 px-4 rounded-full border text-sm transition-colors"
+                                :class="form.audiences.includes(opt.value)
+                                    ? 'border-gray-900 bg-gray-900 text-white'
+                                    : 'border-gray-200 hover:border-gray-400 text-gray-700'">
+                            <i class="fa-solid text-xs" :class="opt.icon"></i>
+                            <span x-text="opt.label"></span>
+                        </button>
+                    </template>
+                </div>
+            </div>
+
+            <hr class="border-gray-100 mb-6">
+
+            <!-- 設備 -->
+            <div class="mb-6">
+                <div class="flex items-baseline gap-2 mb-1">
+                    <label class="font-bold">場地設備</label>
+                    <span class="text-sm text-gray-500">(可複選)</span>
+                </div>
+                <p class="text-xs text-gray-500 mb-3">勾選場地「有提供」或「允許使用」的項目，未勾選即視為不提供 / 不允許。</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                    <template x-for="opt in options.facilities" :key="opt.value">
+                        <label class="flex items-start gap-3 p-3 rounded-lg border cursor-pointer transition-colors"
+                               :class="form.facilities.includes(opt.value) ? 'border-gray-900 bg-gray-50' : 'border-gray-200 hover:border-gray-400'">
+                            <input type="checkbox" class="mt-1 h-4 w-4 accent-gray-900"
+                                   :value="opt.value" x-model="form.facilities">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 text-sm font-medium">
+                                    <i class="fa-solid w-4 text-center text-gray-500" :class="opt.icon"></i>
+                                    <span x-text="opt.label"></span>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-0.5" x-text="opt.hint"></p>
+                            </div>
+                        </label>
+                    </template>
+                </div>
+                <!-- 與下方「場地須知」的連動提示 -->
+                <div x-cloak x-show="relatedNotices.length"
+                     class="mt-3 flex items-start gap-2 text-xs text-gray-600 bg-amber-50 border border-amber-200 rounded-md px-3 py-2">
+                    <i class="fa-solid fa-lightbulb text-amber-500 mt-0.5"></i>
+                    <span>建議在下方「場地須知」開啟
+                        <template x-for="(n, i) in relatedNotices" :key="n">
+                            <span><span x-show="i > 0">、</span><span class="font-semibold" x-text="'「' + n + '」'"></span></span>
+                        </template>
+                        並補充細節（如電壓瓦數、可用火源種類）。
+                    </span>
+                </div>
+            </div>
+
+            <hr class="border-gray-100 mb-6">
+
+            <!-- 資格 -->
+            <div class="mb-6">
+                <div class="flex items-baseline gap-2 mb-1">
+                    <label class="font-bold">攤商資格要求</label>
+                </div>
+                <p class="text-xs text-gray-500 mb-3">開啟後，攤商報名時須符合並提供相關證明資訊。</p>
+                <div class="space-y-2">
+                    <template x-for="opt in options.qualifications" :key="opt.value">
+                        <div class="flex items-center gap-4 p-3 rounded-lg border border-gray-200">
+                            <div class="h-9 w-9 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 shrink-0">
+                                <i class="fa-solid" :class="opt.icon"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm font-medium" x-text="opt.label"></p>
+                                <p class="text-xs text-gray-500" x-text="opt.hint"></p>
+                            </div>
+                            <!-- 與場地須知相同樣式的 toggle -->
+                            <button type="button" role="switch"
+                                    :aria-checked="form.qualifications.includes(opt.value)"
+                                    @click="toggle('qualifications', opt.value)"
+                                    class="relative inline-flex h-5 w-9 shrink-0 rounded-full transition-colors"
+                                    :class="form.qualifications.includes(opt.value) ? 'bg-rose-500' : 'bg-rose-200'">
+                                <span class="absolute top-0.5 left-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform"
+                                      :class="form.qualifications.includes(opt.value) ? 'translate-x-4' : ''"></span>
+                            </button>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <!-- 攤商搜尋預覽 -->
+            <div class="rounded-lg bg-gray-50 border border-dashed border-gray-300 p-4">
+                <p class="text-xs font-medium text-gray-500 mb-2">
+                    <i class="fa-solid fa-magnifying-glass mr-1"></i>攤商搜尋時會看到的標籤
+                </p>
+                <div class="flex flex-wrap gap-1.5" x-show="previewTags.length">
+                    <template x-for="tag in previewTags" :key="tag.label">
+                        <span class="inline-flex items-center gap-1 text-xs px-2 py-1 rounded"
+                              :class="tag.cls">
+                            <i class="fa-solid" :class="tag.icon"></i>
+                            <span x-text="tag.label"></span>
+                        </span>
+                    </template>
+                </div>
+                <p class="text-xs text-gray-400" x-show="!previewTags.length">尚未選擇任何條件</p>
+            </div>
+        </section>
+
+        <!-- ========== 封面照片 ========== -->
+        <section class="border border-gray-200 rounded-xl shadow-sm p-5 space-y-5">
+            <div>
+                <p class="font-bold mb-3">活動封面照片* <span class="font-normal text-sm text-gray-500">(電腦版)</span></p>
+                <div class="h-48 border-2 border-dashed border-rose-300 rounded-lg flex flex-col items-center justify-center text-sm text-gray-500">
+                    <i class="fa-solid fa-plus text-xl mb-2"></i>新增照片<span>建議尺寸 1920 x 400 像素</span>
+                </div>
+            </div>
+            <div>
+                <p class="font-bold mb-3">活動封面照片* <span class="font-normal text-sm text-gray-500">(手機版)</span></p>
+                <div class="mx-auto w-64 sm:w-72 aspect-square border-2 border-dashed border-rose-300 rounded-lg flex flex-col items-center justify-center text-sm text-gray-500">
+                    <i class="fa-solid fa-plus text-xl mb-2"></i>新增照片<span>建議尺寸 600 x 600 像素</span>
+                </div>
+            </div>
+            <div>
+                <p class="font-bold mb-3">活動Banner照片* <span class="font-normal text-sm text-gray-500">(顯示於首頁活動列表的橫幅圖)</span></p>
+                <div class="mx-auto max-w-sm h-48 border-2 border-dashed border-rose-300 rounded-lg flex flex-col items-center justify-center text-sm text-gray-500">
+                    <i class="fa-solid fa-plus text-xl mb-2"></i>新增照片<span>建議尺寸 400 x 200 像素</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== 其他既有區塊（簡化） ========== -->
+        <section class="border border-gray-200 rounded-xl shadow-sm p-5">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="font-bold">參加日期和攤位管理*</h2>
+                <button type="button" class="h-9 px-4 rounded-md bg-gray-900 text-white text-sm">新增參加日期</button>
+            </div>
+            <p class="text-center text-sm text-gray-500">目前沒有資料</p>
+        </section>
+
+        <section class="border border-gray-200 rounded-xl shadow-sm p-5">
+            <div class="flex items-center justify-between mb-4 gap-3">
+                <h2 class="font-bold">租借設備</h2>
+                <div class="flex items-center gap-3 text-sm">
+                    <span class="hidden sm:inline">已新增 0/3 項租借設備</span>
+                    <button type="button" class="h-9 px-4 rounded-md bg-gray-900 text-white">新增租借設備</button>
+                </div>
+            </div>
+            <p class="text-center text-sm text-gray-500">目前沒有資料</p>
+        </section>
+
+        <section class="border border-gray-200 rounded-xl shadow-sm p-5">
+            <label class="block font-bold mb-2">保證金*</label>
+            <input type="number" value="0" class="w-full h-9 border border-gray-200 rounded-md px-3 text-sm">
+        </section>
+
+        <section class="border border-gray-200 rounded-xl shadow-sm p-5">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="font-bold">攤位類型管理</h2>
+                <button type="button" class="h-9 px-4 rounded-md bg-gray-900 text-white text-sm">新增攤位類型</button>
+            </div>
+            <p class="text-center text-sm text-gray-500">目前沒有資料</p>
+        </section>
+
+        <section class="border border-gray-200 rounded-xl shadow-sm p-5">
+            <h2 class="font-bold">場地須知</h2>
+            <p class="text-sm text-gray-600 mb-3">開啟項目後，攤商在活動頁面將會看到對應的場地說明</p>
+            <div class="space-y-3">
+                <template x-for="n in notices" :key="n.title">
+                    <div class="border rounded-lg p-4 transition-colors"
+                         :class="relatedNotices.includes(n.title) && !n.on ? 'border-amber-300 bg-amber-50/40' : 'border-gray-200'">
+                        <div class="flex items-center gap-3 mb-2">
+                            <button type="button" role="switch" :aria-checked="n.on" @click="n.on = !n.on"
+                                    class="relative inline-flex h-5 w-9 shrink-0 rounded-full transition-colors"
+                                    :class="n.on ? 'bg-rose-500' : 'bg-rose-200'">
+                                <span class="absolute top-0.5 left-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform"
+                                      :class="n.on ? 'translate-x-4' : ''"></span>
+                            </button>
+                            <span class="font-medium" :class="n.on ? 'text-gray-900' : 'text-gray-400'" x-text="n.title"></span>
+                            <span x-cloak x-show="relatedNotices.includes(n.title) && !n.on"
+                                  class="text-[11px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700">建議開啟</span>
+                        </div>
+                        <textarea rows="2" :disabled="!n.on" :placeholder="n.placeholder"
+                                  class="w-full ml-0 sm:ml-12 sm:w-[calc(100%-3rem)] border border-gray-200 rounded-md px-3 py-2 text-sm disabled:bg-gray-50 disabled:text-gray-400"></textarea>
+                    </div>
+                </template>
+            </div>
+        </section>
+
+        <p class="flex items-center gap-2 text-sm text-gray-500">
+            <i class="fa-solid fa-circle-info"></i>當報名額滿或活動到期時，系統將自動關閉報名，停止收件。
+        </p>
+
+        <div class="flex justify-center pt-4">
+            <button type="submit" class="h-10 px-5 rounded-md bg-gray-900 text-white text-sm hover:bg-gray-700">建立活動</button>
+        </div>
+    </form>
+</main>
+
+<script src="js/market-categories.js"></script>
+<script>
+function createEvent() {
+    return {
+        options: {
+            categories: CATEGORIES,
+            audiences: [
+                { value: 'family',    label: '家庭親子', icon: 'fa-children' },
+                { value: 'tourist',   label: '觀光客',   icon: 'fa-camera' },
+                { value: 'petowner',  label: '寵物飼主', icon: 'fa-dog' },
+            ],
+            facilities: [
+                { value: 'water',    label: '水供給',  icon: 'fa-faucet-drip',      hint: '場地提供取水點' },
+                { value: 'power',    label: '電供給',  icon: 'fa-plug',             hint: '攤位可接電使用' },
+                { value: 'openFire', label: '明火',    icon: 'fa-fire',             hint: '允許瓦斯爐等明火烹調' },
+                { value: 'hidFire',  label: '暗火',    icon: 'fa-fire-burner',      hint: '允許電磁爐、烤箱等無明火加熱' },
+                { value: 'parking',  label: '停車位',  icon: 'fa-square-parking',   hint: '提供攤商停車或卸貨車位' },
+            ],
+            qualifications: [
+                { value: 'foodReg', label: '食品業者登錄', icon: 'fa-certificate', hint: '攤商須具備食品業者登錄字號，報名時需填寫' },
+                { value: 'invoice', label: '開立發票',     icon: 'fa-receipt',     hint: '攤商須能開立統一發票（含電子發票）' },
+            ],
+        },
+        form: { categories: [], audiences: [], facilities: [], qualifications: [] },
+        errors: { categories: false },
+        notices: [
+            { title: '攤位設備', on: false, placeholder: '請輸入說明內容，例如：「提供桌椅、遮陽棚」' },
+            { title: '供電服務', on: false, placeholder: '請輸入說明內容，例如：「每個攤位提供110V/500W電力，如需額外用電請事先申請」' },
+            { title: '電器登記', on: false, placeholder: '請輸入說明內容，例如：「請攤商於報名時填寫使用的電器設備及預估用電瓦數（W）」' },
+            { title: '明火使用', on: false, placeholder: '請輸入說明內容，例如：「禁止使用明火及瓦斯等危險物品」' },
+            { title: '寄物服務', on: false, placeholder: '請輸入說明內容，例如：「不提供寄物服務，請自行保管貴重物品」' },
+            { title: '垃圾處理', on: false, placeholder: '請輸入說明內容，例如：「請將垃圾分類後放置指定位置」' },
+            { title: '車牌登記', on: false, placeholder: '請輸入說明內容，例如：「需於報名時提供車牌號碼，未登記車輛無法進入場地」' },
+        ],
+
+        toggle(key, value) {
+            const list = this.form[key];
+            const i = list.indexOf(value);
+            i === -1 ? list.push(value) : list.splice(i, 1);
+            if (key === 'categories' && list.length) this.errors.categories = false;
+        },
+
+        get filledGroups() {
+            return ['categories', 'audiences', 'facilities', 'qualifications']
+                .filter(k => this.form[k].length).length;
+        },
+
+        // 依勾選的場地設備，提示對應的場地須知
+        get relatedNotices() {
+            const f = this.form.facilities, out = [];
+            if (f.includes('power')) out.push('供電服務');
+            if (f.includes('openFire') || f.includes('hidFire')) out.push('明火使用');
+            if (f.includes('parking')) out.push('車牌登記');
+            return out;
+        },
+
+        get previewTags() {
+            const pick = (key, cls) => this.options[key]
+                .filter(o => this.form[key].includes(o.value))
+                .map(o => ({ label: o.label, icon: o.icon, cls }));
+            return [
+                ...pick('categories',     'bg-gray-900 text-white'),
+                ...pick('audiences',      'bg-sky-100 text-sky-800'),
+                ...pick('facilities',     'bg-emerald-100 text-emerald-800'),
+                ...pick('qualifications', 'bg-amber-100 text-amber-800'),
+            ];
+        },
+
+        submit() {
+            this.errors.categories = this.form.categories.length === 0;
+            if (this.errors.categories) {
+                this.$root.querySelector('section:nth-of-type(2)').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                return;
+            }
+            console.log('payload', JSON.parse(JSON.stringify(this.form)));
+            alert('活動建立成功（原型）');
+        },
+    };
+}
+</script>
+</body>
+</html>

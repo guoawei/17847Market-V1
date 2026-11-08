@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>找市集 - 擺個市集</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.14.1/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; }
+        [x-cloak] { display: none !important; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900" x-data="marketSearch()" @scroll.window.throttle.100ms="onScroll()" @resize.window.debounce.150ms="updateCatCount()">
+
+<!-- ========== 頂部導覽 ========== -->
+<header class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+        <div class="flex items-center gap-10">
+            <div class="leading-tight">
+                <p class="text-xl font-black tracking-wider">擺個市集</p>
+                <p class="text-[10px] text-gray-500">市集人專屬招商平台</p>
+            </div>
+            <nav class="hidden md:flex gap-8 text-sm font-medium text-gray-700">
+                <a href="#">我的市集</a><a href="#">攤商審核</a><a href="#">定價</a><a href="#">關於我們</a>
+            </nav>
+        </div>
+        <div class="flex items-center gap-3 text-sm">
+            <span class="h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center">郭</span>
+            <span class="hidden sm:inline text-gray-600">郭追</span>
+            <button class="h-9 px-4 rounded-md bg-gray-900 text-white">登出</button>
+        </div>
+    </div>
+</header>
+
+<!-- ========== 搜尋工具 ========== -->
+<section class="sticky top-0 z-30 bg-gray-50/95 backdrop-blur pt-6 pb-3">
+    <div class="max-w-7xl mx-auto px-4">
+
+        <!-- 第一層：原本的三欄搜尋列（保留） -->
+        <div class="bg-white rounded-xl shadow-md flex flex-col md:flex-row md:items-center p-2 gap-1">
+            <label class="flex items-center gap-3 flex-1 px-4 py-2 rounded-lg hover:bg-gray-50 cursor-text">
+                <i class="fa-solid fa-magnifying-glass text-lg"></i>
+                <div class="flex-1">
+                    <p class="text-xs text-gray-500">市集名稱、特色</p>
+                    <input x-model="q.keyword" placeholder="找市集" class="w-full font-bold placeholder-gray-900 focus:outline-none bg-transparent">
+                </div>
+            </label>
+            <div class="hidden md:block w-px h-10 bg-gray-200"></div>
+            <label class="flex items-center gap-3 md:w-56 px-4 py-2 rounded-lg hover:bg-gray-50 cursor-pointer">
+                <i class="fa-solid fa-location-dot text-lg"></i>
+                <div class="flex-1">
+                    <p class="text-xs text-gray-500">地區</p>
+                    <select x-model="q.area" class="w-full font-bold bg-transparent focus:outline-none -ml-1">
+                        <option value="">全部</option>
+                        <template x-for="r in REGIONS" :key="r.name">
+                            <optgroup :label="r.name">
+                                <option :value="'region:' + r.name" x-text="r.name + '全區'"></option>
+                                <template x-for="c in r.cities" :key="c"><option :value="c" x-text="c"></option></template>
+                            </optgroup>
+                        </template>
+                    </select>
+                </div>
+            </label>
+            <div class="hidden md:block w-px h-10 bg-gray-200"></div>
+            <label class="flex items-center gap-3 md:w-56 px-4 py-2 rounded-lg hover:bg-gray-50 cursor-pointer">
+                <i class="fa-regular fa-calendar text-lg"></i>
+                <div class="flex-1">
+                    <p class="text-xs text-gray-500">活動日期</p>
+                    <input type="date" x-model="q.date" class="w-full font-bold bg-transparent focus:outline-none">
+                </div>
+            </label>
+            <button class="h-12 md:w-28 rounded-lg bg-amber-500 hover:bg-amber-600 text-white font-bold text-lg">搜尋</button>
+        </div>
+
+        <!-- 第二層：招商類別（收合時顯示一排，「更多類別」展開全部，不需橫向捲動） -->
+        <div class="mt-4 flex items-start gap-3">
+            <div class="flex-1 min-w-0 flex flex-wrap gap-2">
+                <button @click="q.categories = []"
+                        class="h-10 px-4 rounded-full border text-sm flex items-center gap-2 transition-colors"
+                        :class="!q.categories.length ? 'bg-gray-900 text-white border-gray-900' : 'bg-white border-gray-200 hover:border-gray-400'">
+                    <i class="fa-solid fa-border-all"></i>不限類別
+                </button>
+                <template x-for="c in visibleCategories" :key="c.value">
+                    <button @click="toggle(q.categories, c.value)" :aria-pressed="q.categories.includes(c.value)"
+                            class="h-10 px-4 rounded-full border text-sm flex items-center gap-2 transition-colors"
+                            :class="q.categories.includes(c.value) ? 'bg-gray-900 text-white border-gray-900' : 'bg-white border-gray-200 hover:border-gray-400'">
+                        <i class="fa-solid" :class="c.icon"></i><span x-text="c.label"></span>
+                    </button>
+                </template>
+                <!-- 展開 / 收合全部類別：用文字明確告知還有幾個 -->
+                <button x-show="catsExpanded || hiddenCategoryCount" @click="catsExpanded = !catsExpanded" :aria-expanded="catsExpanded"
+                        class="h-10 px-4 rounded-full border border-dashed border-gray-400 bg-white text-sm font-medium flex items-center gap-2 hover:border-gray-900">
+                    <template x-if="!catsExpanded">
+                        <span>更多類別 <span class="text-gray-500" x-text="'+' + hiddenCategoryCount"></span></span>
+                    </template>
+                    <template x-if="catsExpanded"><span>收合類別</span></template>
+                    <i class="fa-solid fa-chevron-down text-xs transition-transform" :class="catsExpanded && 'rotate-180'"></i>
+                </button>
+            </div>
+            <button @click="toggleFilters()" :aria-expanded="filtersOpen" aria-controls="filter-panel"
+                    class="shrink-0 h-10 px-4 rounded-full border text-sm flex items-center gap-2 transition-colors"
+                    :class="filtersOpen ? 'bg-gray-900 text-white border-gray-900' : (advancedCount ? 'bg-white border-gray-900' : 'bg-white border-gray-200 hover:border-gray-400')">
+                <i class="fa-solid fa-sliders"></i>更多條件
+                <span x-show="advancedCount" class="h-5 min-w-5 px-1.5 rounded-full text-xs flex items-center justify-center"
+                      :class="filtersOpen ? 'bg-white text-gray-900' : 'bg-gray-900 text-white'" x-text="advancedCount"></span>
+                <i class="fa-solid fa-chevron-down text-xs transition-transform" :class="filtersOpen && 'rotate-180'"></i>
+            </button>
+        </div>
+
+        <!-- 第三層：收折式進階條件（直接展開在搜尋列下方，點選即時套用） -->
+        <div id="filter-panel" x-cloak x-show="filtersOpen" x-collapse>
+            <div class="mt-3 bg-white rounded-xl border border-gray-200 shadow-sm max-h-[60vh] overflow-y-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr_1.2fr] divide-y lg:divide-y-0 lg:divide-x divide-gray-100">
+
+                    <!-- 主要客群 -->
+                    <div class="p-4">
+                        <p class="text-sm font-bold mb-0.5">主要客群</p>
+                        <p class="text-xs text-gray-500 mb-3">符合其一即可</p>
+                        <div class="flex flex-wrap gap-2">
+                            <template x-for="a in OPTIONS.audiences" :key="a.value">
+                                <button @click="toggle(q.audiences, a.value)" :aria-pressed="q.audiences.includes(a.value)"
+                                        class="h-8 px-3 rounded-full border text-sm flex items-center gap-1.5 transition-colors"
+                                        :class="q.audiences.includes(a.value) ? 'bg-gray-900 text-white border-gray-900' : 'border-gray-200 hover:border-gray-400'">
+                                    <i class="fa-solid text-xs" :class="a.icon"></i><span x-text="a.label"></span>
+                                </button>
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- 場地設備 -->
+                    <div class="p-4">
+                        <p class="text-sm font-bold mb-0.5">場地設備</p>
+                        <p class="text-xs text-gray-500 mb-3">勾選的項目都要有提供 / 允許</p>
+                        <div class="flex flex-wrap gap-2">
+                            <template x-for="f in OPTIONS.facilities" :key="f.value">
+                                <button @click="toggle(q.facilities, f.value)" :aria-pressed="q.facilities.includes(f.value)"
+                                        class="h-8 px-3 rounded-full border text-sm flex items-center gap-1.5 transition-colors"
+                                        :class="q.facilities.includes(f.value) ? 'bg-gray-900 text-white border-gray-900' : 'border-gray-200 hover:border-gray-400'">
+                                    <i class="fa-solid text-xs" :class="f.icon"></i><span x-text="f.label"></span>
+                                </button>
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- 資格要求 -->
+                    <div class="p-4">
+                        <p class="text-sm font-bold mb-0.5">我具備的資格</p>
+                        <p class="text-xs text-gray-500 mb-3">關閉的項目，會隱藏要求該資格的活動</p>
+                        <div class="space-y-2">
+                            <template x-for="qq in OPTIONS.quals" :key="qq.value">
+                                <div class="flex items-center gap-2">
+                                    <i class="fa-solid w-4 text-xs text-gray-400" :class="qq.icon"></i>
+                                    <span class="text-sm flex-1" x-text="qq.label"></span>
+                                    <button type="button" role="switch" :aria-checked="!q.lackQuals.includes(qq.value)"
+                                            @click="toggle(q.lackQuals, qq.value)"
+                                            class="relative inline-flex h-5 w-9 shrink-0 rounded-full transition-colors"
+                                            :class="!q.lackQuals.includes(qq.value) ? 'bg-rose-500' : 'bg-rose-200'">
+                                        <span class="absolute top-0.5 left-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform"
+                                              :class="!q.lackQuals.includes(qq.value) ? 'translate-x-4' : ''"></span>
+                                    </button>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="px-4 py-2.5 border-t border-gray-100 flex items-center justify-between text-sm bg-gray-50 rounded-b-xl">
+                    <span class="text-gray-600">符合條件 <b class="text-gray-900" x-text="results.length"></b> 個活動</span>
+                    <div class="flex items-center gap-4">
+                        <button x-show="advancedCount" @click="Object.assign(q, { audiences: [], facilities: [], lackQuals: [] })" class="underline text-gray-500">清除這些條件</button>
+                        <button @click="filtersOpen = false" class="font-medium flex items-center gap-1">收合 <i class="fa-solid fa-chevron-up text-xs"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<main class="max-w-7xl mx-auto px-4 pb-16">
+
+    <!-- ========== 依我的攤位條件推薦（攤商登入時） ========== -->
+    <div class="mt-3 rounded-xl border bg-white p-4 flex flex-col md:flex-row md:items-center gap-3"
+         :class="matchMode ? 'border-amber-400 ring-1 ring-amber-200' : 'border-gray-200'">
+        <div class="flex items-start gap-3 flex-1">
+            <div class="h-10 w-10 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center shrink-0">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+            </div>
+            <div>
+                <p class="font-bold">依我的攤位條件推薦</p>
+                <p class="text-xs text-gray-500 mt-0.5 flex flex-wrap gap-x-2">
+                    <span x-text="labelsOf('categories', VENDOR.categories).join('、')"></span>·
+                    <span x-text="VENDOR.cities.join('、')"></span>·
+                    <span>需要 <span x-text="labelsOf('facilities', VENDOR.needs).join('、') || '無'"></span></span>
+                    <a href="vendor-booth-profile.html" class="underline text-gray-700">編輯條件</a>
+                </p>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <label x-show="matchMode" class="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
+                <input type="checkbox" x-model="onlyMatched" class="h-4 w-4 accent-gray-900">只看適合我的
+            </label>
+            <button type="button" role="switch" :aria-checked="matchMode" @click="matchMode = !matchMode"
+                    class="relative inline-flex h-6 w-11 shrink-0 rounded-full transition-colors"
+                    :class="matchMode ? 'bg-amber-500' : 'bg-gray-300'">
+                <span class="absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform" :class="matchMode ? 'translate-x-5' : ''"></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ========== 已套用條件 + 排序 ========== -->
+    <div class="mt-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="flex flex-wrap items-center gap-2 text-sm">
+            <span class="font-bold">共 <span x-text="results.length"></span> 個活動</span>
+            <template x-for="chip in activeChips" :key="chip.key">
+                <button @click="chip.remove()" class="h-7 pl-3 pr-2 rounded-full bg-white border border-gray-300 text-xs flex items-center gap-1.5 hover:border-gray-500">
+                    <span x-text="chip.label"></span><i class="fa-solid fa-xmark text-gray-400"></i>
+                </button>
+            </template>
+            <button x-show="activeChips.length" @click="resetAll()" class="text-xs underline text-gray-500">清除全部</button>
+        </div>
+        <select x-model="sort" class="h-9 rounded-md border border-gray-200 bg-white px-3 text-sm self-start sm:self-auto">
+            <option value="recommend">排序：推薦</option>
+            <option value="date">活動日期近→遠</option>
+            <option value="price">攤位費低→高</option>
+        </select>
+    </div>
+
+    <!-- ========== 活動卡片 ========== -->
+    <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <template x-for="ev in results" :key="ev.id">
+            <article class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col hover:shadow-md transition-shadow">
+                <!-- 圖片（原型以色塊代替） -->
+                <div class="relative h-48 flex items-center justify-center text-6xl text-white/80" :style="'background:' + ev.bg">
+                    <i class="fa-solid" :class="iconOf(ev.categories[0])"></i>
+                    <span x-show="matchMode && match(ev).ok"
+                          class="absolute top-3 left-3 h-7 px-3 rounded-full bg-amber-500 text-white text-xs font-bold flex items-center gap-1 shadow">
+                        <i class="fa-solid fa-star"></i>適合你
+                    </span>
+                </div>
+
+                <div class="p-4 flex-1 flex flex-col">
+                    <div class="flex items-center justify-between">
+                        <span class="h-7 px-3 rounded-full bg-gray-100 text-xs font-medium flex items-center gap-1.5">
+                            <i class="fa-solid fa-clock"></i><span x-text="ev.status"></span>
+                        </span>
+                        <span class="h-7 px-3 rounded-full bg-amber-400 text-white text-xs font-bold flex items-center" x-text="ev.city.replace(/[市縣]$/, '')"></span>
+                    </div>
+
+                    <h3 class="mt-3 font-bold text-lg leading-snug line-clamp-2" x-text="ev.title"></h3>
+
+                    <!-- 新增：媒合標籤（類別 / 客群 / 設備 / 資格） -->
+                    <div class="mt-3 flex flex-wrap gap-1.5">
+                        <template x-for="c in sortedCats(ev).slice(0, 3)" :key="c">
+                            <span class="text-[11px] px-2 py-0.5 rounded"
+                                  :class="matchMode && VENDOR.categories.includes(c) ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-700'"
+                                  x-text="labelOf('categories', c)"></span>
+                        </template>
+                        <span x-show="ev.categories.length > 3" class="text-[11px] px-2 py-0.5 rounded bg-gray-100 text-gray-500"
+                              :title="labelsOf('categories', sortedCats(ev).slice(3)).join('、')" x-text="'+' + (ev.categories.length - 3)"></span>
+                        <template x-for="a in ev.audiences" :key="a">
+                            <span class="text-[11px] px-2 py-0.5 rounded bg-sky-50 text-sky-700" x-text="labelOf('audiences', a)"></span>
+                        </template>
+                    </div>
+                    <div class="mt-2 flex items-center gap-3 text-gray-400 text-sm">
+                        <template x-for="f in OPTIONS.facilities" :key="f.value">
+                            <i class="fa-solid" :class="[f.icon, ev.facilities.includes(f.value) ? 'text-emerald-600' : 'opacity-30']"
+                               :title="f.label + (ev.facilities.includes(f.value) ? '：有' : '：無')"></i>
+                        </template>
+                        <template x-for="qq in ev.quals" :key="qq">
+                            <span class="text-[11px] px-1.5 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-200" x-text="'需' + labelOf('quals', qq)"></span>
+                        </template>
+                    </div>
+
+                    <!-- 新增：不符合原因（推薦模式） -->
+                    <ul x-show="matchMode && !match(ev).ok" class="mt-3 text-xs text-gray-500 space-y-0.5">
+                        <template x-for="r in match(ev).reasons" :key="r">
+                            <li><i class="fa-solid fa-circle-xmark text-rose-400 mr-1"></i><span x-text="r"></span></li>
+                        </template>
+                    </ul>
+
+                    <div class="mt-auto pt-4 flex items-end justify-between">
+                        <span class="flex items-center gap-2 text-gray-600"><i class="fa-regular fa-calendar"></i><span x-text="ev.dateLabel"></span></span>
+                        <span><span class="text-2xl font-bold text-red-600" x-text="ev.price"></span><span class="text-xs text-red-600">元/攤</span></span>
+                    </div>
+                    <button class="mt-2 text-sm text-gray-500 hover:text-gray-900">查看場次 <i class="fa-solid fa-chevron-down text-xs"></i></button>
+                </div>
+            </article>
+        </template>
+    </div>
+
+    <!-- 無結果 -->
+    <div x-cloak x-show="!results.length" class="mt-16 text-center text-gray-500">
+        <i class="fa-solid fa-store-slash text-4xl mb-3"></i>
+        <p class="font-medium">找不到符合條件的活動</p>
+        <p class="text-sm mt-1">試著減少篩選條件，或<button @click="resetAll()" class="underline">清除全部</button></p>
+    </div>
+</main>
+
+<script src="js/market-categories.js"></script>
+<script>
+// 與 market-create-event.html / vendor-booth-profile.html 共用同一份選項
+const OPTIONS = {
+    categories: CATEGORIES,
+    audiences: [
+        { value: 'family',   label: '家庭親子', icon: 'fa-children' },
+        { value: 'tourist',  label: '觀光客',   icon: 'fa-camera' },
+        { value: 'petowner', label: '寵物飼主', icon: 'fa-dog' },
+    ],
+    facilities: [
+        { value: 'water',    label: '水供給', icon: 'fa-faucet-drip' },
+        { value: 'power',    label: '電供給', icon: 'fa-plug' },
+        { value: 'openFire', label: '明火',   icon: 'fa-fire' },
+        { value: 'hidFire',  label: '暗火',   icon: 'fa-fire-burner' },
+        { value: 'parking',  label: '停車位', icon: 'fa-square-parking' },
+    ],
+    quals: [
+        { value: 'insurance', label: '公共意外責任險', icon: 'fa-shield-halved' },
+        { value: 'foodReg',   label: '食品業者登錄',   icon: 'fa-certificate' },
+        { value: 'invoice',   label: '開立發票',       icon: 'fa-receipt' },
+    ],
+};
+
+const REGIONS = [
+    { name: '北部', cities: ['台北市', '新北市', '基隆市', '桃園市', '新竹市', '新竹縣', '宜蘭縣'] },
+    { name: '中部', cities: ['苗栗縣', '台中市', '彰化縣', '南投縣', '雲林縣'] },
+    { name: '南部', cities: ['嘉義市', '嘉義縣', '台南市', '高雄市', '屏東縣'] },
+    { name: '東部', cities: ['花蓮縣', '台東縣'] },
+    { name: '離島', cities: ['澎湖縣', '金門縣', '連江縣'] },
+];
+
+// 登入攤商的攤位條件（來自 vendor-booth-profile.html）
+const VENDOR = { categories: ['dessert'], needs: ['power'], cities: ['台北市', '新北市', '宜蘭縣'], quals: ['insurance'] };
+
+const EVENTS = [
+    { id: 1, title: '【新動市集】2026耶誕市集【12/12-13 宜蘭市化龍一村】', city: '宜蘭縣', start: '2026-12-12', end: '2026-12-13', dateLabel: '12/12-12/13', price: 650, status: '報名中',
+      categories: ['food', 'dessert', 'plant', 'handmade', 'kids'], audiences: ['family', 'tourist'], facilities: ['power', 'parking'], quals: [], bg: 'linear-gradient(135deg,#f87171,#fbbf24)' },
+    { id: 2, title: '【新動市集】2026耶誕市集【12.25-26 宜蘭站前丟丟噹森林】', city: '宜蘭縣', start: '2026-12-25', end: '2026-12-26', dateLabel: '12/25-12/26', price: 700, status: '報名中',
+      categories: ['food', 'drink', 'dessert'], audiences: ['tourist', 'family'], facilities: ['water', 'power', 'hidFire'], quals: ['foodReg'], bg: 'linear-gradient(135deg,#34d399,#0ea5e9)' },
+    { id: 3, title: '新動市集_藏冬藝之市【11.28-29 宜蘭站前丟丟噹森林】', city: '宜蘭縣', start: '2026-11-28', end: '2026-11-29', dateLabel: '11/28-11/29', price: 700, status: '21天後截止',
+      categories: ['handmade', 'accessory', 'healing', 'dessert'], audiences: ['tourist'], facilities: ['power'], quals: [], bg: 'linear-gradient(135deg,#a78bfa,#f472b6)' },
+    { id: 4, title: '汪汪冬冬來跳舞｜冬山河親水公園寵物市集', city: '宜蘭縣', start: '2026-11-21', end: '2026-11-21', dateLabel: '11/21', price: 500, status: '報名中',
+      categories: ['pet', 'food', 'drink'], audiences: ['petowner', 'family'], facilities: ['water', 'power', 'parking'], quals: [], bg: 'linear-gradient(135deg,#86efac,#fde047)' },
+    { id: 5, title: '魔法少女 X 青山四月天｜文化部文化資產局', city: '台北市', start: '2026-12-12', end: '2026-12-13', dateLabel: '12/12-12/13', price: 800, status: '報名中',
+      categories: ['toys', 'apparel', 'accessory', 'dessert', 'performer'], audiences: ['tourist'], facilities: ['power'], quals: ['invoice'], bg: 'linear-gradient(135deg,#c4b5fd,#93c5fd)' },
+    { id: 6, title: '2026下半年開放招商｜台北四四南村週末市集', city: '台北市', start: '2026-12-05', end: '2026-12-27', dateLabel: '12/05-12/27', price: 900, status: '報名中',
+      categories: ['food', 'drink', 'dessert', 'select', 'beauty', 'secondhand'], audiences: ['tourist', 'family'], facilities: ['water', 'power', 'openFire', 'hidFire'], quals: ['foodReg', 'invoice'], bg: 'linear-gradient(135deg,#94a3b8,#475569)' },
+    { id: 7, title: '板橋親子週末市集｜府中廣場', city: '新北市', start: '2026-12-19', end: '2026-12-20', dateLabel: '12/19-12/20', price: 600, status: '報名中',
+      categories: ['food', 'dessert', 'kids', 'diy', 'npo'], audiences: ['family'], facilities: ['power', 'parking'], quals: ['insurance'], bg: 'linear-gradient(135deg,#fdba74,#fb7185)' },
+    { id: 8, title: '審計新村冬日咖啡節', city: '台中市', start: '2026-12-12', end: '2026-12-13', dateLabel: '12/12-12/13', price: 750, status: '7天後截止',
+      categories: ['drink', 'dessert', 'farm'], audiences: ['tourist'], facilities: ['water', 'power', 'hidFire'], quals: ['foodReg', 'invoice'], bg: 'linear-gradient(135deg,#a16207,#fcd34d)' },
+    { id: 9, title: '駁二療癒手作市集', city: '高雄市', start: '2026-11-28', end: '2026-11-29', dateLabel: '11/28-11/29', price: 600, status: '報名中',
+      categories: ['diy', 'healing', 'interactive', 'handmade'], audiences: ['tourist'], facilities: [], quals: [], bg: 'linear-gradient(135deg,#5eead4,#818cf8)' },
+];
+
+function marketSearch() {
+    return {
+        OPTIONS, REGIONS, VENDOR,
+        q: { keyword: '', area: '', date: '', categories: [], audiences: [], facilities: [], lackQuals: [] },
+        filtersOpen: false,
+        catsExpanded: false,
+        openedAtY: 0,
+        collapsedCatCount: 7,
+
+        // 收合時顯示的類別數，依螢幕寬度調整，大約剛好一排
+        updateCatCount() {
+            const w = window.innerWidth;
+            this.collapsedCatCount = w < 640 ? 3 : w < 1024 ? 5 : 7;
+        },
+        // 收合時：前 N 個 + 使用者已選但排在後面的類別（避免選了卻看不到）
+        get visibleCategories() {
+            if (this.catsExpanded) return CATEGORIES;
+            return CATEGORIES.filter((c, i) => i < this.collapsedCatCount || this.q.categories.includes(c.value));
+        },
+        get hiddenCategoryCount() { return CATEGORIES.length - this.visibleCategories.length; },
+
+        toggleFilters() {
+            this.filtersOpen = !this.filtersOpen;
+            this.openedAtY = window.scrollY;
+        },
+        // 展開「更多條件」或「更多類別」後，往下捲動超過 80px 就自動收合
+        onScroll() {
+            if (!this.filtersOpen && !this.catsExpanded) { this.openedAtY = window.scrollY; return; }
+            if (window.scrollY < this.openedAtY) this.openedAtY = window.scrollY;   // 往上捲時更新基準點
+            else if (window.scrollY - this.openedAtY > 80) { this.filtersOpen = false; this.catsExpanded = false; }
+        },
+        init() { this.updateCatCount(); },
+        matchMode: true,
+        onlyMatched: false,
+        sort: 'recommend',
+
+        toggle(list, v) { const i = list.indexOf(v); i === -1 ? list.push(v) : list.splice(i, 1); },
+        labelOf(group, v) { return OPTIONS[group].find(o => o.value === v)?.label ?? v; },
+        labelsOf(group, vs) { return vs.map(v => this.labelOf(group, v)); },
+        // 推薦模式下，把攤商自己的類別排到最前面，確保一定看得到
+        sortedCats(ev) {
+            if (!this.matchMode) return ev.categories;
+            return [...ev.categories].sort((a, b) => VENDOR.categories.includes(b) - VENDOR.categories.includes(a));
+        },
+        iconOf(cat) { return OPTIONS.categories.find(o => o.value === cat)?.icon; },
+
+        // 篩選邏輯：類別、客群取聯集（有其一即可）；設備取交集（全部都要有）；資格排除
+        passes(ev, f) {
+            const kw = this.q.keyword.trim();
+            if (kw && !ev.title.includes(kw)) return false;
+            if (this.q.area) {
+                if (this.q.area.startsWith('region:')) {
+                    const r = REGIONS.find(r => 'region:' + r.name === this.q.area);
+                    if (!r.cities.includes(ev.city)) return false;
+                } else if (ev.city !== this.q.area) return false;
+            }
+            if (this.q.date && (this.q.date < ev.start || this.q.date > ev.end)) return false;
+            if (f.categories.length && !f.categories.some(c => ev.categories.includes(c))) return false;
+            if (f.audiences.length && !f.audiences.some(a => ev.audiences.includes(a))) return false;
+            if (!f.facilities.every(x => ev.facilities.includes(x))) return false;
+            if (ev.quals.some(x => f.lackQuals.includes(x))) return false;
+            return true;
+        },
+
+        // 攤商條件比對
+        match(ev) {
+            const reasons = [];
+            if (!VENDOR.categories.some(c => ev.categories.includes(c))) reasons.push('未招募你的類別');
+            if (!VENDOR.cities.includes(ev.city)) reasons.push('不在你的期望城市');
+            VENDOR.needs.filter(n => !ev.facilities.includes(n))
+                .forEach(n => reasons.push('不提供' + this.labelOf('facilities', n)));
+            ev.quals.filter(x => !VENDOR.quals.includes(x))
+                .forEach(x => reasons.push('需要' + this.labelOf('quals', x)));
+            return { ok: reasons.length === 0, reasons, score: 4 - reasons.length };
+        },
+
+        get results() {
+            let list = EVENTS.filter(ev => this.passes(ev, this.q));
+            if (this.matchMode && this.onlyMatched) list = list.filter(ev => this.match(ev).ok);
+            const by = {
+                recommend: (a, b) => this.matchMode ? this.match(b).score - this.match(a).score : 0,
+                date: (a, b) => a.start.localeCompare(b.start),
+                price: (a, b) => a.price - b.price,
+            };
+            return [...list].sort(by[this.sort]);
+        },
+
+        get advancedCount() {
+            return this.q.audiences.length + this.q.facilities.length + this.q.lackQuals.length;
+        },
+
+        get activeChips() {
+            const chips = [];
+            if (this.q.keyword) chips.push({ key: 'kw', label: '「' + this.q.keyword + '」', remove: () => this.q.keyword = '' });
+            if (this.q.area) chips.push({ key: 'area', label: this.q.area.replace('region:', '') + (this.q.area.startsWith('region:') ? '全區' : ''), remove: () => this.q.area = '' });
+            if (this.q.date) chips.push({ key: 'date', label: this.q.date, remove: () => this.q.date = '' });
+            const add = (list, group, prefix = '') => list.forEach(v =>
+                chips.push({ key: group + v, label: prefix + this.labelOf(group, v), remove: () => this.toggle(list, v) }));
+            add(this.q.categories, 'categories');
+            add(this.q.audiences, 'audiences');
+            add(this.q.facilities, 'facilities', '有');
+            add(this.q.lackQuals, 'quals', '不需');
+            return chips;
+        },
+
+        resetAll() {
+            Object.assign(this.q, { keyword: '', area: '', date: '', categories: [], audiences: [], facilities: [], lackQuals: [] });
+            this.onlyMatched = false;
+        },
+    };
+}
+</script>
+</body>
+</html>

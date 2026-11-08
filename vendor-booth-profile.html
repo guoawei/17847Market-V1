@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的攤位 - 17847 Market</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; }
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body class="bg-white text-gray-900">
+<main class="max-w-5xl mx-auto px-4 sm:px-6 py-10" x-data="vendorProfile()">
+
+    <h1 class="text-2xl font-bold mb-5">我的攤位</h1>
+
+    <form class="space-y-4" @submit.prevent="submit()">
+
+        <!-- ========== 聯絡資訊 ========== -->
+        <section class="border border-gray-200 rounded-xl shadow-sm p-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-4 text-sm">
+                <div><label class="block font-bold mb-2">品牌名稱*</label><input value="瑪莉的脆皮雞蛋糕" class="w-full h-9 border border-gray-200 rounded-md px-3"></div>
+                <div><label class="block font-bold mb-2">負責人姓名*</label><input value="mary1" class="w-full h-9 border border-gray-200 rounded-md px-3"></div>
+                <div><label class="block font-bold mb-2">聯絡電話*</label><input value="0987654321" class="w-full h-9 border border-gray-200 rounded-md px-3"></div>
+                <div><label class="block font-bold mb-2">Email*</label><input value="vendor@example.com" disabled class="w-full h-9 border border-gray-200 rounded-md px-3 text-gray-400"></div>
+                <div><label class="block font-bold mb-2">Line ID</label><input class="w-full h-9 border border-gray-200 rounded-md px-3"></div>
+                <div><label class="block font-bold mb-2">Instagram</label><input class="w-full h-9 border border-gray-200 rounded-md px-3"></div>
+            </div>
+        </section>
+
+        <!-- ========== 品牌資訊（原「攤商分類」下拉已移到下方媒合卡片） ========== -->
+        <section class="border border-gray-200 rounded-xl shadow-sm p-5 space-y-5 text-sm">
+            <div>
+                <p class="font-bold mb-2">攤商大頭照*</p>
+                <div class="h-24 w-24 rounded-full bg-gray-200"></div>
+            </div>
+            <div>
+                <p class="font-bold mb-2">攤位照片* (最少3張)</p>
+                <div class="flex flex-wrap gap-4">
+                    <div class="h-28 w-44 rounded-lg bg-gray-200"></div>
+                    <div class="h-28 w-44 rounded-lg bg-gray-200"></div>
+                    <div class="h-28 w-44 rounded-lg bg-gray-200"></div>
+                    <div class="h-28 w-44 rounded-lg border-2 border-dashed border-gray-300 flex flex-col items-center justify-center text-gray-500">
+                        <i class="fa-solid fa-plus text-lg mb-1"></i>新增照片
+                    </div>
+                </div>
+            </div>
+            <div>
+                <label class="block font-bold mb-2">品牌介紹*</label>
+                <textarea rows="5" class="w-full border border-gray-200 rounded-md px-3 py-2">沐吉，取自「沐恩、得吉」，是一個從家庭出發、用心製作的溫暖品牌。</textarea>
+            </div>
+        </section>
+
+        <!-- ========== 【新增】擺攤條件（活動配對用） ========== -->
+        <section class="border border-gray-200 rounded-xl shadow-sm p-5">
+            <div class="flex items-start justify-between gap-4 mb-1">
+                <h2 class="font-bold text-lg">擺攤條件</h2>
+                <span class="text-xs text-gray-500 whitespace-nowrap mt-1">
+                    完成度 <span class="font-semibold text-gray-900" x-text="filledGroups"></span>/5
+                </span>
+            </div>
+            <p class="text-sm text-gray-500 mb-5">
+                系統會依這些條件，推薦適合你的市集活動。填寫一次，之後報名都會自動帶入。
+            </p>
+
+            <!-- 1. 攤商類別 -->
+            <div class="mb-6">
+                <div class="flex items-baseline gap-2 mb-1">
+                    <label class="font-bold">攤商類別*</label>
+                    <span class="text-sm text-gray-500">(可複選)</span>
+                </div>
+                <p class="text-xs text-gray-500 mb-3">你主要販售的商品類型，會對應到市集的「招商類別」。</p>
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+                    <template x-for="opt in options.categories" :key="opt.value">
+                        <button type="button" @click="toggle('categories', opt.value)"
+                                :aria-pressed="has('categories', opt.value)"
+                                class="flex items-center gap-3 h-12 px-4 rounded-lg border text-sm transition-colors text-left"
+                                :class="has('categories', opt.value) ? 'border-gray-900 bg-gray-900 text-white' : 'border-gray-200 hover:border-gray-400 text-gray-700'">
+                            <i class="fa-solid w-4 text-center" :class="opt.icon"></i>
+                            <span class="flex-1" x-text="opt.label"></span>
+                            <i class="fa-solid fa-check text-xs" x-show="has('categories', opt.value)"></i>
+                        </button>
+                    </template>
+                </div>
+                <p x-cloak x-show="errors.categories" class="text-xs text-red-500 mt-2">
+                    <i class="fa-solid fa-circle-exclamation mr-1"></i>請至少選擇一個攤商類別
+                </p>
+            </div>
+
+            <hr class="border-gray-100 mb-6">
+
+            <!-- 2 & 3. 設備：需要 / 自備 並排 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div>
+                    <label class="font-bold block mb-1">需要場地提供</label>
+                    <p class="text-xs text-gray-500 mb-3">擺攤時一定要有的條件，不符合的活動會提醒你。</p>
+                    <div class="space-y-2">
+                        <template x-for="opt in options.needs" :key="opt.value">
+                            <label class="flex items-start gap-3 p-3 rounded-lg border cursor-pointer transition-colors"
+                                   :class="has('needs', opt.value) ? 'border-gray-900 bg-gray-50' : 'border-gray-200 hover:border-gray-400'">
+                                <input type="checkbox" class="mt-1 h-4 w-4 accent-gray-900" :value="opt.value" x-model="form.needs">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 text-sm font-medium">
+                                        <i class="fa-solid w-4 text-center text-gray-500" :class="opt.icon"></i>
+                                        <span x-text="opt.label"></span>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-0.5" x-text="opt.hint"></p>
+                                </div>
+                            </label>
+                        </template>
+                    </div>
+                    <!-- 需要用電時補充瓦數，可帶入活動的「電器登記」 -->
+                    <div x-cloak x-show="has('needs', 'power')" class="mt-2 pl-3 border-l-2 border-gray-200">
+                        <label class="text-xs text-gray-600">預估用電量（選填）</label>
+                        <div class="flex items-center gap-2 mt-1">
+                            <input type="number" x-model="form.powerWatt" placeholder="例如 1500" class="w-32 h-8 border border-gray-200 rounded-md px-2 text-sm">
+                            <span class="text-sm text-gray-500">W</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="font-bold block mb-1">自備設備</label>
+                    <p class="text-xs text-gray-500 mb-3">你會自己帶到現場的設備，方便市集主安排。</p>
+                    <div class="space-y-2">
+                        <template x-for="opt in options.owns" :key="opt.value">
+                            <label class="flex items-start gap-3 p-3 rounded-lg border cursor-pointer transition-colors"
+                                   :class="has('owns', opt.value) ? 'border-gray-900 bg-gray-50' : 'border-gray-200 hover:border-gray-400'">
+                                <input type="checkbox" class="mt-1 h-4 w-4 accent-gray-900" :value="opt.value" x-model="form.owns">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 text-sm font-medium">
+                                        <i class="fa-solid w-4 text-center text-gray-500" :class="opt.icon"></i>
+                                        <span x-text="opt.label"></span>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-0.5" x-text="opt.hint"></p>
+                                </div>
+                            </label>
+                        </template>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="border-gray-100 mb-6">
+
+            <!-- 4. 營業資格 -->
+            <div class="mb-6">
+                <label class="font-bold block mb-1">相關營業資格</label>
+                <p class="text-xs text-gray-500 mb-3">具備的資格會顯示認證標章；要求此資格的活動才會推薦給你。</p>
+                <div class="space-y-2">
+                    <!-- 公共意外責任險 -->
+                    <div class="rounded-lg border border-gray-200">
+                        <div class="flex items-center gap-4 p-3">
+                            <div class="h-9 w-9 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 shrink-0"><i class="fa-solid fa-shield-halved"></i></div>
+                            <div class="flex-1">
+                                <p class="text-sm font-medium">公共意外責任險</p>
+                                <p class="text-xs text-gray-500">已投保擺攤用的公共意外責任險</p>
+                            </div>
+                            <button type="button" role="switch" :aria-checked="has('quals','insurance')" @click="toggle('quals','insurance')"
+                                    class="relative inline-flex h-5 w-9 shrink-0 rounded-full transition-colors"
+                                    :class="has('quals','insurance') ? 'bg-rose-500' : 'bg-rose-200'">
+                                <span class="absolute top-0.5 left-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform" :class="has('quals','insurance') ? 'translate-x-4' : ''"></span>
+                            </button>
+                        </div>
+                        <div x-cloak x-show="has('quals','insurance')" class="px-3 pb-3 sm:pl-16 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="text-xs text-gray-600">保單到期日*</label>
+                                <input type="date" x-model="form.insuranceExpiry" class="mt-1 w-full h-8 border border-gray-200 rounded-md px-2 text-sm">
+                                <p x-show="insuranceExpired" class="text-xs text-red-500 mt-1">保單已過期，將不會顯示認證標章</p>
+                            </div>
+                            <div>
+                                <label class="text-xs text-gray-600">保單證明（選填）</label>
+                                <button type="button" class="mt-1 w-full h-8 border border-dashed border-gray-300 rounded-md text-xs text-gray-500 hover:bg-gray-50">
+                                    <i class="fa-solid fa-upload mr-1"></i>上傳檔案
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 食品業者登錄 -->
+                    <div class="rounded-lg border border-gray-200">
+                        <div class="flex items-center gap-4 p-3">
+                            <div class="h-9 w-9 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 shrink-0"><i class="fa-solid fa-certificate"></i></div>
+                            <div class="flex-1">
+                                <p class="text-sm font-medium">食品業者登錄</p>
+                                <p class="text-xs text-gray-500">已完成食品藥物管理署食品業者登錄</p>
+                            </div>
+                            <button type="button" role="switch" :aria-checked="has('quals','foodReg')" @click="toggle('quals','foodReg')"
+                                    class="relative inline-flex h-5 w-9 shrink-0 rounded-full transition-colors"
+                                    :class="has('quals','foodReg') ? 'bg-rose-500' : 'bg-rose-200'">
+                                <span class="absolute top-0.5 left-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform" :class="has('quals','foodReg') ? 'translate-x-4' : ''"></span>
+                            </button>
+                        </div>
+                        <div x-cloak x-show="has('quals','foodReg')" class="px-3 pb-3 sm:pl-16">
+                            <label class="text-xs text-gray-600">登錄字號*</label>
+                            <input type="text" x-model="form.foodRegNo" placeholder="例如 A-123456789-00000-0" class="mt-1 w-full sm:w-1/2 h-8 border border-gray-200 rounded-md px-2 text-sm">
+                        </div>
+                    </div>
+                    <!-- 賣食物但沒登錄的提醒 -->
+                    <p x-cloak x-show="sellsFood && !has('quals','foodReg')"
+                       class="flex items-start gap-2 text-xs text-gray-600 bg-amber-50 border border-amber-200 rounded-md px-3 py-2">
+                        <i class="fa-solid fa-lightbulb text-amber-500 mt-0.5"></i>
+                        <span>你選了食品相關類別，多數美食市集會要求「食品業者登錄」，補上可大幅增加推薦活動數。</span>
+                    </p>
+                </div>
+            </div>
+
+            <hr class="border-gray-100 mb-6">
+
+            <!-- 5. 期望城市 -->
+            <div class="mb-6">
+                <div class="flex items-baseline justify-between gap-2 mb-1">
+                    <div class="flex items-baseline gap-2">
+                        <label class="font-bold">期望擺攤城市*</label>
+                        <span class="text-sm text-gray-500">(可複選)</span>
+                    </div>
+                    <button type="button" x-show="form.cities.length" @click="form.cities = []" class="text-xs text-gray-500 underline">清除</button>
+                </div>
+                <p class="text-xs text-gray-500 mb-3">
+                    已選 <span class="font-semibold text-gray-900" x-text="form.cities.length"></span> 個縣市。點區域名稱可整區全選。
+                </p>
+                <div class="space-y-3">
+                    <template x-for="region in options.regions" :key="region.name">
+                        <div class="flex flex-col sm:flex-row sm:items-start gap-2">
+                            <button type="button" @click="toggleRegion(region)"
+                                    class="sm:w-20 shrink-0 h-8 text-left text-sm font-medium flex items-center gap-1.5"
+                                    :class="regionAll(region) ? 'text-gray-900' : 'text-gray-500 hover:text-gray-900'">
+                                <i class="fa-regular text-xs" :class="regionAll(region) ? 'fa-square-check' : 'fa-square'"></i>
+                                <span x-text="region.name"></span>
+                            </button>
+                            <div class="flex flex-wrap gap-2">
+                                <template x-for="c in region.cities" :key="c">
+                                    <button type="button" @click="toggle('cities', c)" :aria-pressed="has('cities', c)"
+                                            class="h-8 px-3 rounded-full border text-sm transition-colors"
+                                            :class="has('cities', c) ? 'border-gray-900 bg-gray-900 text-white' : 'border-gray-200 hover:border-gray-400 text-gray-700'"
+                                            x-text="c"></button>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                <p x-cloak x-show="errors.cities" class="text-xs text-red-500 mt-2">
+                    <i class="fa-solid fa-circle-exclamation mr-1"></i>請至少選擇一個城市
+                </p>
+            </div>
+
+            <!-- 配對預覽 -->
+            <div class="rounded-lg bg-gray-50 border border-dashed border-gray-300 p-4 text-sm">
+                <p class="text-xs font-medium text-gray-500 mb-2"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i>系統將為你推薦的活動</p>
+                <template x-if="!form.categories.length && !form.cities.length">
+                    <p class="text-xs text-gray-400">選擇類別與城市後，這裡會顯示配對條件</p>
+                </template>
+                <ul class="space-y-1 text-gray-700" x-show="form.categories.length || form.cities.length">
+                    <li x-show="form.categories.length"><i class="fa-solid fa-check text-emerald-600 w-4"></i>招商類別包含 <b x-text="labels('categories').join('、')"></b></li>
+                    <li x-show="form.cities.length"><i class="fa-solid fa-check text-emerald-600 w-4"></i>活動地點在 <b x-text="citySummary"></b></li>
+                    <li x-show="form.needs.length"><i class="fa-solid fa-check text-emerald-600 w-4"></i>場地提供／允許 <b x-text="labels('needs').join('、')"></b></li>
+                    <li x-show="!has('quals','foodReg')" class="text-gray-500"><i class="fa-solid fa-xmark text-gray-400 w-4"></i>排除要求「食品業者登錄」的活動</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ========== 商品管理 ========== -->
+        <section class="border border-gray-200 rounded-xl shadow-sm p-5">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="font-bold">商品管理*</h2>
+                <button type="button" class="h-9 px-4 rounded-md bg-gray-900 text-white text-sm">新增商品</button>
+            </div>
+            <div class="flex items-center gap-4 border border-gray-200 rounded-lg p-4">
+                <div class="h-20 w-32 rounded-lg bg-gray-200"></div>
+                <div class="flex-1"><p class="font-bold">硬蛋糕</p><p class="text-sm text-gray-500">333</p></div>
+                <span>100元 <i class="fa-solid fa-pen text-sm text-gray-500 ml-1"></i></span>
+            </div>
+        </section>
+
+        <div class="flex justify-center pt-4">
+            <button type="submit" class="h-10 px-5 rounded-md bg-gray-900 text-white text-sm hover:bg-gray-700">儲存變更</button>
+        </div>
+    </form>
+</main>
+
+<script src="js/market-categories.js"></script>
+<script>
+
+function vendorProfile() {
+    return {
+        options: {
+            categories: CATEGORIES,
+            // value 與市集「場地設備」相同，方便直接比對
+            needs: [
+                { value: 'water',    label: '水',   icon: 'fa-faucet-drip',  hint: '需要取水（清洗、製作飲品）' },
+                { value: 'power',    label: '電',   icon: 'fa-plug',         hint: '需要接電使用電器' },
+                { value: 'openFire', label: '明火', icon: 'fa-fire',         hint: '使用瓦斯爐等明火烹調' },
+                { value: 'hidFire',  label: '暗火', icon: 'fa-fire-burner',  hint: '使用電磁爐、烤箱等加熱' },
+            ],
+            owns: [
+                { value: 'tent',  label: '帳篷', icon: 'fa-tent',        hint: '自備遮陽 / 防雨帳篷' },
+                { value: 'table', label: '桌椅', icon: 'fa-chair',       hint: '自備展示桌與座椅' },
+            ],
+            regions: [
+                { name: '北部', cities: ['台北市', '新北市', '基隆市', '桃園市', '新竹市', '新竹縣', '宜蘭縣'] },
+                { name: '中部', cities: ['苗栗縣', '台中市', '彰化縣', '南投縣', '雲林縣'] },
+                { name: '南部', cities: ['嘉義市', '嘉義縣', '台南市', '高雄市', '屏東縣'] },
+                { name: '東部', cities: ['花蓮縣', '台東縣'] },
+                { name: '離島', cities: ['澎湖縣', '金門縣', '連江縣'] },
+            ],
+        },
+        form: {
+            categories: ['dessert'], needs: ['power'], owns: [], quals: [], cities: ['台北市', '新北市'],
+            powerWatt: '', insuranceExpiry: '', foodRegNo: '',
+        },
+        errors: { categories: false, cities: false },
+
+        has(key, v) { return this.form[key].includes(v); },
+        toggle(key, v) {
+            const l = this.form[key], i = l.indexOf(v);
+            i === -1 ? l.push(v) : l.splice(i, 1);
+            if (key in this.errors && l.length) this.errors[key] = false;
+        },
+        labels(key) { return this.options[key].filter(o => this.has(key, o.value)).map(o => o.label); },
+
+        regionAll(r) { return r.cities.every(c => this.has('cities', c)); },
+        toggleRegion(r) {
+            if (this.regionAll(r)) this.form.cities = this.form.cities.filter(c => !r.cities.includes(c));
+            else r.cities.forEach(c => { if (!this.has('cities', c)) this.form.cities.push(c); });
+            if (this.form.cities.length) this.errors.cities = false;
+        },
+        get citySummary() {
+            // 整區選滿時顯示區域名，否則列縣市
+            const parts = [];
+            this.options.regions.forEach(r => {
+                if (this.regionAll(r)) parts.push(r.name + '全區');
+                else parts.push(...r.cities.filter(c => this.has('cities', c)));
+            });
+            return parts.join('、');
+        },
+
+        get sellsFood() { return CATEGORIES.some(c => c.isFood && this.has('categories', c.value)); },
+        get insuranceExpired() {
+            return this.form.insuranceExpiry && new Date(this.form.insuranceExpiry) < new Date(new Date().toDateString());
+        },
+        get filledGroups() {
+            return ['categories', 'needs', 'owns', 'quals', 'cities'].filter(k => this.form[k].length).length;
+        },
+
+        submit() {
+            this.errors.categories = !this.form.categories.length;
+            this.errors.cities = !this.form.cities.length;
+            if (this.errors.categories || this.errors.cities) {
+                this.$root.querySelector('section:nth-of-type(3)').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                return;
+            }
+            console.log('payload', JSON.parse(JSON.stringify(this.form)));
+            alert('已儲存（原型）');
+        },
+    };
+}
+</script>
+</body>
+</html>
