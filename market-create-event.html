@@ -297,6 +297,10 @@ function createEvent() {
                 { value: 'family',    label: '家庭親子', icon: 'fa-children' },
                 { value: 'tourist',   label: '觀光客',   icon: 'fa-camera' },
                 { value: 'petowner',  label: '寵物飼主', icon: 'fa-dog' },
+                { value: 'office',    label: '上班族',   icon: 'fa-briefcase' },
+                { value: 'student',   label: '學生',     icon: 'fa-graduation-cap' },
+                { value: 'foreigner', label: '外國旅客', icon: 'fa-earth-asia' },
+                { value: 'senior',    label: '銀髮族',   icon: 'fa-person-cane' },
             ],
             facilities: [
                 { value: 'water',    label: '水供給',  icon: 'fa-faucet-drip',      hint: '場地提供取水點' },
@@ -304,6 +308,11 @@ function createEvent() {
                 { value: 'openFire', label: '明火',    icon: 'fa-fire',             hint: '允許瓦斯爐等明火烹調' },
                 { value: 'hidFire',  label: '暗火',    icon: 'fa-fire-burner',      hint: '允許電磁爐、烤箱等無明火加熱' },
                 { value: 'parking',  label: '停車位',  icon: 'fa-square-parking',   hint: '提供攤商停車或卸貨車位' },
+                { value: 'storage',  label: '寄物',    icon: 'fa-box-archive',      hint: '提供攤商寄放物品的空間' },
+                { value: 'garbage',  label: '市集方收垃圾', icon: 'fa-trash-can',  hint: '由市集方統一回收處理垃圾' },
+                { value: 'unloading', label: '卸貨區', icon: 'fa-truck-ramp-box',   hint: '提供攤商卸貨的專用區域' },
+                { value: 'tent',     label: '帳篷',    icon: 'fa-tent',             hint: '市集方提供遮陽 / 防雨帳篷' },
+                { value: 'table',    label: '桌椅',    icon: 'fa-chair',            hint: '市集方提供展示桌與座椅' },
             ],
             qualifications: [
                 { value: 'foodReg', label: '食品業者登錄', icon: 'fa-certificate', hint: '攤商須具備食品業者登錄字號，報名時需填寫' },
@@ -340,6 +349,8 @@ function createEvent() {
             if (f.includes('power')) out.push('供電服務');
             if (f.includes('openFire') || f.includes('hidFire')) out.push('明火使用');
             if (f.includes('parking')) out.push('車牌登記');
+            if (f.includes('storage')) out.push('寄物服務');
+            if (f.includes('garbage')) out.push('垃圾處理');
             return out;
         },
 
