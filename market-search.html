@@ -184,6 +184,56 @@
 
 <main class="max-w-7xl mx-auto px-4 pb-16">
 
+    <!-- ========== 廣告 Banner：市集主自動化對帳金流服務 ========== -->
+    <div x-data="payBanner()"
+         x-show="show" x-transition.opacity
+         class="mt-3 relative overflow-hidden rounded-2xl bg-gradient-to-br from-amber-400 via-amber-300 to-yellow-200">
+        <!-- 背景裝飾：大字與圓點 -->
+        <div class="pointer-events-none absolute inset-0 opacity-[0.12]" style="background-image: radial-gradient(#78350f 1.2px, transparent 1.2px); background-size: 16px 16px;"></div>
+        <span class="pointer-events-none absolute -bottom-10 -left-4 text-[140px] font-black leading-none text-white/25 select-none">NT$</span>
+
+        <a href="payment-service-intro.html" class="relative grid md:grid-cols-[1fr_auto] items-center gap-6 px-6 py-7 md:px-10 md:py-8 group">
+            <div>
+                <p class="inline-flex items-center gap-1.5 text-xs font-bold tracking-widest text-amber-900/70">
+                    <i class="fa-solid fa-store"></i>給市集主辦方 · NEW
+                </p>
+                <p class="mt-2 text-2xl md:text-3xl font-black leading-tight text-gray-900">
+                    還在對匯款末五碼？<br class="hidden sm:block">報名費，現在<span class="underline decoration-white decoration-[6px] underline-offset-4">自動對帳</span>。
+                </p>
+                <p class="mt-3 text-sm text-amber-950/80">攤商線上刷卡，付款成功自動標記已付款｜每筆 3% 手續費，無月費、無開通費</p>
+                <span class="mt-5 inline-flex h-11 px-6 rounded-full bg-gray-900 group-hover:bg-black text-white font-bold text-sm items-center gap-2 shadow-lg shadow-amber-900/20">
+                    看看怎麼運作 <i class="fa-solid fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
+                </span>
+            </div>
+
+            <!-- 右側視覺：浮動的付款通知卡 -->
+            <div class="hidden md:block relative w-72 h-40">
+                <div class="absolute right-6 top-0 w-60 rounded-xl bg-white/60 p-3 rotate-[-6deg] shadow">
+                    <div class="h-2 w-24 rounded bg-gray-300"></div>
+                    <div class="mt-2 h-2 w-16 rounded bg-gray-200"></div>
+                </div>
+                <div class="absolute right-0 top-8 w-64 rounded-xl bg-white p-3.5 shadow-xl rotate-[3deg] transition-transform group-hover:rotate-0">
+                    <div class="flex items-center gap-3">
+                        <span class="h-9 w-9 rounded-full bg-emerald-500 text-white flex items-center justify-center"><i class="fa-solid fa-check"></i></span>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm font-bold text-gray-900">小麥手作烘焙 已付款</p>
+                            <p class="text-xs text-gray-500">信用卡 · NT$1,200 · 剛剛</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="absolute right-10 top-[104px] w-52 rounded-xl bg-gray-900 text-white px-3.5 py-2.5 shadow-xl rotate-[-2deg]">
+                    <p class="text-[11px] text-gray-400">可提領餘額</p>
+                    <p class="font-black">NT$ 12,610</p>
+                </div>
+            </div>
+        </a>
+
+        <button @click="dismiss()"
+                class="absolute top-3 right-3 h-8 w-8 rounded-full text-amber-900/60 hover:text-gray-900 hover:bg-white/50 flex items-center justify-center" aria-label="關閉廣告">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+
     <!-- ========== 依我的攤位條件推薦（攤商登入時） ========== -->
     <div class="mt-3 rounded-xl border bg-white p-4 flex flex-col md:flex-row md:items-center gap-3"
          :class="matchMode ? 'border-amber-400 ring-1 ring-amber-200' : 'border-gray-200'">
@@ -302,6 +352,15 @@
     </div>
 </main>
 
+<script>
+// 廣告 Banner：一律顯示；關閉只在本次瀏覽隱藏，重新整理會再出現
+function payBanner() {
+    return {
+        show: true,
+        dismiss() { this.show = false; },
+    };
+}
+</script>
 <script src="js/market-categories.js"></script>
 <script>
 // 與 market-create-event.html / vendor-booth-profile.html 共用同一份選項

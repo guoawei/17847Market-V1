@@ -349,7 +349,7 @@
                   <div class="mt-5">
                     <label class="flex items-start gap-2 text-sm text-gray-700">
                       <input type="checkbox" x-model="form.agree" class="mt-0.5 rounded border-gray-300 text-yellow-500 focus:ring-yellow-500">
-                      <span>我已閱讀並同意《報名費代收服務條款》，並同意將必要資料提供予 TapPay 進行金流串接作業。</span>
+                      <span>我已閱讀並同意<a href="payment-service-intro.html#terms" target="_blank" class="underline text-yellow-600">《自動化對帳功能服務條款》</a>，並同意將必要資料提供予 TapPay 進行金流串接作業。</span>
                     </label>
                     <p x-show="errors.agree" class="text-xs text-red-500 mt-1">請先閱讀並同意服務條款</p>
                   </div>
@@ -460,6 +460,8 @@
           init() {
             this.status = localStorage.getItem("paymentServiceStatus") || "none";
             this.submittedAt = localStorage.getItem("paymentServiceSubmittedAt") || "";
+            // 從介紹頁勾選同意後進入，預先勾選
+            if (new URLSearchParams(location.search).get("agreed") === "1") this.form.agree = true;
           },
           validate() {
             this.errors = {};
